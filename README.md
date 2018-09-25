@@ -34,25 +34,25 @@ Design Documentation:
    
 Requirements:
 
-    - The use of this game presently requires the user to have installed jUnit and Maven in order to perform unit testing.
-    - No installation is required in order to operate the application.
+   - The use of this game presently requires the user to have installed jUnit and Maven in order to perform unit testing.
+   - No installation is required in order to operate the application.
    
 Usage:
 
-    Unit tests can be run through maven by issuing the following command:
+   Unit tests can be run through maven by issuing the following command:
     
       `mvn -B verify'
       
-    ~~The application can be run by executing~~ Not yet implemented:
+   ~~The application can be run by executing~~ Not yet implemented:
       `mvn exec:java`
       
 ***
       
 Collaborators:
 
-    The list of collaborators for this group assignment are as follows:
+   The list of collaborators for this group assignment are as follows:
     
-      - Aidan Crowther, 100980915
-      - David Zilio, 100997259
-      - Ellis Glennie, 101036478
-      - Brittny Lapierre, 100922938
+   - Aidan Crowther, 100980915
+   - David Zilio, 100997259
+   - Ellis Glennie, 101036478
+   - Brittny Lapierre, 100922938
