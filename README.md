@@ -41,10 +41,11 @@ Usage:
 
    Unit tests can be run through maven by issuing the following command:
     
-      `mvn -B verify'
+      mvn -B verify
       
    ~~The application can be run by executing~~ Not yet implemented:
-      `mvn exec:java`
+   
+      mvn exec:java
       
 ***
       
