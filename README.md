@@ -24,7 +24,7 @@ Roadmap:
    - [X] Post tests for base game classes
    - [ ] Create UML design documentation
    - [ ] Develop testing roadmap for unit tests
-   ...
+   - [ ] ...
    
 Design Documentation:
 
