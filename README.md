@@ -8,7 +8,7 @@ Description:
 
 Status:
   
-   This project is still in intial stages, and currently offers no functionality
+   This project is still in initial stages, and currently offers no functionality
    
    Currently Supports:
    
