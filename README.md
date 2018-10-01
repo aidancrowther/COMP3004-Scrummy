@@ -22,7 +22,7 @@ Roadmap:
 
    - [x] Post base game classes (Tiles, Decks, Players...)
    - [X] Post tests for base game classes
-   - [ ] Create UML design documentation
+   - [X] Create UML design documentation
    - [ ] Develop testing roadmap for unit tests
    - [ ] ...
 
