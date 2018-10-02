@@ -8,8 +8,10 @@ import java.util.*;
 
 public class Player{
 
+    ArrayList<Tile> hand = new ArrayList<>();
+
     public Player(){
-        
+
     }
     
 }
