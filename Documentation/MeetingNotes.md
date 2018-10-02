@@ -40,7 +40,15 @@ Taken By: David N. Zilio
 
 ### Tuesday 2<sup>nd</sup>
 
-Taken By: 
+Taken By: David N. Zilio
+
+* David - Threading I guess... Controller's my problem
+* Bree - UI
+* Aidan - AI
+* Ellis - Table/basic play mechanisms
+* Observer Patterns?
+* When merging: merge into master, then branch back out
+* This meeting should be focused on planning so we can work independently without conflicting
 
 ### Thursday 4<sup>th</sup>
 
