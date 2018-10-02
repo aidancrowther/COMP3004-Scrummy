@@ -12,12 +12,12 @@ public class Deck{
 
     //Generate a new deck object containing 52 cards
     public Deck(){
-        String suits[] = {"S", "C", "D", "H"};
-        String values[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        char colours[] = {'R', 'G', 'B', 'O'};
+        int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
-        for(String suit : suits){
-            for(String value : values){
-                deck.push(new Tile(suit, value));
+        for(char colour : colours){
+            for(int value : values){
+                deck.push(new Tile(colour, value));
             }
         }
     }

@@ -4,31 +4,31 @@
 
 package COMP3004;
 
-public class Tile {
+public class Tile{
     
-    private String suit;
-    private String value;
+    private char colour;
+    private int value;
 
     //Gnerate a new card using the specified suit and value
-    public Tile(String suit, String value){
-        this.suit = suit;
+    public Tile(char colour, int value){
+        this.colour = colour;
         this.value = value;
     }
 
     //Return the cards suit
-    public String getSuit(){
-        return suit;
+    public char getColour(){
+        return colour;
     }
 
     //Return the cards value
-    public String getValue(){
+    public int getValue(){
         return value;
     }
 
     //Print the cards suit and value in a human readable format
     @Override
     public String toString(){
-        return suit+value;
+        return ""+colour+value;
     }
     
 }

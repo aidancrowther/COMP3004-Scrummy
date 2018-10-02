@@ -13,23 +13,23 @@ public class TileTest{
     //Assert that a new card can be generated correctly
     public void CheckTileInit(){
 
-        String suit = "H";
-        String value = "10";
-        Tile card = new Tile(suit, value);
+        char colour = 'R';
+        int value = 10;
+        Tile card = new Tile(colour, value);
 
-        assertTrue(card.getSuit().equals(suit));
-        assertTrue(card.getValue().equals(value));
+        assertTrue(card.getColour() == colour);
+        assertTrue(card.getValue() == value);
     }
 
     @Test
     //Verify that cards get printed correctly
     public void CheckTilePrint(){
 
-        String suit = "H";
-        String value = "A";
-        Tile card = new Tile(suit, value);
+        char colour = 'G';
+        int value = 8;
+        Tile card = new Tile(colour, value);
 
-        assertTrue(card.toString().split("")[0].equals(suit));
-        assertTrue(card.toString().split("")[1].equals(value));
+        assertTrue(card.toString().split("")[0].equals(""+colour));
+        assertTrue(card.toString().split("")[1].equals(""+value));
     }
 }
