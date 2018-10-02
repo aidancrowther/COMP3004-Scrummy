@@ -1,4 +1,4 @@
-# COMP3004 - TileRummy
+# COMP3004 - Scrummy
 
 Description:
 
