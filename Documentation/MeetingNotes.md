@@ -40,7 +40,17 @@ Taken By: David N. Zilio
 
 ### Tuesday 2<sup>nd</sup>
 
-Taken By: 
+Taken By: David N. Zilio
+
+* David - Threading I guess... Controller's my problem
+* Bree - UI
+* Aidan - AI
+* Ellis - Table/basic play mechanisms
+* Observer Patterns?
+* When merging: merge into master, then branch back out
+* This meeting should be focused on planning so we can work independently without conflicting
+* We ended up spening a lot of time focusing on ideas of what we should do going forward and extending the UML design
+* We were stumped with how to properly abstract an observer pattern while following the semantics of MVC
 
 ### Thursday 4<sup>th</sup>
 
