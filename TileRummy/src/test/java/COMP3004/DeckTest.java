@@ -12,14 +12,14 @@ public class DeckTest
 
     @Test
     //Assert that a new deck will have exactly 52 cards in it.
-    public void Check52Tiles()
+    public void Check104Tiles()
     {
         int counter = 0;
         Deck testDeck = new Deck();
 
         for(;!testDeck.isEmpty();testDeck.pop()) counter++;
 
-        assertTrue(counter == 52);
+        assertTrue(counter == 104);
 
     }
 

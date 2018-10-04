@@ -15,9 +15,9 @@ public class Deck{
         char colours[] = {'R', 'G', 'B', 'O'};
         int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
-        for(char colour : colours){
+        for(int colour = 0; colour < 8; colour++){
             for(int value : values){
-                deck.push(new Tile(colour, value));
+                deck.push(new Tile(colours[colour%4], value));
             }
         }
     }
