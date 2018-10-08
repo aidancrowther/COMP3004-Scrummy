@@ -19,9 +19,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 
 ### Ellis Glennie
 
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
+* Completed Meld class with appropriate test cases.
+* Made slight changes to the UML to accomodate this.
+* Meld:
+  * Status: Completed
   * the list of commits pertaining to it in the repository
 
 ### Brittny Lapierre
