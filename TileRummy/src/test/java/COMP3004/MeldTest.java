@@ -37,27 +37,6 @@ public class MeldTest {
 
 
     @Test
-    //Assert that Meld can differentiate between a run and a set (assuming valid)
-    public void testIsRun() {
-        Meld run = new Meld();
-        Meld set = new Meld();
-        run.add(new Tile('R', 3));
-        run.add(new Tile('R', 4));
-        run.add(new Tile('R', 5));
-        run.add(new Tile('R', 6));
-        run.add(new Tile('R', 7));
-
-        set.add(new Tile('R', 1));
-        set.add(new Tile('G', 1));
-        set.add(new Tile('O', 1));
-        set.add(new Tile('B', 1));
-        
-        assertTrue(run.isRun());
-        assertFalse(set.isRun());
-    }
-
-
-    @Test
     //Assert that sort() will properly sort a run
     //once sort() works, it will be called by add() and remove()
     public void testSortRun() {
