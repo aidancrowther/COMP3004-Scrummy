@@ -12,24 +12,25 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 
 ### Aidan Crowther
 
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
-  * the list of commits pertaining to it in the repository
+* Worked out view interface logic with Brittny
+  * Brittny is iplementing the interface base commands
+* Began working out AI logical semantics on paper
+  * No code commited for this as of yet
 
 ### Ellis Glennie
 
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
-  * the list of commits pertaining to it in the repository
+* Focusing on Meld and Table logic and creating these classes
+* Will be helping in other areas once this is completed
+* Completed Meld class with appropriate test cases.
+* Wrote out test cases for the Table class, plan to finish Table this week
 
 ### Brittny Lapierre
-
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
-  * the list of commits pertaining to it in the repository
+* Will be focusing on the UI of the game
+* Created a plan for implementing the observer pattern into our game
+* Collaborated with Aiden to plan the methods required for the view class
+* Created User Scenarios for the different game cases for the terminal GUI - which will be implemented first
+* Began noting down the test methods that will be implemented before the planned view/controller methods
+* Attention was put on planning rather than pushing code. See view planning document here: https://drive.google.com/file/d/1qdqNqqOKw2eH2MAPj5rSv_srwxC6t0jv/view?usp=sharing
 
 ### David N. Zilio
 
