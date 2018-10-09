@@ -19,11 +19,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 
 ### Ellis Glennie
 
+* Focusing on Meld and Table logic and creating these classes
+* Will be helping in other areas once this is completed
 * Completed Meld class with appropriate test cases.
-* Made slight changes to the UML to accomodate this.
-* Meld:
-  * Status: Completed
-  * the list of commits pertaining to it in the repository
+* Wrote out test cases for the Table class, plan to finish Table this week
 
 ### Brittny Lapierre
 * Will be focusing on the UI of the game
