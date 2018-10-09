@@ -26,11 +26,12 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
   * the list of commits pertaining to it in the repository
 
 ### Brittny Lapierre
-
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
-  * the list of commits pertaining to it in the repository
+* Will be focusing on the UI of the game
+* Created a plan for implementing the observer pattern into our game
+* Collaborated with Aiden to plan the methods required for the view class
+* Created User Scenarios for the different game cases for the terminal GUI - which will be implemented first
+* Began noting down the test methods that will be implemented before the planned view/controller methods
+* Attention was put on planning rather than pushing code. See view planning document here: https://drive.google.com/file/d/1qdqNqqOKw2eH2MAPj5rSv_srwxC6t0jv/view?usp=sharing
 
 ### David N. Zilio
 
