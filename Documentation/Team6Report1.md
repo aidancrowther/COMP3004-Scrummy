@@ -12,10 +12,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 
 ### Aidan Crowther
 
-* the list of features worked on
-* for each such feature:
-  * its status (in progress OR completed)
-  * the list of commits pertaining to it in the repository
+* Worked out view interface logic with Brittny
+  * Brittny is iplementing the interface base commands
+* Began working out AI logical semantics on paper
+  * No code commited for this as of yet
 
 ### Ellis Glennie
 
