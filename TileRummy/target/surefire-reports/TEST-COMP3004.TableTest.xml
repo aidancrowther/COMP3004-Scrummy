@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.TileTest" time="0.003" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.TableTest" time="0.003" tests="3" errors="2" skipped="0" failures="1">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,6 +60,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="CheckTilePrint" classname="COMP3004.TileTest" time="0"/>
-  <testcase name="CheckTileInit" classname="COMP3004.TileTest" time="0"/>
+  <testcase name="testAddMeld" classname="COMP3004.TableTest" time="0">
+    <error message="Index: 0, Size: 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at COMP3004.TableTest.testAddMeld(TableTest.java:25)
+</error>
+  </testcase>
+  <testcase name="testAddTile" classname="COMP3004.TableTest" time="0">
+    <error message="Index: 0, Size: 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at COMP3004.TableTest.testAddTile(TableTest.java:45)
+</error>
+  </testcase>
+  <testcase name="testIsValid" classname="COMP3004.TableTest" time="0">
+    <failure type="java.lang.AssertionError">java.lang.AssertionError
+	at COMP3004.TableTest.testIsValid(TableTest.java:82)
+</failure>
+  </testcase>
 </testsuite>

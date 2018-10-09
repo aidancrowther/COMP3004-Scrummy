@@ -16,25 +16,39 @@ public class Meld {
     public ArrayList<Tile> getTiles() { return tiles; }
 
 
+    /*
+        Adds a tile to the current meld 
+    */
     public void add(Tile t) { 
         this.tiles.add(t);
-        //sort();
+        sort();
     }
 
+    /*
+        Removes a tile from the meld
+        Walks through the arraylist until it finds an identical tile, then removes it.
+    */
     public void remove(Tile t) { 
         for (int i=0; i<tiles.size(); i++) {
             if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
-                tiles.remove(i);
+                tiles.remove(i);   
                 break;
             }
         }
     }
 
+    /*
+        Sorts the meld by colour and by number
+        Differentiates between a run and a meld (to save time), then overrides default collections
+        comparator 
+    */
     public void sort() {
-        if (tiles.size() > 0) {
-            if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //sort a run
+        if (tiles.size() > 1) { //will only sort a meld with any tiles in it
+            //If two tiles have the same colour, assume it's a run.
+            if (tiles.get(0).getColour() == tiles.get(1).getColour()) {
+                //Override default comparator to compare by tile value (ints)
                 Collections.sort(tiles, new Comparator<Tile>() {
-                    @Override //override default comparator
+                    @Override 
                     public int compare(Tile t1, Tile t2) {  
                         if (t1.getValue() > t2.getValue()) { 
                             return 1;
@@ -45,8 +59,9 @@ public class Meld {
                     }
                 });
             } else { //sort a set
+                //Override default comparator to compare by tile colour (chars)
                 Collections.sort(tiles, new Comparator<Tile>() {
-                    @Override //override default comparator
+                    @Override 
                     public int compare(Tile t1, Tile t2) {  
                         if (t1.getColour() > t2.getColour()) { 
                             return 1;
@@ -61,11 +76,17 @@ public class Meld {
 
     }
 
+    /* 
+        Returns whether or not the meld is valid (aka if it follows the rules)
+        Checks size, then tests either a run or a set
+        Both runs and sets can be incorrect either by color or number; isValid() tests both
+        Return: boolean
+    */
     public boolean isValid() {
+        //valid melds must have 3+ tiles
         if (tiles.size() < 3) {
             return false;
         }
-        //sort(); //just in case
         if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //test a run
             for (int i=1; i<tiles.size(); i++) {
                 if (tiles.get(i).getColour() != tiles.get(0).getColour()) { //make sure all are same colour
