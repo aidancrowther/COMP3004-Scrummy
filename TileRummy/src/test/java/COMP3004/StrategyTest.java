@@ -6,12 +6,12 @@ import org.junit.Test;
 
 
 
-
-public class Strategy1Test{
+//Test all AI strategies
+public class StrategyTest{
 
     @Test
-    //Assert that add() will place a tile in a meld
-    public void testSetTable() {
+    //Assert that update will change the table
+    public void testUpdate() {
         Table toAdd = new Table();
         Strategy1 AI1 = new Strategy1();
 
