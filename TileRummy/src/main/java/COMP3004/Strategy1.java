@@ -29,7 +29,10 @@ public class Strategy1 extends ArtificialIntelligence
     }
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
-
+        if(inMeld.getTiles().contains(tile)){
+            outMeld.add(tile);
+            inMeld.remove(tile);
+        }
     }
 
     /*
