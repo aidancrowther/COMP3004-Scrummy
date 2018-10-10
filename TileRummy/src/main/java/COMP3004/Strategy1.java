@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class Strategy1 extends ArtificialIntelligence
 {
+    protected Table table = null;
+    protected ArrayList<Tile> hand = null;
+
     public Strategy1(){
 
     }
@@ -48,6 +51,6 @@ public class Strategy1 extends ArtificialIntelligence
 
     //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
     public void setHand(ArrayList<Tile> hand){
-
+        
     }
 }

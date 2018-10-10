@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 public interface PlayerInterface
 {
-    Table table = new Table(); // Every view will edit their own copy of the scrummy table
-    ArrayList<Tile> hand = new ArrayList<Tile>(); // Every view will interact with a copy of its player's hand
 
     public void drawTile();
 
