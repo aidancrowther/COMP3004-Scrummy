@@ -22,7 +22,7 @@ public class TableTest {
         t.add(m1);
         t.add(m2);
 
-        assertTrue(t.getMelds().get(0) == null);
+        assertTrue(t.getMelds().get(0).getTiles().size() == 0);
         assertTrue(t.getMelds().get(1) == m1);
         assertTrue(t.getMelds().get(2) == m2);
     }
@@ -42,9 +42,9 @@ public class TableTest {
         t.add(new Tile('G', 5));
         //a new meld should automatically be created now
 
-        assertTrue(t.getMelds().get(0) == null);
-        assertTrue(t.getMelds().get(1) != null);
-        assertTrue(t.getMelds().get(2) != null);
+        assertTrue(t.getMelds().get(0).getTiles().size() == 0);
+        assertTrue(t.getMelds().get(1).isValid());
+        assertTrue(t.getMelds().get(2).isValid());
     }
 
 
@@ -83,7 +83,6 @@ public class TableTest {
         assertFalse(t3.isValid());
     }
 
-    //Test deleting melds with nothing in them (except meld 0 of course)
 
     //
 

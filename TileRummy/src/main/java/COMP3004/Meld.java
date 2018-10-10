@@ -20,9 +20,15 @@ public class Meld {
         Adds a tile to the current meld 
     */
     public void add(Tile t) { 
-        this.tiles.add(t);
+        tiles.add(t);
         sort();
     }
+
+
+    public void clear() {
+        tiles.clear();
+    }
+
 
     /*
         Removes a tile from the meld
