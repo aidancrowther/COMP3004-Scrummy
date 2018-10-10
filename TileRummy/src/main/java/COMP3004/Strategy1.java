@@ -38,6 +38,24 @@ public class Strategy1 extends ArtificialIntelligence
      * AI: Strategies
      */
     public Table play(){
+
+        /*  Initialize an empty list of identified melds
+        *   Iterate over the list, starting at element 0, and seeing how many tiles following it are in sequence
+        *     - If there are none, move onto the next element
+        *     - Otherwise, check if the sequence is >= 3
+        *     - Add the entire list as a meld to the list of melds
+        *     - Otherwise, move onto the tile immeditely following the last tile in the sequence
+        *   Once we reach the last element, stop looking for runs
+        *   Iterate over each element of the list, looking for duplicate values with different colour
+        *     - If >=3 are found, add the set to the list of melds
+        *     - Otherwise, move onto the next element
+        *   For now, ignore melds on the table
+        *   Check the list of melds for non duplicate uses of tiles (unless duplicate tiles exist)
+        *   Combine melds that use different tiles
+        *   Sort the list by number of tiles they each use
+        *   Update the table, using the set of melds that uses the most tiles
+        */
+
         return null;
     }
 
