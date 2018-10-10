@@ -54,6 +54,7 @@ public class Strategy1 extends ArtificialIntelligence
         *   Combine melds that use different tiles
         *   Sort the list by number of tiles they each use
         *   Update the table, using the set of melds that uses the most tiles
+        *   Verify that the table is valid, then return it
         */
 
         return null;
