@@ -35,5 +35,5 @@ public interface PlayerInterface
     public void update(Table table); 
 
     //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
-    public void setHand(ArrayList<Tile> hand);
+    public void setHand(Meld hand);
 }
