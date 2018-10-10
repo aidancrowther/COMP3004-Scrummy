@@ -12,7 +12,7 @@
 
 package COMP3004;
 
-public class TerminalUI implements PlayerInterface
+public class TerminalUI // implements PlayerInterface
 {
 
 }

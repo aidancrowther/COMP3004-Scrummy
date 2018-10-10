@@ -12,7 +12,7 @@
 
 package COMP3004;
 
-public class GraphicalUI implements PlayerInterface
+public class GraphicalUI // implements PlayerInterface
 {
 
 }
