@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.TableTest" time="0.025" tests="3" errors="2" skipped="0" failures="1">
-=======
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.TableTest" time="0.016" tests="3" errors="0" skipped="0" failures="0">
->>>>>>> ellis
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.TableTest" time="0.031" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="file.encoding.pkg" value="sun.io"/>
@@ -19,15 +15,9 @@
     <property name="os.name" value="Linux"/>
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-<<<<<<< HEAD
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter253748486285997091.jar /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire 2018-10-10T13-08-48_692-jvmRun1 surefire7569133956032667837tmp surefire_01238007021323988884tmp"/>
+    <property name="sun.java.command" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter626011818307770643.jar /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire 2018-10-10T14-01-40_634-jvmRun1 surefire5377993855310897276tmp surefire_03477930012978011387tmp"/>
     <property name="surefire.test.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/test-classes:/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/classes:/home/aidancrowther/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/aidancrowther/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
-=======
-    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\Al\AppData\Local\Temp\surefire3627270717365315569\surefirebooter3516627352003700876.jar C:\Users\Al\AppData\Local\Temp\surefire3627270717365315569 2018-10-10T12-33-18_636-jvmRun1 surefire7280359131175108120tmp surefire_01002748962579629368tmp"/>
-    <property name="surefire.test.class.path" value="C:\3004\Scrummy\TileRummy\target\test-classes;C:\3004\Scrummy\TileRummy\target\classes;C:\Users\Al\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Al\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
->>>>>>> ellis
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/aidancrowther"/>
     <property name="user.language" value="en"/>
@@ -38,16 +28,9 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-<<<<<<< HEAD
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter253748486285997091.jar"/>
+    <property name="surefire.real.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter626011818307770643.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
-=======
-    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\Al\AppData\Local\Temp\surefire3627270717365315569\surefirebooter3516627352003700876.jar"/>
-    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_181\jre\classes"/>
-    <property name="user.script" value=""/>
->>>>>>> ellis
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_181-b13"/>
     <property name="user.name" value="aidancrowther"/>
@@ -74,25 +57,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-<<<<<<< HEAD
-  <testcase name="testAddMeld" classname="COMP3004.TableTest" time="0.005">
-    <error message="Index: 0, Size: 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at COMP3004.TableTest.testAddMeld(TableTest.java:25)
-</error>
-  </testcase>
-  <testcase name="testAddTile" classname="COMP3004.TableTest" time="0">
-    <error message="Index: 0, Size: 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at COMP3004.TableTest.testAddTile(TableTest.java:45)
-</error>
-  </testcase>
-  <testcase name="testIsValid" classname="COMP3004.TableTest" time="0.001">
-    <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at COMP3004.TableTest.testIsValid(TableTest.java:82)
-</failure>
-  </testcase>
-=======
-  <testcase name="testAddMeld" classname="COMP3004.TableTest" time="0"/>
-  <testcase name="testAddTile" classname="COMP3004.TableTest" time="0"/>
+  <testcase name="testAddMeld" classname="COMP3004.TableTest" time="0.002"/>
+  <testcase name="testAddTile" classname="COMP3004.TableTest" time="0.001"/>
   <testcase name="testIsValid" classname="COMP3004.TableTest" time="0"/>
->>>>>>> ellis
 </testsuite>
