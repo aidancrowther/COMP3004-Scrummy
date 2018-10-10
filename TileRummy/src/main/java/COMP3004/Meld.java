@@ -120,6 +120,20 @@ public class Meld {
     }
 
 
+    /*
+
+    */
+    public String toString() {
+        String m = "";
+        for (int i=0; i<tiles.size(); i++) {
+            m += tiles.get(i).toString();
+            if (i<tiles.size()-1) {
+                m += ", ";
+            }
+        }
+
+        return m;
+    }
 
 
 

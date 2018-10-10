@@ -14,11 +14,18 @@ public class Table {
 
     public ArrayList<Meld> getMelds() { return melds; }
 
-
+    /*
+        Adds a complete meld to the table
+    */
     public void add(Meld m) {
         melds.add(m);
     }
 
+    /*
+        Adds tiles one by one to create a new meld.
+        melds.get(0) is always 
+        Once a valid meld is detected, the meld is moved to the end of melds
+    */
     public void add(Tile t) {
         melds.get(0).add(t);
 
@@ -31,10 +38,18 @@ public class Table {
         }
     }
 
+    /*
+        Add tiles to a preexisting meld
+    */
     public void add(Tile t, int i) {
         melds.get(i).add(t);
     }
 
+    /*
+        See if the table is valid
+        If there is an incomplete meld in melds.get(0), or any completed melds are invalid, return false
+        Else return false
+    */
     public boolean isValid() {
         if (melds.get(0).getTiles().size() != 0) {
             return false;
