@@ -9,5 +9,5 @@ package COMP3004;
  * */
 
 public interface Observer {
-    void update();
+    void update(Table table);
 }

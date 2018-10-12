@@ -32,7 +32,7 @@ public interface PlayerInterface
      * The view classes observe the model. This function will update their local table to the game board after every turn. 
      * This should set the table to match the table in scrummy, therefore we do not need setTable
      */
-    public void update(Table table); 
+    //public void update(Table table);
 
     //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
     public void setHand(Meld hand);
