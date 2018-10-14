@@ -12,7 +12,7 @@
 
 package COMP3004;
 
-public abstract class ArtificialIntelligence implements PlayerInterface
+public abstract class ArtificialIntelligence extends TableObserver implements PlayerInterface
 {
     
 }

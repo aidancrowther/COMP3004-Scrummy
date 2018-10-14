@@ -11,8 +11,18 @@
  */
 package COMP3004;
 
-public class Scrummy
+public class Scrummy implements Subject
 {
+    //TODO: Brittny
+    public void registerObserver(){
+    }
+
+    public void removeObserver(){
+    }
+
+    public void notifyObservers(){
+    }
+
     public static void main (String[] args) {
 
     }

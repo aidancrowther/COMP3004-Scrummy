@@ -42,12 +42,12 @@ public class StrategyTest{
         meld2.add(tiles.get(5));
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
-        for(int i=4; i<=6; i++) assertTrue(meld2.getTiles().get(i-1).toString().equals("O"+i));
+        for(int i=4; i<=6; i++) assertTrue(meld2.getTiles().get(i-4).toString().equals("O"+i));
 
         //Test moving a tile that is in meld1 to meld2
         AI1.selectTile(meld1, meld2, tiles.get(0));
-        assertFalse(meld1.getTiles().get(0) == tiles.get(0));
-        assertTrue(meld2.getTiles().get(3) == tiles.get(0));
+        assertFalse(meld1.getTiles().contains(tiles.get(0)));
+        assertTrue(meld2.getTiles().contains(tiles.get(0)));
 
         //Test moving a tile that is not in meld1 to meld2
         AI1.selectTile(meld1, meld2, tiles.get(0));
