@@ -65,4 +65,34 @@ public class StrategyTest{
         assertTrue(meld2.getTiles().size() == 4);
     }
 
+
+    /*
+    @Test
+    public void testSearchHand() {}
+
+    @Test
+    public void testSearchTable() {}
+
+    @Test
+    public void testBreak30() {}
+
+    @Test
+    public void testPlayEmptyTable() {}
+
+    @Test
+    public void testDifferentTableStates() {
+        does play() react appropriately to:
+            Table it can't play
+            Table it can play melds and add to melds
+            Table it can only play melds
+            Table it can only add to preexisting melds
+    }
+
+    */
+
+
+
+
+
+
 }

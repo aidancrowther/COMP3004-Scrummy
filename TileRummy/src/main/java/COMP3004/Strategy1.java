@@ -14,6 +14,8 @@
 package COMP3004;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class Strategy1 extends ArtificialIntelligence
 {
@@ -42,22 +44,22 @@ public class Strategy1 extends ArtificialIntelligence
      */
     public Table play(){
 
-        /*  Initialize an empty list of identified melds
-        *   Iterate over the list, starting at element 0, and seeing how many tiles following it are in sequence
-        *     - If there are none, move onto the next element
-        *     - Otherwise, check if the sequence is >= 3
-        *     - Add the entire list as a meld to the list of melds
-        *     - Otherwise, move onto the tile immeditely following the last tile in the sequence
-        *   Once we reach the last element, stop looking for runs
-        *   Iterate over each element of the list, looking for duplicate values with different colour
-        *     - If >=3 are found, add the set to the list of melds
-        *     - Otherwise, move onto the next element
-        *   For now, ignore melds on the table
-        *   Check the list of melds for non duplicate uses of tiles (unless duplicate tiles exist)
-        *   Combine melds that use different tiles
-        *   Sort the list by number of tiles they each use
-        *   Update the table, using the set of melds that uses the most tiles
-        *   Verify that the table is valid, then return it
+        /*  
+
+            -> HashMap<Meld, int> handResults = searchHand();
+            -> HashMap<Meld, int> tableResults = searchTable(table);
+
+            -> ArrayList<ArrayList<Meld>> results
+
+            -> results contains every combination of the Melds within handResults and tableResults
+                that do not use the same elements from hand
+            -> Pick the largest ArrayList. Remove every tile from hand that is there.
+            -> From the largest ArrayList of melds, search for the keyvalue of each meld within its
+                original hashmap, and append said meld to the meld specified in the Hashmap
+            -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
+
+            -> Return the brand new table :)
+
         */
 
         return null;
@@ -67,4 +69,55 @@ public class Strategy1 extends ArtificialIntelligence
     public void setHand(Meld hand){
         this.hand = hand;
     }
+
+
+
+    /*
+    public HashMap<Meld, int> searchHand() {
+        HashMap<Meld, int> handMelds = new HashMap<Meld, int>();
+
+        -> Check the hand for runs:
+            -> Iterate over hand, starting at tile 0, and see how many tiles following it are in numerical sequence
+            -> If there are none, move onto the next element
+            -> Otherwise, check if the sequence is >= 3
+            -> Add the entire list as a meld to handMelds, setting keyvalue to 0
+            -> Otherwise, move onto the tile immeditely following the last tile in the sequence
+            -> Continue until the entire hand has been hecked for runs
+        -> Check the hand for sets:
+            -> Iterate over hand, looking for duplicate values with different colours
+            -> If >=3 are found, add the set as a meld to handMelds, setting keyvalue to 0
+            -> Otherwise, move onto the next element
+        
+        -> Return the hashmap of melds 
+    }
+
+
+    public HashMap<Meld, int> searchTable(Table t) {
+        HashMap<Meld, int> tableMelds = new HashMap<Meld, int>();
+
+        -> Retrieve t.getMelds()
+        -> For all melds in t.getMelds():
+            -> If the meld is a run:
+                -> Iterate over hand
+                -> If the tile in hand can be added to the front or end of the sequence, add(Tile, Meld) it.
+            -> If the meld is a set:
+                -> Iterate over hand
+                -> If the tile in hand is the same number and a colour not in the meld, add(Tile, Meld) it
+
+        -> Add all of t.getMelds() to tableMelds, using ArrayList index as key value
+        -> Return the hashmap of melds
+
+        -> NOTE: This does not currently support preexisting melds.
+    }
+
+
+
+
+
+
+
+
+
+    */
+
 }
