@@ -18,6 +18,7 @@ public class Scrummy implements Subject
 
     //TODO: Brittny
     public void registerObserver(TableObserver t){
+        observers.add(t);
     }
 
     public void removeObserver(){
