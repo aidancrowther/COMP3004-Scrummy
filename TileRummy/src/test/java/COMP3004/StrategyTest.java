@@ -25,9 +25,11 @@ public class StrategyTest{
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
 
-        assertTrue(AI1.hand.equals(null));
+        assertTrue(AI1.hand == null);
         AI1.setHand(meld1);
         assertTrue(AI1.hand.equals(meld1));
+        meld1 = null;
+        assertFalse(AI1.hand == null);
     }
 
     @Test
