@@ -12,13 +12,25 @@ public class ScrummyTest
 {
 
     @Test
-    public void testAddObserver()
-    {
+    public void testAddObserver() {
         TerminalUI t = new TerminalUI();
         Scrummy s = new Scrummy();
         int prevLen = s.getObservers().size();
         s.registerObserver(t);
         int newLen = s.getObservers().size();
         assertTrue((newLen - prevLen) == 1);
+    }
+
+    @Test
+    public void testRemoveObserver() {
+        TerminalUI t = new TerminalUI();
+        Scrummy s = new Scrummy();
+        s.registerObserver(t);
+
+        int prevLen = s.getObservers().size();
+        s.removeObserver(t);
+        int newLen = s.getObservers().size();
+        assertTrue((prevLen-newLen) == 1);
+        assertTrue(!(s.getObservers().contains(t)));
     }
 }

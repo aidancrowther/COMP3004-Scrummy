@@ -18,10 +18,11 @@ public class Scrummy implements Subject
 
     //TODO: Brittny
     public void registerObserver(TableObserver t){
-        observers.add(t);
+        this.observers.add(t);
     }
 
-    public void removeObserver(){
+    public void removeObserver(TableObserver t){
+
     }
 
     public void notifyObservers(){
