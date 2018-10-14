@@ -12,7 +12,19 @@
 
 package COMP3004;
 
-public class TerminalUI // implements PlayerInterface
+public class TerminalUI extends TableObserver implements PlayerInterface
 {
+    public void drawTile(){
+    }
 
+    public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
+    }
+
+    public Table play(){
+        return null;
+    }
+
+    public void setHand(Meld hand){
+
+    }
 }

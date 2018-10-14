@@ -2,7 +2,6 @@ package COMP3004;
 
 import java.util.*;
 
-
 public class Table {
     private ArrayList<Meld> melds = new ArrayList<>();
 
