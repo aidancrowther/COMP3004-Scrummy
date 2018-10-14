@@ -12,14 +12,22 @@ public class StrategyTest{
 
     @Test
     //Assert that update will change the table
-    public void testUpdate() {
-        Table toAdd = new Table();
+    public void testSetHand() {
         Strategy1 AI1 = new Strategy1();
+        //Generate a small list of tiles and melds for the test
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
 
-        //Assert that the table is correctly initialized and passed by reference
-        assertTrue(AI1.table == null);
-        AI1.update(toAdd);
-        assertTrue(AI1.table == toAdd);
+        Meld meld1 = new Meld();
+        meld1.add(tiles.get(0));
+        meld1.add(tiles.get(1));
+        meld1.add(tiles.get(2));
+
+        for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
+
+        assertTrue(AI1.hand.equals(null));
+        AI1.setHand(meld1);
+        assertTrue(AI1.hand.equals(meld1));
     }
 
     @Test
@@ -29,7 +37,7 @@ public class StrategyTest{
         Strategy1 AI1 = new Strategy1();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
-        for(int i=1; i<=13; i++) tiles.add(new Tile('O', i));
+        for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
 
         Meld meld1 = new Meld();
         meld1.add(tiles.get(0));
