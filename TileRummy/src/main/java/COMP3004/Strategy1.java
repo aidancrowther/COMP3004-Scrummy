@@ -38,7 +38,7 @@ public class Strategy1 extends ArtificialIntelligence
     /*
      * Terminal View: Loops through the prompts until player enters text to complete their turn, then returns this.table.
      * GUI View: Allows the user to interact with the table until the user presses complete turn button. When button is pressed end the user’s turn, and the method returns this.table.
-     * AI: Strategies
+     * AI: Strategies 1 - 4
      */
     public Table play(){
 
