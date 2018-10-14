@@ -22,7 +22,7 @@ public class Scrummy implements Subject
     }
 
     public void removeObserver(TableObserver t){
-
+        this.observers.remove(t);
     }
 
     public void notifyObservers(){
