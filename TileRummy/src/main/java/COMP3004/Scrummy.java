@@ -10,17 +10,24 @@
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
 package COMP3004;
+import java.util.ArrayList;
 
 public class Scrummy implements Subject
 {
+    private ArrayList<TableObserver> observers = new ArrayList<>();
+
     //TODO: Brittny
-    public void registerObserver(){
+    public void registerObserver(TableObserver t){
     }
 
     public void removeObserver(){
     }
 
     public void notifyObservers(){
+    }
+
+    public ArrayList<TableObserver> getObservers(){
+        return this.observers;
     }
 
     public static void main (String[] args) {

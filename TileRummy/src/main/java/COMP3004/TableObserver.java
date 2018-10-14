@@ -1,6 +1,6 @@
 package COMP3004;
 
-public class TableObserver implements Observer {
+public abstract class TableObserver implements Observer {
 
     /*
     * These attributes save the player state as they make moves.

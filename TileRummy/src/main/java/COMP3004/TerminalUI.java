@@ -18,6 +18,10 @@ public class TerminalUI extends TableObserver implements PlayerInterface
     }
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
+        if(inMeld.getTiles().contains(tile)){
+            outMeld.add(tile);
+            inMeld.remove(tile);
+        }
     }
 
     public Table play(){

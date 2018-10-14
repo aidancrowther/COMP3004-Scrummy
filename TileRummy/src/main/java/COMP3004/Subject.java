@@ -8,7 +8,7 @@ package COMP3004;
 * */
 
 public interface Subject {
-    void registerObserver();
+    void registerObserver(TableObserver t);
     void removeObserver();
     void notifyObservers();
 }
