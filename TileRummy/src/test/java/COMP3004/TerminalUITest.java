@@ -120,9 +120,19 @@ public class TerminalUITest {
         meld2.add(tiles.get(8));
         table.add(meld3);
 
-        //TODO: TEST USER SELECT HAND, MELD2
-        //TODO: TEST USER SELECT HAND, MELD3
-        //TODO: TEST USER SELECT MELD2, MELD3
+
+        //TEST USER SELECT HAND, MELD2
+        terminal.selectTile(hand, table.getMelds().get(0), tiles.get(0));
+        assertFalse(hand.getTiles().contains(tiles.get(0)));
+        assertTrue(table.getMelds().get(0).getTiles().contains(tiles.get(0)));
+        //TEST USER SELECT HAND, MELD3
+        terminal.selectTile(hand, table.getMelds().get(1), tiles.get(0));
+        assertFalse(hand.getTiles().contains(tiles.get(1)));
+        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(0)));
+        //TEST USER SELECT MELD2, MELD3
+        terminal.selectTile(table.getMelds().get(3), table.getMelds().get(1), tiles.get(0));
+        assertFalse(hand.getTiles().contains(tiles.get(0)));
+        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(0)));
     }
     /*
     @Test
