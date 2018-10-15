@@ -12,19 +12,9 @@
 
 package COMP3004;
 
-public class GraphicalUI extends View implements PlayerInterface
+public class GraphicalUI extends View
 {
-    public void drawTile(){
-    }
-
-    public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
-    }
-
     public Table play(){
         return null;
-    }
-
-    public void setHand(Meld hand){
-
     }
 }

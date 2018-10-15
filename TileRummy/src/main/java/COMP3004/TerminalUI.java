@@ -12,8 +12,12 @@
 
 package COMP3004;
 
-public class TerminalUI extends View implements PlayerInterface
+import java.util.Scanner;
+
+public class TerminalUI extends View
 {
+    private Scanner scanner;
+
     //Colours for printing to terminal
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -24,6 +28,8 @@ public class TerminalUI extends View implements PlayerInterface
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_GREY = "\u001B[90m";
+    public static final String ANSI_BRIGHT_YELLOW = "\u001B[93m";
 
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -34,14 +40,14 @@ public class TerminalUI extends View implements PlayerInterface
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    public void drawTile() {
-    }
+    public TerminalUI(){
+        this.scanner = new Scanner(System.in);
+    /*
+        System.out.print("Enter your nationality: ");
+        String nationality = scanner.nextLine();
 
-    public void selectTile(Meld inMeld, Meld outMeld, Tile tile) {
-        if(inMeld.getTiles().contains(tile)){
-            outMeld.add(tile);
-            inMeld.remove(tile);
-        }
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();*/
     }
 
     public Table play(){
@@ -64,12 +70,16 @@ public class TerminalUI extends View implements PlayerInterface
         return null;
     }
 
-    public void setHand(Meld hand) {
-        this.hand = hand;
-    }
+    //PRINT TABLE
+    //ASK USER IF WANT TO MOVE
+    //SELECT AN ACTIVE MELD (OR HAND)
+    //SELECT TILE
+    //MOVE TILE
+
+
+
 
     public String generateTileString(Tile tile) {
-        //'R', 'G', 'B', 'O'
         String tileColour = ANSI_BLUE;
         if(tile.getColour() == 'R'){
             tileColour = ANSI_RED;
@@ -92,10 +102,11 @@ public class TerminalUI extends View implements PlayerInterface
     }
 
     public void printMessage(String message) {
-        System.out.println(ANSI_YELLOW + message + ANSI_RESET);
+        System.out.println(ANSI_BRIGHT_YELLOW + message + ANSI_RESET);
     }
 
     public void printMessagePlain(String message) {
         System.out.println(message);
     }
+
 }
