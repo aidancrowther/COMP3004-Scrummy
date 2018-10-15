@@ -12,6 +12,8 @@
 
 package COMP3004;
 
+import javafx.beans.binding.IntegerBinding;
+
 import java.util.Scanner;
 
 public class TerminalUI extends View
@@ -64,49 +66,43 @@ public class TerminalUI extends View
 
     private boolean move(){
         //SELECT AN ACTIVE MELD (OR HAND)
-        this.printMessage(">Do you want to move a tile on the table, or play from your hand (t/h)?");
-        String response = this.readPlayerInput();
+        Meld fromMeld = this.hand;
+        if(this.table.getMelds().size() > 1){
+            this.printMessage(">Do you want to move a tile on the table, or play from your hand (t/h)?");
+            String response = this.readPlayerInput();
 
-        Meld fromMeld;
-        //SELECT TILE
-        if(response.equals("t")){
-            //>
-            //>meldX
-            this.printMessage("Which meld on the board would you like to edit? (Enter meld #)");
-            int index = Integer.parseInt(this.readPlayerInput()) - 1;
-            fromMeld = this.table.getMelds().get(index);
-        } else {
-            fromMeld = this.hand;
-        }
-
-
-
-        Tile selectedTile = null;
-        while(selectedTile == null){
-            this.printMessage("Which tile do you want to select? (Ex: R13)");
-            String tileString = this.readPlayerInput();
-
-            for(Tile t : fromMeld.getTiles()) {
-                if(tileString.equals("" + t.getColour() + t.getValue())){
-                    selectedTile = t;
-                }
+            //SELECT TILE
+            if(response.equals("t")) {
+                //>
+                //>meldX
+                this.printMessage("Which meld on the board would you like to edit? (Enter meld #)");
+                int index = Integer.parseInt(this.readPlayerInput()) - 1;
+                fromMeld = this.table.getMelds().get(index);
             }
         }
 
-        //SELECT MELT TO MOVE TILE
-        //MOVE TILE
-        this.printMessage(">Which meld would you like to move the tile to? (Enter meld #)");
-        int index = Integer.parseInt(this.readPlayerInput()) - 1;
-        Meld toMeld = this.table.getMelds().get(index);
+        Tile selectedTile = null;
+        while(selectedTile == null){
+            this.printMessage("Which tile do you want to select? (Enter tile index)");
+            int index = Integer.parseInt(this.readPlayerInput());
+            selectedTile = fromMeld.getTiles().get(index);
+        }
 
-        this.selectTile(fromMeld, toMeld, selectedTile);
+        //SELECT MELT TO MOVE TILE
+        if(this.table.getMelds().size() > 1){
+            this.printMessage("Which meld would you like to move the tile to? (Enter meld #)");
+            int index = Integer.parseInt(this.readPlayerInput()) - 1;
+            Meld toMeld = this.table.getMelds().get(index);
+            this.selectTile(fromMeld, toMeld, selectedTile);
+        } else {
+            this.table.add(selectedTile);
+            this.hand.remove(selectedTile);
+        }
 
         this.printPlayerAction("The tile has been moved.");
 
-        this.printMessage("\nHere is the table:");
         this.printTable();
 
-        this.printMessage("\nHere is your hand:");
         this.printActivePlayerHand(this.hand);
 
         this.printMessage("\nDo you want to make a move? (y/n)");
@@ -134,7 +130,7 @@ public class TerminalUI extends View
     }
 
     private void printActivePlayerHand(Meld hand) {
-        String row = "";
+        String row = "\nPLAYER HAND:\n";
         for(Tile tile : hand.getTiles()){
             row += this.generateTileString(tile);
         }
@@ -142,9 +138,16 @@ public class TerminalUI extends View
     }
 
     private void printTable() {
-        int currMeld = 1;
+        this.printMessage("\nGAME TABLE");
+        int currMeld = 0;
         for(Meld meld : this.table.getMelds()) {
-            String row = "Meld #" + currMeld + ": ";
+            String row = "";
+            if(currMeld == 0 && meld.getTiles().size() > 0){
+                row = "Temporary Meld: ";
+            } else {
+                row = "Meld #" + currMeld + ": ";
+            }
+
             for(Tile tile : meld.getTiles()){
                 row += this.generateTileString(tile);
             }
