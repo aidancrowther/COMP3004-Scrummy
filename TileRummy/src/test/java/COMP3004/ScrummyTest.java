@@ -2,6 +2,7 @@ package COMP3004;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -32,5 +33,18 @@ public class ScrummyTest
         int newLen = s.getObservers().size();
         assertTrue((prevLen-newLen) == 1);
         assertTrue(!(s.getObservers().contains(t)));
+    }
+
+    @Test
+    public void testNotifyObservers(){
+        TerminalUI t = new TerminalUI();
+        Scrummy s = new Scrummy();
+        s.registerObserver(t);
+
+        s.notifyObservers();
+
+        for(TableObserver observer : s.getObservers()){
+            assertEquals(observer.getTable(), s.getTable());
+        }
     }
 }

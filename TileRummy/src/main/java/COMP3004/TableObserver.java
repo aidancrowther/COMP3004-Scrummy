@@ -22,4 +22,8 @@ public abstract class TableObserver implements Observer {
     public void update(Table table){
         this.table = table;
     }
+
+    public Table getTable() {
+        return this.table;
+    }
 }

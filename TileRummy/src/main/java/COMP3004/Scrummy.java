@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class Scrummy implements Subject
 {
+    Table table = new Table();
     private ArrayList<TableObserver> observers = new ArrayList<>();
 
     //TODO: Brittny
@@ -34,5 +35,9 @@ public class Scrummy implements Subject
 
     public static void main (String[] args) {
 
+    }
+
+    public Table getTable(){
+        return this.table;
     }
 }
