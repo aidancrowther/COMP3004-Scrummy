@@ -54,7 +54,7 @@ public class TerminalUI extends View
         if(this.readPlayerInput().equals("y")){
             while(this.move()){}
         }
-        return this.table;
+        return this.table; //will be the same if player doesn't move
     }
 
     //Used if the player made an invalid move
@@ -88,7 +88,6 @@ public class TerminalUI extends View
 
         //SELECT MELD TO MOVE TILE
         if(this.table.getMelds().size() > 1){
-            //TODO: Case that they want to move it to their hand
             this.printMessage("Which meld would you like to move the tile to? (Enter meld #)");
             int index = Integer.parseInt(this.readPlayerInput());
             Meld toMeld = this.table.getMelds().get(index);

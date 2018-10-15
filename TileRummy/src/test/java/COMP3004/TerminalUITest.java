@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 //Test all AI strategies
@@ -134,19 +132,44 @@ public class TerminalUITest {
         assertFalse(hand.getTiles().contains(tiles.get(3)));
         assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(3)));
     }
-    /*
-    @Test
-    public void testPlayEmptyTable() {}
+
 
     @Test
-    public void testDifferentTableStates() {
-        does play() react appropriately to:
-            Table it can't play
-            Table it can play melds and add to melds
-            Table it can only play melds
-            Table it can only add to preexisting melds
+    public void testSelectingMeldsFromTableOnInput() {
+        TerminalUI terminal = new TerminalUI();
+        Table table = new Table();
+        //Generate a small list of tiles and melds for the test
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for(int i=1; i<=9; i++) tiles.add(new Tile('O', i));
+
+        Meld hand = new Meld();
+        hand.add(tiles.get(0));
+        hand.add(tiles.get(1));
+        hand.add(tiles.get(2));
+        terminal.setHand(hand);
+
+        Meld meld2= new Meld();
+        meld2.add(tiles.get(3));
+        meld2.add(tiles.get(4));
+        meld2.add(tiles.get(5));
+        table.add(meld2);
+
+        Meld meld3= new Meld();
+        meld2.add(tiles.get(6));
+        meld2.add(tiles.get(7));
+        meld2.add(tiles.get(8));
+        table.add(meld3);
+
+        //These variable simulate player input
+        int fromMeldIndex = 1;
+        int toMeldIndex = 2;
+
+        Meld fromMeld = terminal.selectMeldFromTable(fromMeldIndex);
+        Meld toMeld = terminal.selectMeldFromTable(toMeldIndex);
+
+        assertNotNull(fromMeld);
+        assertEquals(fromMeld, meld2);
+        assertNotNull(toMeld);
+        assertEquals(toMeld, meld3);
     }
-
-    */
-
 }
