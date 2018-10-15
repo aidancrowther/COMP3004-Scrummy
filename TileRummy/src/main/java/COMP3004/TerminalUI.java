@@ -14,6 +14,8 @@ package COMP3004;
 
 public class TerminalUI extends View implements PlayerInterface
 {
+    private boolean playing = true;
+
     //Colours for printing to terminal
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -45,9 +47,9 @@ public class TerminalUI extends View implements PlayerInterface
     }
 
     public Table play(){
-        boolean playing = true;
-        while(playing) {
+        while(this.playing){
             this.printMessage("Let's play Scrummy!");
+            this.playing = false;
         }
         return null;
     }

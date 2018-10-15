@@ -14,12 +14,12 @@ package COMP3004;
 
 public class Controller
 {
-    Scrummy scrummy;
-    View view;
+    private Scrummy scrummy;
+    private View view;
 
-    public Controller(Scrummy scrummy, View view){
-        this.scrummy = scrummy;
-        this.view = view;
+    public Controller(){
+        this.view = new TerminalUI(); //TODO: make this an option
+        this.scrummy = new Scrummy();
     }
 
     public void startGame(){
