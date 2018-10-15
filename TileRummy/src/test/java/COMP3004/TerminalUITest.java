@@ -25,12 +25,11 @@ public class TerminalUITest {
         meld1.add(tiles.get(2));
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
-
-        assertTrue(terminal.hand == null);
+        
         terminal.setHand(meld1);
-        assertTrue(terminal.hand.equals(meld1));
+        assertTrue(terminal.getHand().equals(meld1));
         meld1 = null;
-        assertFalse(terminal.hand == null);
+        assertFalse(terminal.getHand() == null);
     }
 
     @Test

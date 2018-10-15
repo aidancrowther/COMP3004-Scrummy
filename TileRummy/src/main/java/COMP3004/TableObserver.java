@@ -26,4 +26,6 @@ public abstract class TableObserver implements Observer {
     public Table getTable() {
         return this.table;
     }
+
+    public Meld getHand() { return this.hand; }
 }

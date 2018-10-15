@@ -29,6 +29,6 @@ public class TerminalUI extends TableObserver implements PlayerInterface
     }
 
     public void setHand(Meld hand){
-
+        this.hand = hand;
     }
 }
