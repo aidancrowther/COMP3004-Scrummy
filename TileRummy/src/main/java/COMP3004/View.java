@@ -1,11 +1,7 @@
 package COMP3004;
 
 public class View extends TableObserver implements PlayerInterface {
-    private Player player;
-
-    public View() {
-        player = new Player();
-    }
+    private Meld hand;
 
     public boolean playing = true;
 
@@ -24,15 +20,8 @@ public class View extends TableObserver implements PlayerInterface {
         return null;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
+    public Meld getHand() { return this.hand; }
     public void setHand(Meld hand) {
-        this.player.setHand(hand);
+        this.hand = hand;
     }
 }
