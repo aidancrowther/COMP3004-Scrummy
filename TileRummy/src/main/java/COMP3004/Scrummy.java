@@ -41,7 +41,10 @@ public class Scrummy implements Subject
     public void validatePlayerMove(Table playedTable) {
         /*
         * If valid table then update game table and notify observers
-        * Else keep table as is and notify observers
+        * Else
+        *   keep table as is and notify observers
+        *   also add the tiles the user played back into
+        *   their hand
         * */
     }
 
