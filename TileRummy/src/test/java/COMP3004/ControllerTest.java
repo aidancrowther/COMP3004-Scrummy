@@ -10,7 +10,6 @@ public class ControllerTest {
     public void testCreateController() {
         Controller controller = new Controller();
         assertNotNull(controller.getScrummy());
-        assertNotNull(controller.getView());
         assertNotEquals(controller.getScrummy().getObservers().size(), 0);
         assertTrue(controller.getScrummy().getObservers().contains(controller.getView()));
     }

@@ -33,7 +33,7 @@ public class Controller
         * else
         *   have scrummy evaluate the table and update if valid
         * */
-//        Table playedTable = this.view.play();
+        Table playedTable = this.view.play();
     }
 
     public void setViewType(String selection){
