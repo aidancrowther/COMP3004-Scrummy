@@ -68,12 +68,12 @@ public class TerminalUI extends View
         //SELECT AN ACTIVE MELD (OR HAND)
         Meld fromMeld = this.hand;
         if(this.table.getMelds().size() > 1){
-            this.printMessage(">Do you want to move a tile on the table, or play from your hand (t/h)?");
+            this.printMessage("Do you want to move a tile on the table, or play from your hand (t/h)?");
             String response = this.readPlayerInput();
 
             //SELECT TILE
             if(response.equals("t")) {
-                fromMeld = this.selectMeldFromTable();
+                fromMeld = this.selectMeldFromTable("Which meld would you like select the tile from? (Enter meld #)");
             }
         }
 
@@ -81,12 +81,16 @@ public class TerminalUI extends View
         while(selectedTile == null){
             this.printMessage("Which tile do you want to select? (Enter tile position # starting from 1)");
             int index = Integer.parseInt(this.readPlayerInput()) - 1;
-            selectedTile = fromMeld.getTiles().get(index);
+            if(fromMeld.getTiles().size() >= index && index >= 0) {
+                selectedTile = fromMeld.getTiles().get(index);
+            } else {
+                this.printMessage("You've entered an incorrect index.");
+            }
         }
 
         //SELECT MELD TO MOVE TILE
         if(this.table.getMelds().size() > 1){
-            Meld toMeld = this.selectMeldFromTable();
+            Meld toMeld = this.selectMeldFromTable("Which meld would you like to move the tile to? (Enter meld # or 0 to create add to a tentative meld)");
             this.selectTile(fromMeld, toMeld, selectedTile);
         } else {
             this.table.add(selectedTile);
@@ -101,13 +105,25 @@ public class TerminalUI extends View
     }
 
     public Meld selectMeldFromTable(int index){
-        return this.table.getMelds().get(index);
+        Meld selectedMeld = null;
+        while(selectedMeld == null){
+            if(this.table.getMelds().size() > index && index >= 0){
+                selectedMeld = this.table.getMelds().get(index);
+            }
+        }
+        return selectedMeld;
     }
 
-    public Meld selectMeldFromTable(){
-        this.printMessage("Which meld would you like to move the tile to? (Enter meld #)");
-        int index = Integer.parseInt(this.readPlayerInput());
-        return this.table.getMelds().get(index);
+    public Meld selectMeldFromTable(String message){
+        Meld selectedMeld = null;
+        while(selectedMeld == null){
+            this.printMessage(message);//"Which meld would you like to move the tile to? (Enter meld # or 0 to create a new meld)");
+            int index = Integer.parseInt(this.readPlayerInput());
+            if(this.table.getMelds().size() > index && index >= 0){
+                selectedMeld = this.table.getMelds().get(index);
+            }
+        }
+        return selectedMeld;
     }
 
 
@@ -144,7 +160,7 @@ public class TerminalUI extends View
             String row = "";
             if(currMeld == 0){
                 if(meld.getTiles().size() > 0){
-                    row = "Temporary Meld: ";
+                    row = "Tentative Meld: ";
                     for(Tile tile : meld.getTiles()){
                         row += this.generateTileString(tile);
                     }
