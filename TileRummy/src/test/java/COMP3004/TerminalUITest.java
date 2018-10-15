@@ -92,6 +92,38 @@ public class TerminalUITest {
         }
     }
 
+
+    @Test
+    //Assert that the selectTile method will move tiles between melds correctly
+    public void testMoveOnInput(){
+        TerminalUI terminal = new TerminalUI();
+        Table table = new Table();
+        //Generate a small list of tiles and melds for the test
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for(int i=1; i<=9; i++) tiles.add(new Tile('O', i));
+
+        Meld hand = new Meld();
+        hand.add(tiles.get(0));
+        hand.add(tiles.get(1));
+        hand.add(tiles.get(2));
+        terminal.setHand(hand);
+
+        Meld meld2= new Meld();
+        meld2.add(tiles.get(3));
+        meld2.add(tiles.get(4));
+        meld2.add(tiles.get(5));
+        table.add(meld2);
+
+        Meld meld3= new Meld();
+        meld2.add(tiles.get(6));
+        meld2.add(tiles.get(7));
+        meld2.add(tiles.get(8));
+        table.add(meld3);
+
+        //TODO: TEST USER SELECT HAND, MELD2
+        //TODO: TEST USER SELECT HAND, MELD3
+        //TODO: TEST USER SELECT MELD2, MELD3
+    }
     /*
     @Test
     public void testPlayEmptyTable() {}

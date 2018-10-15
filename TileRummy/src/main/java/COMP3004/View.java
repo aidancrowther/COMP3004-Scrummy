@@ -21,6 +21,7 @@ public class View extends TableObserver implements PlayerInterface {
     }
 
     public Meld getHand() { return this.hand; }
+
     public void setHand(Meld hand) {
         this.hand = hand;
     }

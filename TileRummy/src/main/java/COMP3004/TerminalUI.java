@@ -46,9 +46,9 @@ public class TerminalUI extends View
 
     public Table play(){
         this.printWelcomeMessage();
-        while(this.playing){
-            this.printMessage("\nDo you want to make a move? (y/n)");
-            this.playing = false;
+        this.printMessage("\nDo you want to make a move? (y/n)");
+        if(true){
+            while(this.move()){}
         }
         return this.table;
     }
@@ -59,11 +59,17 @@ public class TerminalUI extends View
         return this.table;
     }
 
-    //ASK USER IF WANT TO MOVE
-    //SELECT AN ACTIVE MELD (OR HAND)
-    //SELECT TILE
-    //MOVE TILE
-    //ASK IF DONE
+
+    private boolean move(){
+        //SELECT AN ACTIVE MELD (OR HAND)
+        //SELECT TILE
+        //SELECT MELT TO MOVE TILE
+        //MOVE TILE
+        this.printMessage("\nDo you want to make a move? (y/n)");
+        return false;
+    }
+
+
 
     public String generateTileString(Tile tile) {
         String tileColour = ANSI_BLUE;
