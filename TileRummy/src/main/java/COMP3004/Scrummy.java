@@ -27,6 +27,9 @@ public class Scrummy implements Subject
     }
 
     public void notifyObservers(){
+        for(TableObserver observer : this.observers) {
+            observer.update(this.table);
+        }
     }
 
     public ArrayList<TableObserver> getObservers(){
