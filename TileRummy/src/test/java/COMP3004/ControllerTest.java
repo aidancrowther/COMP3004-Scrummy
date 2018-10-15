@@ -15,4 +15,18 @@ public class ControllerTest {
         assertTrue(controller.getScrummy().getObservers().contains(controller.getView()));
     }
 
+    @Test
+    public void testSetViewType() {
+        Controller controller = new Controller();
+        String response = "t";
+        controller.setViewType(response);
+        assertNotNull(controller.getView());
+        assertTrue(controller.getView() instanceof TerminalUI);
+
+        response = "g";
+        controller.setViewType(response);
+        assertNotNull(controller.getView());
+        assertTrue(controller.getView() instanceof GraphicalUI);
+
+    }
 }
