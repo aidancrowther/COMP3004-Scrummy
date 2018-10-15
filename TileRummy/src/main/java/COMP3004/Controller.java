@@ -20,6 +20,7 @@ public class Controller
     public Controller(){
         this.view = new TerminalUI(); //TODO: make this an option
         this.scrummy = new Scrummy();
+        this.scrummy.registerObserver(this.view);
     }
 
     public void run(){
