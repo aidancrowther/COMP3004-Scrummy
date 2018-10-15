@@ -12,7 +12,7 @@
 
 package COMP3004;
 
-public class GraphicalUI extends TableObserver implements PlayerInterface
+public class GraphicalUI extends View implements PlayerInterface
 {
     public void drawTile(){
     }

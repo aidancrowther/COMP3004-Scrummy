@@ -35,10 +35,6 @@ public class Scrummy implements Subject
         return this.observers;
     }
 
-    public static void main (String[] args) {
-
-    }
-
     public Table getTable(){
         return this.table;
     }

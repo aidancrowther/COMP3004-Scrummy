@@ -12,7 +12,7 @@
 
 package COMP3004;
 
-public class TerminalUI extends TableObserver implements PlayerInterface
+public class TerminalUI extends View implements PlayerInterface
 {
     //Colours for printing to terminal
     public static final String ANSI_RESET = "\u001B[0m";
@@ -47,17 +47,13 @@ public class TerminalUI extends TableObserver implements PlayerInterface
     public Table play(){
         boolean playing = true;
         while(playing) {
-
+            this.printMessage("Let's play Scrummy!");
         }
         return null;
     }
 
     public void setHand(Meld hand){
         this.hand = hand;
-    }
-
-    public void printMessage(String message) {
-        System.out.println(ANSI_YELLOW + message + ANSI_RESET);
     }
 
     public String generateTileString (Tile tile) {
@@ -72,5 +68,17 @@ public class TerminalUI extends TableObserver implements PlayerInterface
             tileColour = ANSI_YELLOW; //best i can do
         }
         return ANSI_WHITE_BACKGROUND + tileColour + tile.getValue() + ANSI_RESET;
+    }
+
+    public void printPlayerAction(String message) {
+        System.out.println(ANSI_CYAN + message + ANSI_RESET);
+    }
+
+    public void printAIAction(String message) {
+        System.out.println(ANSI_PURPLE + message + ANSI_RESET);
+    }
+
+    public void printMessage(String message) {
+        System.out.println(ANSI_YELLOW + message + ANSI_RESET);
     }
 }

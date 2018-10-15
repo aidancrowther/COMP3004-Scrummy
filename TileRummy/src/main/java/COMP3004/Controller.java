@@ -14,5 +14,15 @@ package COMP3004;
 
 public class Controller
 {
+    Scrummy scrummy;
+    View view;
 
+    public Controller(Scrummy scrummy, View view){
+        this.scrummy = scrummy;
+        this.view = view;
+    }
+
+    public void startGame(){
+        this.view.play();
+    }
 }
