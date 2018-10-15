@@ -17,7 +17,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 * 
 
 ### Brittny Lapierre
-* 
+* Updated UML with MVC + Observer Pattern 
+* Terminal View Testing (using TTD)
+* Implemented the observer pattern with Scrummy and the Views
+* Implemented I/O for TerminalUI
 
 ### David N. Zilio
 *
