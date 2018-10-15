@@ -14,8 +14,6 @@ package COMP3004;
 
 public class TerminalUI extends View implements PlayerInterface
 {
-    private boolean playing = true;
-
     //Colours for printing to terminal
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -36,10 +34,10 @@ public class TerminalUI extends View implements PlayerInterface
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
-    public void drawTile(){
+    public void drawTile() {
     }
 
-    public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
+    public void selectTile(Meld inMeld, Meld outMeld, Tile tile) {
         if(inMeld.getTiles().contains(tile)){
             outMeld.add(tile);
             inMeld.remove(tile);
@@ -49,27 +47,40 @@ public class TerminalUI extends View implements PlayerInterface
     public Table play(){
         while(this.playing){
             this.printMessage("Let's play Scrummy!");
+            this.printPlayerAction("A player move looks like this.");
+            this.printAIAction("An AI action looks like this.");
+
+            this.printMessage("Tiles look like:");
+            Tile testTile = new Tile('R', 1);
+            this.printMessagePlain(this.generateTileString(testTile));
+            testTile = new Tile('G', 6);
+            this.printMessagePlain(this.generateTileString(testTile));
+            testTile = new Tile('B', 12);
+            this.printMessagePlain(this.generateTileString(testTile));
+            testTile = new Tile('O', 4);
+            this.printMessagePlain(this.generateTileString(testTile));
             this.playing = false;
         }
         return null;
     }
 
-    public void setHand(Meld hand){
+    public void setHand(Meld hand) {
         this.hand = hand;
     }
 
-    public String generateTileString (Tile tile) {
+    public String generateTileString(Tile tile) {
         //'R', 'G', 'B', 'O'
         String tileColour = ANSI_BLUE;
         if(tile.getColour() == 'R'){
             tileColour = ANSI_RED;
-        } else if(tile.getColour() == 'g') {
+        } else if(tile.getColour() == 'G') {
             tileColour = ANSI_GREEN;
 
-        } else if (tile.getColour() == '0') {
+        } else if (tile.getColour() == 'O') {
             tileColour = ANSI_YELLOW; //best i can do
         }
-        return ANSI_WHITE_BACKGROUND + tileColour + tile.getValue() + ANSI_RESET;
+
+        return " |" + tileColour + tile.getValue() + ANSI_RESET + (tile.getValue() < 10 ? " " : "") + "| ";
     }
 
     public void printPlayerAction(String message) {
@@ -82,5 +93,9 @@ public class TerminalUI extends View implements PlayerInterface
 
     public void printMessage(String message) {
         System.out.println(ANSI_YELLOW + message + ANSI_RESET);
+    }
+
+    public void printMessagePlain(String message) {
+        System.out.println(message);
     }
 }
