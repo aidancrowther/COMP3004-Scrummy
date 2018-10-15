@@ -82,13 +82,13 @@ public class TerminalUITest {
             String tileColour = terminal.ANSI_BLUE;
             if(t.getColour() == 'R'){
                 tileColour = terminal.ANSI_RED;
-            } else if(t.getColour() == 'g') {
+            } else if(t.getColour() == 'G') {
                 tileColour = terminal.ANSI_GREEN;
 
-            } else if (t.getColour() == '0') {
+            } else if (t.getColour() == 'O') {
                 tileColour = terminal.ANSI_YELLOW; //best i can do
             }
-            assertEquals(terminal.ANSI_WHITE_BACKGROUND + tileColour + t.getValue() + terminal.ANSI_RESET, terminal.generateTileString(t));
+            assertEquals("|" + tileColour + t.getValue() + terminal.ANSI_RESET + "|", terminal.generateTileString(t).replace(" ", ""));
         }
     }
 
@@ -126,13 +126,13 @@ public class TerminalUITest {
         assertFalse(hand.getTiles().contains(tiles.get(0)));
         assertTrue(table.getMelds().get(0).getTiles().contains(tiles.get(0)));
         //TEST USER SELECT HAND, MELD3
-        terminal.selectTile(hand, table.getMelds().get(1), tiles.get(0));
+        terminal.selectTile(hand, table.getMelds().get(1), tiles.get(1));
         assertFalse(hand.getTiles().contains(tiles.get(1)));
-        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(0)));
+        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(1)));
         //TEST USER SELECT MELD2, MELD3
-        terminal.selectTile(table.getMelds().get(3), table.getMelds().get(1), tiles.get(0));
-        assertFalse(hand.getTiles().contains(tiles.get(0)));
-        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(0)));
+        terminal.selectTile(table.getMelds().get(0), table.getMelds().get(1), tiles.get(3));
+        assertFalse(hand.getTiles().contains(tiles.get(3)));
+        assertTrue(table.getMelds().get(1).getTiles().contains(tiles.get(3)));
     }
     /*
     @Test

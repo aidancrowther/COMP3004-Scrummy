@@ -1,7 +1,7 @@
 package COMP3004;
 
 public class View extends TableObserver implements PlayerInterface {
-    private Meld hand;
+    public Meld hand;
 
     public boolean playing = true;
 

@@ -45,7 +45,9 @@ public class TerminalUI extends View
     }
 
     public Table play(){
-        this.printWelcomeMessage();
+        //this.printWelcomeMessage();
+        this.printTable();
+        this.printActivePlayerHand(this.hand);
         this.printMessage("\nDo you want to make a move? (y/n)");
         if(true){
             while(this.move()){}
