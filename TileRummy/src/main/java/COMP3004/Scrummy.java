@@ -17,7 +17,6 @@ public class Scrummy implements Subject
     Table table = new Table();
     private ArrayList<TableObserver> observers = new ArrayList<>();
 
-    //TODO: Brittny
     public void registerObserver(TableObserver t){
         this.observers.add(t);
     }
