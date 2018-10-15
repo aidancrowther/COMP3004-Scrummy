@@ -73,25 +73,24 @@ public class TerminalUI extends View
 
             //SELECT TILE
             if(response.equals("t")) {
-                //>
-                //>meldX
                 this.printMessage("Which meld on the board would you like to edit? (Enter meld #)");
-                int index = Integer.parseInt(this.readPlayerInput()) - 1;
+                int index = Integer.parseInt(this.readPlayerInput());
                 fromMeld = this.table.getMelds().get(index);
             }
         }
 
         Tile selectedTile = null;
         while(selectedTile == null){
-            this.printMessage("Which tile do you want to select? (Enter tile index)");
-            int index = Integer.parseInt(this.readPlayerInput());
+            this.printMessage("Which tile do you want to select? (Enter tile position # starting from 1)");
+            int index = Integer.parseInt(this.readPlayerInput()) - 1;
             selectedTile = fromMeld.getTiles().get(index);
         }
 
-        //SELECT MELT TO MOVE TILE
+        //SELECT MELD TO MOVE TILE
         if(this.table.getMelds().size() > 1){
+            //TODO: Case that they want to move it to their hand
             this.printMessage("Which meld would you like to move the tile to? (Enter meld #)");
-            int index = Integer.parseInt(this.readPlayerInput()) - 1;
+            int index = Integer.parseInt(this.readPlayerInput());
             Meld toMeld = this.table.getMelds().get(index);
             this.selectTile(fromMeld, toMeld, selectedTile);
         } else {
@@ -99,12 +98,9 @@ public class TerminalUI extends View
             this.hand.remove(selectedTile);
         }
 
-        this.printPlayerAction("The tile has been moved.");
-
+        this.printPlayerAction("\nThe tile has been moved.");
         this.printTable();
-
         this.printActivePlayerHand(this.hand);
-
         this.printMessage("\nDo you want to make a move? (y/n)");
         return this.readPlayerInput().equals("y");
     }
@@ -142,16 +138,22 @@ public class TerminalUI extends View
         int currMeld = 0;
         for(Meld meld : this.table.getMelds()) {
             String row = "";
-            if(currMeld == 0 && meld.getTiles().size() > 0){
-                row = "Temporary Meld: ";
+            if(currMeld == 0){
+                if(meld.getTiles().size() > 0){
+                    row = "Temporary Meld: ";
+                    for(Tile tile : meld.getTiles()){
+                        row += this.generateTileString(tile);
+                    }
+                }
             } else {
                 row = "Meld #" + currMeld + ": ";
+                for(Tile tile : meld.getTiles()){
+                    row += this.generateTileString(tile);
+                }
             }
 
-            for(Tile tile : meld.getTiles()){
-                row += this.generateTileString(tile);
-            }
             this.printMessagePlain(row);
+
             currMeld++;
         }
     }
