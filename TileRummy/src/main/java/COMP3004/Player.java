@@ -7,11 +7,24 @@ package COMP3004;
 import java.util.*;
 
 public class Player{
-
-    ArrayList<Tile> hand = new ArrayList<>();
+    private String name = "player";
+    Meld hand = new Meld();
 
     public Player(){
 
     }
-    
+
+    public void setHand(Meld hand) {
+        this.hand = hand;
+    }
+
+    public Meld getHand() { return this.hand; }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
 }

@@ -42,42 +42,41 @@ public class TerminalUI extends View
 
     public TerminalUI(){
         this.scanner = new Scanner(System.in);
-    /*
-        System.out.print("Enter your nationality: ");
-        String nationality = scanner.nextLine();
-
-        System.out.print("Enter your age: ");
-        int age = scanner.nextInt();*/
     }
 
     public Table play(){
-        while(this.playing){
-            this.printMessage("Let's play Scrummy!");
-            this.printPlayerAction("A player move looks like this.");
-            this.printAIAction("An AI action looks like this.");
+        this.printMessage("Let's play Scrummy!");
+        this.printPlayerAction("A player move looks like this.");
+        this.printAIAction("An AI action looks like this.");
 
-            this.printMessage("Tiles look like:");
-            Tile testTile = new Tile('R', 1);
-            this.printMessagePlain(this.generateTileString(testTile));
-            testTile = new Tile('G', 6);
-            this.printMessagePlain(this.generateTileString(testTile));
-            testTile = new Tile('B', 12);
-            this.printMessagePlain(this.generateTileString(testTile));
-            testTile = new Tile('O', 4);
-            this.printMessagePlain(this.generateTileString(testTile));
+        this.printMessage("Tiles look like:");
+        Tile testTile = new Tile('R', 1);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('G', 6);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('B', 12);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('O', 4);
+        this.printMessagePlain(this.generateTileString(testTile));
+
+        while(this.playing){
+            this.printMessage("\nDo you want to make a move?");
             this.playing = false;
         }
-        return null;
+        return this.table;
     }
 
-    //PRINT TABLE
+    //Used if the player made an invalid move
+    public Table play(String message) {
+        this.printMessage(message);
+        return this.table;
+    }
+
     //ASK USER IF WANT TO MOVE
     //SELECT AN ACTIVE MELD (OR HAND)
     //SELECT TILE
     //MOVE TILE
-
-
-
+    //ASK IF DONE
 
     public String generateTileString(Tile tile) {
         String tileColour = ANSI_BLUE;
@@ -93,20 +92,28 @@ public class TerminalUI extends View
         return " |" + tileColour + tile.getValue() + ANSI_RESET + (tile.getValue() < 10 ? " " : "") + "| ";
     }
 
-    public void printPlayerAction(String message) {
+    private void printPlayerAction(String message) {
         System.out.println(ANSI_CYAN + message + ANSI_RESET);
     }
 
-    public void printAIAction(String message) {
+    private void printAIAction(String message) {
         System.out.println(ANSI_PURPLE + message + ANSI_RESET);
     }
 
-    public void printMessage(String message) {
+    private void printMessage(String message) {
         System.out.println(ANSI_BRIGHT_YELLOW + message + ANSI_RESET);
     }
 
-    public void printMessagePlain(String message) {
+    private void printMessagePlain(String message) {
         System.out.println(message);
+    }
+
+    private String readPlayerInput(){
+        return this.scanner.nextLine();
+    }
+
+    private void printTable() {
+        //PRINT TABLE
     }
 
 }

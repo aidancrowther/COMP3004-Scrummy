@@ -28,9 +28,9 @@ public class TerminalUITest {
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
 
         terminal.setHand(meld1);
-        assertTrue(terminal.getHand().equals(meld1));
+        assertTrue(terminal.getPlayer().getHand().equals(meld1));
         meld1 = null;
-        assertFalse(terminal.getHand() == null);
+        assertFalse(terminal.getPlayer().getHand() == null);
     }
 
     @Test

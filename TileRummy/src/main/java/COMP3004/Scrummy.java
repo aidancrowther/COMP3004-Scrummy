@@ -14,8 +14,15 @@ import java.util.ArrayList;
 
 public class Scrummy implements Subject
 {
-    Table table = new Table();
+    private Table table = new Table();
+    private Deck deck = new Deck();
+    private Player[] players = new Player[4];
+
     private ArrayList<TableObserver> observers = new ArrayList<>();
+
+    public Scrummy(){
+
+    }
 
     public void registerObserver(TableObserver t){
         this.observers.add(t);
@@ -31,6 +38,13 @@ public class Scrummy implements Subject
         }
     }
 
+    public void validatePlayerMove(Table playedTable) {
+        /*
+        * If valid table then update game table and notify observers
+        * Else keep table as is and notify observers
+        * */
+    }
+
     public ArrayList<TableObserver> getObservers(){
         return this.observers;
     }
@@ -38,4 +52,6 @@ public class Scrummy implements Subject
     public Table getTable(){
         return this.table;
     }
+
+    public void setTable(Table table) { this.table = table; }
 }

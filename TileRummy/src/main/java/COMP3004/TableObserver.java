@@ -8,11 +8,9 @@ public abstract class TableObserver implements Observer {
     * also be updated.
     * */
     Table table;
-    Meld hand;
 
     public TableObserver() {
         table = new Table();
-        hand = new Meld();
     }
 
     /*
@@ -26,6 +24,4 @@ public abstract class TableObserver implements Observer {
     public Table getTable() {
         return this.table;
     }
-
-    public Meld getHand() { return this.hand; }
 }

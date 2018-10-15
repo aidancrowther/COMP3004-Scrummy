@@ -16,9 +16,6 @@ import java.util.ArrayList;
 
 public interface PlayerInterface
 {
-
-    public void drawTile();
-
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile);
 
     /*

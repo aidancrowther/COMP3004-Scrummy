@@ -1,27 +1,38 @@
 package COMP3004;
 
 public class View extends TableObserver implements PlayerInterface {
-    public boolean playing = true;
-    public View(){
-        super();
+    private Player player;
+
+    public View() {
+        player = new Player();
     }
 
-    public void drawTile() {
-    }
+    public boolean playing = true;
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile) {
-        if(inMeld.getTiles().contains(tile)){
+        if (inMeld.getTiles().contains(tile)) {
             outMeld.add(tile);
             inMeld.remove(tile);
         }
     }
 
-    public Table play(){
+    public Table play() {
         return null;
     }
 
-    public void setHand(Meld hand) {
-        this.hand = hand;
+    public Table play(String message) {
+        return null;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public void setHand(Meld hand) {
+        this.player.setHand(hand);
+    }
 }
