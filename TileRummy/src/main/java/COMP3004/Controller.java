@@ -24,7 +24,9 @@ public class Controller
     }
 
     public void run(){
-        /* Set view's player to current player in scrummy
+        /*
+        * While everyone has cards in their hand...
+        * Set view's player to current player in scrummy
         * Set vies table to table in scrummy
         * If table equals scrummy table,
         *   add a card to the players hand

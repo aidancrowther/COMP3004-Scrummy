@@ -45,22 +45,9 @@ public class TerminalUI extends View
     }
 
     public Table play(){
-        this.printMessage("Let's play Scrummy!");
-        this.printPlayerAction("A player move looks like this.");
-        this.printAIAction("An AI action looks like this.");
-
-        this.printMessage("Tiles look like:");
-        Tile testTile = new Tile('R', 1);
-        this.printMessagePlain(this.generateTileString(testTile));
-        testTile = new Tile('G', 6);
-        this.printMessagePlain(this.generateTileString(testTile));
-        testTile = new Tile('B', 12);
-        this.printMessagePlain(this.generateTileString(testTile));
-        testTile = new Tile('O', 4);
-        this.printMessagePlain(this.generateTileString(testTile));
-
+        this.printWelcomeMessage();
         while(this.playing){
-            this.printMessage("\nDo you want to make a move?");
+            this.printMessage("\nDo you want to make a move? (y/n)");
             this.playing = false;
         }
         return this.table;
@@ -92,6 +79,34 @@ public class TerminalUI extends View
         return " |" + tileColour + tile.getValue() + ANSI_RESET + (tile.getValue() < 10 ? " " : "") + "| ";
     }
 
+    private void printActivePlayerName(String name) {
+        this.printPlayerAction("Current Player: " + name);
+    }
+
+    private void printActivePlayerHand(Meld hand) {
+        String row = "";
+        for(Tile tile : hand.getTiles()){
+            row += this.generateTileString(tile);
+        }
+        this.printMessagePlain(row);
+    }
+
+    private void printTable() {
+        int currMeld = 1;
+        for(Meld meld : this.table.getMelds()) {
+            String row = "Meld #" + currMeld + ": ";
+            for(Tile tile : meld.getTiles()){
+                row += this.generateTileString(tile);
+            }
+            this.printMessagePlain(row);
+            currMeld++;
+        }
+    }
+
+    private String readPlayerInput(){
+        return this.scanner.nextLine();
+    }
+
     private void printPlayerAction(String message) {
         System.out.println(ANSI_CYAN + message + ANSI_RESET);
     }
@@ -108,12 +123,21 @@ public class TerminalUI extends View
         System.out.println(message);
     }
 
-    private String readPlayerInput(){
-        return this.scanner.nextLine();
+    private void printWelcomeMessage(){
+        this.printMessage("Let's play Scrummy!");
+        this.printPlayerAction("A player move looks like this.");
+        this.printAIAction("An AI action looks like this.");
+
+        this.printMessage("Tiles look like:");
+        Tile testTile = new Tile('R', 1);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('G', 6);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('B', 12);
+        this.printMessagePlain(this.generateTileString(testTile));
+        testTile = new Tile('O', 4);
+        this.printMessagePlain(this.generateTileString(testTile));
     }
 
-    private void printTable() {
-        //PRINT TABLE
-    }
 
 }
