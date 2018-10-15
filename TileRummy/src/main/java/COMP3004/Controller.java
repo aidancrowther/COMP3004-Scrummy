@@ -36,8 +36,12 @@ public class Controller
 //        Table playedTable = this.view.play();
     }
 
-    public void setView(){
-
+    public void setViewType(String selection){
+        if(selection.equals("t")) {
+            this.view = new TerminalUI();
+        } else {
+            this.view = new GraphicalUI();
+        }
     }
 
     public View getView(){
