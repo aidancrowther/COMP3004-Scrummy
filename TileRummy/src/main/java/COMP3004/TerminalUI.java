@@ -49,7 +49,7 @@ public class TerminalUI extends View
         this.printTable();
         this.printActivePlayerHand(this.hand);
         this.printMessage("\nDo you want to make a move? (y/n)");
-        if(true){
+        if(this.readPlayerInput().equals("y")){
             while(this.move()){}
         }
         return this.table;
@@ -64,11 +64,53 @@ public class TerminalUI extends View
 
     private boolean move(){
         //SELECT AN ACTIVE MELD (OR HAND)
+        this.printMessage(">Do you want to move a tile on the table, or play from your hand (t/h)?");
+        String response = this.readPlayerInput();
+
+        Meld fromMeld;
         //SELECT TILE
+        if(response.equals("t")){
+            //>
+            //>meldX
+            this.printMessage("Which meld on the board would you like to edit? (Enter meld #)");
+            int index = Integer.parseInt(this.readPlayerInput()) - 1;
+            fromMeld = this.table.getMelds().get(index);
+        } else {
+            fromMeld = this.hand;
+        }
+
+
+
+        Tile selectedTile = null;
+        while(selectedTile == null){
+            this.printMessage("Which tile do you want to select? (Ex: R13)");
+            String tileString = this.readPlayerInput();
+
+            for(Tile t : fromMeld.getTiles()) {
+                if(tileString.equals("" + t.getColour() + t.getValue())){
+                    selectedTile = t;
+                }
+            }
+        }
+
         //SELECT MELT TO MOVE TILE
         //MOVE TILE
+        this.printMessage(">Which meld would you like to move the tile to? (Enter meld #)");
+        int index = Integer.parseInt(this.readPlayerInput()) - 1;
+        Meld toMeld = this.table.getMelds().get(index);
+
+        this.selectTile(fromMeld, toMeld, selectedTile);
+
+        this.printPlayerAction("The tile has been moved.");
+
+        this.printMessage("\nHere is the table:");
+        this.printTable();
+
+        this.printMessage("\nHere is your hand:");
+        this.printActivePlayerHand(this.hand);
+
         this.printMessage("\nDo you want to make a move? (y/n)");
-        return false;
+        return this.readPlayerInput().equals("y");
     }
 
 
