@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +26,7 @@ public class TerminalUITest {
         meld1.add(tiles.get(2));
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
-        
+
         terminal.setHand(meld1);
         assertTrue(terminal.getHand().equals(meld1));
         meld1 = null;
@@ -64,6 +65,32 @@ public class TerminalUITest {
         assertTrue(meld2.getTiles().size() == 4);
     }
 
+    @Test
+    public void testGenerateTileString() {
+        TerminalUI terminal = new TerminalUI();
+        ArrayList<Tile> allTiles = new ArrayList<>();
+        char colours[] = {'R', 'G', 'B', 'O'};
+        int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+
+        for(int colour = 0; colour < 8; colour++){
+            for(int value : values){
+                allTiles.add(new Tile(colours[colour%4], value));
+            }
+        }
+
+        for(Tile t : allTiles) {
+            String tileColour = terminal.ANSI_BLUE;
+            if(t.getColour() == 'R'){
+                tileColour = terminal.ANSI_RED;
+            } else if(t.getColour() == 'g') {
+                tileColour = terminal.ANSI_GREEN;
+
+            } else if (t.getColour() == '0') {
+                tileColour = terminal.ANSI_YELLOW; //best i can do
+            }
+            assertEquals(terminal.ANSI_WHITE_BACKGROUND + tileColour + t.getValue() + terminal.ANSI_RESET, terminal.generateTileString(t));
+        }
+    }
 
     /*
     @Test
