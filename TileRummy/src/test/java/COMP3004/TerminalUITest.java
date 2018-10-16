@@ -159,6 +159,7 @@ public class TerminalUITest {
         meld2.add(tiles.get(7));
         meld2.add(tiles.get(8));
         table.add(meld3);
+        terminal.update(table);
 
         //These variable simulate player input
         int fromMeldIndex = 1;

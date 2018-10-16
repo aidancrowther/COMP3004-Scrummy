@@ -106,6 +106,7 @@ public class TerminalUI extends View
 
     public Meld selectMeldFromTable(int index){
         Meld selectedMeld = null;
+        System.out.println(this.table.getMelds().size());
         while(selectedMeld == null){
             if(this.table.getMelds().size() > index && index >= 0){
                 selectedMeld = this.table.getMelds().get(index);
