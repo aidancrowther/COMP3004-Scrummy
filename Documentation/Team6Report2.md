@@ -11,7 +11,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 ## Independant Sprint Comments
 
 ### Aidan Crowther
-* 
+* Wrote tests and methods for AI Strategy 1
+* Commented in logical steps for AI strategies
+* Organized method structure for Strategies
+* Determined basic AI table interaction steps
 
 ### Ellis Glennie
 * 
