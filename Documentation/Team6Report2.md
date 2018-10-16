@@ -17,7 +17,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 * Determined basic AI table interaction steps
 
 ### Ellis Glennie
-* 
+* Completed Table.java, ensuring it passed all prewritten tests
+* Modified Meld.java for terminal use
+* Commented logical steps for AI strategies
+* Determined basic AI table interaction steps
 
 ### Brittny Lapierre
 * Updated UML with MVC + Observer Pattern 
