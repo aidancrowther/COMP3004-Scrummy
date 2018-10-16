@@ -1,6 +1,6 @@
 # Team6Report2
 
-Due: October 9<sup>th</sup>
+Due: October 16<sup>th</sup>
 
     before submitting to cuLearn, a report must be sent by email to ALL team members. Do keep these emails!
 
