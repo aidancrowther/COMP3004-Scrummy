@@ -7,7 +7,7 @@ import org.junit.Test;
 
 
 
-//Test all AI strategies
+//Test all AI strategies 1 - 4
 public class StrategyTest{
 
     @Test
