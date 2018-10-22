@@ -72,10 +72,52 @@ public class StrategyTest{
 
     @Test
     public void testSearchTable() {}
+    */
 
     @Test
-    public void testBreak30() {}
+    public void testBreak30(){
 
+        Tile tile1 = new Tile('O', 10);
+        Tile tile2 = new Tile('O', 9);
+        Tile tile3 = new Tile('O', 8);
+        Tile tile4 = new Tile('B', 10);
+        Tile tile5 = new Tile('G', 8);
+        Tile tile6 = new Tile('O', 7);
+
+        //Initialize a hand that can't generate a play of 30
+        Meld hand = new Meld();
+        hand.add(tile1);
+        hand.add(tile2);
+        hand.add(tile3);
+        hand.add(tile4);
+        hand.add(tile5);
+
+        //Initialize AI with the specified hand
+        Strategy1 AI1 = new Strategy1();
+        AI1.setHand(hand);
+
+        //Asser that the AI doesn't play if it can't break 30 points
+        Table table = AI1.play();
+        assertTrue(table == null);
+
+        //Generate the expected table
+        Table outTable = new Table();
+        outTable.add(tile1);
+        outTable.add(tile2);
+        outTable.add(tile3);
+        outTable.add(tile6);
+
+        //Add a card to allow the player to break 30
+        hand.add(tile6);
+        AI1.setHand(hand);
+
+        //Assert that the player plays their meld and returns the correct table
+        table = AI1.play();
+        assertTrue(table == outTable);
+
+    }
+
+    /*
     @Test
     public void testPlayEmptyTable() {}
 
