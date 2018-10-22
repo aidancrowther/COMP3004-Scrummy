@@ -1,5 +1,8 @@
 package COMP3004;
 
+import COMP3004.controllers.TerminalViewController;
+import COMP3004.models.Scrummy;
+import COMP3004.oberver.pattern.TableObserver;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +17,7 @@ public class ScrummyTest
 
     @Test
     public void testAddObserver() {
-        TerminalUI t = new TerminalUI();
+        TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
         int prevLen = s.getObservers().size();
         s.registerObserver(t);
@@ -24,7 +27,7 @@ public class ScrummyTest
 
     @Test
     public void testRemoveObserver() {
-        TerminalUI t = new TerminalUI();
+        TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
         s.registerObserver(t);
 
@@ -37,7 +40,7 @@ public class ScrummyTest
 
     @Test
     public void testNotifyObservers(){
-        TerminalUI t = new TerminalUI();
+        TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
         s.registerObserver(t);
 

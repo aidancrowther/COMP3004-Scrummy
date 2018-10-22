@@ -11,10 +11,12 @@
  * --play when it can, all that it can
  */
 
-package COMP3004;
+package COMP3004.artificial.intelligence;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import COMP3004.artificial.intelligence.ArtificialIntelligence;
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
 
 
 public class Strategy1 extends ArtificialIntelligence
@@ -69,6 +71,7 @@ public class Strategy1 extends ArtificialIntelligence
     public void setHand(Meld hand){
         this.hand = hand;
     }
+    public Meld getHand() { return this.hand; }
 
 
 

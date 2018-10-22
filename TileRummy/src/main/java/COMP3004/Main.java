@@ -1,9 +1,12 @@
 package COMP3004;
 
+import COMP3004.controllers.Controller;
+
 public class Main {
     public static void main (String[] args) {
         Controller controller = new Controller();
-        controller.setViewType("t"); // TODO: make interactive
+        String viewType = "g";
+        controller.setViewType(viewType); // TODO: make interactive
         controller.run();
     }
 }

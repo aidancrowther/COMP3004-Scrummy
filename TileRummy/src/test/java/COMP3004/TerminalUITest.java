@@ -1,5 +1,9 @@
 package COMP3004;
 
+import COMP3004.controllers.TerminalViewController;
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,7 +17,7 @@ public class TerminalUITest {
     @Test
     //Assert that update will change the table
     public void testSetHand() {
-        TerminalUI terminal = new TerminalUI();
+        TerminalViewController terminal = new TerminalViewController();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
@@ -34,7 +38,7 @@ public class TerminalUITest {
     @Test
     //Assert that the selectTile method will move tiles between melds correctly
     public void testSelectTile(){
-        TerminalUI terminal = new TerminalUI();
+        TerminalViewController terminal = new TerminalViewController();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
@@ -65,7 +69,7 @@ public class TerminalUITest {
 
     @Test
     public void testGenerateTileString() {
-        TerminalUI terminal = new TerminalUI();
+        TerminalViewController terminal = new TerminalViewController();
         ArrayList<Tile> allTiles = new ArrayList<>();
         char colours[] = {'R', 'G', 'B', 'O'};
         int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
@@ -77,16 +81,16 @@ public class TerminalUITest {
         }
 
         for(Tile t : allTiles) {
-            String tileColour = terminal.ANSI_BLUE;
+            String tileColour = terminal.getGameView().ANSI_BLUE;
             if(t.getColour() == 'R'){
-                tileColour = terminal.ANSI_RED;
+                tileColour = terminal.getGameView().ANSI_RED;
             } else if(t.getColour() == 'G') {
-                tileColour = terminal.ANSI_GREEN;
+                tileColour = terminal.getGameView().ANSI_GREEN;
 
             } else if (t.getColour() == 'O') {
-                tileColour = terminal.ANSI_YELLOW; //best i can do
+                tileColour = terminal.getGameView().ANSI_YELLOW; //best i can do
             }
-            assertEquals("|" + tileColour + t.getValue() + terminal.ANSI_RESET + "|", terminal.generateTileString(t).replace(" ", ""));
+            assertEquals("|" + tileColour + t.getValue() + terminal.getGameView().ANSI_RESET + "|", terminal.getGameView().generateTileString(t).replace(" ", ""));
         }
     }
 
@@ -94,7 +98,7 @@ public class TerminalUITest {
     @Test
     //Assert that the selectTile method will move tiles between melds correctly
     public void testMoveOnInput(){
-        TerminalUI terminal = new TerminalUI();
+        TerminalViewController terminal = new TerminalViewController();
         Table table = new Table();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -136,7 +140,7 @@ public class TerminalUITest {
 
     @Test
     public void testSelectingMeldsFromTableOnInput() {
-        TerminalUI terminal = new TerminalUI();
+        TerminalViewController terminal = new TerminalViewController();
         Table table = new Table();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();

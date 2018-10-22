@@ -2,6 +2,8 @@ package COMP3004;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import COMP3004.models.Tile;
 import org.junit.Test;
 
 /**

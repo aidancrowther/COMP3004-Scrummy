@@ -10,17 +10,21 @@
  * The controller class manages any of the observer interactions between UI and Scrummy or view and model respectively
  */
 
-package COMP3004;
+package COMP3004.controllers;
+
+import COMP3004.models.Scrummy;
+import COMP3004.models.Table;
+import COMP3004.controllers.TerminalViewController;
 
 public class Controller
 {
     private Scrummy scrummy;
-    private View view;
+    private GameInteractionController gameInteractionController;
 
     public Controller(){
         //this.view = new TerminalUI(); //TODO: make this an option
         this.scrummy = new Scrummy();
-        this.scrummy.registerObserver(this.view);
+        this.scrummy.registerObserver(this.gameInteractionController);
     }
 
     public void run(){
@@ -33,19 +37,19 @@ public class Controller
         * else
         *   have scrummy evaluate the table and update if valid
         * */
-        Table playedTable = this.view.play();
+        Table playedTable = this.gameInteractionController.play();
     }
 
     public void setViewType(String selection){
         if(selection.equals("t")) {
-            this.view = new TerminalUI();
+            this.gameInteractionController = new TerminalViewController();
         } else {
-            this.view = new GraphicalUI();
+            this.gameInteractionController = new GraphicalViewController();
         }
     }
 
-    public View getView(){
-        return this.view;
+    public GameInteractionController getView(){
+        return this.gameInteractionController;
     }
 
     public Scrummy getScrummy(){

@@ -3,6 +3,10 @@ package COMP3004;
 import java.util.ArrayList;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import COMP3004.artificial.intelligence.Strategy1;
+import COMP3004.models.Meld;
+import COMP3004.models.Tile;
 import org.junit.Test;
 
 
@@ -25,11 +29,11 @@ public class StrategyTest{
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
 
-        assertTrue(AI1.hand == null);
+        assertTrue(AI1.getHand() == null);
         AI1.setHand(meld1);
-        assertTrue(AI1.hand.equals(meld1));
+        assertTrue(AI1.getHand().equals(meld1));
         meld1 = null;
-        assertFalse(AI1.hand == null);
+        assertFalse(AI1.getHand() == null);
     }
 
     @Test

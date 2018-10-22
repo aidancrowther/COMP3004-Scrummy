@@ -2,9 +2,7 @@
 *  Aidan Crowther, 100980915
 */
 
-package COMP3004;
-
-import java.util.*;
+package COMP3004.models;
 
 public class Player{
     private String name = "player";
