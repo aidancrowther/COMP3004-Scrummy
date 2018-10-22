@@ -2,7 +2,7 @@
 
 Description:
 
-  A project for COMP3004 at carleton university designed to showcase an understanding of TDD and Agile development in a group environment.
+  A project for COMP3004 at Carleton university designed to showcase an understanding of TDD and Agile development in a group environment.
 
 ***
 
