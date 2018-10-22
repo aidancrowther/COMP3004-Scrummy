@@ -40,4 +40,6 @@ public class GameInteractionController extends TableObserver implements GameInte
         this.hand = hand;
     }
 
+    public void setViewControllerInstance(GameInteractionController g) { }
+
 }

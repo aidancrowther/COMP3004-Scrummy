@@ -15,14 +15,22 @@ package COMP3004.controllers;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.controllers.TerminalViewController;
+import COMP3004.views.GraphicalView;
+import COMP3004.views.TerminalView;
 
 public class Controller
 {
     private Scrummy scrummy;
+    private GraphicalView graphicalView;
+    //private TerminalViewController terminalInteractionController;
+    private GraphicalViewController graphicalInteractionController;
     private GameInteractionController gameInteractionController;
+
+    //private TerminalView terminalView;
 
     public Controller(){
         this.scrummy = new Scrummy();
+        //this.gameInteractionController = new GameInteractionController();
     }
 
     public void run(){
@@ -38,16 +46,30 @@ public class Controller
         Table playedTable = this.gameInteractionController.play();
     }
 
-    public void setViewType(String selection){
+    // TODO: clean up if possible
+    public void setInteractionType(String selection){
         if(selection.equals("t")) {
             this.gameInteractionController = new TerminalViewController();
+            //this.terminalInteractionController = new TerminalViewController();
+            //this.gameInteractionController = this.terminalInteractionController; //to access controller generally
         } else {
-            this.gameInteractionController = new GraphicalViewController();
+            this.graphicalInteractionController = new GraphicalViewController();
+            this.gameInteractionController = this.graphicalInteractionController; //to access controller generally
         }
+
         this.scrummy.registerObserver(this.gameInteractionController);
+        this.scrummy.notifyObservers();
     }
 
-    public GameInteractionController getView(){
+    public void launchGraphicalView(String[] args){
+        // SET UP 2 WAY COMMUNICATION THEN LAUNCH GUI
+        this.graphicalView = new GraphicalView();
+        this.graphicalView.setController(graphicalInteractionController);
+        this.graphicalInteractionController.setGameView(graphicalView);
+        this.graphicalView.initInterface(args);
+    }
+
+    public GameInteractionController getInteractionController(){
         return this.gameInteractionController;
     }
 

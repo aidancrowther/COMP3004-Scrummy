@@ -14,21 +14,21 @@ public class ControllerTest {
         Controller controller = new Controller();
         assertNotNull(controller.getScrummy());
         assertNotEquals(controller.getScrummy().getObservers().size(), 0);
-        assertTrue(controller.getScrummy().getObservers().contains(controller.getView()));
+        assertTrue(controller.getScrummy().getObservers().contains(controller.getInteractionController()));
     }
 
     @Test
     public void testSetViewType() {
         Controller controller = new Controller();
         String response = "t";
-        controller.setViewType(response);
-        assertNotNull(controller.getView());
-        assertTrue(controller.getView() instanceof TerminalViewController);
+        controller.setInteractionType(response);
+        assertNotNull(controller.getInteractionController());
+        assertTrue(controller.getInteractionController() instanceof TerminalViewController);
 
         response = "g";
-        controller.setViewType(response);
-        assertNotNull(controller.getView());
-        assertTrue(controller.getView() instanceof GraphicalViewController);
+        controller.setInteractionType(response);
+        assertNotNull(controller.getInteractionController());
+        assertTrue(controller.getInteractionController() instanceof GraphicalViewController);
 
     }
 }

@@ -19,15 +19,20 @@ public class GraphicalViewController extends GameInteractionController
 {
     private GraphicalView gameView;
 
-    public GraphicalViewController() {
-        this.gameView = new GraphicalView();
-        this.gameView.launch(GraphicalView.class);
-    }
+    public GraphicalViewController() {}
 
+    //If press finish
     public Table play(){
-        return null;
+        return this.getTable();
     }
 
+    //CHECKING UPDATE CALLS ACTUAL INSTANCE
+    public void update(Table table){
+        System.out.println("This is graphical game and the table was updated.");
+        this.setTable(table);
+    }
+
+    public void setGameView(GraphicalView gameView) { this.gameView = gameView; }
     public GraphicalView getGameView(){
         return this.gameView;
     }
