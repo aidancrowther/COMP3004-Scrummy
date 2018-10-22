@@ -29,6 +29,14 @@ public class Meld {
         tiles.clear();
     }
 
+    public Meld copy() {
+        Meld m = new Meld();
+        for (int i=0; i<this.getTiles().size(); i++) {
+            m.add(this.getTiles().get(i));
+        }
+        return m;
+    }
+
 
     /*
         Removes a tile from the meld
