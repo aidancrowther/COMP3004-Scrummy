@@ -159,6 +159,21 @@ public class MeldTest {
 
     }
 
+    @Test
+    public void testCopy() {
+        Meld m1 = new Meld();
+
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        Meld m2 = m1.copy();
+
+        assertTrue(m2.compare(m1));
+
+
+    }
+
 
 
 
