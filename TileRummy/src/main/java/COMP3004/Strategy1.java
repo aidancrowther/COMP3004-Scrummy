@@ -75,37 +75,33 @@ public class Strategy1 extends ArtificialIntelligence
     
     public HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
-        int n, i;
+        int n = 0;
         ArrayList<Character> a = new ArrayList<Character>(); 
         Meld m = new Meld();
         ArrayList<Tile> h = hand.getTiles();
 
         //runs
-        n=0;
-        i=0;
-        while (i<h.size()-2) {
+        for (int i=0; i<h.size()-2; i++) {
             m.clear();
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
             if (m.isValid()) {
-                for (int j=i+3; j<h.size()-2; j++) {
-                    m.add(h.get(j));
-                    if (!m.isValid()) {
-                        m.remove(h.get(j));
-                        break;
+                if (i+2<h.size()) {
+                    for (int j=i+3; j<h.size()-2; j++) {
+                        m.add(h.get(j));
+                        if (!m.isValid()) {
+                            m.remove(h.get(j));
+                            break;
+                        }
                     }
                 }
                 handMelds.put(m, n);
                 n++;
-                i += m.getTiles().size();
-            }
-            else {
-                i++;
             }
         }
         //sets\
-        for (i=0; i<h.size(); i++) {
+        for (int i=0; i<h.size(); i++) {
             a.clear();
             m.clear();
             m.add(h.get(i));

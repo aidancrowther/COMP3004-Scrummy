@@ -89,8 +89,6 @@ public class StrategyTest{
         m1.add(new Tile('B', 2));
         m1.add(new Tile('B', 3));
         m1.add(new Tile('B', 4));
-        m1.add(new Tile('B', 5));
-        m1.add(new Tile('B', 6));
         m1.add(new Tile('B', 8));
         m1.add(new Tile('B', 12));
         m1.add(new Tile('G', 1));
@@ -98,7 +96,6 @@ public class StrategyTest{
         m1.add(new Tile('G', 3));
         m1.add(new Tile('G', 4));
         m1.add(new Tile('G', 5));
-        m1.add(new Tile('G', 6));
         m1.add(new Tile('G', 8));
         m1.add(new Tile('O', 8));
         m1.add(new Tile('O', 12));
@@ -106,24 +103,19 @@ public class StrategyTest{
         m1.add(new Tile('R', 12));
 
         AI1.setHand(m1);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 5);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 1).getTiles().size() == 6);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 2).getTiles().size() == 4);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 3).getTiles().size() == 3);
+        HashMap<Meld, Integer> h = AI1.searchHand();
+        assertTrue(h.size() == 10);
+        assertTrue(getKeyFromValue(h, 0).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 1).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(h, 3).getTiles().size() == 5);
+        assertTrue(getKeyFromValue(h, 4).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 5).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(h, 6).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 7).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 8).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(h, 9).getTiles().size() == 3);
 
-        //testing a hand with more than one option; searchHand returns
-        //all possible even if they overlap
-        Meld m2 = new Meld();
-        m2.add(new Tile('G', 1));
-        m2.add(new Tile('G', 2));
-        m2.add(new Tile('G', 3));
-        m2.add(new Tile('G', 4));
-        m2.add(new Tile('O', 1));
-        m2.add(new Tile('R', 1));
-        AI1.setHand(m2);
-        assertTrue(AI1.searchHand().size() == 2);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 4);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 3);
 
     }
 
