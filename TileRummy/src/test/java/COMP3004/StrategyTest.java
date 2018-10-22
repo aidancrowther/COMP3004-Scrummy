@@ -105,7 +105,7 @@ public class StrategyTest{
         AI1.setHand(m1);
         HashMap<Meld, Integer> h = AI1.searchHand();
         assertTrue(h.size() == 11);
-        /*assertTrue(getKeyFromValue(h, 0).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 0).getTiles().size() == 3);
         assertTrue(getKeyFromValue(h, 1).getTiles().size() == 3);
         assertTrue(getKeyFromValue(h, 2).getTiles().size() == 4);
         assertTrue(getKeyFromValue(h, 3).getTiles().size() == 5);
@@ -114,7 +114,8 @@ public class StrategyTest{
         assertTrue(getKeyFromValue(h, 6).getTiles().size() == 3);
         assertTrue(getKeyFromValue(h, 7).getTiles().size() == 3);
         assertTrue(getKeyFromValue(h, 8).getTiles().size() == 4);
-        assertTrue(getKeyFromValue(h, 9).getTiles().size() == 3);*/
+        assertTrue(getKeyFromValue(h, 9).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 10).getTiles().size() == 3);
 
 
     }
