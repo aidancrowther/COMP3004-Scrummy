@@ -1,14 +1,27 @@
 package COMP3004;
 
 import java.util.ArrayList;
+import java.util.Map;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 
 
+
+
+
 //Test all AI strategies
 public class StrategyTest{
+
+    /*public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+          if (hm.get(o).equals(value)) {
+            return o;
+          }
+        }
+        return null;
+    }*/
 
     @Test
     //Assert that update will change the table
@@ -66,13 +79,58 @@ public class StrategyTest{
     }
 
 
-    /*
     @Test
-    public void testSearchHand() {}
+    public void testSearchHand() {
+        //Tests searchHand with a series of different hands
+        //SearchHand should return a HashMap of the most possible melds
+        Strategy1 AI1 = new Strategy1();
+        Meld m1 = new Meld();
+        //testing a hand with 2 sets and 2 runs (of different sizes)
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('B', 4));
+        m1.add(new Tile('B', 5));
+        m1.add(new Tile('B', 6));
+        m1.add(new Tile('B', 8));
+        m1.add(new Tile('B', 12));
+        m1.add(new Tile('G', 1));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('G', 4));
+        m1.add(new Tile('G', 5));
+        m1.add(new Tile('G', 6));
+        m1.add(new Tile('G', 8));
+        m1.add(new Tile('O', 8));
+        m1.add(new Tile('O', 12));
+        m1.add(new Tile('R', 8));
+        m1.add(new Tile('R', 12));
+
+        AI1.setHand(m1);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 0).size() == 5);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 1).size() == 6);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 2).size() == 4);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 3).size() == 3);
+
+        //testing a hand with more than one option; searchHand has to pick
+        //whatever spends the most cards
+        Meld m2 = new Meld();
+        m2.add(new Tile('G', 1));
+        m2.add(new Tile('G', 2));
+        m2.add(new Tile('G', 3));
+        m2.add(new Tile('B', 1));
+        m2.add(new Tile('O', 1));
+        m2.add(new Tile('R', 1));
+        AI1.setHand(m2);
+        assertTrue(AI1.searchHand().size() == 1);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 0).size() == 4);
+
+    }
 
     @Test
     public void testSearchTable() {}
 
+
+    /*
     @Test
     public void testBreak30() {}
 
