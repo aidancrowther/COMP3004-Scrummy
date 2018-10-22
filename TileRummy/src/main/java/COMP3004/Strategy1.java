@@ -74,9 +74,10 @@ public class Strategy1 extends ArtificialIntelligence
 
     
     public HashMap<Meld, Integer> searchHand() {
-        /*HashMap<Meld, Integer> handRuns = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> handRuns = new HashMap<Meld, Integer>();
         HashMap<Meld, Integer> handSets = new HashMap<Meld, Integer>();
         int n, i;
+        ArrayList<Character> a = new ArrayList<Character>(); 
         Meld m = new Meld();
         ArrayList<Tile> h = hand.getTiles();
 
@@ -105,29 +106,32 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
         n=0;
-        //sets
+        //sets\
+        for (i=0; i<h.size(); i++) {
+            a.clear();
+            m.clear();
+            m.add(h.get(i));
+            a.add(h.get(i).getColour());
+            for (int j=0; j<h.size(); j++) {
+                if (h.get(j).getValue() == h.get(i).getValue() &&
+                    !a.contains(h.get(j).getColour())) {
+                        m.add(h.get(j));
+                        a.add(h.get(j).getColour()); //no duplicate colours
+                    }
+            }
+            if (m.isValid()) {
+                handSets.put(m, n);
+                n++;
+            }
+            //find a way to combine and return best option
+        }
         
-
-
-        /*-> Check the hand for runs:
-            -> Iterate over hand, starting at tile 0, and see how many tiles following it are in numerical sequence
-            -> If there are none, move onto the next element
-            -> Otherwise, check if the sequence is >= 3
-            -> Add the entire list as a meld to handMelds
-            -> Otherwise, move onto the tile immeditely following the last tile in the sequence
-            -> Continue until the entire hand has been hecked for runs
-        -> Check the hand for sets:
-            -> Iterate over hand, looking for duplicate values with different colours
-            -> If >=3 are found, add the set as a meld to handMelds, setting keyvalue to 0
-            -> Otherwise, move onto the next element
-        
-        -> Return the hashmap of melds */
         return null;
     }
 
 
-    /*public HashMap<Meld, int> searchTable(Table t) {
-        HashMap<Meld, int> tableMelds = new HashMap<Meld, int>();
+    /*public HashMap<Meld, Integer> searchTable(Table t) {
+        HashMap<Meld, Integer> tableMelds = new HashMap<Meld, Integer>();
 
         -> Retrieve t.getMelds()
         -> For all melds in t.getMelds():
