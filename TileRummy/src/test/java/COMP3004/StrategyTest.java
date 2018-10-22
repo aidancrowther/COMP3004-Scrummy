@@ -1,7 +1,7 @@
 package COMP3004;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -14,14 +14,14 @@ import org.junit.Test;
 //Test all AI strategies
 public class StrategyTest{
 
-    /*public static Object getKeyFromValue(Map hm, Object value) {
-        for (Object o : hm.keySet()) {
+    public static Meld getKeyFromValue(HashMap<Meld, Integer> hm, int value) {
+        for (Meld o : hm.keySet()) {
           if (hm.get(o).equals(value)) {
             return o;
           }
         }
         return null;
-    }*/
+    }
 
     @Test
     //Assert that update will change the table
@@ -106,10 +106,10 @@ public class StrategyTest{
         m1.add(new Tile('R', 12));
 
         AI1.setHand(m1);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 0).size() == 5);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 1).size() == 6);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 2).size() == 4);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 3).size() == 3);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 5);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 1).getTiles().size() == 6);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 2).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 3).getTiles().size() == 3);
 
         //testing a hand with more than one option; searchHand has to pick
         //whatever spends the most cards
@@ -122,12 +122,26 @@ public class StrategyTest{
         m2.add(new Tile('R', 1));
         AI1.setHand(m2);
         assertTrue(AI1.searchHand().size() == 1);
-        assertTrue(getKeyFromValue(AI1.searchHand(), 0).size() == 4);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 4);
 
     }
 
     @Test
-    public void testSearchTable() {}
+    public void testSearchTable() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
     /*

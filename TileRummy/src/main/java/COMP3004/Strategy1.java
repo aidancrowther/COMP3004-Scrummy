@@ -72,15 +72,48 @@ public class Strategy1 extends ArtificialIntelligence
 
 
 
-    /*
-    public HashMap<Meld, int> searchHand() {
-        HashMap<Meld, int> handMelds = new HashMap<Meld, int>();
+    
+    public HashMap<Meld, Integer> searchHand() {
+        /*HashMap<Meld, Integer> handRuns = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> handSets = new HashMap<Meld, Integer>();
+        int n, i;
+        Meld m = new Meld();
+        ArrayList<Tile> h = hand.getTiles();
 
-        -> Check the hand for runs:
+        //runs
+        n=0;
+        i=0;
+        while (i<h.size()-2) {
+            m.clear();
+            m.add(h.get(i));
+            m.add(h.get(i+1));
+            m.add(h.get(i+2));
+            if (m.isValid()) {
+                for (int j=i+3; j<h.size()-2; j++) {
+                    m.add(h.get(j));
+                    if (!m.isValid()) {
+                        m.remove(h.get(j));
+                        break;
+                    }
+                }
+                handRuns.put(m, n);
+                n++;
+                i += m.getTiles().size();
+            }
+            else {
+                i++;
+            }
+        }
+        n=0;
+        //sets
+        
+
+
+        /*-> Check the hand for runs:
             -> Iterate over hand, starting at tile 0, and see how many tiles following it are in numerical sequence
             -> If there are none, move onto the next element
             -> Otherwise, check if the sequence is >= 3
-            -> Add the entire list as a meld to handMelds, setting keyvalue to 0
+            -> Add the entire list as a meld to handMelds
             -> Otherwise, move onto the tile immeditely following the last tile in the sequence
             -> Continue until the entire hand has been hecked for runs
         -> Check the hand for sets:
@@ -88,11 +121,12 @@ public class Strategy1 extends ArtificialIntelligence
             -> If >=3 are found, add the set as a meld to handMelds, setting keyvalue to 0
             -> Otherwise, move onto the next element
         
-        -> Return the hashmap of melds 
+        -> Return the hashmap of melds */
+        return null;
     }
 
 
-    public HashMap<Meld, int> searchTable(Table t) {
+    /*public HashMap<Meld, int> searchTable(Table t) {
         HashMap<Meld, int> tableMelds = new HashMap<Meld, int>();
 
         -> Retrieve t.getMelds()
