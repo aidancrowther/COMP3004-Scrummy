@@ -74,8 +74,7 @@ public class Strategy1 extends ArtificialIntelligence
 
     
     public HashMap<Meld, Integer> searchHand() {
-        HashMap<Meld, Integer> handRuns = new HashMap<Meld, Integer>();
-        HashMap<Meld, Integer> handSets = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
         int n, i;
         ArrayList<Character> a = new ArrayList<Character>(); 
         Meld m = new Meld();
@@ -97,7 +96,7 @@ public class Strategy1 extends ArtificialIntelligence
                         break;
                     }
                 }
-                handRuns.put(m, n);
+                handMelds.put(m, n);
                 n++;
                 i += m.getTiles().size();
             }
@@ -105,7 +104,6 @@ public class Strategy1 extends ArtificialIntelligence
                 i++;
             }
         }
-        n=0;
         //sets\
         for (i=0; i<h.size(); i++) {
             a.clear();
@@ -120,13 +118,13 @@ public class Strategy1 extends ArtificialIntelligence
                     }
             }
             if (m.isValid()) {
-                handSets.put(m, n);
+                handMelds.put(m, n);
                 n++;
             }
             //find a way to combine and return best option
         }
         
-        return null;
+        return handMelds;
     }
 
 

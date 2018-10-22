@@ -133,7 +133,31 @@ public class MeldTest {
 
 
 
+    @Test
+    //Assert that the compare method in Meld will compare two melds and return 
+    //whether or not they're equal
+    //This is only for testing AI
+    public void testCompare() {
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
 
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        m2.add(new Tile('R', 10));
+        m2.add(new Tile('R', 11));
+        m2.add(new Tile('R', 12));
+
+        m3.add(new Tile('R', 10));
+        m3.add(new Tile('R', 11));
+        m3.add(new Tile('R', 12));
+
+        assertTrue(m2.compare(m3));
+        assertFalse(m2.compare(m1));
+
+    }
 
 
 

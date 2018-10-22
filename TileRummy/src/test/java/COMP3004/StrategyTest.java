@@ -111,18 +111,19 @@ public class StrategyTest{
         assertTrue(getKeyFromValue(AI1.searchHand(), 2).getTiles().size() == 4);
         assertTrue(getKeyFromValue(AI1.searchHand(), 3).getTiles().size() == 3);
 
-        //testing a hand with more than one option; searchHand has to pick
-        //whatever spends the most cards
+        //testing a hand with more than one option; searchHand returns
+        //all possible even if they overlap
         Meld m2 = new Meld();
         m2.add(new Tile('G', 1));
         m2.add(new Tile('G', 2));
         m2.add(new Tile('G', 3));
-        m2.add(new Tile('B', 1));
+        m2.add(new Tile('G', 4));
         m2.add(new Tile('O', 1));
         m2.add(new Tile('R', 1));
         AI1.setHand(m2);
-        assertTrue(AI1.searchHand().size() == 1);
+        assertTrue(AI1.searchHand().size() == 2);
         assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(AI1.searchHand(), 0).getTiles().size() == 3);
 
     }
 
