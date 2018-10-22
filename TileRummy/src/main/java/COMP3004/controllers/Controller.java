@@ -23,7 +23,6 @@ public class Controller
 
     public Controller(){
         this.scrummy = new Scrummy();
-        this.scrummy.registerObserver(this.gameInteractionController);
     }
 
     public void run(){
@@ -45,6 +44,7 @@ public class Controller
         } else {
             this.gameInteractionController = new GraphicalViewController();
         }
+        this.scrummy.registerObserver(this.gameInteractionController);
     }
 
     public GameInteractionController getView(){
