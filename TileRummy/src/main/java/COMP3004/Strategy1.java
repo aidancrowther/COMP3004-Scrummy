@@ -76,50 +76,49 @@ public class Strategy1 extends ArtificialIntelligence
     public HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
         int n = 0;
-        ArrayList<Character> a = new ArrayList<Character>(); 
-        Meld m = new Meld();
         ArrayList<Tile> h = hand.getTiles();
 
         //runs
-        for (int i=0; i<h.size()-2; i++) {
-            m.clear();
+        for (int i=0; i<h.size()-3; i++) {
+            Meld m = new Meld();
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
             if (m.isValid()) {
-                if (i+2<h.size()) {
-                    for (int j=i+3; j<h.size()-2; j++) {
+                handMelds.put(m.copy(), n);
+                n++;
+                if (i+2<h.size()-1) {
+                    for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
-                        if (!m.isValid()) {
-                            m.remove(h.get(j));
+                        if (m.isValid()) {
+                            handMelds.put(m.copy(), n);
+                            n++;
+                        } else {
                             break;
                         }
                     }
                 }
-                handMelds.put(m, n);
-                n++;
             }
         }
-        //sets\
+        //sets
         for (int i=0; i<h.size(); i++) {
-            a.clear();
-            m.clear();
+            ArrayList<Character> a = new ArrayList<Character>(); 
+            Meld m = new Meld();
             m.add(h.get(i));
             a.add(h.get(i).getColour());
-            for (int j=0; j<h.size(); j++) {
+            for (int j=i; j<h.size(); j++) {
                 if (h.get(j).getValue() == h.get(i).getValue() &&
                     !a.contains(h.get(j).getColour())) {
-                        m.add(h.get(j));
-                        a.add(h.get(j).getColour()); //no duplicate colours
+                    m.add(h.get(j));
+                    a.add(h.get(j).getColour()); //no duplicate colours
+                    if (m.isValid()) {
+                            handMelds.put(m.copy(), n);
+                            n++;
                     }
+                }
             }
-            if (m.isValid()) {
-                handMelds.put(m, n);
-                n++;
-            }
-            //find a way to combine and return best option
         }
-        
+
         return handMelds;
     }
 
