@@ -8,14 +8,7 @@ import org.junit.Test;
 
 
 
-<<<<<<< HEAD
-
-
-
-//Test all AI strategies
-=======
 //Test all AI strategies 1 - 4
->>>>>>> 023bdd7836f66db35067f85c3a8180f9fa2deaa0
 public class StrategyTest{
 
     public static Meld getKeyFromValue(HashMap<Meld, Integer> hm, int value) {
@@ -135,12 +128,12 @@ public class StrategyTest{
         t.add(new Tile('R', 5));
         t.add(new Tile('B', 8));
         t.add(new Tile('O', 8));
-        t.add(new Tile('G', 8));
+        t.add(new Tile('R', 8));
 
         m.add(new Tile('R', 2));    //can be added to the beginning of a run
         m.add(new Tile('R', 6));    //can be added to the end of a run
         m.add(new Tile('R', 7));    //can be added to the end of a run
-        m.add(new Tile('R', 8));    //can be added to a set
+        m.add(new Tile('G', 8));    //can be added to a set
         m.add(new Tile('O', 12));   //can't be added to anything
 
         AI1.setHand(m);
