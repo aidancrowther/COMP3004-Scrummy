@@ -8,10 +8,14 @@ import org.junit.Test;
 
 
 
+<<<<<<< HEAD
 
 
 
 //Test all AI strategies
+=======
+//Test all AI strategies 1 - 4
+>>>>>>> 023bdd7836f66db35067f85c3a8180f9fa2deaa0
 public class StrategyTest{
 
     public static Meld getKeyFromValue(HashMap<Meld, Integer> hm, int value) {
