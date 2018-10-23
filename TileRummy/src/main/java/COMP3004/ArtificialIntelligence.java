@@ -20,14 +20,14 @@ public abstract class ArtificialIntelligence extends TableObserver implements Pl
 {
     protected Table table = null;
     protected Meld hand = null;
-    
+
 
     public ArtificialIntelligence() {
 
     }
     
-    public void drawTile(){
-        
+    public void drawTile(Deck deck){
+        hand.add(deck.pop());
     }
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
