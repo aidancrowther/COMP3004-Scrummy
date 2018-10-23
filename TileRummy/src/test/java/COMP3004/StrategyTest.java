@@ -122,18 +122,32 @@ public class StrategyTest{
 
     @Test
     public void testSearchTable() {
+        Strategy1 AI1 = new Strategy1();
+        Table t = new Table();
+        Meld m = new Meld();
+        Meld hTest = new Meld();
 
+        t.add(new Tile('R', 3));
+        t.add(new Tile('R', 4));
+        t.add(new Tile('R', 5));
+        t.add(new Tile('B', 8));
+        t.add(new Tile('O', 8));
+        t.add(new Tile('G', 8));
 
+        m.add(new Tile('R', 2));    //can be added to the beginning of a run
+        m.add(new Tile('R', 6));    //can be added to the end of a run
+        m.add(new Tile('R', 7));    //can be added to the end of a run
+        m.add(new Tile('R', 8));    //can be added to a set
+        m.add(new Tile('O', 12));   //can't be added to anything
 
+        AI1.setHand(m);
 
+        HashMap<Meld, Integer> h = AI1.searchTable();
 
-
-
-
-
-
-
-
+        assertTrue(h.size() == 3);
+        assertTrue(getKeyFromValue(h, 0).getTiles().size() == 0); //keep value 0 empty
+        assertTrue(getKeyFromValue(h, 1).getTiles().size() == 6);
+        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 4);
 
     }
 
