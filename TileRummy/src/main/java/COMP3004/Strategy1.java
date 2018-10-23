@@ -123,32 +123,30 @@ public class Strategy1 extends ArtificialIntelligence
     }
 
 
-    /*public HashMap<Meld, Integer> searchTable(Table t) {
-        HashMap<Meld, Integer> tableMelds = new HashMap<Meld, Integer>();
+    public HashMap<Meld, Integer> searchTable(Table t) {
+        HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
+        ArrayList<Tile> h = hand.getTiles();
+        
+        tMelds.put(new Meld(), 0);
+        for (int i=1; i<t.getMelds().size(); i++) {
+            Meld m = t.getMelds().get(i).copy();
+            
+            for (int j=0; j<h.size(); j++) {
+                m.add(h.get(j));
+                if (!m.isValid()) {
+                    m.remove(h.get(j));
+                }
+            }
 
-        -> Retrieve t.getMelds()
-        -> For all melds in t.getMelds():
-            -> If the meld is a run:
-                -> Iterate over hand
-                -> If the tile in hand can be added to the front or end of the sequence, add(Tile, Meld) it.
-            -> If the meld is a set:
-                -> Iterate over hand
-                -> If the tile in hand is the same number and a colour not in the meld, add(Tile, Meld) it
+            tMelds.put(m, i); //puts t into the HashMap, keeping track of Table location
+        }
 
-        -> Add all of t.getMelds() to tableMelds, using ArrayList index as key value
-        -> Return the hashmap of melds
-
-        -> NOTE: This does not currently support preexisting melds.
+        return tMelds;
     }
 
 
 
 
 
-
-
-
-
-    */
 
 }

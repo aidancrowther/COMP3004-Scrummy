@@ -125,7 +125,6 @@ public class StrategyTest{
         Strategy1 AI1 = new Strategy1();
         Table t = new Table();
         Meld m = new Meld();
-        Meld hTest = new Meld();
 
         t.add(new Tile('R', 3));
         t.add(new Tile('R', 4));
@@ -142,7 +141,7 @@ public class StrategyTest{
 
         AI1.setHand(m);
 
-        HashMap<Meld, Integer> h = AI1.searchTable();
+        HashMap<Meld, Integer> h = AI1.searchTable(t);
 
         assertTrue(h.size() == 3);
         assertTrue(getKeyFromValue(h, 0).getTiles().size() == 0); //keep value 0 empty
