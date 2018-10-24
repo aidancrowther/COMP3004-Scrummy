@@ -1,4 +1,4 @@
-package COMP3004;
+package COMP3004.oberver_pattern;
 /*
  * Author: Brittny Lapierre
  * This interface will provide the observer definition
@@ -7,6 +7,8 @@ package COMP3004;
  * automatically receive updates of state from the
  * subject.
  * */
+
+import COMP3004.models.Table;
 
 public interface Observer {
     void update(Table table);

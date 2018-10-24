@@ -1,9 +1,14 @@
-package COMP3004;
+package COMP3004.controllers;
 
-public class View extends TableObserver implements PlayerInterface {
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
+import COMP3004.oberver_pattern.TableObserver;
+
+public class GameInteractionController extends TableObserver implements GameInteractionInterface {
     public Meld hand;
 
-    public View(){
+    public GameInteractionController(){
         this.hand = new Meld();
         this.hand .add(new Tile('R', 1));
         this.hand .add(new Tile('G', 1));
@@ -33,4 +38,7 @@ public class View extends TableObserver implements PlayerInterface {
     public void setHand(Meld hand) {
         this.hand = hand;
     }
+
+    public void setViewControllerInstance(GameInteractionController g) { }
+
 }

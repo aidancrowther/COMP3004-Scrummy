@@ -11,16 +11,17 @@
  * --play when it can, all that it can
  */
 
-package COMP3004;
+package COMP3004.artificial_intelligence;
 
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class Strategy1 extends ArtificialIntelligence
 {
-
-
     public Strategy1(){
 
     }
@@ -51,17 +52,13 @@ public class Strategy1 extends ArtificialIntelligence
 
         */
 
+
+        HashMap<Meld, Integer> handResults = null;
+        HashMap<Meld, Integer> tableResults = null;
+        ArrayList<ArrayList<Meld>> results = new ArrayList<>();
+
         return null;
     }
-
-
-
-
-    
-    
-
-
-
 
 
 

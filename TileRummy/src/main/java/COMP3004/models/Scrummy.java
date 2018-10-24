@@ -9,7 +9,11 @@
  * 
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
-package COMP3004;
+package COMP3004.models;
+
+import COMP3004.oberver_pattern.Subject;
+import COMP3004.oberver_pattern.TableObserver;
+
 import java.util.ArrayList;
 
 public class Scrummy implements Subject

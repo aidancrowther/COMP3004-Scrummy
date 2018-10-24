@@ -1,32 +1,51 @@
 /* Carleton University
  * Fall 2018
- * 
+ *
  * COMP 3004
  * JP Coriveau
- * 
+ *
  * Group 6
  * David N. Zilio
- * 
+ *
  * This abstract class is a way to abstract out the Strategies of the AI such that it won't be janky in the controller
  */
 
-package COMP3004;
+package COMP3004.artificial_intelligence;
 
+import COMP3004.controllers.GameInteractionInterface;
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
+import COMP3004.oberver_pattern.TableObserver;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-
-public abstract class ArtificialIntelligence extends TableObserver implements PlayerInterface
+public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
 {
     protected Table table = null;
     protected Meld hand = null;
+    protected int score = 0;
+
 
     public ArtificialIntelligence() {
         
     }
-    
-    public void drawTile() {
-        
+
+    public Meld getHand() { return this.hand; }
+
+    public int getScore() { return this.score; }
+
+    //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
+    public void setHand(Meld hand){
+        this.hand = hand;
+    }
+
+    public void setScore(int score){
+        this.score = score;
+    }
+
+    public void drawTile(){
+
     }
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
@@ -36,10 +55,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Pl
         }
     }
 
-    //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
-    public void setHand(Meld hand){
-        this.hand = hand;
-    }
 
     public HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
@@ -70,7 +85,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Pl
         }
         //sets
         for (int i=0; i<h.size(); i++) {
-            ArrayList<Character> a = new ArrayList<Character>(); 
+            ArrayList<Character> a = new ArrayList<Character>();
             Meld m = new Meld();
             m.add(h.get(i));
             a.add(h.get(i).getColour());
@@ -94,11 +109,11 @@ public abstract class ArtificialIntelligence extends TableObserver implements Pl
     public HashMap<Meld, Integer> searchTable(Table t) {
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
-        
+
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
-            
+
             for (int j=0; j<h.size(); j++) {
                 m.add(h.get(j));
                 if (!m.isValid()) {
@@ -113,6 +128,4 @@ public abstract class ArtificialIntelligence extends TableObserver implements Pl
     }
 
 
-
-    
 }

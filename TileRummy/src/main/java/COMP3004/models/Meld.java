@@ -1,4 +1,4 @@
-package COMP3004;
+package COMP3004.models;
 
 import java.util.*;
 
