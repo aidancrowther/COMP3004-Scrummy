@@ -19,6 +19,9 @@ import java.util.HashMap;
 
 public class Strategy1 extends ArtificialIntelligence
 {
+    protected Table table = null;
+    protected Meld hand = null;
+    protected int score = 0;
 
 
     public Strategy1(){
@@ -50,6 +53,11 @@ public class Strategy1 extends ArtificialIntelligence
             -> Return the brand new table :)
 
         */
+
+        HashMap<Meld, Integer> handResults = null;
+        HashMap<Meld, Integer> tableResults = null;
+
+        ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
         return null;
     }
