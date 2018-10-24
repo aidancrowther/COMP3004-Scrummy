@@ -3,8 +3,7 @@ package COMP3004.controllers;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.views.GraphicalView;
-import COMP3004.oberver.pattern.TableObserver;
+import COMP3004.oberver_pattern.TableObserver;
 
 public class GameInteractionController extends TableObserver implements GameInteractionInterface {
     public Meld hand;

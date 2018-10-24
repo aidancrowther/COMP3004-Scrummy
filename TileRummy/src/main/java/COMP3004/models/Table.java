@@ -29,10 +29,7 @@ public class Table {
         melds.get(0).add(t);
 
         if (melds.get(0).isValid()) {
-            add(new Meld());
-			for (int i=0; i<melds.get(0).getTiles().size(); i++) {
-				add(melds.get(0).getTiles().get(i), melds.size()-1);
-			}
+            add(melds.get(0).copy());
             melds.get(0).clear();
         }
     }

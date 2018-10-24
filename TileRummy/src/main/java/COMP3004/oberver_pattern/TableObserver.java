@@ -1,4 +1,4 @@
-package COMP3004.oberver.pattern;
+package COMP3004.oberver_pattern;
 
 import COMP3004.models.Table;
 

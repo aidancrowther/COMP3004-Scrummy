@@ -1,4 +1,4 @@
-package COMP3004.oberver.pattern;
+package COMP3004.oberver_pattern;
 /*
 * Author: Brittny Lapierre
 * This interface will provide the subject functionality

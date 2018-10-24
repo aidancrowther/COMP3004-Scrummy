@@ -11,8 +11,8 @@
  */
 package COMP3004.models;
 
-import COMP3004.oberver.pattern.Subject;
-import COMP3004.oberver.pattern.TableObserver;
+import COMP3004.oberver_pattern.Subject;
+import COMP3004.oberver_pattern.TableObserver;
 
 import java.util.ArrayList;
 

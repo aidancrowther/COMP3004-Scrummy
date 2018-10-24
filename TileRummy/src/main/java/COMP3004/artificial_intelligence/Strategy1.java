@@ -11,25 +11,23 @@
  * --play when it can, all that it can
  */
 
-package COMP3004.artificial.intelligence;
+package COMP3004.artificial_intelligence;
 
-import COMP3004.artificial.intelligence.ArtificialIntelligence;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Strategy1 extends ArtificialIntelligence
 {
-    protected Table table = null;
-    protected Meld hand = null;
-
     public Strategy1(){
 
     }
 
     public void drawTile(){
-        
+
     }
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
@@ -64,6 +62,11 @@ public class Strategy1 extends ArtificialIntelligence
 
         */
 
+
+        HashMap<Meld, Integer> handResults = null;
+        HashMap<Meld, Integer> tableResults = null;
+        ArrayList<ArrayList<Meld>> results = new ArrayList<>();
+
         return null;
     }
 
@@ -72,55 +75,10 @@ public class Strategy1 extends ArtificialIntelligence
         this.hand = hand;
     }
     public Meld getHand() { return this.hand; }
-
-
-
-    /*
-    public HashMap<Meld, int> searchHand() {
-        HashMap<Meld, int> handMelds = new HashMap<Meld, int>();
-
-        -> Check the hand for runs:
-            -> Iterate over hand, starting at tile 0, and see how many tiles following it are in numerical sequence
-            -> If there are none, move onto the next element
-            -> Otherwise, check if the sequence is >= 3
-            -> Add the entire list as a meld to handMelds, setting keyvalue to 0
-            -> Otherwise, move onto the tile immeditely following the last tile in the sequence
-            -> Continue until the entire hand has been hecked for runs
-        -> Check the hand for sets:
-            -> Iterate over hand, looking for duplicate values with different colours
-            -> If >=3 are found, add the set as a meld to handMelds, setting keyvalue to 0
-            -> Otherwise, move onto the next element
-        
-        -> Return the hashmap of melds 
+    public void setScore(int score){
+        this.score = score;
     }
+    public int getScore() { return this.score; }
 
-
-    public HashMap<Meld, int> searchTable(Table t) {
-        HashMap<Meld, int> tableMelds = new HashMap<Meld, int>();
-
-        -> Retrieve t.getMelds()
-        -> For all melds in t.getMelds():
-            -> If the meld is a run:
-                -> Iterate over hand
-                -> If the tile in hand can be added to the front or end of the sequence, add(Tile, Meld) it.
-            -> If the meld is a set:
-                -> Iterate over hand
-                -> If the tile in hand is the same number and a colour not in the meld, add(Tile, Meld) it
-
-        -> Add all of t.getMelds() to tableMelds, using ArrayList index as key value
-        -> Return the hashmap of melds
-
-        -> NOTE: This does not currently support preexisting melds.
-    }
-
-
-
-
-
-
-
-
-
-    */
 
 }

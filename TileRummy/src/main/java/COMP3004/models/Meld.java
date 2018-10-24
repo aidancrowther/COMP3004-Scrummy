@@ -29,6 +29,14 @@ public class Meld {
         tiles.clear();
     }
 
+    public Meld copy() {
+        Meld m = new Meld();
+        for (int i=0; i<this.getTiles().size(); i++) {
+            m.add(this.getTiles().get(i));
+        }
+        return m;
+    }
+
 
     /*
         Removes a tile from the meld
@@ -135,8 +143,16 @@ public class Meld {
         return m;
     }
 
-
-
+    
+    public boolean compare(Meld m) {
+        for (int i=0; i<this.getTiles().size(); i++) {
+            if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
+                this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
+                    return false;
+                }
+        }
+        return true;
+    }
 
 
 

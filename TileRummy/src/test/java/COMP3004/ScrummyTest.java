@@ -2,7 +2,7 @@ package COMP3004;
 
 import COMP3004.controllers.TerminalViewController;
 import COMP3004.models.Scrummy;
-import COMP3004.oberver.pattern.TableObserver;
+import COMP3004.oberver_pattern.TableObserver;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
