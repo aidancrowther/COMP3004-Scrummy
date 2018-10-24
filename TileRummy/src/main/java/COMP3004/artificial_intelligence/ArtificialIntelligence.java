@@ -26,6 +26,9 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     protected Meld hand = null;
     protected int score = 0;
 
+    //Temporary pls delete
+    public String output = "";
+
 
     public ArtificialIntelligence() {
         
@@ -68,14 +71,12 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             m.add(h.get(i+1));
             m.add(h.get(i+2));
             if (m.isValid()) {
-                handMelds.put(m.copy(), n);
-                n++;
+                handMelds.put(m.copy(), 0);
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
                         if (m.isValid()) {
-                            handMelds.put(m.copy(), n);
-                            n++;
+                            handMelds.put(m.copy(), 0);
                         } else {
                             break;
                         }
@@ -110,6 +111,9 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
 
+        if(t == null) return tMelds;
+        if(t.getMelds().size() == 0) return tMelds;
+
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
@@ -127,5 +131,11 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
+    protected Boolean isEquivalent(Tile a, Tile b){
+        Boolean result = true;
+        result &= a.getColour() == b.getColour();
+        result &= a.getValue() == b.getValue();
+        return result;
+    }
 
 }
