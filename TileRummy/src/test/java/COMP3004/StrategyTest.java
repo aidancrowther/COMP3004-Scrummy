@@ -147,10 +147,12 @@ public class StrategyTest{
 
         HashMap<Meld, Integer> h = AI1.searchTable(t);
 
-        assertTrue(h.size() == 3);
+        assertTrue(h.size() == 5);
         assertTrue(getKeyFromValue(h, 0).getTiles().size() == 0); //keep value 0 empty
-        assertTrue(getKeyFromValue(h, 1).getTiles().size() == 6);
-        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 4);
+        assertTrue(getKeyFromValue(h, 1).getTiles().size() == 1);
+        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 2);
+        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 3);
+        assertTrue(getKeyFromValue(h, 2).getTiles().size() == 1);
 
     }
 
