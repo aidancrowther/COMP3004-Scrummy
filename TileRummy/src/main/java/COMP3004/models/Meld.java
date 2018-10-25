@@ -73,7 +73,7 @@ public class Meld {
                 public int compare(Tile t1, Tile t2) {  
                     if (t1.getColour() > t2.getColour()) {
                         return 1;
-                    } else if (t1.getValue() < t2.getValue()) {
+                    } else if (t1.getColour() < t2.getColour()) {
                         return -1;
                     }
                     if (t1.getValue() > t2.getValue()) {
