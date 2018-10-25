@@ -2,11 +2,11 @@
 Test set: COMP3004.StrategyTest
 -------------------------------------------------------------------------------
 Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.004 s <<< FAILURE! - in COMP3004.StrategyTest
-testBreak30(COMP3004.StrategyTest)  Time elapsed: 0 s  <<< FAILURE!
+testBreak30(COMP3004.StrategyTest)  Time elapsed: 0.001 s  <<< FAILURE!
 java.lang.AssertionError
 	at COMP3004.StrategyTest.testBreak30(StrategyTest.java:199)
 
-testDifferentTableStates(COMP3004.StrategyTest)  Time elapsed: 0.001 s  <<< FAILURE!
+testDifferentTableStates(COMP3004.StrategyTest)  Time elapsed: 0 s  <<< FAILURE!
 java.lang.AssertionError
 	at COMP3004.StrategyTest.testDifferentTableStates(StrategyTest.java:257)
 
