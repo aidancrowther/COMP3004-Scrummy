@@ -120,7 +120,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 m.add(h.get(j));
                 toAdd.add(h.get(j));
                 if (m.isValid()) {
-                    tMelds.put(toAdd, i);
+                    tMelds.put(toAdd.copy(), i);
                 } else {
                     m.remove(h.get(j));
                     toAdd.remove(h.get(j));

@@ -130,19 +130,6 @@ public class StrategyTest{
         Table t = new Table();
         Meld m = new Meld();
 
-        Meld m1 = new Meld();
-        m1.add(new Tile('R', 2));
-        Meld m2 = new Meld(); 
-        m2.add(new Tile('R', 2));
-        m2.add(new Tile('R', 6));
-        Meld m3 = new Meld();
-        m3.add(new Tile('R', 2));
-        m3.add(new Tile('R', 6));
-        m3.add(new Tile('R', 7));
-        Meld m4 = new Meld();
-        m4.add(new Tile('G', 8));
-
-
         t.add(new Tile('R', 3));
         t.add(new Tile('R', 4));
         t.add(new Tile('R', 5));
@@ -160,12 +147,8 @@ public class StrategyTest{
 
         HashMap<Meld, Integer> h = AI1.searchTable(t);
 
-        assertTrue(h.size() == 2);
+        assertTrue(h.size() == 5);
         assertTrue(getKeyFromValue(h, 0).getTiles().size() == 0); //keep value 0 empty
-        assertTrue(h.get(m1) == 1);
-        assertTrue(h.get(m2) == 1);
-        assertTrue(h.get(m3) == 1);
-        assertTrue(h.get(m4) == 2);
 
     }
 
