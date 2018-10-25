@@ -33,8 +33,9 @@ public class MeldTest {
         meld.add(t); //add a green 10
         assertTrue(meld.getTiles().contains(t));
 
-        meld.remove(t);
+        Tile r = meld.remove(t);
         assertFalse(meld.getTiles().contains(t));
+        assertTrue(r != null);
     }
 
 
