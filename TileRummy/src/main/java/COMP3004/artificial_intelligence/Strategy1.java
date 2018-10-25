@@ -19,6 +19,7 @@ import COMP3004.models.Tile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*;
 
 
 public class Strategy1 extends ArtificialIntelligence
@@ -34,6 +35,7 @@ public class Strategy1 extends ArtificialIntelligence
      * GUI View: Allows the user to interact with the table until the user presses complete turn button. When button is pressed end the user’s turn, and the method returns this.table.
      * AI: Strategies 1 - 4
      */
+    @Override
     public Table play(){
 
         /*  
@@ -61,6 +63,9 @@ public class Strategy1 extends ArtificialIntelligence
         HashMap<Tile, Integer> inHand = new HashMap<>();
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
+        Table output = table;
+
+        //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){
             Boolean found = false;
             for(Map.Entry<Tile, Integer> pair : inHand.entrySet()){
@@ -73,19 +78,42 @@ public class Strategy1 extends ArtificialIntelligence
             if(!found) inHand.put(tile, 1);
         }
 
-        for(Map.Entry<Tile, Integer> pair : inHand.entrySet()){
-            output+=pair.getKey()+", "+pair.getValue()+"; ";
-        }
-        output+="\n\n";
+        //Generate array lists of moves to make
+        ArrayList<Meld> allMelds = new ArrayList<>();
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
-            output+=pair.getKey().toString()+", "+pair.getValue()+"; ";
-        }
-        output+="\n\n";
-        for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
-            output+=pair.getKey().toString()+", "+pair.getValue()+"; ";
+            allMelds.add(pair.getKey());
         }
 
-        return null;
+        //Find all sets of melds that can go together
+        allMelds = sortByLength(allMelds);
+        for(Meld m : allMelds){
+            ArrayList<Meld> result = new ArrayList<>();
+            ArrayList<Integer> toAdd = findUnique(m, allMelds, inHand);
+            for(Integer i : toAdd){
+                result.add(allMelds.get(i));
+            }
+            results.add(result);
+        }
+
+        int longest = 0;
+        ArrayList<Meld> longestList = new ArrayList<>();
+        for(ArrayList<Meld> a : results){
+            if(a.size() > longest){
+                longest = a.size();
+                longestList = a;
+            }
+        }
+
+        for(Meld m : longestList){
+            if(handResults.get(m) != null) output.add(m);
+            else if(tableResults.get(m) != null){
+                for(Tile t : m.getTiles()){
+                    output.add(t, tableResults.get(m));
+                }
+            }
+        }
+
+        return output;
     }
 
 }

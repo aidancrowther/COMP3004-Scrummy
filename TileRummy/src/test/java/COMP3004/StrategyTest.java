@@ -2,6 +2,7 @@ package COMP3004;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -153,36 +154,6 @@ public class StrategyTest{
 
     }
 
-
-    @Test
-    public void forMySanity(){
-        ArtificialIntelligence AI1 = new Strategy1();
-        Meld hand = new Meld();
-
-        Tile tile1 = new Tile('O', 10);
-        Tile tile2 = new Tile('O', 9);
-        Tile tile3 = new Tile('O', 8);
-        Tile tile4 = new Tile('B', 10);
-        Tile tile5 = new Tile('G', 8);
-        Tile tile6 = new Tile('O', 7);
-        Tile tile7 = new Tile('O', 10);
-
-        hand.add(tile1);
-        hand.add(tile2);
-        hand.add(tile3);
-        hand.add(tile4);
-        hand.add(tile5);
-        hand.add(tile6);
-        hand.add(tile7);
-
-        AI1.setHand(hand);
-        AI1.setTable(new Table());
-
-        AI1.play();
-        System.out.println(AI1.output);
-    }
-
-/*
     @Test
     public void testBreak30(){
 
@@ -202,13 +173,15 @@ public class StrategyTest{
         hand.add(tile4);
         hand.add(tile5);
 
-        //Initialize AI with the specified hand
+        //Initialize AI with the specified hand and table
         Strategy1 AI1 = new Strategy1();
         AI1.setHand(hand);
+        Table t = new Table();
+        AI1.setTable(t);
 
         //Asser that the AI doesn't play if it can't break 30 points
         Table table = AI1.play();
-        assertTrue(table == null);
+        assertTrue(table == t);
 
         //Generate the expected table
         Table outTable = new Table();
@@ -349,5 +322,4 @@ public class StrategyTest{
         assertTrue(expected1Found);
         assertTrue(expected2Found);
     }
-    */
 }

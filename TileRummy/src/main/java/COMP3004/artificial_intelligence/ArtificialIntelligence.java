@@ -19,20 +19,18 @@ import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserver;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.*;
 
 public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
 {
-    protected Table table = null;
     protected Meld hand = null;
     protected int score = 0;
-
-    //Temporary pls delete
-    public String output = "";
-
 
     public ArtificialIntelligence() {
         
     }
+
+    public Table play(){return null;}
 
     public Meld getHand() { return this.hand; }
 
@@ -113,9 +111,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
 
-        if(t == null) return tMelds;
-        if(t.getMelds().size() <= 1) return tMelds;
-
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
@@ -133,11 +128,65 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    protected Boolean isEquivalent(Tile a, Tile b){
+    //Return if two tiles have the same colour and value
+    public Boolean isEquivalent(Tile a, Tile b){
         Boolean result = true;
         result &= a.getColour() == b.getColour();
         result &= a.getValue() == b.getValue();
         return result;
+    }
+
+    //Return an arrayList of indeces for melds that do not share tiles
+    public ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
+
+        ArrayList<Integer> results = new ArrayList<>();
+
+        //Iterate over the set to compare against
+        for(int i=0; i<a.size(); i++){
+            //Initialize tracking variables
+            Boolean containsDuplicate = false;
+            HashMap<Tile, Integer> hand = inHand;
+            //Iterate over both tile sets
+            if(a.get(i) != m){
+                for(Tile t1 : a.get(i).getTiles()){
+                    for(Tile t2 : m.getTiles()){
+                        //If they are the same, and there is no duplicate this set contains reused tiles
+                        if(hand.get(t1) != null) if(hand.get(t1) > 1 && isEquivalent(t1, t2) && !containsDuplicate){
+                            containsDuplicate = false;
+                            hand.put(t1, hand.get(t1)-1);
+                        }
+                        else if(hand.get(t2) != null) if(hand.get(t2) > 1 && isEquivalent(t1, t2) && !containsDuplicate){
+                            containsDuplicate = false;
+                            hand.put(t2, hand.get(t2)-1);
+                        }
+                        else containsDuplicate |= isEquivalent(t1, t2);
+                    }
+                }
+            }
+            //If there are no reused tiles, add to the list of indeces
+            if(!containsDuplicate) results.add(i);
+        }
+
+        //Return the list of indeces
+        return results;
+    }
+
+    //Sort an arraylist of melds to put the longest ones first
+    public ArrayList<Meld> sortByLength(ArrayList<Meld> a){
+
+        //Create a comparator
+        Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
+            @Override
+            public int compare(Meld m1, Meld m2){
+                return Integer.compare(m1.getTiles().size(), m2.getTiles().size());
+            }
+        };
+
+        //Sort in descending order, then reverse
+        Collections.sort(a, meldLengthComparator);
+        Collections.reverse(a);
+
+        return a;
     }
 
 }

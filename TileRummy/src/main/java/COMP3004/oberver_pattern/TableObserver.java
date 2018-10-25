@@ -9,7 +9,7 @@ public abstract class TableObserver implements Observer {
     * If all of the moves were valid, then the game state will
     * also be updated.
     * */
-    private Table table;
+    protected Table table;
 
     public TableObserver() {
         table = new Table();
