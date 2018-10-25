@@ -2,7 +2,7 @@
 Test set: COMP3004.ControllerTest
 -------------------------------------------------------------------------------
 Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in COMP3004.ControllerTest
-testCreateController(COMP3004.ControllerTest)  Time elapsed: 0 s  <<< FAILURE!
+testCreateController(COMP3004.ControllerTest)  Time elapsed: 0.001 s  <<< FAILURE!
 java.lang.AssertionError: Values should be different. Actual: 0
 	at COMP3004.ControllerTest.testCreateController(ControllerTest.java:16)
 
