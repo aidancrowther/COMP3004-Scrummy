@@ -353,4 +353,38 @@ public class StrategyTest{
         assertTrue(expected1Found);
         assertTrue(expected2Found);
     }
+
+    @Test
+    public void testListScore() {
+        Strategy1 AI1 = new Strategy1();
+        ArrayList<Meld> a = new ArrayList<Meld>();
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
+
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('B', 4));
+        m1.add(new Tile('B', 8));
+
+        m2.add(new Tile('B', 12));
+        m2.add(new Tile('G', 1));
+        m2.add(new Tile('G', 2));
+        m2.add(new Tile('G', 3));
+        m2.add(new Tile('G', 4));
+        m2.add(new Tile('G', 5));
+
+        m3.add(new Tile('G', 8));
+        m3.add(new Tile('O', 8));
+        m3.add(new Tile('O', 12));
+        m3.add(new Tile('R', 8));
+        m3.add(new Tile('R', 12));
+
+        a.add(m1);
+        a.add(m2);
+        a.add(m3);
+
+        assertTrue(AI1.)
+
+    }
 }

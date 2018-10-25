@@ -192,4 +192,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return a;
     }
 
+
+
+
 }
