@@ -151,42 +151,6 @@ public class StrategyTest{
     }
 
     @Test
-    public void forMySanity(){
-        //Generate tiles to use
-        Tile tile1 = new Tile('O', 10);
-        Tile tile2 = new Tile('O', 11);
-        Tile tile3 = new Tile('O', 12);
-        Tile tile4 = new Tile('B', 10);
-        Tile tile5 = new Tile('G', 8);
-
-        //Initialize a hand that can't generate a play of 30
-        Meld hand = new Meld();
-        hand.add(tile1);
-        hand.add(tile2);
-        hand.add(tile3);
-        hand.add(tile4);
-        hand.add(tile5);
-
-        //Initialize AI with the specified hand and table
-        Strategy1 AI1 = new Strategy1();
-        AI1.setHand(hand);
-        Table t = new Table();
-        AI1.setTable(t);
-
-        HashMap<Meld, Integer> out = AI1.searchHand();
-
-        System.out.println(AI1.hand);
-
-        System.out.println("Before");
-
-        for(Map.Entry<Meld, Integer> pair : out.entrySet()){
-            System.out.println(pair.getKey());
-        }
-
-        System.out.println("After");
-    }
-
-    @Test
     public void testBreak30(){
 
         //Generate tiles to use
@@ -228,6 +192,7 @@ public class StrategyTest{
         table = AI1.play();
         assertTrue(table.getMelds().size() == 2);
         assertTrue(outTable.compare(table.getMelds().get(1)));
+        assertTrue(AI1.hand.getTiles().size() == 2);
 
     }
 

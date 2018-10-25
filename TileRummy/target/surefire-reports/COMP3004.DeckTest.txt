@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: COMP3004.DeckTest
--------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in COMP3004.DeckTest
-=======
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in COMP3004.DeckTest
->>>>>>> 7c7aac4647e2c7a9adbe65033ab11f26c261591d
