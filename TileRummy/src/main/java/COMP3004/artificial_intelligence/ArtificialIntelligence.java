@@ -23,7 +23,7 @@ import java.util.*;
 
 public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
 {
-    protected Meld hand = null;
+    public Meld hand = null;
     protected int score = 0;
 
     public ArtificialIntelligence() {

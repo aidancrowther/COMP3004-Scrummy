@@ -156,12 +156,12 @@ public class StrategyTest{
     public void testBreak30(){
 
         //Generate tiles to use
-        Tile tile1 = new Tile('O', 10);
-        Tile tile2 = new Tile('O', 9);
-        Tile tile3 = new Tile('O', 8);
+        Tile tile1 = new Tile('R', 10);
+        Tile tile2 = new Tile('O', 11);
+        Tile tile3 = new Tile('O', 7);
         Tile tile4 = new Tile('B', 10);
         Tile tile5 = new Tile('G', 8);
-        Tile tile6 = new Tile('O', 7);
+        Tile tile6 = new Tile('O', 10);
 
         //Initialize a hand that can't generate a play of 30
         Meld hand = new Meld();
@@ -179,13 +179,12 @@ public class StrategyTest{
 
         //Asser that the AI doesn't play if it can't break 30 points
         Table table = AI1.play();
-        assertTrue(table == t);
+        assertTrue(table.getMelds().size() == 1);
 
         //Generate the expected table
-        Table outTable = new Table();
+        Meld outTable = new Meld();
         outTable.add(tile1);
-        outTable.add(tile2);
-        outTable.add(tile3);
+        outTable.add(tile4);
         outTable.add(tile6);
 
         //Add a card to allow the player to break 30
@@ -194,7 +193,8 @@ public class StrategyTest{
 
         //Assert that the player plays their meld and returns the correct table
         table = AI1.play();
-        assertTrue(table == outTable);
+        assertTrue(table.getMelds().size() == 2);
+        assertTrue(outTable.compare(table.getMelds().get(1)));
 
     }
 
@@ -234,7 +234,7 @@ public class StrategyTest{
 
         //Assert that the player does not play onto the table
         Table output = AI1.play();
-        assertTrue(output == table);
+        assertTrue(output.getMelds().size() == 1);
 
         //Update the table so that the player can only add to existing melds
         table.add(tile7);

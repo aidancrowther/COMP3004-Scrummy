@@ -108,17 +108,18 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
-        //Add each meld to the correct meld on the table
+        //Add each meld to the correct meld on the table, removing the tiles from the players hand
         for(Meld m : longestList){
             if(handResults.get(m) != null){
                 Meld toAdd = new Meld();
                 for(Tile t : m.getTiles()){
                     toAdd.add(hand.remove(t));
                 }
+                output.add(toAdd);
             }
             else if(tableResults.get(m) != null){
                 for(Tile t : m.getTiles()){
-                    output.add(t, tableResults.get(m));
+                    output.add(hand.remove(t), tableResults.get(m));
                 }
             }
         }
