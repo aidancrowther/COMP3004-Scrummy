@@ -114,15 +114,18 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
+            Meld toAdd = new Meld();
 
             for (int j=0; j<h.size(); j++) {
                 m.add(h.get(j));
-                if (!m.isValid()) {
+                toAdd.add(h.get(j));
+                if (m.isValid()) {
+                    tMelds.put(toAdd, i);
+                } else {
                     m.remove(h.get(j));
+                    toAdd.remove(h.get(j));
                 }
             }
-
-            tMelds.put(m, i); //puts t into the HashMap, keeping track of Table location
         }
 
         return tMelds;
