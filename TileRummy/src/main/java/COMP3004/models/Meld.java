@@ -42,13 +42,13 @@ public class Meld {
         Removes a tile from the meld
         Walks through the arraylist until it finds an identical tile, then removes it.
     */
-    public void remove(Tile t) { 
+    public Tile remove(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
             if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
-                tiles.remove(i);   
-                break;
+                return tiles.remove(i);   
             }
         }
+        return null;
     }
 
     /*
