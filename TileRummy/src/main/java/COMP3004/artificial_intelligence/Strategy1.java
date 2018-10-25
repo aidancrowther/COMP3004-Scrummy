@@ -57,12 +57,15 @@ public class Strategy1 extends ArtificialIntelligence
         */
 
 
+        //Get all possible melds
         HashMap<Meld, Integer> handResults = searchHand();
         HashMap<Meld, Integer> tableResults = searchTable(table);
 
+        //Lists to track hand status
         HashMap<Tile, Integer> inHand = new HashMap<>();
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
+        //Output table
         Table output = table;
 
         //Identify duplicate tiles and keep track of all tiles
@@ -95,6 +98,7 @@ public class Strategy1 extends ArtificialIntelligence
             results.add(result);
         }
 
+        //Find the longest set of melds to use
         int longest = 0;
         ArrayList<Meld> longestList = new ArrayList<>();
         for(ArrayList<Meld> a : results){
@@ -104,6 +108,7 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
+        //Add each meld to the correct meld on the table
         for(Meld m : longestList){
             if(handResults.get(m) != null) output.add(m);
             else if(tableResults.get(m) != null){
@@ -113,6 +118,7 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
+        //Return the output table
         return output;
     }
 
