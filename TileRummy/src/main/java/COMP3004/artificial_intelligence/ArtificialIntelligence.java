@@ -193,6 +193,15 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
 
+    public int listScore(ArrayList<Meld> a) {
+        int output = 0;
+        for (int i=0; i<a.size(); i++) {
+            for (int j=0; j<a.get(i).getTiles().size(); j++) {
+                output += a.get(i).getTiles().get(j).getValue();
+            }
+        }
 
+        return output;
+    }
 
 }

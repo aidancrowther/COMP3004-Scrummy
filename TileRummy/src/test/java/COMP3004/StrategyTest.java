@@ -384,7 +384,7 @@ public class StrategyTest{
         a.add(m2);
         a.add(m3);
 
-        assertTrue(AI1.)
+        assertTrue(AI1.listScore(a) == 92);
 
     }
 }
