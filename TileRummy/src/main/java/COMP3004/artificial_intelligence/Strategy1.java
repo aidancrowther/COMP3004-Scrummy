@@ -133,8 +133,7 @@ public class Strategy1 extends ArtificialIntelligence
         if (this.score < 30) {
             this.score = 0;
             return new Table();
-        }
-        return output;
+        } else return output;
     }
 
 }
