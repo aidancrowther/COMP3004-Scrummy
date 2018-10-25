@@ -58,8 +58,13 @@ public class Strategy1 extends ArtificialIntelligence
 
 
         //Get all possible melds
-        HashMap<Meld, Integer> handResults = searchHand();
-        HashMap<Meld, Integer> tableResults = searchTable(table);
+        HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> tableResults = new HashMap<Meld, Integer>();
+        
+        handResults = searchHand();
+        if (this.score >= 30) {
+            tableResults = searchTable(table);
+        }
 
         //Lists to track hand status
         HashMap<Tile, Integer> inHand = new HashMap<>();
@@ -113,6 +118,7 @@ public class Strategy1 extends ArtificialIntelligence
             if(handResults.get(m) != null){
                 Meld toAdd = new Meld();
                 for(Tile t : m.getTiles()){
+                    this.score += hand.get(t).getValue();
                     toAdd.add(hand.remove(t));
                 }
             }
@@ -124,6 +130,10 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Return the output table
+        if (this.score < 30) {
+            this.score = 0;
+            return new Table();
+        }
         return output;
     }
 

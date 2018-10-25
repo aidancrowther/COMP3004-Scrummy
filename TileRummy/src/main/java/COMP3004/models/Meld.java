@@ -51,6 +51,15 @@ public class Meld {
         return null;
     }
 
+    public Tile get(Tile t) {
+        for (int i=0; i<tiles.size(); i++) {
+            if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
+                return tiles.get(i);   
+            }
+        }
+        return null;
+    }
+
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
@@ -58,34 +67,24 @@ public class Meld {
     */
     public void sort() {
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
-            //If two tiles have the same colour, assume it's a run.
-            if (tiles.get(0).getColour() == tiles.get(1).getColour()) {
-                //Override default comparator to compare by tile value (ints)
-                Collections.sort(tiles, new Comparator<Tile>() {
-                    @Override 
-                    public int compare(Tile t1, Tile t2) {  
-                        if (t1.getValue() > t2.getValue()) { 
-                            return 1;
-                        } else if (t1.getValue() < t2.getValue()) {
-                            return -1;
-                        }
+            //Override default comparator to compare by tile value (ints)
+            Collections.sort(tiles, new Comparator<Tile>() {
+                @Override 
+                public int compare(Tile t1, Tile t2) {  
+                    if (t1.getColour() > t2.getColour()) {
+                        return 1;
+                    } else if (t1.getValue() < t2.getValue()) {
+                        return -1;
+                    }
+                    if (t1.getValue() > t2.getValue()) {
+                        return 1;
+                    } else if (t1.getValue() < t2.getValue()) {
+                        return -1;
+                    } else {
                         return 0;
                     }
-                });
-            } else { //sort a set
-                //Override default comparator to compare by tile colour (chars)
-                Collections.sort(tiles, new Comparator<Tile>() {
-                    @Override 
-                    public int compare(Tile t1, Tile t2) {  
-                        if (t1.getColour() > t2.getColour()) { 
-                            return 1;
-                        } else if (t1.getColour() < t2.getColour()) {
-                            return -1;
-                        } 
-                        return 0;
-                    }
-                });
-            }
+                }
+            });
         }
 
     }
