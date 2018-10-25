@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: COMP3004.TerminalUITest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in COMP3004.TerminalUITest
-=======
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in COMP3004.TerminalUITest
->>>>>>> 996baee7997018bc6bc3dfe82728bfbd2a0230a6
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in COMP3004.TerminalUITest
