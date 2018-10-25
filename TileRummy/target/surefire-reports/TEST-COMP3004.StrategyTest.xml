@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5072183182275714183.jar /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire 2018-10-24T22-03-45_937-jvmRun1 surefire5423003309258846761tmp surefire_06005089333156162016tmp"/>
+    <property name="sun.java.command" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5843607008061593410.jar /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire 2018-10-25T13-10-52_543-jvmRun1 surefire3420423048959147130tmp surefire_07368460626104896347tmp"/>
     <property name="surefire.test.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/test-classes:/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/classes:/home/aidancrowther/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/aidancrowther/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/aidancrowther"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5072183182275714183.jar"/>
+    <property name="surefire.real.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5843607008061593410.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_181-b13"/>
@@ -59,14 +59,14 @@
   </properties>
   <testcase name="testSearchHand" classname="COMP3004.StrategyTest" time="0.001"/>
   <testcase name="testSearchTable" classname="COMP3004.StrategyTest" time="0"/>
-  <testcase name="testBreak30" classname="COMP3004.StrategyTest" time="0">
+  <testcase name="testBreak30" classname="COMP3004.StrategyTest" time="0.001">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
 	at COMP3004.StrategyTest.testBreak30(StrategyTest.java:199)
 </failure>
   </testcase>
   <testcase name="testSetHand" classname="COMP3004.StrategyTest" time="0"/>
   <testcase name="testSelectTile" classname="COMP3004.StrategyTest" time="0"/>
-  <testcase name="testDifferentTableStates" classname="COMP3004.StrategyTest" time="0.001">
+  <testcase name="testDifferentTableStates" classname="COMP3004.StrategyTest" time="0">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
 	at COMP3004.StrategyTest.testDifferentTableStates(StrategyTest.java:257)
 </failure>

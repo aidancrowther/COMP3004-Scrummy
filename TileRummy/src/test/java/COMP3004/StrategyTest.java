@@ -13,8 +13,6 @@ import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import org.junit.Test;
 
-
-
 //Test all AI strategies 1 - 4
 public class StrategyTest{
 
