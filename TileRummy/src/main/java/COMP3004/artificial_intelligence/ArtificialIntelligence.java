@@ -63,7 +63,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         ArrayList<Tile> h = hand.getTiles();
 
         //runs
-        for (int i=0; i<h.size()-3; i++) {
+        for (int i=0; i<h.size()-2; i++) {
             Meld m = new Meld();
             m.add(h.get(i));
             m.add(h.get(i+1));

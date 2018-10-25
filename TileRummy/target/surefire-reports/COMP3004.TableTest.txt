@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: COMP3004.TableTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s - in COMP3004.TableTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s - in COMP3004.TableTest
