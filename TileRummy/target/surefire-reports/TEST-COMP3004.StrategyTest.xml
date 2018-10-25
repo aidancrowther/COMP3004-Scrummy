@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.StrategyTest" time="0.024" tests="7" errors="0" skipped="0" failures="1">
+=======
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="COMP3004.StrategyTest" time="0.004" tests="7" errors="0" skipped="0" failures="2">
+>>>>>>> 996baee7997018bc6bc3dfe82728bfbd2a0230a6
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -17,9 +21,15 @@
     <property name="os.name" value="Windows 10"/>
     <property name="user.country" value="CA"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
+<<<<<<< HEAD
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\bin"/>
     <property name="sun.java.command" value="C:\Users\Al\AppData\Local\Temp\surefire6915192916753470400\surefirebooter6928528898781114179.jar C:\Users\Al\AppData\Local\Temp\surefire6915192916753470400 2018-10-25T15-11-53_987-jvmRun1 surefire7030570849241909767tmp surefire_02067453466533694268tmp"/>
     <property name="surefire.test.class.path" value="C:\3004\Scrummy\TileRummy\target\test-classes;C:\3004\Scrummy\TileRummy\target\classes;C:\Users\Al\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Al\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+=======
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
+    <property name="sun.java.command" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5709462652104707056.jar /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire 2018-10-25T15-08-29_641-jvmRun1 surefire7277679288567671677tmp surefire_03583671722247991tmp"/>
+    <property name="surefire.test.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/test-classes:/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/classes:/home/aidancrowther/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/aidancrowther/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+>>>>>>> 996baee7997018bc6bc3dfe82728bfbd2a0230a6
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Al"/>
     <property name="user.language" value="en"/>
@@ -30,10 +40,16 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
+<<<<<<< HEAD
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="surefire.real.class.path" value="C:\Users\Al\AppData\Local\Temp\surefire6915192916753470400\surefirebooter6928528898781114179.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_181\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_181\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_181\jre\classes"/>
     <property name="user.script" value=""/>
+=======
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/target/surefire/surefirebooter5709462652104707056.jar"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
+>>>>>>> 996baee7997018bc6bc3dfe82728bfbd2a0230a6
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_181-b13"/>
     <property name="user.name" value="Al"/>
@@ -61,11 +77,21 @@
     <property name="java.class.version" value="52.0"/>
   </properties>
   <testcase name="testSearchHand" classname="COMP3004.StrategyTest" time="0"/>
+<<<<<<< HEAD
   <testcase name="testSearchTable" classname="COMP3004.StrategyTest" time="0"/>
   <testcase name="testBreak30" classname="COMP3004.StrategyTest" time="0"/>
   <testcase name="forMySanity" classname="COMP3004.StrategyTest" time="0.022"/>
+=======
+  <testcase name="testSearchTable" classname="COMP3004.StrategyTest" time="0.001"/>
+  <testcase name="testBreak30" classname="COMP3004.StrategyTest" time="0.001">
+    <failure type="java.lang.AssertionError">java.lang.AssertionError
+	at COMP3004.StrategyTest.testBreak30(StrategyTest.java:229)
+</failure>
+  </testcase>
+  <testcase name="forMySanity" classname="COMP3004.StrategyTest" time="0.001"/>
+>>>>>>> 996baee7997018bc6bc3dfe82728bfbd2a0230a6
   <testcase name="testSetHand" classname="COMP3004.StrategyTest" time="0"/>
-  <testcase name="testSelectTile" classname="COMP3004.StrategyTest" time="0"/>
+  <testcase name="testSelectTile" classname="COMP3004.StrategyTest" time="0.001"/>
   <testcase name="testDifferentTableStates" classname="COMP3004.StrategyTest" time="0">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
 	at COMP3004.StrategyTest.testDifferentTableStates(StrategyTest.java:270)
