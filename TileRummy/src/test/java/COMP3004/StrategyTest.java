@@ -192,6 +192,7 @@ public class StrategyTest{
         table = AI1.play();
         assertTrue(table.getMelds().size() == 2);
         assertTrue(outTable.compare(table.getMelds().get(1)));
+        assertTrue(AI1.hand.getTiles().size() == 2);
 
     }
 

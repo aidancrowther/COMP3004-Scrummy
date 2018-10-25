@@ -62,7 +62,7 @@ public class Strategy1 extends ArtificialIntelligence
         HashMap<Meld, Integer> tableResults = new HashMap<Meld, Integer>();
         
         handResults = searchHand();
-        if (this.score >= 30) {
+        if (score >= 30) {
             tableResults = searchTable(table);
         }
 
@@ -107,8 +107,12 @@ public class Strategy1 extends ArtificialIntelligence
         int longest = 0;
         ArrayList<Meld> longestList = new ArrayList<>();
         for(ArrayList<Meld> a : results){
-            if(a.size() > longest){
+            if(a.size() > longest && score >= 30){
                 longest = a.size();
+                longestList = a;
+            }
+            else if(listScore(a) > longest && score < 30){
+                longest = listScore(a);
                 longestList = a;
             }
         }
@@ -131,10 +135,8 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Return the output table
-        if (this.score < 30) {
-            this.score = 0;
-            return new Table();
-        } else return output;
+        if (longest < 30) return new Table();
+        else return output;
     }
 
 }
