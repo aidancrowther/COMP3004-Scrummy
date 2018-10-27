@@ -131,6 +131,14 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
+    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+
+        return null;
+    }
+
+
+
+
     //Return if two tiles have the same colour and value
     public Boolean isEquivalent(Tile a, Tile b){
         Boolean result = true;
