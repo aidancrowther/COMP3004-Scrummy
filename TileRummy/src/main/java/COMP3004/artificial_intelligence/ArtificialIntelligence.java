@@ -141,10 +141,18 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             Meld m = table.getMelds().get(i).copy();        //the meld about to be split
             for (int j=0; j<m.size(); j++) {                //for every tile in meld i
                 Meld shortM = new Meld();
-                for (int k=j; k<m.size(); k++) {
+                for (int k=j; k<m.size(); k++) {            //splitting up meld
+                    shortM.add(m.getTiles().get(k));
                     
+
+
+
+
+
+
                 }
             }
+        }
 
 
 
@@ -160,7 +168,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                     split as the value                    
                 */
             
-        }
 
 
         return null;
