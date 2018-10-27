@@ -131,14 +131,30 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table ttable) {
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
+        ArrayList<Tile> h = hand.getTiles();
+        ArrayList<Meld> t = table.getMelds();
+        Meld hTiles = new Meld();                       //this will contain all of hand's tiles to be used in splits
+        ArrayList<Meld> aList = new ArrayList<Meld>();  //arraylist of melds created from a split
+
+        for (int i=1; i<t.size(); i++) {                //for every meld in table
+            Meld m = t.get(i).copy();
+            for (int j=0; j<m.getTiles().size(); j++) { //for every tile in table
+                /*  find every sequence of tiles in a run, and every combination in a set
+                    for each one, iterate through the tiles and see if they can be added to make
+                    a valid meld
+
+                    Go with the first option you find for simplicity's sake
+                    Once you've made a valid meld, see if the rest of the table's meld can make a valid meld
+                    either on its own or with other tiles
+                    If so, add the tiles from hand to hTiles, and add the table's position and all results of the
+                    split as the value                    
+                */
+            }
+        }
 
 
-
-
-
-        
         return null;
     }
 
