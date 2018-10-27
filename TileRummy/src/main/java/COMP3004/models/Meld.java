@@ -15,6 +15,8 @@ public class Meld {
     //gets meld contents
     public ArrayList<Tile> getTiles() { return tiles; }
 
+    public int size() { return tiles.size(); }
+
 
     /*
         Adds a tile to the current meld 

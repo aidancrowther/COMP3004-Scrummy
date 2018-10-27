@@ -131,16 +131,24 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table ttable) {
+    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
         ArrayList<Tile> h = hand.getTiles();
-        ArrayList<Meld> t = table.getMelds();
         Meld hTiles = new Meld();                       //this will contain all of hand's tiles to be used in splits
         ArrayList<Meld> aList = new ArrayList<Meld>();  //arraylist of melds created from a split
 
-        for (int i=1; i<t.size(); i++) {                //for every meld in table
-            Meld m = t.get(i).copy();
-            for (int j=0; j<m.getTiles().size(); j++) { //for every tile in table
+        for (int i=1; i<table.getMelds().size(); i++) {     //for every meld in table
+            Meld m = table.getMelds().get(i).copy();        //the meld about to be split
+            for (int j=0; j<m.size(); j++) {                //for every tile in meld i
+                Meld shortM = new Meld();
+                for (int k=j; k<m.size(); k++) {
+                    
+                }
+            }
+
+
+
+
                 /*  find every sequence of tiles in a run, and every combination in a set
                     for each one, iterate through the tiles and see if they can be added to make
                     a valid meld
@@ -151,7 +159,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                     If so, add the tiles from hand to hTiles, and add the table's position and all results of the
                     split as the value                    
                 */
-            }
+            
         }
 
 
@@ -211,7 +219,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
             @Override
             public int compare(Meld m1, Meld m2){
-                return Integer.compare(m1.getTiles().size(), m2.getTiles().size());
+                return Integer.compare(m1.size(), m2.size());
             }
         };
 
@@ -226,7 +234,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     public int listScore(ArrayList<Meld> a) {
         int output = 0;
         for (int i=0; i<a.size(); i++) {
-            for (int j=0; j<a.get(i).getTiles().size(); j++) {
+            for (int j=0; j<a.get(i).size(); j++) {
                 output += a.get(i).getTiles().get(j).getValue();
             }
         }

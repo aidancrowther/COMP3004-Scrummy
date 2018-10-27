@@ -445,7 +445,6 @@ public class StrategyTest{
         h.add(new Tile('R', 5));
         h.add(new Tile('O', 4));
         h.add(new Tile('O', 5));
-        h.add(new Tile('B', 11));
 
         t.add(m1);
         t.add(m2);
