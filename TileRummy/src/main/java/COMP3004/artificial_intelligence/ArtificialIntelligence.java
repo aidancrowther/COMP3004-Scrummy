@@ -132,7 +132,13 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
 
+
+
+
+
+        
         return null;
     }
 

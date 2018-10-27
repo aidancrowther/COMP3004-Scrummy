@@ -433,20 +433,29 @@ public class StrategyTest{
         m6.add(new Tile('G', 6));
         m6.add(new Tile('R', 6));
 
+        Meld m7 = new Meld();
+        m7.add(new Tile('B', 9));
+        m7.add(new Tile('B', 10));
+        m7.add(new Tile('B', 11));
+        m7.add(new Tile('B', 12));
+
         Meld h = new Meld();
         h.add(new Tile('R', 1));
         h.add(new Tile('R', 3));
         h.add(new Tile('R', 5));
         h.add(new Tile('O', 4));
         h.add(new Tile('O', 5));
+        h.add(new Tile('B', 11));
 
         t.add(m1);
         t.add(m2);
+        t.add(m7);
         AI1.setHand(h);
 
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
 
         assertTrue(sTest.get(h) != null);
+        assertTrue(sTest.size() == 2);
         assertTrue(getAListFromValue(sTest.get(h), 1).get(0).compare(m3));
         assertTrue(getAListFromValue(sTest.get(h), 1).get(1).compare(m4));
         assertTrue(getAListFromValue(sTest.get(h), 2).get(0).compare(m5));
