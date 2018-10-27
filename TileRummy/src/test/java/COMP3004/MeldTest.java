@@ -182,6 +182,7 @@ public class MeldTest {
     public void testIsRun() {
         Meld m1 = new Meld();
         Meld m2 = new Meld();
+        Meld m3 = new Meld();
 
         m1.add(new Tile('G', 3));
         m1.add(new Tile('B', 3));
@@ -191,8 +192,13 @@ public class MeldTest {
         m2.add(new Tile('G', 2));
         m2.add(new Tile('G', 3));
 
+        m3.add(new Tile('G', 1));
+        m3.add(new Tile('R', 1));
+        m3.add(new Tile('G', 6));
+
         assertTrue(!m1.isRun());
         assertTrue(m2.isRun());
+        assertTrue(!m3.isRun());
     }
 
 

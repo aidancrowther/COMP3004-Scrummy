@@ -153,6 +153,13 @@ public class Meld {
         return true;
     }
 
+    public boolean isRun() {
+        if (!isValid() || tiles.get(0).getColour() != tiles.get(1).getColour()) {
+            return false;
+        }
+        return true;
+    }
+
 
 
 
