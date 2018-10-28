@@ -173,12 +173,15 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                             for (int q=0; q<shortM.size(); q++) {
                                 h.remove(shortM.getTiles().get(q)); //dont reuse tiles
                                 m.remove(shortM.getTiles().get(q)); //dont reuse meld tiles
+                                j--;
                             }
                             aList.add(shortM.copy());
                             break;
                         }
                     }
                 
+
+
                 } else { //splitting a set
 
                 }
