@@ -146,8 +146,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 if (m.isRun()) {                                //splitting a run
                     for (int k=j; k<m.size(); k++) {            //break it up
                         if (shortM.size() + 1 != m.size()) {    //do not make the actual meld; searchTable does this part                     //runs
+                            
                             shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
                             for (int p=0; p<h.size(); p++) {    //iterate through hand
+                                
                                 if ((h.get(p).getColour() == shortM.getTiles().get(0).getColour() &&
                                     (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 || 
                                      h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1)) ||
@@ -162,7 +164,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                                     hTiles.remove(h.get(p));
                                 }
                             }
-                            aList.add(shortM.copy());     
+                            aList.add(shortM.copy());   
                         }
                     }
                 
