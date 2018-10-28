@@ -136,6 +136,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
         Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
 
+        if (t == null || t.getMelds().size() == 1) {
+            return tableSplits;
+        }
+
         for (int i=1; i<table.getMelds().size(); i++) {         //for every meld in table
             ArrayList<Meld> aList = new ArrayList<Meld>();       //arraylist of melds created from a split
             Meld m = table.getMelds().get(i).copy();            //the meld about to be split
@@ -166,14 +170,12 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                             }                              
                         }
                         if (shortM.isValid()) {
-                            /*for (int q=0; q<shortM.size(); q++) {
+                            for (int q=0; q<shortM.size(); q++) {
                                 h.remove(shortM.getTiles().get(q)); //dont reuse tiles
+                                m.remove(shortM.getTiles().get(q)); //dont reuse meld tiles
                             }
                             aList.add(shortM.copy());
-                            if (k == 0) {
-                                j++;
-                            }
-                            break;*/
+                            break;
                         }
                     }
                 
@@ -184,16 +186,15 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
             }
 
-            /*REMOVE TILES FROM M WHEN THEY GET USED! 
-            
-            
-            if () {
-
-            }*/
+            /*REMOVE TILES FROM M WHEN THEY GET USED */         
+            if (m.getTiles().isEmpty()) {
+                meldSplits.put(aList, i);
+            }
             
         }
 
-        return null;
+        tableSplits.put(hTiles, meldSplits);
+        return tableSplits;
     }
 
 
