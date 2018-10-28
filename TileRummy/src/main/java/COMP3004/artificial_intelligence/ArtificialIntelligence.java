@@ -111,6 +111,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
 
+        if (t == null) {
+            return tMelds;
+        }
+
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
@@ -135,15 +139,15 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
         HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
         Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
+        ArrayList<Tile> h = hand.copy().getTiles();
 
-        if (t == null || t.getMelds().size() == 1) {
+        if (t == null) {
             return tableSplits;
         }
 
-        for (int i=1; i<table.getMelds().size(); i++) {         //for every meld in table
+        for (int i=1; i<t.getMelds().size(); i++) {             //for every meld in table
             ArrayList<Meld> aList = new ArrayList<Meld>();       //arraylist of melds created from a split
-            Meld m = table.getMelds().get(i).copy();            //the meld about to be split
-            ArrayList<Tile> h = hand.copy().getTiles();
+            Meld m = t.getMelds().get(i).copy();                //the meld about to be split
             
             for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
@@ -171,16 +175,14 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                         }
                         if (shortM.isValid()) {
                             for (int q=0; q<shortM.size(); q++) {
-                                h.remove(shortM.getTiles().get(q)); //dont reuse tiles
+                                h.remove(shortM.getTiles().get(q)); //dont reuse hand's tiles
                                 m.remove(shortM.getTiles().get(q)); //dont reuse meld tiles
-                                j--;
                             }
+                            j--;
                             aList.add(shortM.copy());
-                            break;
+                            k=999;
                         }
                     }
-                
-
 
                 } else { //splitting a set
 
@@ -198,7 +200,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
         tableSplits.put(hTiles, meldSplits);
         return tableSplits;
-    }
+    } 
 
 
 
