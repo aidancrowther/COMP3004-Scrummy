@@ -132,34 +132,49 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
-        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
         ArrayList<Tile> h = hand.getTiles();
-        Meld hTiles = new Meld();                       //this will contain all of hand's tiles to be used in splits
-        ArrayList<Meld> aList = new ArrayList<Meld>();  //arraylist of melds created from a split
+        Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
 
-        for (int i=1; i<table.getMelds().size(); i++) {     //for every meld in table
-            Meld m = table.getMelds().get(i).copy();        //the meld about to be split
-            for (int j=0; j<m.size(); j++) {                //for every tile in meld i
+        for (int i=1; i<table.getMelds().size(); i++) {         //for every meld in table
+            HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>();
+            ArrayList<Meld> aList = new ArrayList<Meld>();          //arraylist of melds created from a split
+            Meld m = table.getMelds().get(i).copy();            //the meld about to be split
+            
+            for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
-                for (int k=j; k<m.size(); k++) {            //splitting up meld
-                    shortM.add(m.getTiles().get(k));
-                    
+                if (m.isRun()) {                                //splitting a run
+                    for (int k=j; k<m.size(); k++) {            //break it up
+                        if (shortM.size() + 1 != m.size()) {    //do not make the actual meld; searchTable does this part                     //runs
+                            shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
+                            for (int p=0; p<h.size(); p++) {    //iterate through hand
+                                if ((h.get(p).getColour() == shortM.getTiles().get(0).getColour() &&
+                                    (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 || 
+                                     h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1)) ||
+                                     (h.get(p).getColour() != shortM.getTiles().get(0).getColour() &&
+                                     shortM.getTiles().get(0).getValue() == h.get(p).getValue())) {
 
-
-
-
-
+                                    shortM.add(h.get(p));
+                                    hTiles.add(h.get(p));
+                                } 
+                                if (shortM.size() > 2 && !shortM.isValid()) {
+                                    shortM.remove(h.get(p));
+                                    hTiles.remove(h.get(p));
+                                }
+                            }
+                            aList.add(shortM.copy());     
+                        }
+                    }
+                
+                } else { //splitting a set
 
                 }
             }
-        }
 
 
 
 
-                /*  find every sequence of tiles in a run, and every combination in a set
-                    for each one, iterate through the tiles and see if they can be added to make
-                    a valid meld
+                /*  
 
                     Go with the first option you find for simplicity's sake
                     Once you've made a valid meld, see if the rest of the table's meld can make a valid meld
@@ -168,7 +183,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                     split as the value                    
                 */
             
-
+        }
 
         return null;
     }
