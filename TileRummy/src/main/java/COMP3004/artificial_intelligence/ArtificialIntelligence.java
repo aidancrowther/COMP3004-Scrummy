@@ -133,57 +133,63 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
     public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
-        ArrayList<Tile> h = hand.getTiles();
+        HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
         Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
 
         for (int i=1; i<table.getMelds().size(); i++) {         //for every meld in table
-            HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>();
-            ArrayList<Meld> aList = new ArrayList<Meld>();          //arraylist of melds created from a split
+            ArrayList<Meld> aList = new ArrayList<Meld>();       //arraylist of melds created from a split
             Meld m = table.getMelds().get(i).copy();            //the meld about to be split
+            ArrayList<Tile> h = hand.copy().getTiles();
             
             for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
                 if (m.isRun()) {                                //splitting a run
                     for (int k=j; k<m.size(); k++) {            //break it up
-                        if (shortM.size() + 1 != m.size()) {    //do not make the actual meld; searchTable does this part                     //runs
-                            
+                        if (shortM.size() + 1 != m.size()) {    //do not make the actual meld; searchTable does this part 
                             shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
+                            
                             for (int p=0; p<h.size(); p++) {    //iterate through hand
                                 
                                 if ((h.get(p).getColour() == shortM.getTiles().get(0).getColour() &&
                                     (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 || 
                                      h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1)) ||
                                      (h.get(p).getColour() != shortM.getTiles().get(0).getColour() &&
-                                     shortM.getTiles().get(0).getValue() == h.get(p).getValue())) {
+                                     shortM.getTiles().get(0).getValue() == h.get(p).getValue())) { //if it can be added
 
                                     shortM.add(h.get(p));
                                     hTiles.add(h.get(p));
                                 } 
-                                if (shortM.size() > 2 && !shortM.isValid()) {
+                                if (shortM.size() > 2 && !shortM.isValid()) {  //in case the wrong type was added
                                     shortM.remove(h.get(p));
                                     hTiles.remove(h.get(p));
                                 }
+                            }                              
+                        }
+                        if (shortM.isValid()) {
+                            /*for (int q=0; q<shortM.size(); q++) {
+                                h.remove(shortM.getTiles().get(q)); //dont reuse tiles
                             }
-                            aList.add(shortM.copy());   
+                            aList.add(shortM.copy());
+                            if (k == 0) {
+                                j++;
+                            }
+                            break;*/
                         }
                     }
                 
                 } else { //splitting a set
 
                 }
+
+
             }
 
+            /*REMOVE TILES FROM M WHEN THEY GET USED! 
+            
+            
+            if () {
 
-
-
-                /*  
-
-                    Go with the first option you find for simplicity's sake
-                    Once you've made a valid meld, see if the rest of the table's meld can make a valid meld
-                    either on its own or with other tiles
-                    If so, add the tiles from hand to hTiles, and add the table's position and all results of the
-                    split as the value                    
-                */
+            }*/
             
         }
 
