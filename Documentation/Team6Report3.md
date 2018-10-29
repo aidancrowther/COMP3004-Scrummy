@@ -24,7 +24,7 @@ __Plans until Due Date:__
 ### Ellis Glennie
 __Work Completed:__
 
-* Added methods to Meld and Table for AI functionality
+* Added methods to Meld and Table for AI functionality (using TDD)
 * Tested and wrote methods (using TDD) for AI to interact with the table, including:
     * Creating melds from its own hand to add to the table
     * Adding to preexisting melds on the table from its own hand
