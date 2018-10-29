@@ -179,7 +179,7 @@ public class MeldTest {
     }
 
     @Test
-    public void testIsRun() {
+    public void testMeldType() {
         Meld m1 = new Meld();
         Meld m2 = new Meld();
         Meld m3 = new Meld();
@@ -196,9 +196,9 @@ public class MeldTest {
         m3.add(new Tile('R', 1));
         m3.add(new Tile('G', 6));
 
-        assertTrue(!m1.isRun());
-        assertTrue(m2.isRun());
-        assertTrue(!m3.isRun());
+        assertTrue(m1.meldType() == -1);
+        assertTrue(m2.meldType() == 1);
+        assertTrue(m3.meldType() == 0);
     }
 
 
