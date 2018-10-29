@@ -42,11 +42,12 @@ public class Controller
         * else
         *   have scrummy evaluate the table and update if valid rest player hand if not
         * */
-        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
         Meld playerHandCopy = new Meld();
         for(Tile t : this.scrummy.getCurrentPlayer().getHand().getTiles()){
             playerHandCopy.add(t);
         }
+        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+
     }
 
     // FOR TESTING
