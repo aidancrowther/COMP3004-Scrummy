@@ -391,7 +391,7 @@ public class StrategyTest{
     }
 
     @Test
-    public void splitRuns() {
+    public void testSplittingRuns() {
         Strategy1 AI1 = new Strategy1();
         Table t = new Table();
 
@@ -435,6 +435,14 @@ public class StrategyTest{
         
         assertTrue(test.get(0).compare(m3));
         assertTrue(test.get(1).compare(m4));
+        //more here later
+    }
+
+    @Test
+    public void testSplittingSets() {
+
+
+
 
     }
 
