@@ -50,8 +50,7 @@ public class Scrummy implements Subject
         * and increment current player
         * Else
         *   keep table as is and notify observers
-        *   also add the tiles the user played back into
-        *   their hand
+        *   reset player hand if not
         * */
     }
 
@@ -68,4 +67,6 @@ public class Scrummy implements Subject
     public void setCurrentPlayerIndex(int index) { this.currentPlayerIndex = index; }
 
     public Player[] getPlayers() { return this.players; }
+
+    public Deck getDeck() { return this.deck; }
 }

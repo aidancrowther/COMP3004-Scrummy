@@ -40,14 +40,32 @@ public class Controller
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
-        *   have scrummy evaluate the table and update if valid rest player hand if not
+        *   have scrummy evaluate the table and update if valid reset player hand if not
         * */
-        Meld playerHandCopy = new Meld();
-        for(Tile t : this.scrummy.getCurrentPlayer().getHand().getTiles()){
-            playerHandCopy.add(t);
+        boolean play = true;
+        int winnerIndex = -1;
+        while(play){
+            Meld playerHandCopy = new Meld();
+            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles()){
+                playerHandCopy.add(t);
+            }
+            //Check current player and respond appropriately here
+            Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+            if(playedTable.equals(this.getScrummy().getTable())) {
+                this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
+            } else {
+                this.getScrummy().validatePlayerMove(playedTable);
+            }
+            for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
+                if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
+                    play = false;
+                    winnerIndex = i;
+                    break;
+                }
+            }
         }
-        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
 
+        //print winner
     }
 
     // FOR TESTING
