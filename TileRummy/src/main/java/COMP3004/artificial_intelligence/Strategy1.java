@@ -60,10 +60,12 @@ public class Strategy1 extends ArtificialIntelligence
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
         HashMap<Meld, Integer> tableResults = new HashMap<Meld, Integer>();
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> splitResults = new HashMap<>();
         
         handResults = searchHand();
         if (score >= 30) {
             tableResults = searchTable(table);
+            //splitResults = searchSplit(table);
         }
 
         //Lists to track hand status
@@ -92,6 +94,9 @@ public class Strategy1 extends ArtificialIntelligence
             allMelds.add(pair.getKey());
         }
         for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
+            allMelds.add(pair.getKey());
+        }
+        for(Map.Entry<Meld, HashMap<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
             allMelds.add(pair.getKey());
         }
 
@@ -134,6 +139,9 @@ public class Strategy1 extends ArtificialIntelligence
                 for(Tile t : m.getTiles()){
                     output.add(hand.remove(t), tableResults.get(m));
                 }
+            }
+            else if(splitResults.get(m) != null){
+
             }
         }
 

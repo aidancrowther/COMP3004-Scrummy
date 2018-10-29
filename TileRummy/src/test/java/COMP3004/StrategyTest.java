@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNoException;
 
 import COMP3004.artificial_intelligence.ArtificialIntelligence;
 import COMP3004.artificial_intelligence.Strategy1;
@@ -324,6 +325,176 @@ public class StrategyTest{
             }
         }
 
+        assertTrue(expected1Found);
+        assertTrue(expected2Found);
+    }
+
+    @Test
+    public void testPlaySplit(){
+        //does play() react appropriately to:
+        //    Table it can't split
+        //    Table it can split run
+        //    Table it can split set
+        //    Table it can split multiple times
+
+        //Generate tiles to use
+        Tile tile1 = new Tile('O', 10);
+        Tile tile2 = new Tile('O', 9);
+        Tile tile3 = new Tile('O', 8);
+        Tile tile4 = new Tile('B', 7);
+        Tile tile5 = new Tile('G', 7);
+        Tile tile6 = new Tile('O', 7);
+        Tile tile7 = new Tile('O', 7);
+        Tile tile8 = new Tile('O', 9);
+        Tile tile9 = new Tile('O', 11);
+        Tile tile10 = new Tile('R', 7);
+        Tile tile11 = new Tile('R', 7);
+
+        //Initialize the AI to use
+        ArtificialIntelligence AI1 = new Strategy1();
+        AI1.setScore(30);
+
+        //Test with a table that the player can't split
+        Table table = new Table();
+        table.add(tile1);
+        table.add(tile2);
+        table.add(tile3);
+        AI1.setTable(table);
+
+        Meld hand = new Meld();
+        hand.add(tile9);
+        AI1.setHand(hand);
+
+        Meld expected = new Meld();
+        expected.add(tile1);
+        expected.add(tile2);
+        expected.add(tile3);
+        expected.add(tile9);
+
+        Table output = AI1.play();
+        ArrayList<Meld> melds = output.getMelds();
+
+        //Assert that the player plays a normal hand
+        assertTrue(melds.size() == 2);
+        assertTrue(melds.get(1).compare(expected));
+
+        //Test with a table where the player can split a run
+        table = new Table();
+        table.add(tile1);
+        table.add(tile2);
+        table.add(tile3);
+        AI1.setTable(table);
+
+        hand = new Meld();
+        hand.add(tile9);
+        hand.add(tile8);
+        hand.add(tile7);
+        AI1.setHand(hand);
+
+        Meld expected1 = new Meld();
+        expected.add(tile7);
+        expected.add(tile2);
+        expected.add(tile9);
+
+        Meld expected2 = new Meld();
+        expected.add(tile3);
+        expected.add(tile8);
+        expected.add(tile1);
+
+        output = AI1.play();
+        melds = output.getMelds();
+
+        Boolean expected1Found = false;
+        Boolean expected2Found = false;
+
+        //Assert that the player plays a split on the tables run
+        assertTrue(melds.size() == 3);
+        for(Meld m : melds){
+            if(m.size() > 0){
+                expected1Found |= m.compare(expected1);
+                expected2Found |= m.compare(expected2);
+            }
+        }
+        assertTrue(expected1Found);
+        assertTrue(expected2Found);
+
+        //Test with a table where the player can split a set
+        table = new Table();
+        table.add(tile4);
+        table.add(tile5);
+        table.add(tile6);
+        AI1.setTable(table);
+
+        hand = new Meld();
+        hand.add(tile7);
+        hand.add(tile10);
+        hand.add(tile11);
+        AI1.setHand(hand);
+
+        expected1 = new Meld();
+        expected.add(tile4);
+        expected.add(tile10);
+        expected.add(tile6);
+
+        expected2 = new Meld();
+        expected.add(tile5);
+        expected.add(tile7);
+        expected.add(tile11);
+
+        output = AI1.play();
+        melds = output.getMelds();
+
+        expected1Found = false;
+        expected2Found = false;
+
+        //Assert that the player plays a split on the tables run
+        assertTrue(melds.size() == 3);
+        for(Meld m : melds){
+            if(m.size() > 0){
+                expected1Found |= m.compare(expected1);
+                expected2Found |= m.compare(expected2);
+            }
+        }
+        assertTrue(expected1Found);
+        assertTrue(expected2Found);
+
+        //Test with a table where the player can split into a set and a run
+        table = new Table();
+        table.add(tile6);
+        table.add(tile3);
+        table.add(tile2);
+        AI1.setTable(table);
+
+        hand = new Meld();
+        hand.add(tile10);
+        hand.add(tile4);
+        hand.add(tile1);
+        AI1.setHand(hand);
+
+        expected1 = new Meld();
+        expected.add(tile4);
+        expected.add(tile10);
+        expected.add(tile6);
+
+        expected2 = new Meld();
+        expected.add(tile1);
+        expected.add(tile2);
+        expected.add(tile3);
+
+        output = AI1.play();
+        melds = output.getMelds();
+
+        expected1Found = false;
+        expected2Found = false;
+
+        //Assert that the player plays a split on the tables run
+        assertTrue(melds.size() == 3);
+        for(Meld m : melds){
+            if(m.size() > 0){
+                expected1Found |= m.compare(expected1);
+                expected2Found |= m.compare(expected2);
+            }
+        }
         assertTrue(expected1Found);
         assertTrue(expected2Found);
     }
