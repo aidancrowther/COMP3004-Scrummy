@@ -5,7 +5,7 @@ import COMP3004.controllers.Controller;
 public class Main {
     public static void main (String[] args) {
         Controller controller = new Controller();
-        String viewType = "g";//"t";
+        String viewType = "t";//"g";
         controller.setInteractionType(viewType); // TODO: make interactive
         if(viewType.equals("g")){
             controller.launchGraphicalView(args);
