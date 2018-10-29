@@ -178,7 +178,7 @@ public class StrategyTest{
         AI1.setHand(hand);
 
         //Asser that the AI doesn't play if it can't break 30 points
-        Table table = AI1.play();
+        Table table = AI1.play(AI1.getHand());
         assertTrue(table == null);
 
         //Generate the expected table
@@ -193,7 +193,7 @@ public class StrategyTest{
         AI1.setHand(hand);
 
         //Assert that the player plays their meld and returns the correct table
-        table = AI1.play();
+        table = AI1.play(AI1.getHand());
         assertTrue(table == outTable);
 
     }
@@ -235,7 +235,7 @@ public class StrategyTest{
         AI1.setTable(table);
 
         //Assert that the player does not play onto the table
-        Table output = AI1.play();
+        Table output = AI1.play(AI1.getHand());
         assertTrue(output == table);
 
         //Update the table so that the player can only add to existing melds
@@ -252,7 +252,7 @@ public class StrategyTest{
         expected.add(tile4);
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
         ArrayList<Meld> melds = output.getMelds();
         assertTrue(melds.size() == 1);
         assertTrue(melds.get(0) == expected);
@@ -274,7 +274,7 @@ public class StrategyTest{
         expected.add(tile5);
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
         melds = output.getMelds();
         assertTrue(melds.size() == 1);
         assertTrue(melds.get(0) == expected);
@@ -307,7 +307,7 @@ public class StrategyTest{
 
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
         melds = output.getMelds();
         assertTrue(melds.size() == 2);
         
