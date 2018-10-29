@@ -196,9 +196,9 @@ public class MeldTest {
         m3.add(new Tile('R', 1));
         m3.add(new Tile('G', 6));
 
-        assertTrue(m1.meldType() == -1);
+        assertTrue(m1.meldType() == 0);
         assertTrue(m2.meldType() == 1);
-        assertTrue(m3.meldType() == 0);
+        assertTrue(m3.meldType() == -1);
     }
 
 
