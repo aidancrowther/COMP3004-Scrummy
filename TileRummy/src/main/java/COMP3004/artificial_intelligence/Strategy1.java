@@ -42,7 +42,7 @@ public class Strategy1 extends ArtificialIntelligence
      * GUI View: Allows the user to interact with the table until the user presses complete turn button. When button is pressed end the user’s turn, and the method returns this.table.
      * AI: Strategies 1 - 4
      */
-    public Table play(){
+    public Table play(Meld hand){
 
         /*  
 

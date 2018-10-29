@@ -14,36 +14,36 @@ package COMP3004.controllers;
 
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
-import COMP3004.controllers.TerminalViewController;
+import COMP3004.models.Meld;
+import COMP3004.models.Tile;
 import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
+import COMP3004.controllers.TerminalViewController;
 
 public class Controller
 {
     private Scrummy scrummy;
     private GraphicalView graphicalView;
-    //private TerminalViewController terminalInteractionController;
     private GraphicalViewController graphicalInteractionController;
     private GameInteractionController gameInteractionController;
 
-    //private TerminalView terminalView;
-
     public Controller(){
         this.scrummy = new Scrummy();
-        //this.gameInteractionController = new GameInteractionController();
     }
 
     public void run(){
         /*
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
-        * Set vies table to table in scrummy
+        * copy players hand, pass in players hand?
+        * Set views table to table in scrummy
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
         *   have scrummy evaluate the table and update if valid
         * */
-        Table playedTable = this.gameInteractionController.play();
+        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+
     }
 
     // TODO: clean up if possible

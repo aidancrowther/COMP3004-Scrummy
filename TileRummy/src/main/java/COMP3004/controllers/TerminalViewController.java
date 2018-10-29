@@ -24,7 +24,7 @@ public class TerminalViewController extends GameInteractionController
         terminalView = new TerminalView();
     }
 
-    public Table play(){
+    public Table play(Meld hand){
         this.terminalView.printTable(this.getTable());
         this.terminalView.printActivePlayerHand(this.hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
@@ -35,7 +35,7 @@ public class TerminalViewController extends GameInteractionController
     }
 
     //Used if the player made an invalid move
-    public Table play(String message) {
+    public Table play(Meld hand, String message) {
         this.terminalView.printMessage(message);
         return this.getTable();
     }

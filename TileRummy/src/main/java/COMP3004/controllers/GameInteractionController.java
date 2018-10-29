@@ -25,11 +25,11 @@ public class GameInteractionController extends TableObserver implements GameInte
         }
     }
 
-    public Table play() {
+    public Table play(Meld hand) {
         return null;
     }
 
-    public Table play(String message) {
+    public Table play(Meld hand, String message) {
         return null;
     }
 

@@ -25,7 +25,7 @@ public interface GameInteractionInterface
      * GUI View: Allows the user to interact with the table until the user presses complete turn button. When button is pressed end the user’s turn, and the method returns this.table.
      * AI: Strategies
      */
-    public Table play();
+    public Table play(Meld hand);
 
     /*
      * The view classes observe the model. This function will update their local table to the game board after every turn. 

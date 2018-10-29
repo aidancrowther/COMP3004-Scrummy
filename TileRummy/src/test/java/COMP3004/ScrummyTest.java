@@ -14,6 +14,13 @@ import static org.junit.Assert.assertTrue;
  */
 public class ScrummyTest
 {
+    @Test
+    public void testScrummyController() {
+        Scrummy s = new Scrummy();
+        /*
+        * Test that each player was initialized and that they have hands of size 14
+        * */
+    }
 
     @Test
     public void testAddObserver() {

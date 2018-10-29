@@ -21,11 +21,12 @@ public class Scrummy implements Subject
     private Table table = new Table();
     private Deck deck = new Deck();
     private Player[] players = new Player[4];
+    private int currentPlayerIndex = 0; // USER STARTS
 
     private ArrayList<TableObserver> observers = new ArrayList<>();
 
     public Scrummy(){
-
+        // Give players hands here
     }
 
     public void registerObserver(TableObserver t){
@@ -44,7 +45,8 @@ public class Scrummy implements Subject
 
     public void validatePlayerMove(Table playedTable) {
         /*
-        * If valid table then update game table and notify observers
+        * If valid table then update game table, set the player hand, and notify observers
+        * and increment current player
         * Else
         *   keep table as is and notify observers
         *   also add the tiles the user played back into
@@ -59,6 +61,8 @@ public class Scrummy implements Subject
     public Table getTable(){
         return this.table;
     }
-
     public void setTable(Table table) { this.table = table; }
+
+    public Player getCurrentPlayer(){ return this.players[currentPlayerIndex]; }
+    public void setCurrentPlayerIndex(int index) { this.currentPlayerIndex = index; }
 }

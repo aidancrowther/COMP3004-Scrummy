@@ -12,6 +12,7 @@
 
 package COMP3004.controllers;
 
+import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.views.GraphicalView;
 
@@ -22,7 +23,7 @@ public class GraphicalViewController extends GameInteractionController
     public GraphicalViewController() {}
 
     //If press finish
-    public Table play(){
+    public Table play(Meld hand){
         return this.getTable();
     }
 
