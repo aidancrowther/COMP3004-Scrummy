@@ -3,6 +3,8 @@ package COMP3004;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Iterator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -350,6 +352,158 @@ public class StrategyTest{
         a.add(m3);
 
         assertTrue(AI1.listScore(a) == 92);
+
+    }
+
+    @Test
+    public void testSplittingRuns() {
+        Strategy1 AI1 = new Strategy1();
+        Table t = new Table();
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('R', 2));
+        m1.add(new Tile('R', 3));
+        m1.add(new Tile('R', 4));
+
+        Meld m3 = new Meld();
+        m3.add(new Tile('R', 1));
+        m3.add(new Tile('R', 2));
+        m3.add(new Tile('R', 3));
+
+        Meld m4 = new Meld();
+        m4.add(new Tile('R', 3));
+        m4.add(new Tile('R', 4));
+        m4.add(new Tile('R', 5));
+
+        Meld h = new Meld();
+        h.add(new Tile('R', 1));
+        h.add(new Tile('R', 3));
+        h.add(new Tile('R', 5));
+        h.add(new Tile('O', 4));
+        h.add(new Tile('O', 5));
+
+        t.add(m1);
+        AI1.setHand(h);
+
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
+
+        Iterator<HashMap<ArrayList<Meld>, Integer>> iterator = sTest.values().iterator();
+        ArrayList<Meld> test = new ArrayList<Meld>();
+		
+		while (iterator.hasNext()) {
+			for (ArrayList<Meld> al : iterator.next().keySet()) {
+				for (int i=0; i<al.size(); i++) {
+					test.add(al.get(i));
+				}
+			}		
+        }
+        
+        assertTrue(test.get(0).compare(m3));
+        assertTrue(test.get(1).compare(m4));
+        //more here later
+    }
+
+    @Test
+    public void testSplittingSets() {
+        Strategy1 AI1 = new Strategy1();
+        Table t = new Table();
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('B', 7));
+        m1.add(new Tile('G', 7));
+        m1.add(new Tile('O', 7));
+        m1.add(new Tile('R', 7));
+
+        Meld m2 = new Meld();
+        m2.add(new Tile('G', 3));
+        m2.add(new Tile('O', 3));
+        m2.add(new Tile('R', 3));
+
+        Meld m3 = new Meld();
+        m3.add(new Tile('B', 6));
+        m3.add(new Tile('B', 7));
+        m3.add(new Tile('B', 8));
+
+        Meld m4 = new Meld();
+        m4.add(new Tile('G', 7));
+        m4.add(new Tile('O', 7));
+        m4.add(new Tile('R', 7));
+
+        Meld m5 = new Meld();
+        m5.add(new Tile('O', 2));
+        m5.add(new Tile('O', 3));
+        m5.add(new Tile('O', 4));
+        m5.add(new Tile('O', 5));
+
+        Meld m6 = new Meld();
+        m6.add(new Tile('B', 3));
+        m6.add(new Tile('G', 3));
+        m6.add(new Tile('R', 3));
+
+        Meld h = new Meld();
+        h.add(new Tile('B', 3));
+        h.add(new Tile('B', 7));
+        h.add(new Tile('B', 8));
+        h.add(new Tile('O', 2));
+        h.add(new Tile('O', 4));
+        h.add(new Tile('O', 5));
+
+        t.add(m1);
+        t.add(m2);
+        AI1.setHand(h);
+
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
+
+        Iterator<HashMap<ArrayList<Meld>, Integer>> iterator = sTest.values().iterator();
+        ArrayList<Meld> test = new ArrayList<Meld>();
+		
+		while (iterator.hasNext()) {
+			for (ArrayList<Meld> al : iterator.next().keySet()) {
+				for (int i=0; i<al.size(); i++) {
+					test.add(al.get(i));
+				}
+			}		
+        }
+        
+        assertTrue(test.get(0).compare(m3));
+        assertTrue(test.get(1).compare(m4));
+        assertTrue(test.get(2).compare(m6));
+        assertTrue(test.get(3).compare(m5));
+        /*test should contain:
+        B6 B7 B8
+        G7 O7 R7
+        B3 G3 R3
+        O2 O3 O4 O5
+
+        */
+    }
+
+    @Test
+    public void testOtherSplits() {
+        /*TEST FOR SPLITS:
+            Unsplittable melds
+                * [ ] Melds that cannot be split at all
+                * [ ] Runs that can be split but leave invalid function with the remaining cards
+                * [ ] Sets that can be split but leave invalid function with the remaining cards
+            Run Cases
+                * [X] Splitting runs from the first tile
+                * [X] Splitting runs with two of the same card involved 
+                * [ ] Splitting runs from the middle
+                * [ ] Splitting runs from the end
+                * [ ] Splitting runs into a run and a set
+            Set Cases
+                * [ ] Splitting sets from just the first tile
+                * [ ] Splitting sets from two consecutive tiles
+                * [ ] Splitting sets from the middle, leaving two nonconsecutive tiles
+                * [ ] Splitting sets 
+                * [ ] Splitting sets into a run and a set
+            Other / Edge Cases:
+                * [ ] Checking twice over size>3 sets to make sure no runs are possible
+                * [ ] Checking twice over size>3 runs to make sure no sets are possible from edges
+    */
+
+
+
 
     }
 }

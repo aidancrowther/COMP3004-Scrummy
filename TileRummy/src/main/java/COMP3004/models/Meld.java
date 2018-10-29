@@ -15,6 +15,8 @@ public class Meld {
     //gets meld contents
     public ArrayList<Tile> getTiles() { return tiles; }
 
+    public int size() { return tiles.size(); }
+
 
     /*
         Adds a tile to the current meld 
@@ -151,6 +153,19 @@ public class Meld {
                 }
         }
         return true;
+    }
+
+    public int meldType() { //-1 is invalid, 0 is set, 1 is run
+        if (!isValid()) {
+            return -1;
+        }
+        else {
+            if (tiles.get(0).getColour() == tiles.get(1).getColour()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 
 

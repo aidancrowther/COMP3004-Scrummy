@@ -111,6 +111,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
 
+        if (t == null) {
+            return tMelds;
+        }
+
         tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
@@ -130,6 +134,86 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
         return tMelds;
     }
+
+    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
+        HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
+        Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
+
+        if (t == null) {
+            return tableSplits;
+        }
+
+        for (int i=1; i<t.getMelds().size(); i++) {         //for every meld in table
+            ArrayList<Meld> aList = new ArrayList<Meld>();       //arraylist of melds created from a split
+            Meld m = t.getMelds().get(i).copy();            //the meld about to be split
+            ArrayList<Tile> h = hand.copy().getTiles();
+            
+            for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
+                Meld shortM = new Meld();
+                if (t.getMelds().get(i).meldType() == 1) {         //splitting a run
+                    for (int k=j; k<m.size(); k++) {            //break it up 
+                        shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
+                            
+                        for (int p=0; p<h.size(); p++) {    //iterate through hand                                
+                            if (shortM.size() == 1) {
+								if (h.get(p).getColour() == shortM.getTiles().get(0).getColour()) {
+									if (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 ||
+										h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1) {
+										shortM.add(h.get(p));
+										hTiles.add(h.get(p));
+									}
+								} else {
+									if (h.get(p).getValue() == shortM.getTiles().get(0).getValue()) {
+										shortM.add(h.get(p));
+										hTiles.add(h.get(p));
+									}
+								}
+								
+							} else {
+								shortM.add(h.get(p));
+                                hTiles.add(h.get(p));
+								if (!shortM.isValid()) {
+									shortM.remove(h.get(p));
+									hTiles.remove(h.get(p));
+								}																			
+							}
+						}							
+                        if (shortM.isValid()) {
+                            for (int q=0; q<shortM.size(); q++) {
+								if (h.contains(shortM.getTiles().get(q))) {
+									h.remove(shortM.getTiles().get(q));
+								}
+								else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+									m.remove(shortM.getTiles().get(q));
+								}
+                            }
+                            j--;
+							aList.add(shortM.copy());
+                            k=999;
+                        }
+                    }
+
+                } else { //splitting a set
+
+                }
+
+
+            }
+
+            /*REMOVE TILES FROM M WHEN THEY GET USED */         
+            if (m.getTiles().isEmpty()) {
+                meldSplits.put(aList, i);
+            }
+            
+        }
+
+        tableSplits.put(hTiles, meldSplits);
+        return tableSplits;
+    }  
+
+
+
 
     //Return if two tiles have the same colour and value
     public Boolean isEquivalent(Tile a, Tile b){
@@ -181,7 +265,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
             @Override
             public int compare(Meld m1, Meld m2){
-                return Integer.compare(m1.getTiles().size(), m2.getTiles().size());
+                return Integer.compare(m1.size(), m2.size());
             }
         };
 
@@ -196,7 +280,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     public int listScore(ArrayList<Meld> a) {
         int output = 0;
         for (int i=0; i<a.size(); i++) {
-            for (int j=0; j<a.get(i).getTiles().size(); j++) {
+            for (int j=0; j<a.get(i).size(); j++) {
                 output += a.get(i).getTiles().get(j).getValue();
             }
         }

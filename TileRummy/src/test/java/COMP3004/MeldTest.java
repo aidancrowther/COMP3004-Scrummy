@@ -178,6 +178,29 @@ public class MeldTest {
 
     }
 
+    @Test
+    public void testMeldType() {
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
+
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        m2.add(new Tile('G', 1));
+        m2.add(new Tile('G', 2));
+        m2.add(new Tile('G', 3));
+
+        m3.add(new Tile('G', 1));
+        m3.add(new Tile('R', 1));
+        m3.add(new Tile('G', 6));
+
+        assertTrue(m1.meldType() == 0);
+        assertTrue(m2.meldType() == 1);
+        assertTrue(m3.meldType() == -1);
+    }
+
 
 
 
