@@ -135,6 +135,31 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
+    public void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
+        if (shortM.size() == 1) {
+            if (h.get(p).getColour() == shortM.getTiles().get(0).getColour()) {
+                if (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 ||
+                    h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1) {
+                    shortM.add(h.get(p));
+                    hTiles.add(h.get(p));
+                }
+            } else {
+                if (h.get(p).getValue() == shortM.getTiles().get(0).getValue()) {
+                    shortM.add(h.get(p));
+                    hTiles.add(h.get(p));
+                }
+            }
+            
+        } else {
+            shortM.add(h.get(p));
+            hTiles.add(h.get(p));
+            if (!shortM.isValid()) {
+                shortM.remove(h.get(p));
+                hTiles.remove(h.get(p));
+            }																			
+        }
+    }
+
     public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
         HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
@@ -151,54 +176,30 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             
             for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
-                if (t.getMelds().get(i).meldType() == 1) {         //splitting a run
-                    for (int k=j; k<m.size(); k++) {            //break it up 
+                for (int k=j; k<m.size(); k++) {
+                    if (t.getMelds().get(i).meldType() == 1) {         //splitting a run
                         shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
-                            
                         for (int p=0; p<h.size(); p++) {    //iterate through hand                                
-                            if (shortM.size() == 1) {
-								if (h.get(p).getColour() == shortM.getTiles().get(0).getColour()) {
-									if (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 ||
-										h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1) {
-										shortM.add(h.get(p));
-										hTiles.add(h.get(p));
-									}
-								} else {
-									if (h.get(p).getValue() == shortM.getTiles().get(0).getValue()) {
-										shortM.add(h.get(p));
-										hTiles.add(h.get(p));
-									}
-								}
-								
-							} else {
-								shortM.add(h.get(p));
-                                hTiles.add(h.get(p));
-								if (!shortM.isValid()) {
-									shortM.remove(h.get(p));
-									hTiles.remove(h.get(p));
-								}																			
-							}
+                            addingForSplitting(shortM, hTiles, h, p);
 						}							
-                        if (shortM.isValid()) {
-                            for (int q=0; q<shortM.size(); q++) {
-								if (h.contains(shortM.getTiles().get(q))) {
-									h.remove(shortM.getTiles().get(q));
-								}
-								else if (m.getTiles().contains(shortM.getTiles().get(q))) {
-									m.remove(shortM.getTiles().get(q));
-								}
-                            }
-                            j--;
-							aList.add(shortM.copy());
-                            k=999;
-                        }
+                    } else { //splitting a set
+
                     }
 
-                } else { //splitting a set
-
+                    if (shortM.isValid()) {
+                        for (int q=0; q<shortM.size(); q++) {
+                            if (h.contains(shortM.getTiles().get(q))) {
+                                h.remove(shortM.getTiles().get(q));
+                            }
+                            else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+                                m.remove(shortM.getTiles().get(q));
+                            }
+                        }
+                        j--;
+                        aList.add(shortM.copy());
+                        k=999;
+                    }
                 }
-
-
             }
 
             /*REMOVE TILES FROM M WHEN THEY GET USED */         
@@ -210,7 +211,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
         tableSplits.put(hTiles, meldSplits);
         return tableSplits;
-    }  
+    }
 
 
 
