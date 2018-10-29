@@ -26,6 +26,8 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     public Meld hand = null;
     public int score = 0;
 
+    public String toPrint = "";
+
     public ArtificialIntelligence() {
         
     }
@@ -115,7 +117,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             return tMelds;
         }
 
-        tMelds.put(new Meld(), 0);
         for (int i=1; i<t.getMelds().size(); i++) {
             Meld m = t.getMelds().get(i).copy();
             Meld toAdd = new Meld();

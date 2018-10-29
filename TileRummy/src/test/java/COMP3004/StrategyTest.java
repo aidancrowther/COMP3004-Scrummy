@@ -147,8 +147,7 @@ public class StrategyTest{
 
         HashMap<Meld, Integer> h = AI1.searchTable(t);
 
-        assertTrue(h.size() == 5);
-        assertTrue(getKeyFromValue(h, 0).getTiles().size() == 0); //keep value 0 empty
+        assertTrue(h.size() == 4);
 
     }
 
@@ -234,9 +233,10 @@ public class StrategyTest{
 
         //Assert that the player does not play onto the table
         Table output = AI1.play();
-        assertTrue(output.getMelds().size() == 1);
+        assertTrue(output.getMelds().size() == 2);
 
         //Update the table so that the player can only add to existing melds
+        table = new Table();
         table.add(tile7);
         table.add(tile8);
         table.add(tile5);
@@ -252,8 +252,9 @@ public class StrategyTest{
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play();
         ArrayList<Meld> melds = output.getMelds();
-        assertTrue(melds.size() == 1);
-        assertTrue(melds.get(0) == expected);
+
+        assertTrue(melds.size() == 2);
+        assertTrue(melds.get(1).compare(expected));
 
         //Create a table onto which the AI can only add a new meld
         table = new Table();
@@ -264,6 +265,7 @@ public class StrategyTest{
         hand.add(tile5);
         hand.add(tile7);
         hand.add(tile4);
+        AI1.setHand(hand);
 
         //Derive our expected output
         expected = new Meld();
@@ -274,8 +276,8 @@ public class StrategyTest{
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play();
         melds = output.getMelds();
-        assertTrue(melds.size() == 1);
-        assertTrue(melds.get(0) == expected);
+        assertTrue(melds.size() == 2);
+        assertTrue(melds.get(0).compare(expected));
 
         //Create a table onto which the AI can add a new meld, and modify an existing one
         table = new Table();
@@ -290,6 +292,7 @@ public class StrategyTest{
         hand.add(tile7);
         hand.add(tile4);
         hand.add(tile1);
+        AI1.setHand(hand);
 
         //Derive our expected outputs
         Meld expected1 = new Meld();
@@ -303,18 +306,22 @@ public class StrategyTest{
         expected2.add(tile3);
         expected2.add(tile6);
 
-
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play();
+
+        System.out.println(AI1.toPrint);
+
         melds = output.getMelds();
-        assertTrue(melds.size() == 2);
+        assertTrue(melds.size() == 3);
         
         Boolean expected1Found = false;
         Boolean expected2Found = false;
 
         for(Meld meld : melds){
-            expected1Found |= expected1 == meld;
-            expected2Found |= expected2 == meld;
+            if(meld.size() > 0){
+                expected1Found |= expected1.compare(meld);
+                expected2Found |= expected2.compare(meld);
+            }
         }
 
         assertTrue(expected1Found);

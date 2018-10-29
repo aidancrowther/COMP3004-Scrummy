@@ -91,6 +91,9 @@ public class Strategy1 extends ArtificialIntelligence
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
             allMelds.add(pair.getKey());
         }
+        for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
+            allMelds.add(pair.getKey());
+        }
 
         //Find all sets of melds that can go together
         allMelds = sortByLength(allMelds);
@@ -135,7 +138,7 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Return the output table
-        if (longest < 30) return new Table();
+        if (longest < 30 && score < 30) return new Table();
         else return output;
     }
 
