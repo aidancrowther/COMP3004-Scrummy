@@ -36,7 +36,7 @@ public class Controller
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
         * copy players hand, pass in players hand?
-        * Set views table to table in scrummy
+        * Set views table to table in scrummy (done by observer)
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
@@ -44,6 +44,11 @@ public class Controller
         * */
         Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
 
+    }
+
+    // FOR TESTING
+    public void run(String message){
+        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand(), message);
     }
 
     // TODO: clean up if possible

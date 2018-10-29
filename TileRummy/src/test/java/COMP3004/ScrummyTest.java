@@ -5,9 +5,7 @@ import COMP3004.models.Scrummy;
 import COMP3004.oberver_pattern.TableObserver;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for Scrummy
@@ -17,9 +15,11 @@ public class ScrummyTest
     @Test
     public void testScrummyController() {
         Scrummy s = new Scrummy();
-        /*
-        * Test that each player was initialized and that they have hands of size 14
-        * */
+        //Test that each player was initialized and that they have hands of size 14
+        assertNotNull(s.getPlayers());
+        for(int i = 0; i < s.getPlayers().length; i++){
+            assertTrue(s.getPlayers()[i].getHand().getTiles().size() == 14);
+        }
     }
 
     @Test
