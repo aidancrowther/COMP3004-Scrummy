@@ -151,7 +151,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             
             for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
-                if (m.isRun()) {                                //splitting a run
+                if (t.getMelds().get(i).meldType() == 1) {       //splitting a run
                     for (int k=j; k<m.size(); k++) {            //break it up
                         if (shortM.size() + 1 != m.size()) {    //do not make the actual meld; searchTable does this part 
                             shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run

@@ -3,6 +3,8 @@ package COMP3004;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
+import java.util.Iterator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -18,15 +20,6 @@ public class StrategyTest{
 
     public static Meld getKeyFromValue(HashMap<Meld, Integer> hm, int value) {
         for (Meld o : hm.keySet()) {
-          if (hm.get(o).equals(value)) {
-            return o;
-          }
-        }
-        return null;
-    }
-
-    public static ArrayList<Meld> getAListFromValue(HashMap<ArrayList<Meld>, Integer> hm, int value) {
-        for (ArrayList<Meld> o : hm.keySet()) {
           if (hm.get(o).equals(value)) {
             return o;
           }
@@ -398,7 +391,7 @@ public class StrategyTest{
     }
 
     @Test
-    public void searchSplit() {
+    public void splitRuns() {
         Strategy1 AI1 = new Strategy1();
         Table t = new Table();
 
@@ -406,12 +399,6 @@ public class StrategyTest{
         m1.add(new Tile('R', 2));
         m1.add(new Tile('R', 3));
         m1.add(new Tile('R', 4));
-
-        Meld m2 = new Meld();
-        m2.add(new Tile('O', 6));
-        m2.add(new Tile('G', 6));
-        m2.add(new Tile('R', 6));
-        m2.add(new Tile('B', 6));
 
         Meld m3 = new Meld();
         m3.add(new Tile('R', 1));
@@ -423,22 +410,6 @@ public class StrategyTest{
         m4.add(new Tile('R', 4));
         m4.add(new Tile('R', 5));
 
-        Meld m5 = new Meld();
-        m5.add(new Tile('O', 4));
-        m5.add(new Tile('O', 5));
-        m5.add(new Tile('O', 6));
-
-        Meld m6 = new Meld();
-        m6.add(new Tile('B', 6));
-        m6.add(new Tile('G', 6));
-        m6.add(new Tile('R', 6));
-
-        Meld m7 = new Meld();
-        m7.add(new Tile('B', 9));
-        m7.add(new Tile('B', 10));
-        m7.add(new Tile('B', 11));
-        m7.add(new Tile('B', 12));
-
         Meld h = new Meld();
         h.add(new Tile('R', 1));
         h.add(new Tile('R', 3));
@@ -447,18 +418,23 @@ public class StrategyTest{
         h.add(new Tile('O', 5));
 
         t.add(m1);
-        t.add(m2);
-        t.add(m7);
         AI1.setHand(h);
 
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
 
-        //assertTrue(sTest.get(h) != null);
-        //assertTrue(sTest.size() == 2);
-        assertTrue(getAListFromValue(sTest.get(h), 1).get(0).compare(m3));
-        assertTrue(getAListFromValue(sTest.get(h), 1).get(1).compare(m4));
-        //assertTrue(getAListFromValue(sTest.get(h), 2).get(0).compare(m5));
-        //assertTrue(getAListFromValue(sTest.get(h), 2).get(0).compare(m6));
+        Iterator<HashMap<ArrayList<Meld>, Integer>> iterator = sTest.values().iterator();
+        ArrayList<Meld> test = new ArrayList<Meld>();
+		
+		while (iterator.hasNext()) {
+			for (ArrayList<Meld> al : iterator.next().keySet()) {
+				for (int i=0; i<al.size(); i++) {
+					test.add(al.get(i));
+				}
+			}		
+        }
+        
+        assertTrue(test.get(0).compare(m3));
+        assertTrue(test.get(1).compare(m4));
 
     }
 
