@@ -502,15 +502,43 @@ public class StrategyTest{
         
         assertTrue(test.get(0).compare(m3));
         assertTrue(test.get(1).compare(m4));
-        assertTrue(test.get(2).compare(m5));
-        assertTrue(test.get(3).compare(m6));
-        //more here later
+        assertTrue(test.get(2).compare(m6));
+        assertTrue(test.get(3).compare(m5));
+        /*test should contain:
+        B6 B7 B8
+        G7 O7 R7
+        B3 G3 R3
+        O2 O3 O4 O5
+
+        */
+    }
+
+    @Test
+    public void testOtherSplits() {
+        /*TEST FOR SPLITS:
+            Unsplittable melds
+                * [ ] Melds that cannot be split at all
+                * [ ] Runs that can be split but leave invalid function with the remaining cards
+                * [ ] Sets that can be split but leave invalid function with the remaining cards
+            Run Cases
+                * [X] Splitting runs from the first tile
+                * [X] Splitting runs with two of the same card involved 
+                * [ ] Splitting runs from the middle
+                * [ ] Splitting runs from the end
+                * [ ] Splitting runs into a run and a set
+            Set Cases
+                * [ ] Splitting sets from just the first tile
+                * [ ] Splitting sets from two consecutive tiles
+                * [ ] Splitting sets from the middle, leaving two nonconsecutive tiles
+                * [ ] Splitting sets 
+                * [ ] Splitting sets into a run and a set
+            Other / Edge Cases:
+                * [ ] Checking twice over size>3 sets to make sure no runs are possible
+                * [ ] Checking twice over size>3 runs to make sure no sets are possible from edges
+    */
 
 
 
 
     }
-
-
-
 }
