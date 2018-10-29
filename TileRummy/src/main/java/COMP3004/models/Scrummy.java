@@ -27,6 +27,7 @@ public class Scrummy implements Subject
 
     public Scrummy(){
         // Give players hands here
+
     }
 
     public void registerObserver(TableObserver t){

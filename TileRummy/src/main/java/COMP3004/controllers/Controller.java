@@ -43,7 +43,10 @@ public class Controller
         *   have scrummy evaluate the table and update if valid
         * */
         Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
-
+        Meld playerHandCopy = new Meld();
+        for(Tile t : this.scrummy.getCurrentPlayer().getHand().getTiles()){
+            playerHandCopy.add(t);
+        }
     }
 
     // FOR TESTING
