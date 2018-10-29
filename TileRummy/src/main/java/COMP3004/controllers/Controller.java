@@ -35,12 +35,12 @@ public class Controller
         /*
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
-        * copy players hand, pass in players hand?
+        * copy players hand, pass in players actual hand
         * Set views table to table in scrummy (done by observer)
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
-        *   have scrummy evaluate the table and update if valid
+        *   have scrummy evaluate the table and update if valid rest player hand if not
         * */
         Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
         Meld playerHandCopy = new Meld();
