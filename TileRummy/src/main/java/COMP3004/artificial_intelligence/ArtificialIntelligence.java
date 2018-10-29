@@ -136,21 +136,24 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     public void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
-        if (shortM.size() == 1) {
-            if (h.get(p).getColour() == shortM.getTiles().get(0).getColour()) {
-                if (shortM.getTiles().get(0).getValue() - h.get(p).getValue() == 1 ||
-                    h.get(p).getValue() - shortM.getTiles().get(shortM.size()-1).getValue() == 1) {
-                    shortM.add(h.get(p));
-                    hTiles.add(h.get(p));
-                }
+        Meld copyM = shortM.copy();
+        Meld copyH = hTiles.copy();
+		if (shortM.size() == 1) {
+            //try to make a run
+            if (h.get(p).getColour() == copyM.getTiles().get(0).getColour()) {
+                //try to add one above and one below it; if they do not exist, you know
+                //you can't make a run using just one tile from the table
+            //try to make a set
             } else {
-                if (h.get(p).getValue() == shortM.getTiles().get(0).getValue()) {
-                    shortM.add(h.get(p));
-                    hTiles.add(h.get(p));
-                }
+                //try to add 2 tiles; if they do not exist, you know
+                //you can't make a set using just one tile from the table
             }
-            
-        } else {
+
+            if (copyM.size() > 2 && copyM.isValid()) {
+                shortM = copyM.copy();
+                hTiles = copyH.copy();
+            }
+		} else {
             shortM.add(h.get(p));
             hTiles.add(h.get(p));
             if (!shortM.isValid()) {
@@ -179,22 +182,36 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 for (int k=j; k<m.size(); k++) {
                     if (t.getMelds().get(i).meldType() == 1) {         //splitting a run
                         shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
-                        for (int p=0; p<h.size(); p++) {    //iterate through hand                                
+                        System.out.println("Testing " + shortM.toString());
+						for (int p=0; p<h.size(); p++) {    //iterate through hand                                
                             addingForSplitting(shortM, hTiles, h, p);
-						}							
+                        }	
+                    						
                     } else { //splitting a set
-
+                        if (t.getMelds().get(i).size() == 3) {  //small set of 3
+                            shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
+                            for (int p=0; p<h.size(); p++) {    //iterate through hand                                
+                                addingForSplitting(shortM, hTiles, h, p);
+						    }	
+                        }
+                        else {  //"large" set of 4
+                            
+                        }
                     }
 
                     if (shortM.isValid()) {
+						System.out.println(shortM.toString() + " is a success!");
                         for (int q=0; q<shortM.size(); q++) {
                             if (h.contains(shortM.getTiles().get(q))) {
                                 h.remove(shortM.getTiles().get(q));
                             }
-                            else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+							if (m.getTiles().contains(shortM.getTiles().get(q))) {
                                 m.remove(shortM.getTiles().get(q));
                             }
                         }
+                        /*for (int p=0; p<m.size(); p++) {    //iterate through hand                                
+                            addingForSplitting(shortM, hTiles, m.getTiles(), p);
+                        }*/
                         j--;
                         aList.add(shortM.copy());
                         k=999;
@@ -203,8 +220,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             }
 
             /*REMOVE TILES FROM M WHEN THEY GET USED */         
-            if (m.getTiles().isEmpty()) {
+            if (m.getTiles().isEmpty()) {               //all tiles have been used
                 meldSplits.put(aList, i);
+            } else {
+                //
             }
             
         }

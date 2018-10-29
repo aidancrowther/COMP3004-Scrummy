@@ -87,9 +87,38 @@ public class TableTest {
     }
 
 
-    //
+    @Test
+    public void testRemoveMeld() {
 
-    //Anything else we need?
+        Meld m1 = new Meld();
+        for (int i=1; i<6; i++) {
+            m1.add(new Tile('R', i));
+        }
+        Meld m2 = new Meld();
+        m2.add(new Tile('R', 12));
+        m2.add(new Tile('G', 12));
+        m2.add(new Tile('O', 12));
+
+        Meld m3 = new Meld();
+        for (int i=3; i<8; i++) {
+            m3.add(new Tile('O', i));
+        }
+
+        Meld m4 = m3.copy();
+
+        Table t = new Table();
+        t.add(m1);
+        t.add(m2);
+        t.add(m3);
+
+        t.remove(0);
+        t.remove(1);
+        t.remove(m4);
+
+        assertTrue(t.getMelds().size() == 2);
+        assertTrue(t.getMelds().get(1).size() == 3);
+
+    }
 
 
 }

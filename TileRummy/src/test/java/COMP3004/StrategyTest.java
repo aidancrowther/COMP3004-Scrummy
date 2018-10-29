@@ -390,7 +390,7 @@ public class StrategyTest{
 
     }
 
-    @Test
+    /*@Test
     public void testSplittingRuns() {
         Strategy1 AI1 = new Strategy1();
         Table t = new Table();
@@ -399,6 +399,13 @@ public class StrategyTest{
         m1.add(new Tile('R', 2));
         m1.add(new Tile('R', 3));
         m1.add(new Tile('R', 4));
+
+        Meld m2 = new Meld();
+        m2.add(new Tile('O', 3));
+        m2.add(new Tile('O', 4));
+        m2.add(new Tile('O', 5));
+        m2.add(new Tile('O', 6));
+        m2.add(new Tile('O', 7));
 
         Meld m3 = new Meld();
         m3.add(new Tile('R', 1));
@@ -410,14 +417,28 @@ public class StrategyTest{
         m4.add(new Tile('R', 4));
         m4.add(new Tile('R', 5));
 
+        Meld m5 = new Meld();
+        m5.add(new Tile('O', 2));
+        m5.add(new Tile('O', 3));
+        m5.add(new Tile('O', 4));
+        m5.add(new Tile('O', 5));
+
+        Meld m6 = new Meld();
+        m6.add(new Tile('O', 4));
+        m6.add(new Tile('O', 5));
+        m6.add(new Tile('O', 6));
+        m6.add(new Tile('O', 7));
+
         Meld h = new Meld();
         h.add(new Tile('R', 1));
         h.add(new Tile('R', 3));
         h.add(new Tile('R', 5));
+        h.add(new Tile('O', 2));
         h.add(new Tile('O', 4));
         h.add(new Tile('O', 5));
 
         t.add(m1);
+        t.add(m2);
         AI1.setHand(h);
 
         HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
@@ -435,10 +456,12 @@ public class StrategyTest{
         
         assertTrue(test.get(0).compare(m3));
         assertTrue(test.get(1).compare(m4));
+        assertTrue(test.get(2).compare(m5));
+        assertTrue(test.get(3).compare(m6));
         //more here later
     }
 
-    @Test
+    /*@Test
     public void testSplittingSets() {
         Strategy1 AI1 = new Strategy1();
         Table t = new Table();
@@ -491,6 +514,8 @@ public class StrategyTest{
 
         Iterator<HashMap<ArrayList<Meld>, Integer>> iterator = sTest.values().iterator();
         ArrayList<Meld> test = new ArrayList<Meld>();
+
+
 		
 		while (iterator.hasNext()) {
 			for (ArrayList<Meld> al : iterator.next().keySet()) {
@@ -510,7 +535,7 @@ public class StrategyTest{
         B3 G3 R3
         O2 O3 O4 O5
 
-        */
+        
     }
 
     @Test
@@ -526,19 +551,20 @@ public class StrategyTest{
                 * [ ] Splitting runs from the middle
                 * [ ] Splitting runs from the end
                 * [ ] Splitting runs into a run and a set
+                * [ ] Splitting long runs and leaving some
             Set Cases
                 * [ ] Splitting sets from just the first tile
                 * [ ] Splitting sets from two consecutive tiles
-                * [ ] Splitting sets from the middle, leaving two nonconsecutive tiles
+                * [ ] Splitting sets from the middle, leaving nonconsecutive tiles
                 * [ ] Splitting sets 
                 * [ ] Splitting sets into a run and a set
             Other / Edge Cases:
                 * [ ] Checking twice over size>3 sets to make sure no runs are possible
                 * [ ] Checking twice over size>3 runs to make sure no sets are possible from edges
-    */
+    
 
 
 
 
-    }
+    }*/
 }
