@@ -33,6 +33,8 @@ public class GameInteractionController extends TableObserver implements GameInte
         return null;
     }
 
+    public void displayWinner(String playerName) { }
+
     public Meld getHand() { return this.hand; }
 
     public void setHand(Meld hand) {

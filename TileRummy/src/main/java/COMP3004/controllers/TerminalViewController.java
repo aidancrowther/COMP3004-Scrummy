@@ -104,6 +104,10 @@ public class TerminalViewController extends GameInteractionController
         return selectedMeld;
     }
 
+    public void displayWinner(String playerName) {
+        this.terminalView.printMessage(playerName + " has won the game!");
+    }
+
     public TerminalView getGameView(){
         return this.terminalView;
     }
