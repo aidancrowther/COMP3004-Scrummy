@@ -13,29 +13,47 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 ### Aidan Crowther
 __Work Completed:__
 
+*
+*
 
 __Plans until Due Date:__
+
+*
 *
 
 ### Ellis Glennie
 __Work Completed:__
 
+*
+*
 
 __Plans until Due Date:__
 
+*
+*
 
 ### Brittny Lapierre
 __Work Completed:__
 
+*
+*
 
 __Plans until Due Date:__
 
+*
+*
 
 ### David N. Zilio
 __Work Completed:__
 
+*
+*
+
 
 __Plans until Due Date:__
+
+*
+*
 
 
 
