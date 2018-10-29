@@ -440,6 +440,71 @@ public class StrategyTest{
 
     @Test
     public void testSplittingSets() {
+        Strategy1 AI1 = new Strategy1();
+        Table t = new Table();
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('B', 7));
+        m1.add(new Tile('G', 7));
+        m1.add(new Tile('O', 7));
+        m1.add(new Tile('R', 7));
+
+        Meld m2 = new Meld();
+        m2.add(new Tile('G', 3));
+        m2.add(new Tile('O', 3));
+        m2.add(new Tile('R', 3));
+
+        Meld m3 = new Meld();
+        m3.add(new Tile('B', 6));
+        m3.add(new Tile('B', 7));
+        m3.add(new Tile('B', 8));
+
+        Meld m4 = new Meld();
+        m4.add(new Tile('G', 7));
+        m4.add(new Tile('O', 7));
+        m4.add(new Tile('R', 7));
+
+        Meld m5 = new Meld();
+        m5.add(new Tile('O', 2));
+        m5.add(new Tile('O', 3));
+        m5.add(new Tile('O', 4));
+        m5.add(new Tile('O', 5));
+
+        Meld m6 = new Meld();
+        m6.add(new Tile('B', 3));
+        m6.add(new Tile('G', 3));
+        m6.add(new Tile('R', 3));
+
+        Meld h = new Meld();
+        h.add(new Tile('B', 3));
+        h.add(new Tile('B', 7));
+        h.add(new Tile('B', 8));
+        h.add(new Tile('O', 2));
+        h.add(new Tile('O', 4));
+        h.add(new Tile('O', 5));
+
+        t.add(m1);
+        t.add(m2);
+        AI1.setHand(h);
+
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> sTest = AI1.searchSplit(t);
+
+        Iterator<HashMap<ArrayList<Meld>, Integer>> iterator = sTest.values().iterator();
+        ArrayList<Meld> test = new ArrayList<Meld>();
+		
+		while (iterator.hasNext()) {
+			for (ArrayList<Meld> al : iterator.next().keySet()) {
+				for (int i=0; i<al.size(); i++) {
+					test.add(al.get(i));
+				}
+			}		
+        }
+        
+        assertTrue(test.get(0).compare(m3));
+        assertTrue(test.get(1).compare(m4));
+        assertTrue(test.get(2).compare(m5));
+        assertTrue(test.get(3).compare(m6));
+        //more here later
 
 
 
