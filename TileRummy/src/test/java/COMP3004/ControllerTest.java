@@ -26,6 +26,9 @@ public class ControllerTest {
     @Test
     public void testRun() {
         Controller controller = new Controller();
+        controller.setInteractionType("t");
+        controller.getScrummy().setCurrentPlayerIndex(1); // CURRENT PLAYER STRAT 1
+
         ArrayList<Meld> originalTableMelds = controller.getScrummy().getTable().getMelds();
         Table originalTable = new Table();
         for(Meld m : originalTableMelds) {
@@ -33,7 +36,7 @@ public class ControllerTest {
         }
 
         int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
-        controller.run("Test");
+        controller.run(false);
         assertEquals(controller.getInteractionController().getTable(), controller.getScrummy().getTable());
 
         // Set views table to table in scrummy
@@ -72,6 +75,7 @@ public class ControllerTest {
     @Test
     public void testCreateController() {
         Controller controller = new Controller();
+        controller.setInteractionType("t");
         assertNotNull(controller.getScrummy());
         assertNotEquals(controller.getScrummy().getObservers().size(), 0);
         assertTrue(controller.getScrummy().getObservers().contains(controller.getInteractionController()));

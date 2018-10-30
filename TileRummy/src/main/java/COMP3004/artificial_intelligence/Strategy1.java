@@ -53,7 +53,7 @@ public class Strategy1 extends ArtificialIntelligence
             -> Return the brand new table :)
 
         */
-
+        this.hand = hand;
 
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();

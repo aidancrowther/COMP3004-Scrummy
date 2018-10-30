@@ -62,7 +62,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     public HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
         int n = 0;
-        ArrayList<Tile> h = hand.getTiles();
+        ArrayList<Tile> h = this.hand.getTiles();
 
         //runs
         for (int i=0; i<h.size()-2; i++) {

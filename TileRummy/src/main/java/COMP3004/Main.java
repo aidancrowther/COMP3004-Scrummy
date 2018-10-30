@@ -10,6 +10,6 @@ public class Main {
         if(viewType.equals("g")){
             controller.launchGraphicalView(args);
         }
-        controller.run();
+        controller.run(true);
     }
 }
