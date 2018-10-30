@@ -17,9 +17,8 @@ import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserver;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.*;
+import java.util.AbstractMap;
 
 public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
 {
@@ -61,7 +60,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
 
     protected HashMap<Meld, Integer> searchHand() {
-        HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> handMelds = new HashMap<>();
         int n = 0;
         ArrayList<Tile> h = this.hand.getTiles();
 
@@ -111,7 +110,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
 
     protected HashMap<Meld, Integer> searchTable(Table t) {
-        HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> tMelds = new HashMap<>();
         ArrayList<Tile> h = hand.getTiles();
 
         if (t == null) {
@@ -171,68 +170,23 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
-    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
-        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
-        HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
-        Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
+    public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+        HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
 
         if (t == null) {
             return tableSplits;
         }
 
         for (int i=1; i<t.getMelds().size(); i++) {             //for every meld in table
+            Meld hTiles = new Meld();
             ArrayList<Meld> aList = new ArrayList<Meld>();      //arraylist of melds created from a split
             Meld m = t.getMelds().get(i).copy();                //the meld about to be split
             ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
-            
-            for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
-                Meld shortM = new Meld();
-                for (int k=j; k<m.size(); k++) {
-                    //splitting either a run or a set of 3 (aka anywhere the tiles will just be checked linearly)
-                    if (t.getMelds().get(i).meldType() == 1 ||
-                        t.getMelds().get(i).meldType() == 0 && t.getMelds().get(i).size() == 3) {
-                        shortM.add(m.getTiles().get(k));                    //travel through every combination of cards in the run
-						for (int p=0; p<h.size(); p++) {                    //iterate through hand                                
-                            addingForSplitting(shortM, hTiles, h, p);
-                        }	
-                    //splitting a set of 4						
-                    } else { 
-                        //Whereas a set of 3 only has 6 total splits (including individual tiles),
-                        //a set of four (if i recall correctly) has 14. Every combination of tiles,
-                        //excluding the entire meld and including individual tiles, has to be
-                        //parsed through. addingForSplitting should be called normally once that is
-                        //established.
-                            
-                    }
 
-                    if (shortM.isValid()) {
-						System.out.println(shortM.toString() + " is a success!");
-                        for (int q=0; q<shortM.size(); q++) {
-                            if (h.contains(shortM.getTiles().get(q))) {
-                                h.remove(shortM.getTiles().get(q));
-                            }
-							if (m.getTiles().contains(shortM.getTiles().get(q))) {
-                                m.remove(shortM.getTiles().get(q));
-                            }
-                        }
-                        //After a meld is made, best to make sure nothing else from the table can be
-                        //added. This is an edge case.
-                        /*for (int p=0; p<m.size(); p++) {    //iterate through hand                                
-                            addingForSplitting(shortM, hTiles, m.getTiles(), p);
-                        }*/
-                        j--;
-                        aList.add(shortM.copy());
-                        k=999;
-                    }
-                }
-            }     
-            if (m.getTiles().isEmpty()) {               //all tiles have been used
-                meldSplits.put(aList, i);
-            } else {
-                //
-            }   
+            
+            AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
+            tableSplits.put(hTiles.copy(), meldSplits);
         }
-        tableSplits.put(hTiles, meldSplits);
         return tableSplits;
     }
 
