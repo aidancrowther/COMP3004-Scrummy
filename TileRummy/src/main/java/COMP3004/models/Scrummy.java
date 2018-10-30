@@ -76,6 +76,13 @@ public class Scrummy implements Subject
         }
     }
 
+    public Meld getPlayerHandByIndex(int playerIndex){
+        if( playerIndex >= 0 && playerIndex < this.players.length){
+            return this.players[playerIndex].getHand();
+        }
+        return null;
+    }
+
     public ArrayList<TableObserver> getObservers(){
         return this.observers;
     }
