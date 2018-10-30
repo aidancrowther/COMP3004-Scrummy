@@ -127,7 +127,9 @@ public class Strategy1 extends ArtificialIntelligence
 
         //Add each meld to the correct meld on the table, removing the tiles from the players hand
         for(Meld m : longestList){
+            //If the meld is being played from the hand
             if(handResults.get(m) != null){
+                //Build up the meld to add, removing tiles from the players hand as needed
                 Meld toAdd = new Meld();
                 for(Tile t : m.getTiles()){
                     this.score += hand.get(t).getValue();
@@ -135,13 +137,49 @@ public class Strategy1 extends ArtificialIntelligence
                 }
                 output.add(toAdd);
             }
+            //If the meld is being played onto the table
             else if(tableResults.get(m) != null){
+                //Remove all necessary tiles from the players hand, appending them to the specified meld
                 for(Tile t : m.getTiles()){
                     output.add(hand.remove(t), tableResults.get(m));
                 }
             }
+            //If the player is splitting
             else if(splitResults.get(m) != null){
-                
+                //Build up local variables
+                HashMap<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
+                ArrayList<Meld> meldsToAdd = new ArrayList<>();
+                ArrayList<Meld> result = new ArrayList<>();
+                int splitId = 0;
+
+                //Get the resultant melds and the id of the meld to split
+                for(Map.Entry<ArrayList<Meld>, Integer> list : toSplit.entrySet()){
+                    meldsToAdd = list.getKey();
+                    splitId = list.getValue();
+                }
+
+                //Get the meld that is being split from the table using the id
+                Meld beingSplit = table.getMelds().get(splitId);
+
+                //For each meld involved in the split
+                for(Meld meld : meldsToAdd){
+                    //Build up a meld to add, removing tiles from hand, or getting the reference
+                    Meld toAdd = new Meld();
+                    for(Tile t : meld.getTiles()){
+                        if(indexOf(beingSplit, t) >= 0) toAdd.add(beingSplit.getTiles().get(indexOf(beingSplit, t)));
+                        else if(indexOf(hand, t) >= 0) toAdd.add(hand.remove(t));
+                    }
+
+                    result.add(toAdd);
+                }
+
+                //Remove the split meld from the table
+                output.remove(splitId);
+
+                //Add all of out new melds back to the table
+                for(Meld meld : result){
+                    output.add(meld);
+                }
             }
         }
 
