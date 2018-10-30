@@ -34,4 +34,17 @@ public class TileTest{
         assertTrue(card.toString().split("")[0].equals(""+colour));
         assertTrue(card.toString().split("")[1].equals(""+value));
     }
+
+    @Test
+    public void checkTileEquals(){
+        char colour = 'O';
+        int value = 13;
+        Tile card1 = new Tile(colour, value);
+        
+        value = 10;
+        Tile card2 = new Tile(colour, value);
+
+        assertTrue(card1.equals(card1));
+        assertFalse(card1.equals(card2));
+    }
 }

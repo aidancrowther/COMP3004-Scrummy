@@ -246,7 +246,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    protected ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
+    public ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
 
         ArrayList<Integer> results = new ArrayList<>();
 
@@ -311,12 +311,11 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Get the index of the first entry for a tile in a meld by value
-public int indexOf(Meld m, Tile t){
+    public int indexOf(Meld m, Tile t){
         for (int i=0; i<m.getTiles().size(); i++)
             if (m.getTiles().get(i).equals(t))
                 return i;
         
         return -1;
     }
-
 }
