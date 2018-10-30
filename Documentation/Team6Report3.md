@@ -52,6 +52,7 @@ __Plans until Due Date:__
 
 * Help ensure other AI strategies are complete
 * Go through reubric and make sure every requirement is satisfied
+* Merge all branches 
 
 ### David N. Zilio
 __Work Completed:__
