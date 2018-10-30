@@ -54,8 +54,6 @@ public class Scrummy implements Subject
     public void notifyObservers(){
         for(TableObserver observer : this.observers) {
             observer.update(this.table);
-            System.out.println("in notify");
-            System.out.println(this.table.toString());
         }
     }
 
@@ -69,7 +67,6 @@ public class Scrummy implements Subject
          * */
 
         if(playedTable != null){
-            System.out.println(playedTable.isValid());
             if(playedTable.isValid()){
                 this.table = playedTable;
             } else {
