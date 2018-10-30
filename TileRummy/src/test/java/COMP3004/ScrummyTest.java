@@ -81,6 +81,7 @@ public class ScrummyTest
 
         assertNotEquals(scrummy.getTable(), inValidTable);
         assertNotEquals(gameInteractionController.getTable(), inValidTable);
+        assertEquals(gameInteractionController.getTable(), scrummy.getTable());
 
         Meld good = new Meld();
         good.add(new Tile('R', 1));
@@ -94,6 +95,15 @@ public class ScrummyTest
         scrummy.validatePlayerMove(validTable);
 
         assertEquals(scrummy.getTable(), validTable);
-        assertEquals(gameInteractionController.getTable(), validTable);
+        assertEquals(gameInteractionController.getTable(), scrummy.getTable());
+    }
+
+    @Test
+    public void testScrummyGetPlayerByIndex() {
+        Scrummy s = new Scrummy();
+        for(int i = 0; i < s.getPlayers().length; i++) {
+            Meld playerHand = s.getPlayers()[i].getHand();
+            assertEquals(playerHand, s.getPlayerHandByIndex(i));
+        }
     }
 }
