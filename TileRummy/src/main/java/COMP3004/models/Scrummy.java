@@ -27,7 +27,19 @@ public class Scrummy implements Subject
 
     public Scrummy(){
         // Give players hands here
+        for(int i = 0; i < this.players.length; i++){
+            players[i] = new Player();
+            Meld hand = new Meld();
+            for(int j = 0; j < 14; j++){
+                hand.add(this.deck.pop());
+            }
+            players[i].setHand(hand);
+        }
 
+        players[0].setName("Player");
+        players[1].setName("AI 1");
+        players[2].setName("AI 2");
+        players[3].setName("AI 3");
     }
 
     public void registerObserver(TableObserver t){
