@@ -60,10 +60,12 @@ public class Strategy1 extends ArtificialIntelligence
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
         HashMap<Meld, Integer> tableResults = new HashMap<Meld, Integer>();
+        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> splitResults = new HashMap<>();
         
         handResults = searchHand();
-        if (this.score >= 30) {
+        if (score >= 30) {
             tableResults = searchTable(table);
+            //splitResults = searchSplit(table);
         }
 
         //Lists to track hand status
@@ -91,6 +93,12 @@ public class Strategy1 extends ArtificialIntelligence
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
             allMelds.add(pair.getKey());
         }
+        for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
+            allMelds.add(pair.getKey());
+        }
+        for(Map.Entry<Meld, HashMap<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
+            allMelds.add(pair.getKey());
+        }
 
         //Find all sets of melds that can go together
         allMelds = sortByLength(allMelds);
@@ -107,8 +115,12 @@ public class Strategy1 extends ArtificialIntelligence
         int longest = 0;
         ArrayList<Meld> longestList = new ArrayList<>();
         for(ArrayList<Meld> a : results){
-            if(a.size() > longest){
+            if(a.size() > longest && score >= 30){
                 longest = a.size();
+                longestList = a;
+            }
+            else if(listScore(a) > longest && score < 30){
+                longest = listScore(a);
                 longestList = a;
             }
         }
@@ -128,13 +140,14 @@ public class Strategy1 extends ArtificialIntelligence
                     output.add(hand.remove(t), tableResults.get(m));
                 }
             }
+            else if(splitResults.get(m) != null){
+
+            }
         }
 
         //Return the output table
-        if (this.score < 30) {
-            this.score = 0;
-            return new Table();
-        } else return output;
+        if (longest < 30 && score < 30) return new Table();
+        else return output;
     }
 
 }
