@@ -21,11 +21,25 @@ public class Scrummy implements Subject
     private Table table = new Table();
     private Deck deck = new Deck();
     private Player[] players = new Player[4];
+    private int currentPlayerIndex = 0; // USER STARTS
 
     private ArrayList<TableObserver> observers = new ArrayList<>();
 
     public Scrummy(){
+        // Give players hands here
+        for(int i = 0; i < this.players.length; i++){
+            players[i] = new Player();
+            Meld hand = new Meld();
+            for(int j = 0; j < 14; j++){
+                hand.add(this.deck.pop());
+            }
+            players[i].setHand(hand);
+        }
 
+        players[0].setName("Player");
+        players[1].setName("AI 1");
+        players[2].setName("AI 2");
+        players[3].setName("AI 3");
     }
 
     public void registerObserver(TableObserver t){
@@ -44,12 +58,21 @@ public class Scrummy implements Subject
 
     public void validatePlayerMove(Table playedTable) {
         /*
-        * If valid table then update game table and notify observers
-        * Else
-        *   keep table as is and notify observers
-        *   also add the tiles the user played back into
-        *   their hand
-        * */
+         * If valid table then update game table, set the player hand, and notify observers
+         * and increment current player
+         * Else
+         *   keep table as is and notify observers
+         *   reset player hand if not
+         * */
+        if(playedTable != null){
+            if(playedTable.isValid()){
+                this.table = playedTable;
+            } else {
+                this.notifyObservers();
+            }
+        } else {
+            this.notifyObservers();
+        }
     }
 
     public ArrayList<TableObserver> getObservers(){
@@ -59,6 +82,13 @@ public class Scrummy implements Subject
     public Table getTable(){
         return this.table;
     }
-
     public void setTable(Table table) { this.table = table; }
+
+    public Player getCurrentPlayer(){ return this.players[currentPlayerIndex]; }
+    public void setCurrentPlayerIndex(int index) { this.currentPlayerIndex = index; }
+    public int getCurrentPlayerIndex() { return this.currentPlayerIndex; }
+
+    public Player[] getPlayers() { return this.players; }
+
+    public Deck getDeck() { return this.deck; }
 }

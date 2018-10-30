@@ -1,19 +1,30 @@
 package COMP3004;
 
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.TerminalViewController;
+import COMP3004.models.Meld;
 import COMP3004.models.Scrummy;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserver;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for Scrummy
  */
 public class ScrummyTest
 {
+    @Test
+    public void testScrummyController() {
+        Scrummy s = new Scrummy();
+        //Test that each player was initialized and that they have hands of size 14
+        assertNotNull(s.getPlayers());
+        for(int i = 0; i < s.getPlayers().length; i++){
+            assertTrue(s.getPlayers()[i].getHand().getTiles().size() == 14);
+        }
+    }
 
     @Test
     public void testAddObserver() {
@@ -49,5 +60,40 @@ public class ScrummyTest
         for(TableObserver observer : s.getObservers()){
             assertEquals(observer.getTable(), s.getTable());
         }
+    }
+
+    @Test
+    public void testValidateTable(){
+        Scrummy scrummy = new Scrummy();
+        GameInteractionController gameInteractionController = new GameInteractionController();
+        scrummy.registerObserver(gameInteractionController);
+
+        Meld bad = new Meld();
+        bad.add(new Tile('R', 1));
+        bad.add(new Tile('R', 1));
+
+        Table inValidTable = new Table();
+        inValidTable.add(bad);
+
+        assertFalse(inValidTable.isValid());
+
+        scrummy.validatePlayerMove(inValidTable);
+
+        assertNotEquals(scrummy.getTable(), inValidTable);
+        assertNotEquals(gameInteractionController.getTable(), inValidTable);
+
+        Meld good = new Meld();
+        good.add(new Tile('R', 1));
+        good.add(new Tile('B', 1));
+        good.add(new Tile('G', 1));
+
+
+        Table validTable = new Table();
+        validTable.add(good);
+
+        scrummy.validatePlayerMove(validTable);
+
+        assertEquals(scrummy.getTable(), validTable);
+        assertEquals(gameInteractionController.getTable(), validTable);
     }
 }

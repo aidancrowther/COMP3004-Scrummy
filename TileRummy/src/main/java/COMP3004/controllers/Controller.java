@@ -14,36 +14,102 @@ package COMP3004.controllers;
 
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
-import COMP3004.controllers.TerminalViewController;
+import COMP3004.models.Meld;
+import COMP3004.models.Tile;
+import COMP3004.models.Player;
 import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
+import COMP3004.controllers.TerminalViewController;
 
 public class Controller
 {
     private Scrummy scrummy;
     private GraphicalView graphicalView;
-    //private TerminalViewController terminalInteractionController;
     private GraphicalViewController graphicalInteractionController;
     private GameInteractionController gameInteractionController;
 
-    //private TerminalView terminalView;
-
     public Controller(){
         this.scrummy = new Scrummy();
-        //this.gameInteractionController = new GameInteractionController();
     }
 
     public void run(){
         /*
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
-        * Set vies table to table in scrummy
+        * copy players hand, pass in players actual hand
+        * Set views table to table in scrummy (done by observer)
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
-        *   have scrummy evaluate the table and update if valid
+        *   have scrummy evaluate the table and update if valid reset player hand if not
         * */
-        Table playedTable = this.gameInteractionController.play();
+        boolean play = true;
+        int winnerIndex = -1;
+        while(play){
+            Meld playerHandCopy = new Meld();
+            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles()){
+                playerHandCopy.add(t);
+            }
+
+            //Check current player and respond appropriately here
+            Table playedTable = null;
+            switch(this.getScrummy().getCurrentPlayerIndex()){
+                case 0 : {  // HUMAN
+                    playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+                }
+                case 1 :  { // TODO: STRAT 1
+
+                }
+                case 2 : { // TODO: STRAT 2
+
+                }
+                case 3 : { // TODO: STRAT 3
+
+                }
+                default: {
+                    break;
+                }
+            }
+
+            if(playedTable!= null){
+                // CHECK WHAT PLAYER DID
+                if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
+                    this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
+                } else {
+                    this.getScrummy().validatePlayerMove(playedTable);
+                    if(!playedTable.isValid()){
+                        this.scrummy.getCurrentPlayer().setHand(playerHandCopy);
+                    }
+                }
+
+                // CHECK FOR WIN
+                for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
+                    if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
+                        play = false;
+                        winnerIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            // SET NEXT PLAYER
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
+                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
+            } else {
+                this.scrummy.setCurrentPlayerIndex(0);
+            }
+        }
+
+        //print winner
+        if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
+            Player current = this.scrummy.getPlayers()[winnerIndex];
+            this.gameInteractionController.displayWinner(current.getName());
+        }
+    }
+
+    // FOR TESTING
+    public void run(String message){
+        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand(), message);
     }
 
     // TODO: clean up if possible

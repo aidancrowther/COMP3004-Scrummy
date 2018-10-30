@@ -176,8 +176,9 @@ public class StrategyTest{
         AI1.setTable(t);
 
         //Asser that the AI doesn't play if it can't break 30 points
-        Table table = AI1.play();
+        Table table = AI1.play(AI1.getHand());
         assertTrue(table.getMelds().size() == 1);
+
 
         //Generate the expected table
         Meld outTable = new Meld();
@@ -191,11 +192,10 @@ public class StrategyTest{
         AI1.setHand(hand);
 
         //Assert that the player plays their meld and returns the correct table
-        table = AI1.play();
+        table = AI1.play(AI1.getHand());
         assertTrue(table.getMelds().size() == 2);
         assertTrue(outTable.compare(table.getMelds().get(1)));
         assertTrue(AI1.hand.getTiles().size() == 2);
-
     }
 
     @Test
@@ -233,7 +233,7 @@ public class StrategyTest{
         AI1.setTable(table);
 
         //Assert that the player does not play onto the table
-        Table output = AI1.play();
+        Table output = AI1.play(AI1.getHand());
         assertTrue(output.getMelds().size() == 2);
 
         //Update the table so that the player can only add to existing melds
@@ -251,7 +251,7 @@ public class StrategyTest{
         expected.add(tile4);
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
         ArrayList<Meld> melds = output.getMelds();
 
         assertTrue(melds.size() == 2);
@@ -275,7 +275,7 @@ public class StrategyTest{
         expected.add(tile5);
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
         melds = output.getMelds();
         assertTrue(melds.size() == 2);
         assertTrue(melds.get(0).compare(expected));
@@ -308,7 +308,7 @@ public class StrategyTest{
         expected2.add(tile6);
 
         //Assert that the player plays onto the correct meld, and only onto that meld
-        output = AI1.play();
+        output = AI1.play(AI1.getHand());
 
         System.out.println(AI1.toPrint);
 
