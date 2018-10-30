@@ -31,10 +31,11 @@ __Work Completed:__
 * Tested and wrote methods (using TDD) for AI to interact with the table, including:
     * Creating melds from its own hand to add to the table
     * Adding to preexisting melds on the table from its own hand
-    * Splitting melds on the table and adding tiles from its hand to make two new complete melds
+    * Splitting melds on the table and adding tiles from its hand to make two new complete melds (Incomplete)
 
 __Plans until Due Date:__
 
+* Finish splitting
 * Finish Strategy 2, 3, and 4 logic by Nov 1st
 * Assist other team members after Nov 1st to complete game
 
