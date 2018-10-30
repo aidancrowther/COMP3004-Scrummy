@@ -278,7 +278,7 @@ public class StrategyTest{
         output = AI1.play(AI1.getHand());
         melds = output.getMelds();
         assertTrue(melds.size() == 2);
-        assertTrue(melds.get(0).compare(expected));
+        assertTrue(melds.get(1).compare(expected));
 
         //Create a table onto which the AI can add a new meld, and modify an existing one
         table = new Table();
@@ -297,9 +297,9 @@ public class StrategyTest{
 
         //Derive our expected outputs
         Meld expected1 = new Meld();
-        expected.add(tile7);
-        expected.add(tile8);
-        expected.add(tile4);
+        expected1.add(tile7);
+        expected1.add(tile5);
+        expected1.add(tile4);
 
         Meld expected2 = new Meld();
         expected2.add(tile1);
