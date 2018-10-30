@@ -309,4 +309,14 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return output;
     }
 
+    //Get the index of the first entry for a tile in a meld by value
+    public int indexOf(Meld m, Tile t){
+
+        for(int i=0; i<m.getTiles().size(); i++){
+            if(isEquivalent(m.getTiles().get(i), t)) return i;
+        }
+
+        return -1;
+    }
+
 }
