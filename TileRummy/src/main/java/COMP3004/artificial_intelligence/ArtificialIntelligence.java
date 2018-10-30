@@ -143,14 +143,20 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             //try to make a run
             if (h.get(p).getColour() == copyM.getTiles().get(0).getColour()) {
                 //try to add one above and one below it; if they do not exist, you know
-                //you can't make a run using just one tile from the table
+                //you can't make a run using just one tile from the tabl
+                //Just adding one tile at a time is causing the program to miss
+                //possible melds.
+
             //try to make a set
             } else {
                 //try to add 2 tiles; if they do not exist, you know
                 //you can't make a set using just one tile from the table
+                //Just adding one tile at a time is causing the program to miss
+                //possible melds.
             }
 
-            if (copyM.size() > 2 && copyM.isValid()) {
+            //I'm not entirely sure this is working. Make sure it is.
+            if (copyM.size() > 2 && copyM.isValid()) { 
                 shortM = copyM.copy();
                 hTiles = copyH.copy();
             }
@@ -173,31 +179,29 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             return tableSplits;
         }
 
-        for (int i=1; i<t.getMelds().size(); i++) {         //for every meld in table
-            ArrayList<Meld> aList = new ArrayList<Meld>();       //arraylist of melds created from a split
-            Meld m = t.getMelds().get(i).copy();            //the meld about to be split
-            ArrayList<Tile> h = hand.copy().getTiles();
+        for (int i=1; i<t.getMelds().size(); i++) {             //for every meld in table
+            ArrayList<Meld> aList = new ArrayList<Meld>();      //arraylist of melds created from a split
+            Meld m = t.getMelds().get(i).copy();                //the meld about to be split
+            ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
             
             for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
                 Meld shortM = new Meld();
                 for (int k=j; k<m.size(); k++) {
-                    if (t.getMelds().get(i).meldType() == 1) {         //splitting a run
-                        shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
-                        System.out.println("Testing " + shortM.toString());
-						for (int p=0; p<h.size(); p++) {    //iterate through hand                                
+                    //splitting either a run or a set of 3 (aka anywhere the tiles will just be checked linearly)
+                    if (t.getMelds().get(i).meldType() == 1 ||
+                        t.getMelds().get(i).meldType() == 0 && t.getMelds().get(i).size() == 3) {
+                        shortM.add(m.getTiles().get(k));                    //travel through every combination of cards in the run
+						for (int p=0; p<h.size(); p++) {                    //iterate through hand                                
                             addingForSplitting(shortM, hTiles, h, p);
                         }	
-                    						
-                    } else { //splitting a set
-                        if (t.getMelds().get(i).size() == 3) {  //small set of 3
-                            shortM.add(m.getTiles().get(k));    //travel through every combination of cards in the run
-                            for (int p=0; p<h.size(); p++) {    //iterate through hand                                
-                                addingForSplitting(shortM, hTiles, h, p);
-						    }	
-                        }
-                        else {  //"large" set of 4
+                    //splitting a set of 4						
+                    } else { 
+                        //Whereas a set of 3 only has 6 total splits (including individual tiles),
+                        //a set of four (if i recall correctly) has 14. Every combination of tiles,
+                        //excluding the entire meld and including individual tiles, has to be
+                        //parsed through. addingForSplitting should be called normally once that is
+                        //established.
                             
-                        }
                     }
 
                     if (shortM.isValid()) {
@@ -210,6 +214,8 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                                 m.remove(shortM.getTiles().get(q));
                             }
                         }
+                        //After a meld is made, best to make sure nothing else from the table can be
+                        //added. This is an edge case.
                         /*for (int p=0; p<m.size(); p++) {    //iterate through hand                                
                             addingForSplitting(shortM, hTiles, m.getTiles(), p);
                         }*/
@@ -218,17 +224,13 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                         k=999;
                     }
                 }
-            }
-
-            /*REMOVE TILES FROM M WHEN THEY GET USED */         
+            }     
             if (m.getTiles().isEmpty()) {               //all tiles have been used
                 meldSplits.put(aList, i);
             } else {
                 //
-            }
-            
+            }   
         }
-
         tableSplits.put(hTiles, meldSplits);
         return tableSplits;
     }
