@@ -36,7 +36,9 @@ public class ControllerTest {
 
         int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
         controller.run(false);
-        assertEquals(controller.getAI(1).getTable(), controller.getScrummy().getTable());
+
+        Table t = controller.getAI(1).getTable(); // TODO: figure out why calling this directly in assert was causing error
+        assertEquals(t, controller.getScrummy().getTable());
 
         // Set views table to table in scrummy
         boolean playerMoved = true;

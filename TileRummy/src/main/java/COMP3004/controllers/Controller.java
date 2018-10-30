@@ -44,6 +44,7 @@ public class Controller
             AIs[i] = new Strategy1();
             this.scrummy.registerObserver(AIs[i]);
         }
+        this.scrummy.notifyObservers();
     }
 
     public void run(boolean enableHumanPlayer){
@@ -66,49 +67,55 @@ public class Controller
 
             //Check current player and respond appropriately here
             Table playedTable = null;
-            if(isPlayer[scrummy.getCurrentPlayerIndex()])
-                if(enableHumanPlayer)
+            if(isPlayer[scrummy.getCurrentPlayerIndex()]) {
+                if (enableHumanPlayer) {
                     playedTable = this.gameInteractionController.play(scrummy.getCurrentPlayer().getHand());
-            else
-                playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
-
-            if(playedTable != null){
-                // CHECK WHAT PLAYER DID
-                if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
-                    Tile t = scrummy.getDeck().pop();
-                    if(t != null)
-                        scrummy.getCurrentPlayer().getHand().add(t);
-                } else {
-                    scrummy.validatePlayerMove(playedTable);
-                    if(!playedTable.isValid())
-                        scrummy.getCurrentPlayer().setHand(playerHandCopy);
-                }
-
-                // CHECK FOR WIN
-                if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
-                    play = false;
-                    winnerIndex = scrummy.getCurrentPlayerIndex();
-                    break;
+                    winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
                 }
             }
-            else{} // TODO: shouldn't there be this else here? -- you get null if enableHumanPlayer is false or one of the play funcitons returns null
-            // TODO: Should be broadcasting the changes done to all player views somewhere around here
+            else{
+                playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
+                winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
+            }
+
+            //print winner
+            if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
+                Player current = this.scrummy.getPlayers()[winnerIndex];
+                this.gameInteractionController.displayWinner(current.getName());
+                //TODO: ask if want to play again
+                break;
+            }
+
+            if(!enableHumanPlayer)
+                play = false;
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
             else
                 this.scrummy.setCurrentPlayerIndex(0);
+        }
+    }
 
-            if(!enableHumanPlayer) // TODO: I believe it would be better form to handle this up under the playedTable != null line
-                play = false;
+    public int checkPlayerMove(Table playedTable, Meld playerHandCopy){
+        int winnerIndex = -1;
+        // CHECK WHAT PLAYER DID
+        if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+            Tile t = scrummy.getDeck().pop();
+            if(t != null)
+                scrummy.getCurrentPlayer().getHand().add(t);
+        } else {
+            scrummy.validatePlayerMove(playedTable);
+            if(!playedTable.isValid())
+                scrummy.getCurrentPlayer().setHand(playerHandCopy);
         }
 
-        //print winner
-        if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
-            Player current = this.scrummy.getPlayers()[winnerIndex];
-            this.gameInteractionController.displayWinner(current.getName());
+        // CHECK FOR WIN
+        if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = scrummy.getCurrentPlayerIndex();
         }
+
+        return winnerIndex;
     }
 
     // FOR TESTING
