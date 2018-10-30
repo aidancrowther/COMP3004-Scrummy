@@ -92,6 +92,7 @@ public class Controller
                 }
             }
             else{} // TODO: shouldn't there be this else here? -- you get null if enableHumanPlayer is false or one of the play funcitons returns null
+            // TODO: Should be broadcasting the changes done to all player views somewhere around here
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)

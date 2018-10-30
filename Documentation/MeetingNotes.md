@@ -56,6 +56,28 @@ Taken By: David N. Zilio
 
 Taken By: 
 
+---
+
+## Week2 Oct 9<sup>th</sup> - Oct 16<sup>th</sup>
+
+Midterms my dudes
+
+---
+
+## Week3 Oct 16<sup>th</sup> - Oct 30<sup>th</sup>
+
+### Tuesday 16<sup>th</sup>
+
+Taken By:
+
+### thursday 19<sup>th</sup>
+
+Taken By: --No meeting?
+
+---
+
+## Week4 Oct 30<sup>th</sup> - Nov 5<sup>th</sup>
+
 ### Tuesday 30<sup>th</sup>
 
 Taken By: David N Zilio
@@ -66,3 +88,13 @@ Schedule:
 2. The View Abstract class doesn't exist and 
 3. Why the "this.getScrummy()" in Controller?
 4. enableHumanPlayer???
+5. TODOs in controller
+6. go through the marking grid and do gap analysis
+
+Minutes:
+
+dasf
+
+### thursday 1<sup>st</sup>
+
+Taken By: David N Zilio
