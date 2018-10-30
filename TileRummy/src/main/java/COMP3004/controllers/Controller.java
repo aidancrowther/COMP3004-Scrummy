@@ -81,7 +81,10 @@ public class Controller
             if(playedTable!= null){
                 // CHECK WHAT PLAYER DID
                 if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
-                    this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
+                    Tile t = this.getScrummy().getDeck().pop();
+                    if(t != null){
+                        this.getScrummy().getCurrentPlayer().getHand().add(t);
+                    }
                 } else {
                     this.getScrummy().validatePlayerMove(playedTable);
                     if(!playedTable.isValid()){
@@ -104,6 +107,10 @@ public class Controller
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
             } else {
                 this.scrummy.setCurrentPlayerIndex(0);
+            }
+
+            if(!enableHumanPlayer){
+                play = false;
             }
         }
 
@@ -148,5 +155,9 @@ public class Controller
 
     public Scrummy getScrummy(){
         return this.scrummy;
+    }
+
+    public Strategy1 getStrategy1(){
+        return this.strategy1;
     }
 }

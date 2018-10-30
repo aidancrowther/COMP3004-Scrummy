@@ -130,8 +130,9 @@ public class Strategy1 extends ArtificialIntelligence
                 //Build up the meld to add, removing tiles from the players hand as needed
                 Meld toAdd = new Meld();
                 for(Tile t : m.getTiles()){
-                    this.score += hand.get(t).getValue();
-                    toAdd.add(hand.remove(t));
+                    this.score += t.getValue(); // this.hand.get(t);
+                    toAdd.add(t); //this.hand.remove(t));
+                    this.hand.remove(t);
                 }
                 output.add(toAdd);
             }
@@ -139,7 +140,8 @@ public class Strategy1 extends ArtificialIntelligence
             else if(tableResults.get(m) != null){
                 //Remove all necessary tiles from the players hand, appending them to the specified meld
                 for(Tile t : m.getTiles()){
-                    output.add(hand.remove(t), tableResults.get(m));
+                    output.add(t, tableResults.get(m));
+                    hand.remove(t);
                 }
             }
             //If the player is splitting
