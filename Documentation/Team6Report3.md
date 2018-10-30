@@ -42,13 +42,16 @@ __Plans until Due Date:__
 ### Brittny Lapierre
 __Work Completed:__
 
-*
-*
+* Used TTD for the following:
+* Added code for Scrummy controler - itinialized players
+* Added code in controller for running the game, and changing to the next player
+* Added code for validating user play
+* Restructured code to enable a JavaFX GUI 
 
 __Plans until Due Date:__
 
-*
-*
+* Help ensure other AI strategies are complete
+* Go through reubric and make sure every requirement is satisfied
 
 ### David N. Zilio
 __Work Completed:__
