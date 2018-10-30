@@ -41,6 +41,23 @@ public class Table {
         melds.get(i).add(t);
     }
 
+    public Meld remove(int i) {
+        if (i==0) {
+            return null;
+        } else { 
+            return melds.remove(i);
+        }
+    }
+
+    public Meld remove(Meld m) {
+        for (int i=1; i<melds.size(); i++) {
+            if (melds.get(i).compare(m)) {
+                return melds.remove(i);
+            }
+        }
+        return null;
+    }
+
     /*
         See if the table is valid
         If there is an incomplete meld in melds.get(0), or any completed melds are invalid, return false
