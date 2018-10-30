@@ -46,12 +46,21 @@ public class Scrummy implements Subject
 
     public void validatePlayerMove(Table playedTable) {
         /*
-        * If valid table then update game table, set the player hand, and notify observers
-        * and increment current player
-        * Else
-        *   keep table as is and notify observers
-        *   reset player hand if not
-        * */
+         * If valid table then update game table, set the player hand, and notify observers
+         * and increment current player
+         * Else
+         *   keep table as is and notify observers
+         *   reset player hand if not
+         * */
+        if(playedTable != null){
+            if(playedTable.isValid()){
+                this.table = playedTable;
+            } else {
+                this.notifyObservers();
+            }
+        } else {
+            this.notifyObservers();
+        }
     }
 
     public ArrayList<TableObserver> getObservers(){

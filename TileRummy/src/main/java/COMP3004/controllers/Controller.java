@@ -16,6 +16,7 @@ import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Meld;
 import COMP3004.models.Tile;
+import COMP3004.models.Player;
 import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
 import COMP3004.controllers.TerminalViewController;
@@ -75,6 +76,9 @@ public class Controller
                 this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
             } else {
                 this.getScrummy().validatePlayerMove(playedTable);
+                if(!playedTable.isValid()){
+                   this.scrummy.getCurrentPlayer().setHand(playerHandCopy);
+                }
             }
 
             // CHECK FOR WIN
@@ -95,8 +99,9 @@ public class Controller
         }
 
         //print winner
-        if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
-            this.gameInteractionController.displayWinner(this.scrummy.getPlayers().get(winnerIndex));
+        if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
+            Player current = this.scrummy.getPlayers()[winnerIndex];
+            this.gameInteractionController.displayWinner(current.getName());
         }
     }
 

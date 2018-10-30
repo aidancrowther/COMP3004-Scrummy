@@ -67,7 +67,7 @@ public class ScrummyTest
         Scrummy scrummy = new Scrummy();
         GameInteractionController gameInteractionController = new GameInteractionController();
         scrummy.registerObserver(gameInteractionController);
-        
+
         Meld bad = new Meld();
         bad.add(new Tile('R', 1));
         bad.add(new Tile('R', 1));
@@ -75,7 +75,7 @@ public class ScrummyTest
         Table inValidTable = new Table();
         inValidTable.add(bad);
 
-        assertFalse(table.isValid());
+        assertFalse(inValidTable.isValid());
 
         scrummy.validatePlayerMove(inValidTable);
 

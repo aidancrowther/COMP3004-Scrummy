@@ -33,8 +33,6 @@ public interface GameInteractionInterface
      */
     //public void update(Table table);
 
-    public void displayWinner(String playerName);
-
     //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
     public void setHand(Meld hand);
 }
