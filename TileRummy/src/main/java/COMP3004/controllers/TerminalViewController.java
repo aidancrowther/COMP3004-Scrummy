@@ -25,6 +25,7 @@ public class TerminalViewController extends GameInteractionController
     }
 
     public Table play(Meld hand){
+        this.hand = hand;
         this.terminalView.printTable(this.getTable());
         this.terminalView.printActivePlayerHand(this.hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");

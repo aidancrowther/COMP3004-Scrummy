@@ -52,3 +52,4 @@ SN: 100997259
         * scraping the code it still doesn't execute and actually do anything it's just a bunch of modules. (I fixed that)
         * I worked heavily on the UML design early and I expect that as part of the overall picture coming together in my head I'm going to have to build the main game, stitching the pieces together
         * Poor oop practice all over the place and my group is arguing that it's because of tdd. I don't believe that JP actually wants this. Specifically the code is using the wrong access modifiers; everything is public so even helper functions can be tested with tdd.
+        * Debugged some and got the game running with actual hands being displayed

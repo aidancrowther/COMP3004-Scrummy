@@ -26,6 +26,7 @@ public class Scrummy implements Subject
     private ArrayList<TableObserver> observers = new ArrayList<>();
 
     public Scrummy(){
+        deck.shuffle();
         // Give players hands here
         for(int i = 0; i < this.players.length; i++){
             players[i] = new Player();
