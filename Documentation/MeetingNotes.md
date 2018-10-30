@@ -63,3 +63,6 @@ Taken By: David N Zilio
 Schedule:
 
 1. Do we need to test "all funcitons" including helper funcitons?
+2. The View Abstract class doesn't exist and 
+3. Why the "this.getScrummy()" in Controller?
+4. enableHumanPlayer

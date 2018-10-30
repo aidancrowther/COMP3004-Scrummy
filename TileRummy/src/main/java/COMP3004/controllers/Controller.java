@@ -12,6 +12,7 @@
 
 package COMP3004.controllers;
 
+import COMP3004.artificial_intelligence.ArtificialIntelligence;
 import COMP3004.artificial_intelligence.Strategy1;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
@@ -29,12 +30,20 @@ public class Controller
     private GraphicalViewController graphicalInteractionController;
     private GameInteractionController gameInteractionController;
 
-    private Strategy1 strategy1;
+    private ArtificialIntelligence[] AIs;
+    private boolean[] isPlayer;
 
     public Controller(){
         this.scrummy = new Scrummy();
-        this.strategy1 = new Strategy1();
-        this.scrummy.registerObserver(strategy1);
+        AIs = new ArtificialIntelligence[4];
+        isPlayer = new boolean[4];
+        isPlayer[0] = true;
+        AIs[0] = null;
+        for (byte i = 1; i < 4; i++) {
+            isPlayer[i] = false;
+            AIs[i] = new Strategy1();
+            this.scrummy.registerObserver(AIs[i]);
+        }
     }
 
     public void run(boolean enableHumanPlayer){
@@ -52,66 +61,46 @@ public class Controller
         int winnerIndex = -1;
         while(play){
             Meld playerHandCopy = new Meld();
-            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles()){
+            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
                 playerHandCopy.add(t);
-            }
 
             //Check current player and respond appropriately here
             Table playedTable = null;
-            switch(this.getScrummy().getCurrentPlayerIndex()){
-                case 0 : {  // HUMAN
-                    if(enableHumanPlayer){
-                        playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
-                    }
-                }
-                case 1 :  { // TODO: STRAT 1
-                    playedTable = this.strategy1.play(this.scrummy.getCurrentPlayer().getHand());
-                }
-                case 2 : { // TODO: STRAT 2
+            if(isPlayer[scrummy.getCurrentPlayerIndex()])
+                if(enableHumanPlayer)
+                    playedTable = this.gameInteractionController.play(scrummy.getCurrentPlayer().getHand());
+            else
+                playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
 
-                }
-                case 3 : { // TODO: STRAT 3
-
-                }
-                default: {
-                    break;
-                }
-            }
-
-            if(playedTable!= null){
+            if(playedTable != null){
                 // CHECK WHAT PLAYER DID
-                if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
-                    Tile t = this.getScrummy().getDeck().pop();
-                    if(t != null){
-                        this.getScrummy().getCurrentPlayer().getHand().add(t);
-                    }
+                if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+                    Tile t = scrummy.getDeck().pop();
+                    if(t != null)
+                        scrummy.getCurrentPlayer().getHand().add(t);
                 } else {
-                    this.getScrummy().validatePlayerMove(playedTable);
-                    if(!playedTable.isValid()){
-                        this.scrummy.getCurrentPlayer().setHand(playerHandCopy);
-                    }
+                    scrummy.validatePlayerMove(playedTable);
+                    if(!playedTable.isValid())
+                        scrummy.getCurrentPlayer().setHand(playerHandCopy);
                 }
 
                 // CHECK FOR WIN
-                for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
-                    if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
-                        play = false;
-                        winnerIndex = i;
-                        break;
-                    }
+                if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
+                    play = false;
+                    winnerIndex = scrummy.getCurrentPlayerIndex();
+                    break;
                 }
             }
+            else{} // TODO: shouldn't there be this else here? -- you get null if enableHumanPlayer is false or one of the play funcitons returns null
 
             // SET NEXT PLAYER
-            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
-            } else {
+            else
                 this.scrummy.setCurrentPlayerIndex(0);
-            }
 
-            if(!enableHumanPlayer){
+            if(!enableHumanPlayer) // TODO: I believe it would be better form to handle this up under the playedTable != null line
                 play = false;
-            }
         }
 
         //print winner
@@ -127,8 +116,8 @@ public class Controller
     }*/
 
     // TODO: clean up if possible
-    public void setInteractionType(String selection){
-        if(selection.equals("t")) {
+    public void setInteractionType(char selection){
+        if(selection == 't') {
             this.gameInteractionController = new TerminalViewController();
             //this.terminalInteractionController = new TerminalViewController();
             //this.gameInteractionController = this.terminalInteractionController; //to access controller generally
@@ -143,8 +132,8 @@ public class Controller
 
     public void launchGraphicalView(String[] args){
         // SET UP 2 WAY COMMUNICATION THEN LAUNCH GUI
+        GraphicalView.setController(graphicalInteractionController);
         this.graphicalView = new GraphicalView();
-        this.graphicalView.setController(graphicalInteractionController);
         this.graphicalInteractionController.setGameView(graphicalView);
         this.graphicalView.initInterface(args);
     }
@@ -157,7 +146,10 @@ public class Controller
         return this.scrummy;
     }
 
-    public Strategy1 getStrategy1(){
-        return this.strategy1;
+    public ArtificialIntelligence getAI(int id) {
+        if (id > 4 || id < 0)
+            if (isPlayer[id])
+                return null;
+        return AIs[id];
     }
 }

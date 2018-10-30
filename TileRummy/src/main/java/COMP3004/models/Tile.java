@@ -1,5 +1,6 @@
 /* COMP3004 - BlackJack
 *  Aidan Crowther, 100980915
+*  David N. Zilio, 100997259
 */
 
 package COMP3004.models;
@@ -25,7 +26,7 @@ public class Tile{
         return value;
     }
 
-    //check if the 
+    //Check if the tile is equal to the tile passed in
     public Boolean equals(Tile t){
         Boolean result = true;
         result &= this.getColour() == t.getColour();

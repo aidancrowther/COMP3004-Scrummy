@@ -36,11 +36,11 @@ public class ControllerTest {
 
         int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
         controller.run(false);
-        assertEquals(controller.getStrategy1().getTable(), controller.getScrummy().getTable());
+        assertEquals(controller.getAI(1).getTable(), controller.getScrummy().getTable());
 
         // Set views table to table in scrummy
         boolean playerMoved = true;
-        if(!controller.getStrategy1().getTable().equals(controller.getScrummy().getTable())){
+        if(!controller.getAI(1).getTable().equals(controller.getScrummy().getTable())){
             playerMoved = false;
         }
         /*for(Meld viewMeld: controller.getStrategy1().getTable().getMelds()) {
@@ -57,8 +57,8 @@ public class ControllerTest {
             assertTrue((currentPlayerHandLen - intitialPlayerHandLen) == 1);
         } else {
             // else have scrummy evaluate the table and update if valid
-            if(controller.getStrategy1().getTable().isValid()){
-                assertEquals(controller.getStrategy1().getTable(), controller.getScrummy().getTable());
+            if(controller.getAI(1).getTable().isValid()){
+                assertEquals(controller.getAI(1).getTable(), controller.getScrummy().getTable());
             } else {
                 boolean resetToOriginal = true;
                 for(Meld viewMeld: originalTable.getMelds()) {
@@ -77,7 +77,7 @@ public class ControllerTest {
     @Test
     public void testCreateController() {
         Controller controller = new Controller();
-        controller.setInteractionType("t");
+        controller.setInteractionType('t');
         assertNotNull(controller.getScrummy());
         assertNotEquals(controller.getScrummy().getObservers().size(), 0);
         assertTrue(controller.getScrummy().getObservers().contains(controller.getInteractionController()));
@@ -86,12 +86,12 @@ public class ControllerTest {
     @Test
     public void testSetViewType() {
         Controller controller = new Controller();
-        String response = "t";
+        char response = 't';
         controller.setInteractionType(response);
         assertNotNull(controller.getInteractionController());
         assertTrue(controller.getInteractionController() instanceof TerminalViewController);
 
-        response = "g";
+        response = 'g';
         controller.setInteractionType(response);
         assertNotNull(controller.getInteractionController());
         assertTrue(controller.getInteractionController() instanceof GraphicalViewController);
