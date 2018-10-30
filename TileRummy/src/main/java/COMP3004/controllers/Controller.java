@@ -101,13 +101,15 @@ public class Controller
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
         if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+            scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
             Tile t = scrummy.getDeck().pop();
             if(t != null)
                 scrummy.getCurrentPlayer().getHand().add(t);
         } else {
             scrummy.validatePlayerMove(playedTable);
-            if(!playedTable.isValid())
+            if(!playedTable.isValid()){
                 scrummy.getCurrentPlayer().setHand(playerHandCopy);
+            }
         }
 
         // CHECK FOR WIN
