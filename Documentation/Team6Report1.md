@@ -25,7 +25,6 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 * Wrote out test cases for the Table class, plan to finish Table this week
 
 ### Brittny Lapierre
-
 * Will be focusing on the UI of the game
 * Created a plan for implementing the observer pattern into our game
 * Collaborated with Aiden to plan the methods required for the view class
