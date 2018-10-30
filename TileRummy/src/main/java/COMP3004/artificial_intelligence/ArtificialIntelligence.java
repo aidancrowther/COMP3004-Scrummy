@@ -34,7 +34,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         
     }
 
-    protected Table play(){return null;}
+    public Table play(){return null;}
 
     public Meld getHand() { return this.hand; }
 
