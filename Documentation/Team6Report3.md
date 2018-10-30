@@ -13,13 +13,16 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 ### Aidan Crowther
 __Work Completed:__
 
-*
-*
+* Added support methods to AI
+* Wrote and verified tests for Strategy1 play logic
+    * Creating melds from hand to add to the table
+    * Adding to preexisting melds
+    * Initial splitting logic implemented
 
 __Plans until Due Date:__
 
-*
-*
+* Finish Strategy 2, 3, and 4 logic
+* Assist with code housekeeping and gameplay integration
 
 ### Ellis Glennie
 __Work Completed:__
