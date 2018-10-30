@@ -371,7 +371,7 @@ public class StrategyTest{
         expected.add(tile3);
         expected.add(tile9);
 
-        Table output = AI1.play();
+        Table output = AI1.play(hand);
         ArrayList<Meld> melds = output.getMelds();
 
         //Assert that the player plays a normal hand
@@ -380,28 +380,28 @@ public class StrategyTest{
 
         //Test with a table where the player can split a run
         table = new Table();
-        table.add(tile1);
-        table.add(tile2);
-        table.add(tile3);
+        table.add(tile1); //10
+        table.add(tile2); //9
+        table.add(tile3); //8
         AI1.setTable(table);
 
         hand = new Meld();
-        hand.add(tile9);
-        hand.add(tile8);
-        hand.add(tile7);
+        hand.add(tile9); //11
+        hand.add(tile8); //9
+        hand.add(tile7); //7
         AI1.setHand(hand);
 
         Meld expected1 = new Meld();
-        expected.add(tile7);
-        expected.add(tile2);
-        expected.add(tile9);
+        expected1.add(tile7); //7
+        expected1.add(tile3);//tile2); //9
+        expected1.add(tile2);//tile9); //11
 
         Meld expected2 = new Meld();
-        expected.add(tile3);
-        expected.add(tile8);
-        expected.add(tile1);
+        expected2.add(tile8);//tile3); //8
+        expected2.add(tile1);//tile8); //9
+        expected2.add(tile9);//tile1); //10
 
-        output = AI1.play();
+        output = AI1.play(hand);
         melds = output.getMelds();
 
         Boolean expected1Found = false;
@@ -420,28 +420,30 @@ public class StrategyTest{
 
         //Test with a table where the player can split a set
         table = new Table();
-        table.add(tile4);
-        table.add(tile5);
-        table.add(tile6);
+        table.add(tile4); // B7
+        table.add(tile5); // G7
+        table.add(tile6); // 07
         AI1.setTable(table);
 
         hand = new Meld();
-        hand.add(tile7);
-        hand.add(tile10);
-        hand.add(tile11);
+        hand.add(tile7); //07
+        hand.add(tile10); //R7
+        hand.add(tile11); //R7
         AI1.setHand(hand);
 
         expected1 = new Meld();
-        expected.add(tile4);
-        expected.add(tile10);
-        expected.add(tile6);
+        expected1.add(tile4); //B7
+        expected1.add(tile10); //R7
+        expected1.add(tile6); //07
 
         expected2 = new Meld();
-        expected.add(tile5);
-        expected.add(tile7);
-        expected.add(tile11);
+        expected2.add(tile5); //G7
+        expected2.add(tile7); //07
+        expected2.add(tile11); //R7
 
-        output = AI1.play();
+        output = AI1.play(hand);
+        System.out.println(output.toString());
+
         melds = output.getMelds();
 
         expected1Found = false;
@@ -481,7 +483,7 @@ public class StrategyTest{
         expected.add(tile2);
         expected.add(tile3);
 
-        output = AI1.play();
+        output = AI1.play(hand);
         melds = output.getMelds();
 
         expected1Found = false;

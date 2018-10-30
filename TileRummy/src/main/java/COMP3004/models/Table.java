@@ -75,6 +75,19 @@ public class Table {
         return true;
     }
 
+    public String toString() {
+        String str = "";
+        //System.out.println(this.melds.size());
+        for( Meld m : this.melds){
+            //System.out.println(m.getTiles().size());
+            for( Tile t : m.getTiles() ) {
+                str += " |" + Character.toString(t.getColour()) + "-" + Integer.toString(t.getValue()) + "| ";
+            }
+            str += "\n";
+        }
+        return str;
+    }
+
 
 
 }

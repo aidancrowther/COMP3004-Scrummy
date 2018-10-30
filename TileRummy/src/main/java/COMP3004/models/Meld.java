@@ -146,6 +146,9 @@ public class Meld {
 
     
     public boolean compare(Meld m) {
+        if(this.getTiles().size() != m.getTiles().size()){
+            return false;
+        }
         for (int i=0; i<this.getTiles().size(); i++) {
             if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
                 this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
