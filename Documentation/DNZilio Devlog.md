@@ -29,13 +29,3 @@ SN: 100997259
       1. After our meeting, Jason (friend) and I were discussing the OO-design of the controller and came up with linking the AI into the UserInterface interface so that the AI Strategies could be interfaced exactly like users.
       2. I discussed the above with the group and was assigned UML alterations. Given, my idea becomes my work - makes sence
       3. UML is updated. ReNamed a number of classes and began making empty classes in java files so that the team can get working without worries of conflicts with file names
-
-## Week 2 Oct 9<sup>nd</sup> - Oct 16<sup>th</sup>
-
-1. What did you commit to?
-    * Not really much, It's a really busy week for me
-2. Did you meet your commitments?
-    * considering their sad state, yes
-3. Notes:
-    * Tue Oct 16<sup>th</sup>
-      1. Took down the project and tried to build realizing a couple of bugs, reported them and I'm considering fixing them.
