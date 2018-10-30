@@ -96,4 +96,13 @@ public class ScrummyTest
         assertEquals(scrummy.getTable(), validTable);
         assertEquals(gameInteractionController.getTable(), validTable);
     }
+
+    @Test
+    public void testScrummyGetPlayerByIndex() {
+        Scrummy s = new Scrummy();
+        for(int i = 0; i < s.getPlayers().length; i++) {
+            Meld playerHand = s.getPlayers()[i].getHand();
+            assertEquals(playerHand, s.getPlayerHandByIndex(i));
+        }
+    }
 }
