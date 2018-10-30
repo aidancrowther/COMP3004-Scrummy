@@ -54,6 +54,8 @@ public class Scrummy implements Subject
     public void notifyObservers(){
         for(TableObserver observer : this.observers) {
             observer.update(this.table);
+            System.out.println("in notify");
+            System.out.println(this.table.toString());
         }
     }
 
@@ -65,15 +67,16 @@ public class Scrummy implements Subject
          *   keep table as is and notify observers
          *   reset player hand if not
          * */
+
         if(playedTable != null){
+            System.out.println(playedTable.isValid());
             if(playedTable.isValid()){
                 this.table = playedTable;
             } else {
                 this.notifyObservers();
             }
-        } else {
-            this.notifyObservers();
         }
+        this.notifyObservers();
     }
 
     public Meld getPlayerHandByIndex(int playerIndex){
