@@ -23,16 +23,18 @@ import java.util.*;
 
 public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
 {
-    public Meld hand = null;
-    public int score = 0;
+    protected Meld hand = null;
+    protected void name() {
+        
+    } int score = 0;
 
-    public String toPrint = "";
 
-    public ArtificialIntelligence() {
+
+    protected ArtificialIntelligence() {
         
     }
 
-    public Table play(){return null;}
+    protected Table play(){return null;}
 
     public Meld getHand() { return this.hand; }
 
@@ -58,7 +60,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
 
-    public HashMap<Meld, Integer> searchHand() {
+    protected HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
         int n = 0;
         ArrayList<Tile> h = this.hand.getTiles();
@@ -108,7 +110,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
 
-    public HashMap<Meld, Integer> searchTable(Table t) {
+    protected HashMap<Meld, Integer> searchTable(Table t) {
         HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
         ArrayList<Tile> h = hand.getTiles();
 
@@ -135,7 +137,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    public void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
+    protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
         Meld copyM = shortM.copy();
         Meld copyH = hTiles.copy();
 		if (shortM.size() == 1) {
@@ -238,7 +240,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
 
     //Return if two tiles have the same colour and value
-    public Boolean isEquivalent(Tile a, Tile b){
+    protected Boolean isEquivalent(Tile a, Tile b){
         Boolean result = true;
         result &= a.getColour() == b.getColour();
         result &= a.getValue() == b.getValue();
@@ -246,7 +248,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    public ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
+    protected ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
 
         ArrayList<Integer> results = new ArrayList<>();
 
@@ -281,7 +283,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Sort an arraylist of melds to put the longest ones first
-    public ArrayList<Meld> sortByLength(ArrayList<Meld> a){
+    protected ArrayList<Meld> sortByLength(ArrayList<Meld> a){
 
         //Create a comparator
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
@@ -311,7 +313,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Get the index of the first entry for a tile in a meld by value
-    public int indexOf(Meld m, Tile t){
+    protected int indexOf(Meld m, Tile t){
         for (int i=0; i<m.getTiles().size(); i++)
             if (m.getTiles().get(i).equals(t))
                 return i;

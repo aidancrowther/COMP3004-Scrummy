@@ -83,7 +83,7 @@ public class StrategyTest{
         assertTrue(meld2.getTiles().size() == 4);
     }
 
-
+/*
     @Test
     public void testSearchHand() {
         //Tests searchHand with a series of different hands
@@ -196,7 +196,7 @@ public class StrategyTest{
         assertTrue(table.getMelds().size() == 2);
         assertTrue(outTable.compare(table.getMelds().get(1)));
         assertTrue(AI1.hand.getTiles().size() == 2);
-    }
+    }*/
 
     @Test
     public void testDifferentTableStates() {
@@ -310,7 +310,6 @@ public class StrategyTest{
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play(AI1.getHand());
 
-        System.out.println(AI1.toPrint);
 
         melds = output.getMelds();
         assertTrue(melds.size() == 3);
