@@ -49,13 +49,35 @@ public class Controller
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles()){
                 playerHandCopy.add(t);
             }
+
             //Check current player and respond appropriately here
-            Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
-            if(playedTable.equals(this.getScrummy().getTable())) {
+            Table playedTable = null;
+            switch(this.getScrummy().getCurrentPlayerIndex()){
+                case 0 : {  // HUMAN
+                    playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+                }
+                case 1 :  { // TODO: STRAT 1
+
+                }
+                case 2 : { // TODO: STRAT 2
+
+                }
+                case 3 : { // TODO: STRAT 3
+
+                }
+                default: {
+                    break;
+                }
+            }
+
+            // CHECK WHAT PLAYER DID
+            if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
                 this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
             } else {
                 this.getScrummy().validatePlayerMove(playedTable);
             }
+
+            // CHECK FOR WIN
             for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
                 if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
                     play = false;
@@ -63,9 +85,19 @@ public class Controller
                     break;
                 }
             }
+
+            // SET NEXT PLAYER
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
+                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
+            } else {
+                this.scrummy.setCurrentPlayerIndex(0);
+            }
         }
 
         //print winner
+        if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
+            this.gameInteractionController.displayWinner(this.scrummy.getPlayers().get(winnerIndex));
+        }
     }
 
     // FOR TESTING

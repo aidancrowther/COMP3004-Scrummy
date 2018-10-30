@@ -65,6 +65,7 @@ public class Scrummy implements Subject
 
     public Player getCurrentPlayer(){ return this.players[currentPlayerIndex]; }
     public void setCurrentPlayerIndex(int index) { this.currentPlayerIndex = index; }
+    public int getCurrentPlayerIndex() { return this.currentPlayerIndex; }
 
     public Player[] getPlayers() { return this.players; }
 
