@@ -25,10 +25,17 @@ public class Tile{
         return value;
     }
 
+    //check if the 
+    public Boolean equals(Tile t){
+        Boolean result = true;
+        result &= this.getColour() == t.getColour();
+        result &= this.getValue() == t.getValue();
+        return result;
+    }
+
     //Print the cards suit and value in a human readable format
     @Override
     public String toString(){
         return ""+colour+value;
     }
-    
 }

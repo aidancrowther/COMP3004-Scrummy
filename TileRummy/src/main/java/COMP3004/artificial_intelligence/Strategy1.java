@@ -77,7 +77,7 @@ public class Strategy1 extends ArtificialIntelligence
         for(Tile tile : hand.getTiles()){
             Boolean found = false;
             for(Map.Entry<Tile, Integer> pair : inHand.entrySet()){
-                if(isEquivalent(tile, pair.getKey())){
+                if(tile.equals(pair.getKey())){
                     inHand.put(pair.getKey(), pair.getValue()+1);
                     found = true;
                     break;

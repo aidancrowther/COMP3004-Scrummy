@@ -55,3 +55,11 @@ Taken By: David N. Zilio
 ### Thursday 4<sup>th</sup>
 
 Taken By: 
+
+### Tuesday 30<sup>th</sup>
+
+Taken By: David N Zilio
+
+Schedule:
+
+1. Do we need to test "all funcitons" including helper funcitons?

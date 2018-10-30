@@ -37,6 +37,7 @@ Requirements:
 
    - The use of this game presently requires the user to have installed jUnit and Maven in order to perform unit testing.
    - No installation is required in order to operate the application.
+   - ensure when compiling with maven and trying execution that your JAVA_HOME environment variable is set
 
 Usage:
 

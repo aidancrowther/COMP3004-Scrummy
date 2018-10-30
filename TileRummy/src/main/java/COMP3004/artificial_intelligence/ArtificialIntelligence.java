@@ -46,11 +46,10 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     public void setScore(int score){
         this.score = score;
     }
-
-    public void drawTile(){
-
-    }
-
+    
+    ////////////////////
+    //Helper Functions//
+    ////////////////////
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
         if(inMeld.getTiles().contains(tile)){
             outMeld.add(tile);
@@ -247,7 +246,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    public ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
+    protected ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
 
         ArrayList<Integer> results = new ArrayList<>();
 
@@ -261,15 +260,15 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 for(Tile t1 : a.get(i).getTiles()){
                     for(Tile t2 : m.getTiles()){
                         //If they are the same, and there is no duplicate this set contains reused tiles
-                        if(hand.get(t1) != null) if(hand.get(t1) > 1 && isEquivalent(t1, t2) && !containsDuplicate){
+                        if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
                             containsDuplicate = false;
                             hand.put(t1, hand.get(t1)-1);
                         }
-                        else if(hand.get(t2) != null) if(hand.get(t2) > 1 && isEquivalent(t1, t2) && !containsDuplicate){
+                        else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
                             containsDuplicate = false;
                             hand.put(t2, hand.get(t2)-1);
                         }
-                        else containsDuplicate |= isEquivalent(t1, t2);
+                        else containsDuplicate |= t1.equals(t2);
                     }
                 }
             }
@@ -312,12 +311,11 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
     }
 
     //Get the index of the first entry for a tile in a meld by value
-    public int indexOf(Meld m, Tile t){
-
-        for(int i=0; i<m.getTiles().size(); i++){
-            if(isEquivalent(m.getTiles().get(i), t)) return i;
-        }
-
+public int indexOf(Meld m, Tile t){
+        for (int i=0; i<m.getTiles().size(); i++)
+            if (m.getTiles().get(i).equals(t))
+                return i;
+        
         return -1;
     }
 

@@ -29,4 +29,10 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 * Implemented I/O for TerminalUI
 
 ### David N. Zilio
-*
+1. What did you commit to?
+    * Not really much, It's a really busy week for me
+2. Did you meet your commitments?
+    * considering their sad state, yes
+3. Notes:
+    * Tue Oct 16<sup>th</sup>
+      1. Took down the project and tried to build realizing a couple of bugs, reported them and I'm considering fixing them.
