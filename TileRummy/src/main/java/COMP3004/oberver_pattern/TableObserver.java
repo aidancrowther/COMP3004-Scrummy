@@ -1,4 +1,6 @@
-package COMP3004;
+package COMP3004.oberver_pattern;
+
+import COMP3004.models.Table;
 
 public abstract class TableObserver implements Observer {
 
@@ -7,7 +9,7 @@ public abstract class TableObserver implements Observer {
     * If all of the moves were valid, then the game state will
     * also be updated.
     * */
-    Table table;
+    protected Table table;
 
     public TableObserver() {
         table = new Table();
@@ -23,5 +25,8 @@ public abstract class TableObserver implements Observer {
 
     public Table getTable() {
         return this.table;
+    }
+    public void setTable(Table t) {
+        this.table = t;
     }
 }

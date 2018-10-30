@@ -10,11 +10,13 @@
  * 
  * The player interface is a rule setter for how controller will observe the player, tell the player it's their turn and display the table/their hand to the player
  */
-package COMP3004;
+package COMP3004.controllers;
 
-import java.util.ArrayList; 
+import COMP3004.models.Meld;
+import COMP3004.models.Table;
+import COMP3004.models.Tile;
 
-public interface PlayerInterface
+public interface GameInteractionInterface
 {
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile);
 

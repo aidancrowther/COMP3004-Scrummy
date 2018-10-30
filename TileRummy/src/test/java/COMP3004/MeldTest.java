@@ -2,6 +2,9 @@ package COMP3004;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import COMP3004.models.Meld;
+import COMP3004.models.Tile;
 import org.junit.Test;
 
 
@@ -30,8 +33,9 @@ public class MeldTest {
         meld.add(t); //add a green 10
         assertTrue(meld.getTiles().contains(t));
 
-        meld.remove(t);
+        Tile r = meld.remove(t);
         assertFalse(meld.getTiles().contains(t));
+        assertTrue(r != null);
     }
 
 
@@ -133,7 +137,69 @@ public class MeldTest {
 
 
 
+    @Test
+    //Assert that the compare method in Meld will compare two melds and return 
+    //whether or not they're equal
+    //This is only for testing AI
+    public void testCompare() {
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
 
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        m2.add(new Tile('R', 10));
+        m2.add(new Tile('R', 11));
+        m2.add(new Tile('R', 12));
+
+        m3.add(new Tile('R', 10));
+        m3.add(new Tile('R', 11));
+        m3.add(new Tile('R', 12));
+
+        assertTrue(m2.compare(m3));
+        assertFalse(m2.compare(m1));
+
+    }
+
+    @Test
+    public void testCopy() {
+        Meld m1 = new Meld();
+
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        Meld m2 = m1.copy();
+
+        assertTrue(m2.compare(m1));
+
+
+    }
+
+    @Test
+    public void testMeldType() {
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
+
+        m1.add(new Tile('G', 3));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('O', 3));
+
+        m2.add(new Tile('G', 1));
+        m2.add(new Tile('G', 2));
+        m2.add(new Tile('G', 3));
+
+        m3.add(new Tile('G', 1));
+        m3.add(new Tile('R', 1));
+        m3.add(new Tile('G', 6));
+
+        assertTrue(m1.meldType() == 0);
+        assertTrue(m2.meldType() == 1);
+        assertTrue(m3.meldType() == -1);
+    }
 
 
 

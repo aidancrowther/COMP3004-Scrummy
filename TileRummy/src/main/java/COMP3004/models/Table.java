@@ -1,4 +1,4 @@
-package COMP3004;
+package COMP3004.models;
 
 import java.util.*;
 
@@ -29,10 +29,7 @@ public class Table {
         melds.get(0).add(t);
 
         if (melds.get(0).isValid()) {
-            add(new Meld());
-			for (int i=0; i<melds.get(0).getTiles().size(); i++) {
-				add(melds.get(0).getTiles().get(i), melds.size()-1);
-			}
+            add(melds.get(0).copy());
             melds.get(0).clear();
         }
     }
@@ -42,6 +39,23 @@ public class Table {
     */
     public void add(Tile t, int i) {
         melds.get(i).add(t);
+    }
+
+    public Meld remove(int i) {
+        if (i==0) {
+            return null;
+        } else { 
+            return melds.remove(i);
+        }
+    }
+
+    public Meld remove(Meld m) {
+        for (int i=1; i<melds.size(); i++) {
+            if (melds.get(i).compare(m)) {
+                return melds.remove(i);
+            }
+        }
+        return null;
     }
 
     /*

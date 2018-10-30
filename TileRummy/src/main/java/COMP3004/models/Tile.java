@@ -2,7 +2,7 @@
 *  Aidan Crowther, 100980915
 */
 
-package COMP3004;
+package COMP3004.models;
 
 public class Tile{
     
