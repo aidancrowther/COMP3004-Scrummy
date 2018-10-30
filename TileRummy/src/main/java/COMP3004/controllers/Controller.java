@@ -71,22 +71,24 @@ public class Controller
                 }
             }
 
-            // CHECK WHAT PLAYER DID
-            if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
-                this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
-            } else {
-                this.getScrummy().validatePlayerMove(playedTable);
-                if(!playedTable.isValid()){
-                   this.scrummy.getCurrentPlayer().setHand(playerHandCopy);
+            if(playedTable!= null){
+                // CHECK WHAT PLAYER DID
+                if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
+                    this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
+                } else {
+                    this.getScrummy().validatePlayerMove(playedTable);
+                    if(!playedTable.isValid()){
+                        this.scrummy.getCurrentPlayer().setHand(playerHandCopy);
+                    }
                 }
-            }
 
-            // CHECK FOR WIN
-            for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
-                if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
-                    play = false;
-                    winnerIndex = i;
-                    break;
+                // CHECK FOR WIN
+                for(int i = 0; i < this.getScrummy().getPlayers().length; i++) {
+                    if(this.getScrummy().getPlayers()[i].getHand().getTiles().size() == 0){
+                        play = false;
+                        winnerIndex = i;
+                        break;
+                    }
                 }
             }
 
