@@ -12,6 +12,7 @@
 
 package COMP3004.controllers;
 
+import COMP3004.artificial_intelligence.Strategy1;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Meld;
@@ -28,11 +29,15 @@ public class Controller
     private GraphicalViewController graphicalInteractionController;
     private GameInteractionController gameInteractionController;
 
+    private Strategy1 strategy1;
+
     public Controller(){
         this.scrummy = new Scrummy();
+        this.strategy1 = new Strategy1();
+        this.scrummy.registerObserver(strategy1);
     }
 
-    public void run(){
+    public void run(boolean enableHumanPlayer){
         /*
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
@@ -55,10 +60,12 @@ public class Controller
             Table playedTable = null;
             switch(this.getScrummy().getCurrentPlayerIndex()){
                 case 0 : {  // HUMAN
-                    playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+                    if(enableHumanPlayer){
+                        playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand());
+                    }
                 }
                 case 1 :  { // TODO: STRAT 1
-
+                    playedTable = this.strategy1.play(this.scrummy.getCurrentPlayer().getHand());
                 }
                 case 2 : { // TODO: STRAT 2
 
@@ -74,7 +81,10 @@ public class Controller
             if(playedTable!= null){
                 // CHECK WHAT PLAYER DID
                 if(playedTable.equals(this.getScrummy().getTable())) { // PLAYER NOT MOVE
-                    this.getScrummy().getCurrentPlayer().getHand().add(this.getScrummy().getDeck().pop());
+                    Tile t = this.getScrummy().getDeck().pop();
+                    if(t != null){
+                        this.getScrummy().getCurrentPlayer().getHand().add(t);
+                    }
                 } else {
                     this.getScrummy().validatePlayerMove(playedTable);
                     if(!playedTable.isValid()){
@@ -98,6 +108,10 @@ public class Controller
             } else {
                 this.scrummy.setCurrentPlayerIndex(0);
             }
+
+            if(!enableHumanPlayer){
+                play = false;
+            }
         }
 
         //print winner
@@ -108,9 +122,9 @@ public class Controller
     }
 
     // FOR TESTING
-    public void run(String message){
-        Table playedTable = this.gameInteractionController.play(this.scrummy.getCurrentPlayer().getHand(), message);
-    }
+    /*public void run(String message){
+        Table playedTable = this.strategy1.play(this.scrummy.getCurrentPlayer().getHand());
+    }*/
 
     // TODO: clean up if possible
     public void setInteractionType(String selection){
@@ -141,5 +155,9 @@ public class Controller
 
     public Scrummy getScrummy(){
         return this.scrummy;
+    }
+
+    public Strategy1 getStrategy1(){
+        return this.strategy1;
     }
 }

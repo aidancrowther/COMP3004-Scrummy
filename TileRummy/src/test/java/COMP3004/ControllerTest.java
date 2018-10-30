@@ -26,6 +26,8 @@ public class ControllerTest {
     @Test
     public void testRun() {
         Controller controller = new Controller();
+        controller.getScrummy().setCurrentPlayerIndex(1); // CURRENT PLAYER STRAT 1
+
         ArrayList<Meld> originalTableMelds = controller.getScrummy().getTable().getMelds();
         Table originalTable = new Table();
         for(Meld m : originalTableMelds) {
@@ -33,18 +35,21 @@ public class ControllerTest {
         }
 
         int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
-        controller.run("Test");
-        assertEquals(controller.getInteractionController().getTable(), controller.getScrummy().getTable());
+        controller.run(false);
+        assertEquals(controller.getStrategy1().getTable(), controller.getScrummy().getTable());
 
         // Set views table to table in scrummy
         boolean playerMoved = true;
-        for(Meld viewMeld: controller.getInteractionController().getTable().getMelds()) {
+        if(!controller.getStrategy1().getTable().equals(controller.getScrummy().getTable())){
+            playerMoved = false;
+        }
+        /*for(Meld viewMeld: controller.getStrategy1().getTable().getMelds()) {
             for(Meld scrummyMeld: controller.getScrummy().getTable().getMelds()){
                 if(!viewMeld.equals(scrummyMeld)){
                     playerMoved = false;
                 }
             }
-        }
+        }*/
 
         if(!playerMoved){
             // If table equals scrummy table, add a card to the players hand
@@ -52,8 +57,8 @@ public class ControllerTest {
             assertTrue((currentPlayerHandLen - intitialPlayerHandLen) == 1);
         } else {
             // else have scrummy evaluate the table and update if valid
-            if(controller.getInteractionController().getTable().isValid()){
-                assertEquals(controller.getInteractionController().getTable(), controller.getScrummy().getTable());
+            if(controller.getStrategy1().getTable().isValid()){
+                assertEquals(controller.getStrategy1().getTable(), controller.getScrummy().getTable());
             } else {
                 boolean resetToOriginal = true;
                 for(Meld viewMeld: originalTable.getMelds()) {
@@ -72,6 +77,7 @@ public class ControllerTest {
     @Test
     public void testCreateController() {
         Controller controller = new Controller();
+        controller.setInteractionType("t");
         assertNotNull(controller.getScrummy());
         assertNotEquals(controller.getScrummy().getObservers().size(), 0);
         assertTrue(controller.getScrummy().getObservers().contains(controller.getInteractionController()));

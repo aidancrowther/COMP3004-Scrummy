@@ -24,7 +24,10 @@ public class Deck{
 
     //Return the top card of the deck, removing it
     public Tile pop(){
-        return deck.pop();
+        if(!deck.empty()){
+            return deck.pop();
+        }
+        return null;
     }
     
     //Return true if the deck is empty
