@@ -44,7 +44,7 @@ Usage:
 
       mvn -B verify
 
-   ~~The application can be run by executing~~ Not yet implemented:
+   ~~The application can be run by executing
 
       mvn exec:java
 
