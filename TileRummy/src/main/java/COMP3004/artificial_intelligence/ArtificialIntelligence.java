@@ -31,6 +31,19 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
     }
 
+    public Meld getHand() { return this.hand; }
+
+    public int getScore() { return this.score; }
+
+    //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
+    public void setHand(Meld hand){
+        this.hand = hand;
+    }
+
+    public void setScore(int score){
+        this.score = score;
+    }
+
     public void drawTile(){
 
     }
@@ -42,10 +55,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
-    //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
-    public void setHand(Meld hand){
-        this.hand = hand;
-    }
 
     public HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();

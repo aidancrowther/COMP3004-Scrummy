@@ -26,16 +26,6 @@ public class Strategy1 extends ArtificialIntelligence
 
     }
 
-    public void drawTile(){
-
-    }
-
-    public void selectTile(Meld inMeld, Meld outMeld, Tile tile){
-        if(inMeld.getTiles().contains(tile)){
-            outMeld.add(tile);
-            inMeld.remove(tile);
-        }
-    }
 
     /*
      * Terminal View: Loops through the prompts until player enters text to complete their turn, then returns this.table.
@@ -70,15 +60,6 @@ public class Strategy1 extends ArtificialIntelligence
         return null;
     }
 
-    //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
-    public void setHand(Meld hand){
-        this.hand = hand;
-    }
-    public Meld getHand() { return this.hand; }
-    public void setScore(int score){
-        this.score = score;
-    }
-    public int getScore() { return this.score; }
 
 
 }
