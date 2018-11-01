@@ -6,6 +6,9 @@
  * 
  * Group 6
  * David N. Zilio
+ * Aidan Crowther
+ * Ellis Glennie
+ * Brittny Lapierre
  * 
  * AI Strategy1 should do exactly as the spec requires
  * --play when it can, all that it can
@@ -101,7 +104,6 @@ public class Strategy1 extends ArtificialIntelligence
         //Find all sets of melds that can go together
         allMelds = sortByLength(allMelds);
         for(Map.Entry<Meld, Integer> m : allMelds.entrySet()){
-            ArrayList<Meld> result = new ArrayList<>();
             results.add(findUnique(m.getKey(), allMelds, inHand));
         }
 

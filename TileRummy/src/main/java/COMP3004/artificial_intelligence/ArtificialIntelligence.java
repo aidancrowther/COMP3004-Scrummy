@@ -6,6 +6,9 @@
  *
  * Group 6
  * David N. Zilio
+ * Aidan Crowther
+ * Ellis Glennie
+ * Brittny Lapierre
  *
  * This abstract class is a way to abstract out the Strategies of the AI such that it won't be janky in the controller
  */
@@ -304,37 +307,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
         //Return the list of indeces
         return results;
-
-        /*
-        //Iterate over the set to compare against
-        for(int i=0; i<h.size(); i++){
-            //Initialize tracking variables
-            Boolean containsDuplicate = false;
-            HashMap<Tile, Integer> hand = inHand;
-            //Iterate over both tile sets
-            if(a.get(i) != m){
-                for(Tile t1 : a.get(i).getTiles()){
-                    for(Tile t2 : m.getTiles()){
-                        //If they are the same, and there is no duplicate this set contains reused tiles
-                        if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
-                            containsDuplicate = false;
-                            hand.put(t1, hand.get(t1)-1);
-                        }
-                        else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
-                            containsDuplicate = false;
-                            hand.put(t2, hand.get(t2)-1);
-                        }
-                        else containsDuplicate |= t1.equals(t2);
-                    }
-                }
-            }
-            //If there are no reused tiles, add to the list of indeces
-            if(!containsDuplicate) results.add(i);
-        }
-
-        //Return the list of indeces
-        return results;
-        */
     }
 
     //Sort an arraylist of melds to put the longest ones first
