@@ -10,6 +10,9 @@
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
 package COMP3004.models;
+import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.Strategy3;
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.oberver_pattern.MultiSubject;
 import COMP3004.oberver_pattern.TableObserverInterface;
 import COMP3004.oberver_pattern.PlayerHandObserverInterface;
@@ -47,13 +50,9 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
          *   keep table as is and notify observers
          *   reset player hand if not
          * */
-
-        if(playedTable != null){
-            if(playedTable.isValid()){
-                this.table = playedTable;
-            } else {
-                this.notifyObservers();
-            }
+        if(playedTable != null && playedTable.isValid()){
+            System.out.println("valid");
+            this.table = playedTable;
         }
         this.notifyObservers();
     }
@@ -66,21 +65,21 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
     }
 
     public void notifyObservers(){
-        for(TableObserverInterface observer : this.tableObservers) {
+        for(GameInteractionController observer : this.tableObservers) {
             observer.update(this.table);
         }
 
         int index = 0;
-        for(PlayerHandObserverInterface observer : this.playerHandObservers) {
+        for(Strategy3 observer : this.playerHandObservers) {
             observer.update(this.getPlayerHandByIndex(index).size(), index);
             index++;
         }
     }
 
-    public ArrayList<TableObserverInterface> getTableObservers(){
+    public ArrayList<GameInteractionController> getTableObservers(){
         return this.tableObservers;
     }
-    public ArrayList<PlayerHandObserverInterface> getPlayerHandObservers(){
+    public ArrayList<Strategy3> getPlayerHandObservers(){
         return this.playerHandObservers;
     }
 

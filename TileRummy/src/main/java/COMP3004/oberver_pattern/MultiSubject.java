@@ -1,5 +1,9 @@
 package COMP3004.oberver_pattern;
 
+import COMP3004.artificial_intelligence.ArtificialIntelligence;
+import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.Strategy3;
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Player;
 import COMP3004.models.Table;
 
@@ -9,22 +13,30 @@ public abstract class MultiSubject implements MultiSubjectInterface{
     protected Table table = new Table();
     protected Player[] players = new Player[4];
 
-    protected ArrayList<TableObserverInterface> tableObservers = new ArrayList<>();
-    protected ArrayList<PlayerHandObserverInterface> playerHandObservers = new ArrayList<>();
+    protected ArrayList<GameInteractionController> tableObservers = new ArrayList<>();
+    protected ArrayList<Strategy3> playerHandObservers = new ArrayList<>(); //TODO: if you need this more general create a super class
 
-    public void registerTableObserver(TableObserverInterface t){
+    public void registerTableObserver(ArtificialIntelligence t){
         this.tableObservers.add(t);
     }
 
-    public void removeTableObserver(TableObserverInterface t){
+    public void removeTableObserver(ArtificialIntelligence t){
         this.tableObservers.remove(t);
     }
 
-    public void registerPlayerHandObserver(PlayerHandObserverInterface p){
+    public void registerTableObserver(GameInteractionController t){
+        this.tableObservers.add(t);
+    }
+
+    public void removeTableObserver(GameInteractionController t){
+        this.tableObservers.remove(t);
+    }
+
+    public void registerPlayerHandObserver(Strategy3 p){
         this.playerHandObservers.add(p);
     }
 
-    public void removePlayerHandObserver(PlayerHandObserverInterface p){
+    public void removePlayerHandObserver(Strategy3 p){
         this.playerHandObservers.remove(p);
     }
 

@@ -12,6 +12,7 @@
 
 package COMP3004.artificial_intelligence;
 
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.GameInteractionInterface;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.*;
 
-public abstract class ArtificialIntelligence implements GameInteractionInterface, TableObserverInterface
+public abstract class ArtificialIntelligence extends GameInteractionController implements GameInteractionInterface, TableObserverInterface
 {
     /*
      * These attributes save the player state as they make moves.
@@ -29,7 +30,6 @@ public abstract class ArtificialIntelligence implements GameInteractionInterface
      * also be updated.
      * */
     protected Table table = new Table();
-
     protected Meld hand = null;
     protected void name() {
         
@@ -331,6 +331,7 @@ public abstract class ArtificialIntelligence implements GameInteractionInterface
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
+        System.out.println("AI" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }

@@ -6,21 +6,44 @@ import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserverInterface;
 
 public class GameInteractionController implements GameInteractionInterface {
-    public Meld hand;
+    protected Meld hand;
     protected Table table;
+    protected boolean playing = true;
 
     public GameInteractionController(){
         this.hand = new Meld();
         this.table = new Table();
     }
 
-    public boolean playing = true;
-
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile) {
         if (inMeld.getTiles().contains(tile)) {
             outMeld.add(tile);
             inMeld.remove(tile);
         }
+    }
+
+    public void indicatePlayerMove() {
+        Table copy = new Table();
+        int i = 0;
+        for(Meld m : this.table.getMelds()) {
+            if(i != 0){ //Don't copy the tentative meld
+                copy.add(m);
+            }
+            i++;
+        }
+        this.table = copy;
+    }
+
+    public Table getTableCopy(){
+        Table output = new Table();//table; no set yet - want to make a copy
+        int i = 0;
+        for(Meld m : this.table.getMelds()) {
+            if(i != 0){ //Don't copy the tentative meld
+                output.add(m);
+            }
+            i++;
+        }
+        return output;
     }
 
     public Table play(Meld hand) {
@@ -44,6 +67,7 @@ public class GameInteractionController implements GameInteractionInterface {
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
+        System.out.println("Player" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }

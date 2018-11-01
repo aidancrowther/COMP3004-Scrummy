@@ -30,6 +30,7 @@ public class TerminalViewController extends GameInteractionController
         this.terminalView.printActivePlayerHand(this.hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         if(this.terminalView.readPlayerInput().equals("y")){
+            this.indicatePlayerMove();
             while(this.move()){}
         }
         return this.getTable(); //will be the same if player doesn't move
@@ -40,7 +41,6 @@ public class TerminalViewController extends GameInteractionController
         this.terminalView.printMessage(message);
         return this.getTable();
     }
-
 
     private boolean move(){
         //SELECT AN ACTIVE MELD (OR HAND)

@@ -69,11 +69,13 @@ public class Controller
             Table playedTable = null;
             if(isPlayer[scrummy.getCurrentPlayerIndex()]) {
                 if (enableHumanPlayer) {
+                    System.out.println("HUMAN");
                     playedTable = this.gameInteractionController.play(scrummy.getCurrentPlayer().getHand());
                     winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
                 }
             }
             else{
+                System.out.println("AI");
                 playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
                 winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
             }
@@ -100,14 +102,19 @@ public class Controller
     public int checkPlayerMove(Table playedTable, Meld playerHandCopy){
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
+        System.out.println("Player Table:\n" + playedTable.toString());
+        System.out.println("Scrummy Table:\n" + scrummy.getTable());
         if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+            System.out.println("PLayer no move");
             scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
             Tile t = scrummy.getDeck().pop();
             if(t != null)
                 scrummy.getCurrentPlayer().getHand().add(t);
         } else {
+            System.out.println("Player move");
             scrummy.validatePlayerMove(playedTable);
             if(!playedTable.isValid()){
+                System.out.println("Player invalid");
                 scrummy.getCurrentPlayer().setHand(playerHandCopy);
             }
         }
