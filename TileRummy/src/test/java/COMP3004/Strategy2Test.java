@@ -132,5 +132,181 @@ public class Strategy2Test{
 
         //Assert that the played meld is correct
         assertTrue(match);
+
+        AI.setScore(0);
     }
+
+    @Test
+    public void testNothingToPlay(){
+        //Give them a hand that can't add to the table
+        hand.clear();
+        hand.add(tile2); //O9
+        hand.add(tile3); //O8
+        hand.add(tile6); //O7
+
+        //Give it a used table
+        table = new Table();
+        table.add(tile4); //B6
+        table.add(tile5); //G6
+        table.add(tile7); //R6
+        AI.setTable(table);
+
+        AI.setScore(30);
+        output = AI.play(hand);
+
+        //Assert that the table and meld haven't been played to
+        assertTrue(output.getMelds().size() == 2);
+        assertTrue(output.getMelds().get(1).size() == 3);
+    }
+
+    @Test
+    public void testOnlyPlaysToMeld(){
+        //Give them a hand that can add to the table
+        hand.clear();
+        hand.add(tile2); //O9
+        hand.add(tile3); //O8
+        hand.add(tile7); //R6
+
+        //Give it a used table
+        table = new Table();
+        table.add(tile4); //B6
+        table.add(tile5); //G6
+        table.add(tile8); //O6
+        AI.setTable(table);
+
+        Meld expected = new Meld();
+        expected.add(tile4); //B6
+        expected.add(tile5); //G6
+        expected.add(tile8); //O6
+        expected.add(tile7); //R6
+
+        //Set it's score so it can play
+        AI.setScore(30);
+        output = AI.play(hand);
+
+        //Assert that the table hasn't been played to
+        assertTrue(output.getMelds().size() == 2);
+        assertTrue(output.getMelds().get(1).compare(expected));
+    }
+
+    @Test
+    public void testPlaysEntireHandNoTable(){
+        //Give them a hand that can add to the table
+        hand.clear();
+        hand.add(tile2); //O9
+        hand.add(tile3); //O8
+        hand.add(tile6); //O7
+
+        //Give it a used table
+        table = new Table();
+        table.add(tile4); //B6
+        table.add(tile5); //G6
+        table.add(tile8); //O6
+        AI.setTable(table);
+
+        Meld expected = new Meld();
+        expected.add(tile2); //O9
+        expected.add(tile3); //O8
+        expected.add(tile6); //O7
+
+        //Set it's score so it can play
+        AI.setScore(30);
+        output = AI.play(hand);
+        melds = output.getMelds();
+
+        //Assert that the table has been played to and the meld was added
+        assertTrue(output.getMelds().size() == 3);
+
+        Boolean match = false;
+
+        for(Meld m : melds){
+            match |= m.compare(expected);
+        }
+
+        assertTrue(match);
+    }
+
+    @Test
+    public void testPlaysEntireHandWithTable(){
+        //Give them a hand that can add to the table
+        hand.clear();
+        hand.add(tile7); //R6
+
+        //Give it a used table
+        table = new Table();
+        table.add(tile4); //B6
+        table.add(tile5); //G6
+        table.add(tile8); //O6
+        AI.setTable(table);
+
+        Meld expected = new Meld();
+        expected.add(tile4); //B6
+        expected.add(tile5); //G6
+        expected.add(tile8); //O6
+        expected.add(tile7); //R6
+
+        //Set it's score so it can play
+        AI.setScore(30);
+        output = AI.play(hand);
+        melds = output.getMelds();
+
+        //Assert that the table has been played to, and no new melds were added
+        assertTrue(output.getMelds().size() == 2);
+
+        Boolean match = false;
+
+        for(Meld m : melds){
+            match |= m.compare(expected);
+        }
+
+        assertTrue(match);
+    }
+
+    @Test
+    public void testPlaysEntireHandWithTableAndHand(){
+        //Give them a hand that can add to the table
+        hand.clear();
+        hand.add(tile7); //R6
+        hand.add(tile1); //O10
+        hand.add(tile2); //O9
+        hand.add(tile3); //O8
+
+        //Give it a used table
+        table = new Table();
+        table.add(tile4); //B6
+        table.add(tile5); //G6
+        table.add(tile8); //O6
+        AI.setTable(table);
+
+        Meld expected1 = new Meld();
+        expected1.add(tile4); //B6
+        expected1.add(tile5); //G6
+        expected1.add(tile8); //O6
+        expected1.add(tile7); //R6
+
+        Meld expected2 = new Meld();
+        expected2.add(tile1); //B6
+        expected2.add(tile2); //G6
+        expected2.add(tile3); //O6
+
+        //Set it's score so it can play
+        AI.setScore(30);
+        output = AI.play(hand);
+        melds = output.getMelds();
+
+        //Assert that the table has been played to, and no new melds were added
+        assertTrue(output.getMelds().size() == 3);
+
+        Boolean match1 = false;
+        Boolean match2 = false;
+
+        for(Meld m : melds){
+            match1 |= m.compare(expected1);
+            match2 |= m.compare(expected2);
+        }
+
+        assertTrue(match1);
+        assertTrue(match2);
+    }
+
 }
