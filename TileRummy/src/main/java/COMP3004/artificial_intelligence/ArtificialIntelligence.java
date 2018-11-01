@@ -138,15 +138,12 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
     protected int isAddable(Tile toAdd, Tile t) {
         //returns 0 if toAdd is addable as a set to t
-        //returns 1 if toAdd is addable as a run to back of t
-        //returns 2 if toAdd is addable as a run to front of t
+        //returns 1 if toAdd is addable as a run to t
         //returns -1 if toAdd is not addable to t
         if (toAdd.getColour() == t.getColour()) {
-            if (toAdd.getValue() - t.getValue() == 1) {
-                    return 2;
-            }
-            else if (t.getValue() - toAdd.getValue() == 1) {
-                return 1;
+            if (toAdd.getValue() - t.getValue() == 1 || 
+                t.getValue() - toAdd.getValue() == 1) {
+                    return 1;
             }
         }
         else {
@@ -157,40 +154,39 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return -1;
     }
 
+    protected boolean canMeld(Tile a, Tile b, Tile c) {
+        Meld m = new Meld();
+        m.add(a);
+        m.add(b);
+        m.add(c);
+        if (m.isValid()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int k) {
 		if (shortM.size() == 1) {
             Tile t = shortM.getTiles().get(0);
-            ArrayList<Tile> toAdd = new ArrayList<>();
+            int start;
             //try to make a run
-            if (h.get(k).getColour() == shortM.getTiles().get(0).getColour()) {
-                //gonna have to loop unfortunately
-                
-                if (k < h.size()-1) {
-
-                     
-                } 
-                else if (k < h.size()-2) {
-
-
+            if (isAddable(h.get(k), t) >= 0) {
+                if (k != 0) {
+                    start = k-1; 
                 }
-                //if two cards can be added to the back
                 else {
-                    if (k != 0) {
-                        
+                    start = k;
+                }
+                for (int i=start; i<h.size(); i++) {
+                    if (canMeld(h.get(k), h.get(i), t)) {
+                        shortM.add(h.get(k));
+                        shortM.add(h.get(i));
+                        break;
                     }
                 }
             } 
-            //try to make a set
-            else {
-                //try to add 2 tiles; if they do not exist, you know
-                //you can't make a set using just one tile from the table
-                //Just adding one tile at a time is causing the program to miss
-                //possible melds.
-                
-            }
-            for (Tile a : toAdd) {
-                shortM.add(a);
-            }
             if (shortM.isValid()) {
                 for (Tile a : shortM.getTiles()) {
                     hTiles.add(a);
@@ -202,7 +198,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             shortM.add(h.get(k));
             if (!shortM.isValid()) {
                 shortM.remove(h.get(k));
-            }																			
+            }																		
         }
     }
 
