@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.*;
 
-public abstract class ArtificialIntelligence extends GameInteractionController implements GameInteractionInterface, TableObserverInterface
+public abstract class ArtificialIntelligence extends GameInteractionController implements TableObserverInterface
 {
     /*
      * These attributes save the player state as they make moves.
