@@ -213,10 +213,25 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 Meld shortM = new Meld();
                 if (t.getMelds().get(i).isRun() || !t.getMelds().get(i).isRun() && t.getMelds().get(i).size() == 3) {
                     //for melds where we'll iterate through linearly, rather than consider every combination
-                    for (int k=0; k<h.size(); k++) {
-                        addingForSplitting(shortM, h, k);
-                        if (shortM.isValid()) {
-                            break;
+                    for (int k=j; k<m.size(); k++) { 
+                        shortM.add(m.getTiles().get(k));
+                        for (int p=0; p<h.size(); p++) {
+                            addingForSplitting(shortM, h, p);
+
+							if (shortM.isValid()) {
+								aList.add(shortM.copy());
+								for (int q=0; q<shortM.size(); q++) {
+									if (h.contains(shortM.getTiles().get(q))) {
+										hTiles.add(shortM.getTiles().get(q));
+										h.remove(shortM.getTiles().get(q));
+									}			
+									else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+										m.remove(shortM.getTiles().get(q));
+									}
+								}
+								k=999;
+								j--;
+							}
                         }
                     }
                 }  
@@ -225,25 +240,13 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
                 }
 
-                if (shortM.isValid()) {
-                    aList.add(shortM.copy());
-                    for (int p=0; p<shortM.size(); p++) {
-                        if (h.contains(shortM.getTiles().get(p))) {
-                            hTiles.add(shortM.getTiles().get(p));
-                            h.remove(shortM.getTiles().get(p));
-                        }
-                        if (m.getTiles().contains(shortM.getTiles().get(p))) {
-                            m.remove(shortM.getTiles().get(p));
-                        }
-                    }
-                }
 
 
             }
 
             
-            AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
-            tableSplits.put(hTiles.copy(), meldSplits);
+            //AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
+            //tableSplits.put(hTiles.copy(), meldSplits);
         }
         return tableSplits;
     }
