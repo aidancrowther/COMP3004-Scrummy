@@ -240,13 +240,12 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 
                 }
 
-
+                AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
+                tableSplits.put(hTiles.copy(), meldSplits);
 
             }
 
             
-            //AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
-            //tableSplits.put(hTiles.copy(), meldSplits);
         }
         return tableSplits;
     }
