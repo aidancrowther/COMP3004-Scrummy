@@ -70,7 +70,7 @@ public class Strategy1 extends ArtificialIntelligence
         handResults = searchHand();
         if (score >= 30) {
             tableResults = searchTable(table);
-            splitResults = searchSplit(table);
+            //splitResults = searchSplit(table); Commented out to prevent test failure until splitting is implemented
         }
 
         //Lists to track hand status
@@ -184,7 +184,7 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Return the output table
-        if (longest < 30 && score < 30) return new Table();
+        if (longest < 30 && score < 30) return table;
         else return output;
     }
 

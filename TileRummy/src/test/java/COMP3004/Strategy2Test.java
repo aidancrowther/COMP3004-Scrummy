@@ -26,6 +26,7 @@ public class Strategy2Test{
     Tile tile6 = new Tile('O', 7);
     Tile tile7 = new Tile('R', 6);
     Tile tile8 = new Tile('O', 6);
+    Tile tile9 = new Tile('O', 5);
 
     ArtificialIntelligence AI = new Strategy2();
 
@@ -63,6 +64,9 @@ public class Strategy2Test{
         hand.add(tile6); //O7
         hand.add(tile8); //O6
 
+        table = new Table();
+
+        AI.setScore(0);
         //Give it an empty table
         table = new Table();
         AI.setTable(table);
@@ -89,6 +93,7 @@ public class Strategy2Test{
         table.add(tile7); //R6
         AI.setTable(table);
 
+        AI.setScore(0);
         output = AI.play(hand);
 
         //Assert that the table has been unmodified
@@ -140,15 +145,16 @@ public class Strategy2Test{
     public void testNothingToPlay(){
         //Give them a hand that can't add to the table
         hand.clear();
-        hand.add(tile2); //O9
-        hand.add(tile3); //O8
-        hand.add(tile6); //O7
+        hand.add(tile4); //B6
+        hand.add(tile5); //G6
+        hand.add(tile7); //R6
+        hand.add(tile9); //O5
 
         //Give it a used table
         table = new Table();
-        table.add(tile4); //B6
-        table.add(tile5); //G6
-        table.add(tile7); //R6
+        table.add(tile1); //O10
+        table.add(tile2); //O9
+        table.add(tile3); //O8
         AI.setTable(table);
 
         AI.setScore(30);
