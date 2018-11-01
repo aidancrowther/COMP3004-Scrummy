@@ -167,7 +167,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
-    protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int k) {
+    protected void addingForSplitting(Meld shortM, ArrayList<Tile> h, int k) {
 		if (shortM.size() == 1) {
             Tile t = shortM.getTiles().get(0);
             int start;
@@ -187,12 +187,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                     }
                 }
             } 
-            if (shortM.isValid()) {
-                for (Tile a : shortM.getTiles()) {
-                    hTiles.add(a);
-                }
-            }
-
         } 
         else {
             shortM.add(h.get(k));
@@ -202,7 +196,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
-    public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+    protected HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
 
         if (t == null) {
@@ -220,7 +214,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 if (t.getMelds().get(i).isRun() || !t.getMelds().get(i).isRun() && t.getMelds().get(i).size() == 3) {
                     //for melds where we'll iterate through linearly, rather than consider every combination
                     for (int k=0; k<h.size(); k++) {
-                        addingForSplitting(shortM, hTiles, h, k);
+                        addingForSplitting(shortM, h, k);
                         if (shortM.isValid()) {
                             break;
                         }
