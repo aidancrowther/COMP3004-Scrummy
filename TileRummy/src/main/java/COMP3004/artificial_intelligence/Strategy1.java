@@ -19,14 +19,12 @@ import COMP3004.models.Tile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.*;
-
 
 public class Strategy1 extends ArtificialIntelligence
 {
 
     public Strategy1(){
-
+        
     }
 
 
@@ -87,26 +85,24 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Generate array lists of moves to make
-        ArrayList<Meld> allMelds = new ArrayList<>();
+        HashMap<Meld, Integer> allMelds = new HashMap<>();
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
-            allMelds.add(pair.getKey());
+            allMelds.put(pair.getKey(), 0);
         }
         for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
-            allMelds.add(pair.getKey());
+            allMelds.put(pair.getKey(), pair.getValue());
         }
-        for(Map.Entry<Meld, HashMap<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
-            allMelds.add(pair.getKey());
+        /*
+        for(Map.Entry<Meld, Map.Entry<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
+            allMelds.put(pair.getKey(), pair.getValue().getValue());
         }
+        */
 
         //Find all sets of melds that can go together
         allMelds = sortByLength(allMelds);
-        for(Meld m : allMelds){
+        for(Map.Entry<Meld, Integer> m : allMelds.entrySet()){
             ArrayList<Meld> result = new ArrayList<>();
-            ArrayList<Integer> toAdd = findUnique(m, allMelds, inHand);
-            for(Integer i : toAdd){
-                result.add(allMelds.get(i));
-            }
-            results.add(result);
+            results.add(findUnique(m.getKey(), allMelds, inHand));
         }
 
         //Find the longest set of melds to use
@@ -145,6 +141,7 @@ public class Strategy1 extends ArtificialIntelligence
                 }
             }
             //If the player is splitting
+            /*
             else if(splitResults.get(m) != null){
                 //Build up local variables
                 HashMap<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
@@ -153,10 +150,8 @@ public class Strategy1 extends ArtificialIntelligence
                 int splitId = 0;
 
                 //Get the resultant melds and the id of the meld to split
-                for(Map.Entry<ArrayList<Meld>, Integer> list : toSplit.entrySet()){
-                    meldsToAdd = list.getKey();
-                    splitId = list.getValue();
-                }
+                meldsToAdd = splitResults.get(m).getKey();
+                splitId = splitResults.get(m).getValue();
 
                 //Get the meld that is being split from the table using the id
                 Meld beingSplit = table.getMelds().get(splitId);
@@ -181,6 +176,7 @@ public class Strategy1 extends ArtificialIntelligence
                     output.add(meld);
                 }
             }
+            */
         }
 
         //Return the output table

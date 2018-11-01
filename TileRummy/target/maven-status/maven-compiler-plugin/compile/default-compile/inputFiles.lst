@@ -1,19 +1,19 @@
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Scrummy.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\Observer.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\TerminalViewController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Table.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\views\TerminalView.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\ArtificialIntelligence.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GameInteractionInterface.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Deck.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Tile.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GameInteractionController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy1.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\views\GraphicalView.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GraphicalViewController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Meld.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Player.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\Subject.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\Main.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\Controller.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\TableObserver.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Tile.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/controllers/GameInteractionInterface.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/oberver_pattern/TableObserver.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/oberver_pattern/Subject.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/controllers/GameInteractionController.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/artificial_intelligence/Strategy1.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/views/TerminalView.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/controllers/GraphicalViewController.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/controllers/TerminalViewController.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/views/GraphicalView.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Deck.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/artificial_intelligence/ArtificialIntelligence.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Table.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Player.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Scrummy.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/models/Meld.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/oberver_pattern/Observer.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/controllers/Controller.java
+/home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/main/java/COMP3004/Main.java
