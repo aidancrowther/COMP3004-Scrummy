@@ -190,40 +190,8 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tableSplits;
     }
 
-    //Return a list of all similar tiles following or preceding a given tile in a meld
-    public ArrayList<Tile> following(Tile t, Meld m, Boolean after){
-        ArrayList<Tile> result = new ArrayList<>();
-        Boolean found = false;
-        Tile prevTile = t;
 
-        if(after){
-            for(int i=0; i<m.size(); i++){
-                if(found) if(follows(prevTile, m.getTiles().get(i))){
-                    result.add(m.getTiles().get(i));
-                    prevTile = m.getTiles().get(i);
-                }
-                if(isEquivalent(m.getTiles().get(i), t)) found = true;
-            }
-        }
-        else{
-            for(int i=m.size()-1; i>=0; i--){
-                if(found) if(follows(prevTile, m.getTiles().get(i))){
-                    result.add(m.getTiles().get(i));
-                    prevTile = m.getTiles().get(i);
-                }
-                if(isEquivalent(m.getTiles().get(i), t)) found = true;
-            }
-        }
 
-        return result;
-    }
-
-    //Return true if the two tiles either preceed or follow each other in their suite
-    public Boolean follows(Tile a, Tile b){
-        if(a.getColour() == b.getColour() && a.getValue() < b.getValue()) return true;
-        if(a.getColour() == b.getColour() && a.getValue() > b.getValue()) return true;
-        return false;
-    }
 
     //Return if two tiles have the same colour and value
     protected Boolean isEquivalent(Tile a, Tile b){
