@@ -42,7 +42,7 @@ public class Controller
         for (byte i = 1; i < 4; i++) {
             isPlayer[i] = false;
             AIs[i] = new Strategy1();
-            this.scrummy.registerObserver(AIs[i]);
+            this.scrummy.registerTableObserver(AIs[i]);
         }
         this.scrummy.notifyObservers();
     }
@@ -136,7 +136,7 @@ public class Controller
             this.gameInteractionController = this.graphicalInteractionController; //to access controller generally
         }
 
-        this.scrummy.registerObserver(this.gameInteractionController);
+        this.scrummy.registerTableObserver(this.gameInteractionController);
         this.scrummy.notifyObservers();
     }
 

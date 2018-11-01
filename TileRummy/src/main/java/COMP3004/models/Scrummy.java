@@ -10,20 +10,16 @@
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
 package COMP3004.models;
-
-import COMP3004.oberver_pattern.Subject;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.oberver_pattern.MultiSubject;
+import COMP3004.oberver_pattern.TableObserverInterface;
+import COMP3004.oberver_pattern.PlayerHandObserverInterface;
 
 import java.util.ArrayList;
 
-public class Scrummy implements Subject
+public class Scrummy extends MultiSubject // Table and Players are in superclass
 {
-    private Table table = new Table();
     private Deck deck = new Deck();
-    private Player[] players = new Player[4];
     private int currentPlayerIndex = 0; // USER STARTS
-
-    private ArrayList<TableObserver> observers = new ArrayList<>();
 
     public Scrummy(){
         deck.shuffle();
@@ -41,20 +37,6 @@ public class Scrummy implements Subject
         players[1].setName("AI 1");
         players[2].setName("AI 2");
         players[3].setName("AI 3");
-    }
-
-    public void registerObserver(TableObserver t){
-        this.observers.add(t);
-    }
-
-    public void removeObserver(TableObserver t){
-        this.observers.remove(t);
-    }
-
-    public void notifyObservers(){
-        for(TableObserver observer : this.observers) {
-            observer.update(this.table);
-        }
     }
 
     public void validatePlayerMove(Table playedTable) {
@@ -83,8 +65,23 @@ public class Scrummy implements Subject
         return null;
     }
 
-    public ArrayList<TableObserver> getObservers(){
-        return this.observers;
+    public void notifyObservers(){
+        for(TableObserverInterface observer : this.tableObservers) {
+            observer.update(this.table);
+        }
+
+        int index = 0;
+        for(PlayerHandObserverInterface observer : this.playerHandObservers) {
+            observer.update(this.getPlayerHandByIndex(index).size(), index);
+            index++;
+        }
+    }
+
+    public ArrayList<TableObserverInterface> getTableObservers(){
+        return this.tableObservers;
+    }
+    public ArrayList<PlayerHandObserverInterface> getPlayerHandObservers(){
+        return this.playerHandObservers;
     }
 
     public Table getTable(){

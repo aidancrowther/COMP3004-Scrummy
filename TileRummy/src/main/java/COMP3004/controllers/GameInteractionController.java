@@ -3,17 +3,15 @@ package COMP3004.controllers;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.oberver_pattern.TableObserverInterface;
 
-public class GameInteractionController extends TableObserver implements GameInteractionInterface {
+public class GameInteractionController implements GameInteractionInterface {
     public Meld hand;
+    protected Table table;
 
     public GameInteractionController(){
         this.hand = new Meld();
-        this.hand .add(new Tile('R', 1));
-        this.hand .add(new Tile('G', 1));
-        this.hand .add(new Tile('B', 1));
-        this.hand .add(new Tile('O', 1));
+        this.table = new Table();
     }
 
     public boolean playing = true;
@@ -43,4 +41,10 @@ public class GameInteractionController extends TableObserver implements GameInte
 
     public void setViewControllerInstance(GameInteractionController g) { }
 
+    // OBSERVER PATTERN CODE
+    public void update(Table table) {
+        this.table = table;
+    }
+    public Table getTable() { return this.table; }
+    public void setTable(Table table) { this.table = table; }
 }

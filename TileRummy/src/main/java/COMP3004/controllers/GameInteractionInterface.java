@@ -15,8 +15,9 @@ package COMP3004.controllers;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import COMP3004.oberver_pattern.TableObserverInterface;
 
-public interface GameInteractionInterface
+public interface GameInteractionInterface extends TableObserverInterface
 {
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile);
 
