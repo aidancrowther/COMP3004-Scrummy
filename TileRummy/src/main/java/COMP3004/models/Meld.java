@@ -158,15 +158,15 @@ public class Meld {
         return true;
     }
 
-    public int meldType() { //-1 is invalid, 0 is set, 1 is run
+    public boolean isRun() { //-1 is invalid, 0 is set, 1 is run
         if (!isValid()) {
-            return -1;
+            return false;
         }
         else {
             if (tiles.get(0).getColour() == tiles.get(1).getColour()) {
-                return 1;
+                return true;
             } else {
-                return 0;
+                return false;
             }
         }
     }

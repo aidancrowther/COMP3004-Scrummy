@@ -136,36 +136,72 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
-        Meld copyM = shortM.copy();
-        Meld copyH = hTiles.copy();
-		if (shortM.size() == 1) {
-            //try to make a run
-            if (h.get(p).getColour() == copyM.getTiles().get(0).getColour()) {
-                //try to add one above and one below it; if they do not exist, you know
-                //you can't make a run using just one tile from the tabl
-                //Just adding one tile at a time is causing the program to miss
-                //possible melds.
+    protected int isAddable(Tile toAdd, Tile t) {
+        //returns 0 if toAdd is addable as a set to t
+        //returns 1 if toAdd is addable as a run to back of t
+        //returns 2 if toAdd is addable as a run to front of t
+        //returns -1 if toAdd is not addable to t
+        if (toAdd.getColour() == t.getColour()) {
+            if (toAdd.getValue() - t.getValue() == 1) {
+                    return 2;
+            }
+            else if (t.getValue() - toAdd.getValue() == 1) {
+                return 1;
+            }
+        }
+        else {
+            if (toAdd.getValue() == t.getValue()) {
+                return 0;
+            }
+        }
+        return -1;
+    }
 
+    protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int k) {
+		if (shortM.size() == 1) {
+            Tile t = shortM.getTiles().get(0);
+            ArrayList<Tile> toAdd = new ArrayList<>();
+            //try to make a run
+            if (h.get(k).getColour() == shortM.getTiles().get(0).getColour()) {
+                //gonna have to loop unfortunately
+                
+                if (k < h.size()-1) {
+
+                     
+                } 
+                else if (k < h.size()-2) {
+
+
+                }
+                //if two cards can be added to the back
+                else {
+                    if (k != 0) {
+                        
+                    }
+                }
+            } 
             //try to make a set
-            } else {
+            else {
                 //try to add 2 tiles; if they do not exist, you know
                 //you can't make a set using just one tile from the table
                 //Just adding one tile at a time is causing the program to miss
                 //possible melds.
+                
+            }
+            for (Tile a : toAdd) {
+                shortM.add(a);
+            }
+            if (shortM.isValid()) {
+                for (Tile a : shortM.getTiles()) {
+                    hTiles.add(a);
+                }
             }
 
-            //I'm not entirely sure this is working. Make sure it is.
-            if (copyM.size() > 2 && copyM.isValid()) { 
-                shortM = copyM.copy();
-                hTiles = copyH.copy();
-            }
-		} else {
-            shortM.add(h.get(p));
-            hTiles.add(h.get(p));
+        } 
+        else {
+            shortM.add(h.get(k));
             if (!shortM.isValid()) {
-                shortM.remove(h.get(p));
-                hTiles.remove(h.get(p));
+                shortM.remove(h.get(k));
             }																			
         }
     }
@@ -182,6 +218,38 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             ArrayList<Meld> aList = new ArrayList<Meld>();      //arraylist of melds created from a split
             Meld m = t.getMelds().get(i).copy();                //the meld about to be split
             ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
+
+            for (int j=0; j<m.size(); j++) {
+                Meld shortM = new Meld();
+                if (t.getMelds().get(i).isRun() || !t.getMelds().get(i).isRun() && t.getMelds().get(i).size() == 3) {
+                    //for melds where we'll iterate through linearly, rather than consider every combination
+                    for (int k=0; k<h.size(); k++) {
+                        addingForSplitting(shortM, hTiles, h, k);
+                        if (shortM.isValid()) {
+                            break;
+                        }
+                    }
+                }  
+                else { //sets with 4 cards in them
+                    //for melds where every combination of cards needs to be considered
+
+                }
+
+                if (shortM.isValid()) {
+                    aList.add(shortM.copy());
+                    for (int p=0; p<shortM.size(); p++) {
+                        if (h.contains(shortM.getTiles().get(p))) {
+                            hTiles.add(shortM.getTiles().get(p));
+                            h.remove(shortM.getTiles().get(p));
+                        }
+                        if (m.getTiles().contains(shortM.getTiles().get(p))) {
+                            m.remove(shortM.getTiles().get(p));
+                        }
+                    }
+                }
+
+
+            }
 
             
             AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
