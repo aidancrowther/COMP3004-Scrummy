@@ -81,8 +81,8 @@ public class ControllerTest {
         Controller controller = new Controller();
         controller.setInteractionType('t');
         assertNotNull(controller.getScrummy());
-        assertNotEquals(controller.getScrummy().getObservers().size(), 0);
-        assertTrue(controller.getScrummy().getObservers().contains(controller.getInteractionController()));
+        assertNotEquals(controller.getScrummy().getTableObservers().size(), 0);
+        assertTrue(controller.getScrummy().getTableObservers().contains(controller.getInteractionController()));
     }
 
     @Test
