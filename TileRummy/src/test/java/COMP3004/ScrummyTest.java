@@ -1,12 +1,15 @@
 package COMP3004;
 
+import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.Strategy3;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.TerminalViewController;
 import COMP3004.models.Meld;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.oberver_pattern.PlayerHandObserverInterface;
+import COMP3004.oberver_pattern.TableObserverInterface;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -30,9 +33,15 @@ public class ScrummyTest
     public void testAddObserver() {
         TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
-        int prevLen = s.getObservers().size();
-        s.registerObserver(t);
-        int newLen = s.getObservers().size();
+        int prevLen = s.getTableObservers().size();
+        s.registerTableObserver(t);
+        int newLen = s.getTableObservers().size();
+        assertTrue((newLen - prevLen) == 1);
+
+        Strategy3 strat = new Strategy3();
+        prevLen = s.getPlayerHandObservers().size();
+        s.registerPlayerHandObserver(strat);
+        newLen = s.getPlayerHandObservers().size();
         assertTrue((newLen - prevLen) == 1);
     }
 
@@ -40,25 +49,44 @@ public class ScrummyTest
     public void testRemoveObserver() {
         TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
-        s.registerObserver(t);
+        s.registerTableObserver(t);
 
-        int prevLen = s.getObservers().size();
-        s.removeObserver(t);
-        int newLen = s.getObservers().size();
+        int prevLen = s.getTableObservers().size();
+        s.removeTableObserver(t);
+        int newLen = s.getTableObservers().size();
         assertTrue((prevLen-newLen) == 1);
-        assertTrue(!(s.getObservers().contains(t)));
+        assertTrue(!(s.getTableObservers().contains(t)));
+
+        Strategy3 strat = new Strategy3();
+        s.registerPlayerHandObserver(strat);
+
+        prevLen = s.getPlayerHandObservers().size();
+        s.removePlayerHandObserver(strat);
+        newLen = s.getPlayerHandObservers().size();
+        assertTrue((prevLen-newLen) == 1);
+        assertTrue(!(s.getPlayerHandObservers().contains(strat)));
+
     }
 
     @Test
     public void testNotifyObservers(){
         TerminalViewController t = new TerminalViewController();
         Scrummy s = new Scrummy();
-        s.registerObserver(t);
+        s.registerTableObserver(t);
+
+        Strategy3 strat = new Strategy3();
+        s.registerPlayerHandObserver(strat);
 
         s.notifyObservers();
 
-        for(TableObserver observer : s.getObservers()){
+        for(TableObserverInterface observer : s.getTableObservers()){
             assertEquals(observer.getTable(), s.getTable());
+        }
+
+        int index = 0;
+        for(PlayerHandObserverInterface observer : s.getPlayerHandObservers()){
+            assertEquals(observer.getPlayerHandSize(index), s.getPlayerHandByIndex(index).size());
+            index++;
         }
     }
 
@@ -66,7 +94,7 @@ public class ScrummyTest
     public void testValidateTable(){
         Scrummy scrummy = new Scrummy();
         GameInteractionController gameInteractionController = new GameInteractionController();
-        scrummy.registerObserver(gameInteractionController);
+        scrummy.registerTableObserver(gameInteractionController);
 
         Meld bad = new Meld();
         bad.add(new Tile('R', 1));
