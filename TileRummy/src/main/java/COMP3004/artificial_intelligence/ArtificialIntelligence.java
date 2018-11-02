@@ -136,9 +136,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return tMelds;
     }
 
-    /* 
-        
-    */
     protected int isAddable(Tile toAdd, Tile t) {
         //returns 0 if toAdd is addable as a set to t
         //returns 1 if toAdd is addable as a run to t
@@ -157,6 +154,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         return -1;
     }
 
+    //tries to create a meld out of the offered cards. returns true if it is valid
     protected boolean canMeld(Tile a, Tile b, Tile c) {
         Meld m = new Meld();
         m.add(a);
@@ -170,11 +168,11 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
+    //adds either 2 cards to a meld of 1, or one card to a meld of 2.
     protected void addingForSplitting(Meld shortM, ArrayList<Tile> h, int k) {
 		if (shortM.size() == 1) {
             Tile t = shortM.getTiles().get(0);
             int start;
-            //try to make a run
             if (isAddable(h.get(k), t) >= 0) {
                 if (k != 0) {
                     start = k-1; 
@@ -198,6 +196,8 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         }
     }
 
+    //adds a meld from a split to its arraylist. In doing so, it removes these cards from the 
+    //local copy of the table's meld as well as the local copy of the AI's hand
     protected void addSplitToList(ArrayList<Meld> aList, Meld shortM, Meld m, Meld hTiles, ArrayList<Tile> h) {
         aList.add(shortM.copy());
 	    for (int q=0; q<shortM.size(); q++) {
@@ -211,6 +211,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 		} 
     }
 
+    //Splits a set into every possible combination of cards. Changes depending on length of set
     protected ArrayList<Meld> permute(Meld m) {
         ArrayList<Meld> output = new ArrayList<>();
         for (int i=0; i<m.size(); i++) {
@@ -258,6 +259,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             Meld m = t.getMelds().get(i).copy();                //the meld about to be split
             ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
 
+            //Trying to split a run
             if (t.getMelds().get(i).isRun()) {
                 for (int j=0; j<m.size(); j++) {
                     Meld shortM = new Meld();
@@ -276,6 +278,7 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                     }
                 }
             }
+            //trying to split a set
             else if (!t.getMelds().get(i).isRun())  {
                 ArrayList<Meld> perms = permute(m);
                 for (int j=0; j<perms.size(); j++) {
