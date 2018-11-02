@@ -15,16 +15,24 @@
 
 package COMP3004.artificial_intelligence;
 
-import COMP3004.controllers.GameInteractionInterface;
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.oberver_pattern.TableObserverInterface;
+import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.*;
 import java.util.AbstractMap;
 
-public abstract class ArtificialIntelligence extends TableObserver implements GameInteractionInterface
+public abstract class ArtificialIntelligence extends GameInteractionController implements TableObserverInterface
 {
+    /*
+     * These attributes save the player state as they make moves.
+     * If all of the moves were valid, then the game state will
+     * also be updated.
+     * */
+    //protected Table table = new Table();
     protected Meld hand = null;
     protected void name() {
         
@@ -430,4 +438,12 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
         
         return -1;
     }
+
+    // OBSERVER PATTERN CODE
+    public void update(Table table) {
+        this.table = table;
+        System.out.println("AI" + this.table.toString());
+    }
+    public Table getTable() { return this.table; }
+    public void setTable(Table table) { this.table = table; }
 }

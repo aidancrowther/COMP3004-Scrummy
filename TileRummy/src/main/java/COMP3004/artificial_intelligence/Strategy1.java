@@ -78,7 +78,7 @@ public class Strategy1 extends ArtificialIntelligence
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
         //Output table
-        Table output = table;
+        Table output = this.getTableCopy(table);
 
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){
@@ -184,8 +184,12 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Return the output table
-        if (longest < 30 && score < 30) return new Table();
-        else return output;
+        if (longest >= 30 || score >= 30) {
+            System.out.println("AI HAS MOVED!");
+            this.table = output;
+        }
+        
+        return this.table;
     }
 
 }

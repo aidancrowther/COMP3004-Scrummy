@@ -3,26 +3,47 @@ package COMP3004.controllers;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.oberver_pattern.TableObserverInterface;
 
-public class GameInteractionController extends TableObserver implements GameInteractionInterface {
-    public Meld hand;
+public class GameInteractionController implements GameInteractionInterface {
+    protected Meld hand;
+    protected Table table;
+    protected boolean playing = true;
 
     public GameInteractionController(){
         this.hand = new Meld();
-        this.hand .add(new Tile('R', 1));
-        this.hand .add(new Tile('G', 1));
-        this.hand .add(new Tile('B', 1));
-        this.hand .add(new Tile('O', 1));
+        this.table = new Table();
     }
-
-    public boolean playing = true;
 
     public void selectTile(Meld inMeld, Meld outMeld, Tile tile) {
         if (inMeld.getTiles().contains(tile)) {
             outMeld.add(tile);
             inMeld.remove(tile);
         }
+    }
+
+    public void indicatePlayerMove() {
+        Table copy = new Table();
+        int i = 0;
+        for(Meld m : this.table.getMelds()) {
+            if(i != 0){ //Don't copy the tentative meld
+                copy.add(m);
+            }
+            i++;
+        }
+        this.table = copy;
+    }
+
+    public Table getTableCopy(Table t){
+        Table output = new Table();//table; no set yet - want to make a copy
+        int i = 0;
+        for(Meld m : t.getMelds()) {
+            if(i != 0){
+                output.add(m);
+            }
+            i++;
+        }
+        return output;
     }
 
     public Table play(Meld hand) {
@@ -43,4 +64,11 @@ public class GameInteractionController extends TableObserver implements GameInte
 
     public void setViewControllerInstance(GameInteractionController g) { }
 
+    // OBSERVER PATTERN CODE
+    public void update(Table table) {
+        this.table = table;
+        System.out.println("Player" + this.table.toString());
+    }
+    public Table getTable() { return this.table; }
+    public void setTable(Table table) { this.table = table; }
 }

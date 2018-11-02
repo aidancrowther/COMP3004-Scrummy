@@ -42,7 +42,7 @@ public class Controller
         for (byte i = 1; i < 4; i++) {
             isPlayer[i] = false;
             AIs[i] = new Strategy1();
-            this.scrummy.registerObserver(AIs[i]);
+            this.scrummy.registerTableObserver(AIs[i]);
         }
         this.scrummy.notifyObservers();
     }
@@ -69,11 +69,13 @@ public class Controller
             Table playedTable = null;
             if(isPlayer[scrummy.getCurrentPlayerIndex()]) {
                 if (enableHumanPlayer) {
+                    System.out.println("HUMAN");
                     playedTable = this.gameInteractionController.play(scrummy.getCurrentPlayer().getHand());
                     winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
                 }
             }
             else{
+                System.out.println("AI");
                 playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
                 winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
             }
@@ -101,13 +103,16 @@ public class Controller
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
         if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+            System.out.println("Player no move");
             scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
             Tile t = scrummy.getDeck().pop();
             if(t != null)
                 scrummy.getCurrentPlayer().getHand().add(t);
         } else {
+            System.out.println("Player move");
             scrummy.validatePlayerMove(playedTable);
             if(!playedTable.isValid()){
+                System.out.println("Player invalid");
                 scrummy.getCurrentPlayer().setHand(playerHandCopy);
             }
         }
@@ -136,7 +141,7 @@ public class Controller
             this.gameInteractionController = this.graphicalInteractionController; //to access controller generally
         }
 
-        this.scrummy.registerObserver(this.gameInteractionController);
+        this.scrummy.registerTableObserver(this.gameInteractionController);
         this.scrummy.notifyObservers();
     }
 

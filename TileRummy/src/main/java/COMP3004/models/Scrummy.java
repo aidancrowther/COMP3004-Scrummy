@@ -10,20 +10,19 @@
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
 package COMP3004.models;
-
-import COMP3004.oberver_pattern.Subject;
-import COMP3004.oberver_pattern.TableObserver;
+import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.Strategy3;
+import COMP3004.controllers.GameInteractionController;
+import COMP3004.oberver_pattern.MultiSubject;
+import COMP3004.oberver_pattern.TableObserverInterface;
+import COMP3004.oberver_pattern.PlayerHandObserverInterface;
 
 import java.util.ArrayList;
 
-public class Scrummy implements Subject
+public class Scrummy extends MultiSubject // Table and Players are in superclass
 {
-    private Table table = new Table();
     private Deck deck = new Deck();
-    private Player[] players = new Player[4];
     private int currentPlayerIndex = 0; // USER STARTS
-
-    private ArrayList<TableObserver> observers = new ArrayList<>();
 
     public Scrummy(){
         deck.shuffle();
@@ -43,20 +42,6 @@ public class Scrummy implements Subject
         players[3].setName("AI 3");
     }
 
-    public void registerObserver(TableObserver t){
-        this.observers.add(t);
-    }
-
-    public void removeObserver(TableObserver t){
-        this.observers.remove(t);
-    }
-
-    public void notifyObservers(){
-        for(TableObserver observer : this.observers) {
-            observer.update(this.table);
-        }
-    }
-
     public void validatePlayerMove(Table playedTable) {
         /*
          * If valid table then update game table, set the player hand, and notify observers
@@ -65,13 +50,11 @@ public class Scrummy implements Subject
          *   keep table as is and notify observers
          *   reset player hand if not
          * */
-
-        if(playedTable != null){
-            if(playedTable.isValid()){
-                this.table = playedTable;
-            } else {
-                this.notifyObservers();
-            }
+        System.out.println("Played Table: ");
+        System.out.println(playedTable.toString());
+        if(playedTable != null && playedTable.isValid()){
+            System.out.println("valid");
+            this.table = playedTable;
         }
         this.notifyObservers();
     }
@@ -83,8 +66,23 @@ public class Scrummy implements Subject
         return null;
     }
 
-    public ArrayList<TableObserver> getObservers(){
-        return this.observers;
+    public void notifyObservers(){
+        for(GameInteractionController observer : this.tableObservers) {
+            observer.update(this.table);
+        }
+
+        int index = 0;
+        for(Strategy3 observer : this.playerHandObservers) {
+            observer.update(this.getPlayerHandByIndex(index).size(), index);
+            index++;
+        }
+    }
+
+    public ArrayList<GameInteractionController> getTableObservers(){
+        return this.tableObservers;
+    }
+    public ArrayList<Strategy3> getPlayerHandObservers(){
+        return this.playerHandObservers;
     }
 
     public Table getTable(){
