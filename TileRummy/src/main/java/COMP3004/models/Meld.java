@@ -98,7 +98,7 @@ public class Meld {
         Return: boolean
     */
     public boolean isValid() {
-        //valid melds must have 3+ tiles
+        //valid melds must have 3+ tile
         if (tiles.size() < 3) {
             return false;
         }
@@ -107,7 +107,7 @@ public class Meld {
                 if (tiles.get(i).getColour() != tiles.get(0).getColour()) { //make sure all are same colour
                     return false;
                 }
-                if (tiles.get(i).getValue() != (tiles.get(0).getValue() + i)) { //make sure all values make a run 
+                if (tiles.get(i).getValue() != (tiles.get(0).getValue() + i)) { //make sure all values make a run
                     return false;
                 }
             }

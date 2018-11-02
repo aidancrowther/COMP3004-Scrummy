@@ -32,7 +32,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
      * If all of the moves were valid, then the game state will
      * also be updated.
      * */
-    protected Table table = new Table();
+    //protected Table table = new Table();
     protected Meld hand = null;
     protected void name() {
         

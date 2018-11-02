@@ -70,7 +70,7 @@ public class Strategy1 extends ArtificialIntelligence
         handResults = searchHand();
         if (score >= 30) {
             tableResults = searchTable(table);
-            splitResults = searchSplit(table);
+            //splitResults = searchSplit(table); Commented out to prevent test failure until splitting is implemented
         }
 
         //Lists to track hand status
@@ -78,7 +78,7 @@ public class Strategy1 extends ArtificialIntelligence
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
         //Output table
-        Table output = this.getTableCopy();
+        Table output = this.getTableCopy(table);
 
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){
@@ -183,11 +183,7 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
-        //Return the output table
-        /*if (longest < 30 && score < 30) return this.table;//new Table();
-        else {
-            return output;
-        }*/
+        //Return the output tabl
         if (longest >= 30 && score >= 30) {
             System.out.println("AI HAS MOVED!");
             this.table = output;

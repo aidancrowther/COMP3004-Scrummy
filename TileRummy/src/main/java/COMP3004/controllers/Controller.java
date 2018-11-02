@@ -102,10 +102,8 @@ public class Controller
     public int checkPlayerMove(Table playedTable, Meld playerHandCopy){
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
-        System.out.println("Player Table:\n" + playedTable.toString());
-        System.out.println("Scrummy Table:\n" + scrummy.getTable());
         if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
-            System.out.println("PLayer no move");
+            System.out.println("Player no move");
             scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
             Tile t = scrummy.getDeck().pop();
             if(t != null)

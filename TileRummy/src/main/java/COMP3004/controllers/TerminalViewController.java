@@ -33,6 +33,8 @@ public class TerminalViewController extends GameInteractionController
             this.indicatePlayerMove();
             while(this.move()){}
         }
+        this.terminalView.printMessage("You are done your turn. The game table now looks like:");
+        this.terminalView.printTable(this.getTable());
         return this.getTable(); //will be the same if player doesn't move
     }
 

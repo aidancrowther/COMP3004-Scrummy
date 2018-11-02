@@ -34,11 +34,11 @@ public class GameInteractionController implements GameInteractionInterface {
         this.table = copy;
     }
 
-    public Table getTableCopy(){
+    public Table getTableCopy(Table t){
         Table output = new Table();//table; no set yet - want to make a copy
         int i = 0;
-        for(Meld m : this.table.getMelds()) {
-            if(i != 0){ //Don't copy the tentative meld
+        for(Meld m : t.getMelds()) {
+            if(i != 0){
                 output.add(m);
             }
             i++;

@@ -255,7 +255,6 @@ public class StrategyTest{
         ArrayList<Meld> melds = output.getMelds();
 
         assertTrue(melds.size() == 2);
-        System.out.println("\n\n\n"+melds.get(1).toString()+"\n"+expected.toString()+"\n\n\n");
         assertTrue(melds.get(1).compare(expected));
 
         //Create a table onto which the AI can only add a new meld

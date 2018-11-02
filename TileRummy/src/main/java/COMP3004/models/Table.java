@@ -68,11 +68,12 @@ public class Table {
         Else return true
     */
     public boolean isValid() {
-        if (melds.get(0).getTiles().size() != 0) {
+        //System.out.println(melds.get(0).size());
+        if (this.melds.get(0).getTiles().size() != 0) {
             return false;
         }
-        for (int i=1; i<melds.size(); i++) {
-            if (!melds.get(i).isValid()) {
+        for (int i=1; i<this.melds.size(); i++) {
+            if (!this.melds.get(i).isValid()) {
                 return false;
             }
         }
