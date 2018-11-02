@@ -306,7 +306,6 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
 				    for (int k=0; k<m.size(); k++) {
 					    if (a.isValid(m.getTiles().get(k))) {
 						    a.add(m.getTiles().get(k));
-					    	hTiles.add(m.getTiles().remove(k));
 					    }
 			    	}
 				    for (int k=0; k<h.size(); k++) {
