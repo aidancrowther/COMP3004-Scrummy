@@ -16,7 +16,6 @@
 package COMP3004.artificial_intelligence;
 
 import COMP3004.controllers.GameInteractionController;
-import COMP3004.controllers.GameInteractionInterface;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
