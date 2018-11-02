@@ -132,13 +132,12 @@ public class Meld {
         if (t == null) {
             return false;
         }
-        this.add(t);
-        if (this.isValid()) {
-            this.remove(t);
+        Meld m = this.copy();
+        m.add(t);
+        if (m.isValid()) {
             return true;
         }
         else {
-            this.remove(t);
             return false;
         }
     }
