@@ -250,9 +250,16 @@ public class StrategyTest{
         expected.add(tile5);
         expected.add(tile4);
 
+        System.out.println(AI1.getScore());
+
+        System.out.println(AI1.getHand().toString());
+        for(Meld m : AI1.getTable().getMelds()) System.out.println(m.toString());
+
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play(AI1.getHand());
         ArrayList<Meld> melds = output.getMelds();
+
+        for(Meld m : melds) System.out.println(m.toString());
 
         assertTrue(melds.size() == 2);
         assertTrue(melds.get(1).compare(expected));
@@ -277,6 +284,7 @@ public class StrategyTest{
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play(AI1.getHand());
         melds = output.getMelds();
+
         assertTrue(melds.size() == 2);
         assertTrue(melds.get(1).compare(expected));
 
@@ -309,7 +317,6 @@ public class StrategyTest{
 
         //Assert that the player plays onto the correct meld, and only onto that meld
         output = AI1.play(AI1.getHand());
-
 
         melds = output.getMelds();
         assertTrue(melds.size() == 3);
