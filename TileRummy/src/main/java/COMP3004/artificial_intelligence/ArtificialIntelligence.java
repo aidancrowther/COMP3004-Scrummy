@@ -232,11 +232,16 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
                 }
             }
         }
-        for (int i=m.size()-1; i>=0; i--) {
-            Meld m2 = m.copy();
-            m2.getTiles().remove(i);
-            output.add(m2.copy());
-        }
+		if (m.size() > 2) {
+			for (int i=m.size()-1; i>=0; i--) {
+				Meld m2 = m.copy();
+				m2.getTiles().remove(i);
+				output.add(m2.copy());
+			}
+		}
+		else if (m.size() == 2) {
+			output.add(m.copy());
+		}
         return output;
     }
 
