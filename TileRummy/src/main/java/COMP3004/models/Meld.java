@@ -46,7 +46,7 @@ public class Meld {
     */
     public Tile remove(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
+            if (tiles.get(i).equals(t)) {
                 return tiles.remove(i);   
             }
         }
@@ -55,7 +55,7 @@ public class Meld {
 
     public Tile get(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
+            if (tiles.get(i).equals(t)) {
                 return tiles.get(i);   
             }
         }
@@ -147,14 +147,13 @@ public class Meld {
 
     
     public boolean compare(Meld m) {
-        if(this.getTiles().size() != m.getTiles().size()){
+        if(this.size() != m.size()){
             return false;
         }
         for (int i=0; i<this.getTiles().size(); i++) {
-            if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
-                this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
-                    return false;
-                }
+            if (!this.getTiles().get(i).equals(m.getTiles().get(i))) {
+                return false;
+            }
         }
         return true;
     }
