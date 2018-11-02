@@ -192,10 +192,9 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             } 
         } 
         else {
-            shortM.add(h.get(k));
-            if (!shortM.isValid()) {
-                shortM.remove(h.get(k));
-            }																		
+            if (shortM.isValid(h.get(k))) {
+                shortM.add(h.get(k));
+            }																	
         }
     }
 
@@ -296,9 +295,25 @@ public abstract class ArtificialIntelligence extends TableObserver implements Ga
             }
 
             //edge cases
+            for (Meld a : aList) {
+				for (int k=0; k<m.size(); k++) {
+					if (a.isValid(m.getTiles().get(k))) {
+						a.add(m.getTiles().get(k));
+						hTiles.add(m.getTiles().remove(k));
+					}
+				}
+				for (int k=0; k<h.size(); k++) {
+					if (a.isValid(h.get(k))) {
+						a.add(h.get(k));
+						hTiles.add(h.remove(k));
+					}
+				}
+            }
             if (!m.equals(t.getMelds().get(i)) && m.isValid()) {
 				addSplitToList(aList, m.copy(), m, hTiles, h);
-			}
+            }
+
+            //if a meld is successfully split, add it to the output
             if (m.getTiles().isEmpty()) {
                 AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
                 tableSplits.put(hTiles.copy(), meldSplits);

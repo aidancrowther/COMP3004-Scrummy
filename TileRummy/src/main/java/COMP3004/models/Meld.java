@@ -128,6 +128,21 @@ public class Meld {
         return true; //reached the end!
     }
 
+    public boolean isValid(Tile t) {
+        if (t == null) {
+            return false;
+        }
+        this.add(t);
+        if (this.isValid()) {
+            this.remove(t);
+            return true;
+        }
+        else {
+            this.remove(t);
+            return false;
+        }
+    }
+
 
     /*
 
