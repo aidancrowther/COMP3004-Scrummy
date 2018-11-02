@@ -58,6 +58,10 @@ public class Table {
         return null;
     }
 
+    public Meld set(int id, Meld m) {
+        return melds.set(id, m);
+    }
+
     /*
         See if the table is valid
         If there is an incomplete meld in melds.get(0), or any completed melds are invalid, return false

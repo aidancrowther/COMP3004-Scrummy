@@ -46,7 +46,7 @@ public class Meld {
     */
     public Tile remove(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
+            if (tiles.get(i).equals(t)) {
                 return tiles.remove(i);   
             }
         }
@@ -55,7 +55,7 @@ public class Meld {
 
     public Tile get(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).getColour() == t.getColour() && tiles.get(i).getValue() == t.getValue()) {
+            if (tiles.get(i).equals(t)) {
                 return tiles.get(i);   
             }
         }
@@ -128,45 +128,60 @@ public class Meld {
         return true; //reached the end!
     }
 
+    public boolean isValid(Tile t) {
+        if (t == null) {
+            return false;
+        }
+        this.add(t);
+        if (this.isValid()) {
+            this.remove(t);
+            return true;
+        }
+        else {
+            this.remove(t);
+            return false;
+        }
+    }
+
 
     /*
 
     */
     public String toString() {
-        String m = "";
+        String m = "{";
         for (int i=0; i<tiles.size(); i++) {
             m += tiles.get(i).toString();
             if (i<tiles.size()-1) {
                 m += ", ";
             }
         }
+        m += "}";
 
         return m;
     }
 
     
     public boolean compare(Meld m) {
-        if(this.getTiles().size() != m.getTiles().size()){
+        if(this.size() != m.size()){
             return false;
         }
         for (int i=0; i<this.getTiles().size(); i++) {
-            if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
-                this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
-                    return false;
-                }
+            if (!this.getTiles().get(i).equals(m.getTiles().get(i))) {
+                return false;
+            }
         }
         return true;
     }
 
-    public int meldType() { //-1 is invalid, 0 is set, 1 is run
+    public boolean isRun() { //-1 is invalid, 0 is set, 1 is run
         if (!isValid()) {
-            return -1;
+            return false;
         }
         else {
             if (tiles.get(0).getColour() == tiles.get(1).getColour()) {
-                return 1;
+                return true;
             } else {
-                return 0;
+                return false;
             }
         }
     }

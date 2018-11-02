@@ -6,6 +6,9 @@
  *
  * Group 6
  * David N. Zilio
+ * Aidan Crowther
+ * Ellis Glennie
+ * Brittny Lapierre
  *
  * This abstract class is a way to abstract out the Strategies of the AI such that it won't be janky in the controller
  */
@@ -21,6 +24,7 @@ import COMP3004.oberver_pattern.TableObserverInterface;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.*;
+import java.util.AbstractMap;
 
 public abstract class ArtificialIntelligence extends GameInteractionController implements TableObserverInterface
 {
@@ -68,7 +72,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
 
     protected HashMap<Meld, Integer> searchHand() {
-        HashMap<Meld, Integer> handMelds = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> handMelds = new HashMap<>();
         int n = 0;
         ArrayList<Tile> h = this.hand.getTiles();
 
@@ -118,7 +122,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
 
     protected HashMap<Meld, Integer> searchTable(Table t) {
-        HashMap<Meld, Integer> tMelds = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> tMelds = new HashMap<>();
         ArrayList<Tile> h = hand.getTiles();
 
         if (t == null) {
@@ -144,102 +148,192 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         return tMelds;
     }
 
-    protected void addingForSplitting(Meld shortM, Meld hTiles, ArrayList<Tile> h, int p) {
-        Meld copyM = shortM.copy();
-        Meld copyH = hTiles.copy();
-		if (shortM.size() == 1) {
-            //try to make a run
-            if (h.get(p).getColour() == copyM.getTiles().get(0).getColour()) {
-                //try to add one above and one below it; if they do not exist, you know
-                //you can't make a run using just one tile from the tabl
-                //Just adding one tile at a time is causing the program to miss
-                //possible melds.
-
-            //try to make a set
-            } else {
-                //try to add 2 tiles; if they do not exist, you know
-                //you can't make a set using just one tile from the table
-                //Just adding one tile at a time is causing the program to miss
-                //possible melds.
+    protected int isAddable(Tile toAdd, Tile t) {
+        //returns 0 if toAdd is addable as a set to t
+        //returns 1 if toAdd is addable as a run to t
+        //returns -1 if toAdd is not addable to t
+        if (toAdd.getColour() == t.getColour()) {
+            if (toAdd.getValue() - t.getValue() == 1 || 
+                t.getValue() - toAdd.getValue() == 1) {
+                    return 1;
             }
-
-            //I'm not entirely sure this is working. Make sure it is.
-            if (copyM.size() > 2 && copyM.isValid()) { 
-                shortM = copyM.copy();
-                hTiles = copyH.copy();
+        }
+        else {
+            if (toAdd.getValue() == t.getValue()) {
+                return 0;
             }
-		} else {
-            shortM.add(h.get(p));
-            hTiles.add(h.get(p));
-            if (!shortM.isValid()) {
-                shortM.remove(h.get(p));
-                hTiles.remove(h.get(p));
-            }																			
+        }
+        return -1;
+    }
+
+    //tries to create a meld out of the offered cards. returns true if it is valid
+    protected boolean canMeld(Tile a, Tile b, Tile c) {
+        Meld m = new Meld();
+        m.add(a);
+        m.add(b);
+        m.add(c);
+        if (m.isValid()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
-    public HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> searchSplit(Table t) {
-        HashMap<Meld, HashMap<ArrayList<Meld>, Integer>> tableSplits = new HashMap<Meld, HashMap<ArrayList<Meld>, Integer>>();
-        HashMap<ArrayList<Meld>, Integer> meldSplits = new HashMap<ArrayList<Meld>, Integer>(); //all splits and corresponding table locations
-        Meld hTiles = new Meld();                               //this will contain all of hand's tiles to be used in splits
+    //adds either 2 cards to a meld of 1, or one card to a meld of 2.
+    protected void addingForSplitting(Meld shortM, ArrayList<Tile> h, int k) {
+		if (shortM.size() == 1) {
+            Tile t = shortM.getTiles().get(0);
+            int start;
+            if (isAddable(h.get(k), t) >= 0) {
+                if (k != 0) {
+                    start = k-1; 
+                }
+                else {
+                    start = k;
+                }
+                for (int i=start; i<h.size(); i++) {
+                    if (canMeld(h.get(k), h.get(i), t)) {
+                        shortM.add(h.get(k));
+                        shortM.add(h.get(i));
+                        break;
+                    }
+                }
+            } 
+        } 
+        else {
+            if (shortM.isValid(h.get(k))) {
+                shortM.add(h.get(k));
+            }																	
+        }
+    }
+
+    //adds a meld from a split to its arraylist. In doing so, it removes these cards from the 
+    //local copy of the table's meld as well as the local copy of the AI's hand
+    protected void addSplitToList(ArrayList<Meld> aList, Meld shortM, Meld m, Meld hTiles, ArrayList<Tile> h) {
+        aList.add(shortM.copy());
+	    for (int q=0; q<shortM.size(); q++) {
+		    if (h.contains(shortM.getTiles().get(q))) {
+			    hTiles.add(shortM.getTiles().get(q));
+				h.remove(shortM.getTiles().get(q));
+			}			
+			else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+				m.remove(shortM.getTiles().get(q));
+			}
+		} 
+    }
+
+    //Splits a set into every possible combination of cards. Changes depending on length of set
+    protected ArrayList<Meld> permute(Meld m) {
+        ArrayList<Meld> output = new ArrayList<>();
+        for (int i=0; i<m.size(); i++) {
+            Meld m1 = new Meld();
+            m1.add(m.getTiles().get(i));
+            output.add(m1.copy());
+        }
+        if (m.size() == 4) {
+            Meld m3 = new Meld();;
+            for (int i=0; i<3; i++) {
+                for (int j=0; j<3; j++) {
+                    if (i != j) {
+                        m3 = m.copy();
+                        m3.getTiles().remove(i);
+                        m3.getTiles().remove(j);
+                        output.add(m3.copy());
+                    }
+                }
+            }
+        }
+		if (m.size() > 2) {
+			for (int i=m.size()-1; i>=0; i--) {
+				Meld m2 = m.copy();
+				m2.getTiles().remove(i);
+				output.add(m2.copy());
+			}
+		}
+		else if (m.size() == 2) {
+			output.add(m.copy());
+		}
+        return output;
+    }
+
+
+    protected HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+        HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
 
         if (t == null) {
             return tableSplits;
         }
 
         for (int i=1; i<t.getMelds().size(); i++) {             //for every meld in table
+            Meld hTiles = new Meld();
             ArrayList<Meld> aList = new ArrayList<Meld>();      //arraylist of melds created from a split
             Meld m = t.getMelds().get(i).copy();                //the meld about to be split
             ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
-            
-            for (int j=0; j<m.size(); j++) {                    //for every tile in meld i
-                Meld shortM = new Meld();
-                for (int k=j; k<m.size(); k++) {
-                    //splitting either a run or a set of 3 (aka anywhere the tiles will just be checked linearly)
-                    if (t.getMelds().get(i).meldType() == 1 ||
-                        t.getMelds().get(i).meldType() == 0 && t.getMelds().get(i).size() == 3) {
-                        shortM.add(m.getTiles().get(k));                    //travel through every combination of cards in the run
-						for (int p=0; p<h.size(); p++) {                    //iterate through hand                                
-                            addingForSplitting(shortM, hTiles, h, p);
-                        }	
-                    //splitting a set of 4						
-                    } else { 
-                        //Whereas a set of 3 only has 6 total splits (including individual tiles),
-                        //a set of four (if i recall correctly) has 14. Every combination of tiles,
-                        //excluding the entire meld and including individual tiles, has to be
-                        //parsed through. addingForSplitting should be called normally once that is
-                        //established.
-                            
-                    }
 
-                    if (shortM.isValid()) {
-						System.out.println(shortM.toString() + " is a success!");
-                        for (int q=0; q<shortM.size(); q++) {
-                            if (h.contains(shortM.getTiles().get(q))) {
-                                h.remove(shortM.getTiles().get(q));
-                            }
-							if (m.getTiles().contains(shortM.getTiles().get(q))) {
-                                m.remove(shortM.getTiles().get(q));
-                            }
+            //Trying to split a run
+            if (t.getMelds().get(i).isRun()) {
+                for (int j=0; j<m.size(); j++) {
+                    Meld shortM = new Meld();
+                    //for melds where we'll iterate through linearly, rather than consider every combination
+                    for (int k=j; k<m.size(); k++) { 
+                        shortM.add(m.getTiles().get(k));
+                        for (int p=0; p<h.size(); p++) {
+                            addingForSplitting(shortM, h, p);
+
+							if (shortM.isValid()) {
+								addSplitToList(aList, shortM, m, hTiles, h);
+								k=999;
+								j--;
+							}
                         }
-                        //After a meld is made, best to make sure nothing else from the table can be
-                        //added. This is an edge case.
-                        /*for (int p=0; p<m.size(); p++) {    //iterate through hand                                
-                            addingForSplitting(shortM, hTiles, m.getTiles(), p);
-                        }*/
-                        j--;
-                        aList.add(shortM.copy());
-                        k=999;
                     }
                 }
-            }     
-            if (m.getTiles().isEmpty()) {               //all tiles have been used
-                meldSplits.put(aList, i);
-            } else {
-                //
-            }   
+            }
+            //trying to split a set
+            else if (!t.getMelds().get(i).isRun())  {
+                ArrayList<Meld> perms = permute(m);
+                for (int j=0; j<perms.size(); j++) {
+                    if (perms.size() == 0) {
+                        break;
+                    }
+                    Meld shortM = perms.get(j);
+                    for (int k=0; k<h.size(); k++) {
+                        addingForSplitting(shortM, h, k);
+                        if (shortM.isValid()) {
+                            addSplitToList(aList, shortM, m, hTiles, h);
+                            perms = permute(m);
+							j = -1;
+                        }
+                    }          
+                }
+            }
+
+            //edge cases
+            for (Meld a : aList) {
+				for (int k=0; k<m.size(); k++) {
+					if (a.isValid(m.getTiles().get(k))) {
+						a.add(m.getTiles().get(k));
+						hTiles.add(m.getTiles().remove(k));
+					}
+				}
+				for (int k=0; k<h.size(); k++) {
+					if (a.isValid(h.get(k))) {
+						a.add(h.get(k));
+						hTiles.add(h.remove(k));
+					}
+				}
+            }
+            if (!m.equals(t.getMelds().get(i)) && m.isValid()) {
+				addSplitToList(aList, m.copy(), m, hTiles, h);
+            }
+
+            //if a meld is successfully split, add it to the output
+            if (m.getTiles().isEmpty()) {
+                AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
+                tableSplits.put(hTiles.copy(), meldSplits);
+            }
         }
-        tableSplits.put(hTiles, meldSplits);
         return tableSplits;
     }
 
@@ -255,34 +349,44 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    protected ArrayList<Integer> findUnique(Meld m, ArrayList<Meld> a, HashMap<Tile, Integer> inHand){
+    protected ArrayList<Meld> findUnique(Meld m, HashMap<Meld, Integer> h, HashMap<Tile, Integer> inHand){
 
-        ArrayList<Integer> results = new ArrayList<>();
+        ArrayList<Meld> results = new ArrayList<>();
 
         //Iterate over the set to compare against
-        for(int i=0; i<a.size(); i++){
+        for(Map.Entry<Meld, Integer> entry : h.entrySet()){
             //Initialize tracking variables
             Boolean containsDuplicate = false;
             HashMap<Tile, Integer> hand = inHand;
+            ArrayList<Integer> usedMelds = new ArrayList<>();
             //Iterate over both tile sets
-            if(a.get(i) != m){
-                for(Tile t1 : a.get(i).getTiles()){
-                    for(Tile t2 : m.getTiles()){
-                        //If they are the same, and there is no duplicate this set contains reused tiles
-                        if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
-                            containsDuplicate = false;
-                            hand.put(t1, hand.get(t1)-1);
+            if(entry.getKey() != m){
+                Boolean cont = true;
+                //Make sure we aren't reusing a split
+                if(h.get(entry.getKey()) != 0){
+                    if(!usedMelds.contains(h.get(entry.getKey()))) cont = false;
+                    else usedMelds.add(h.get(entry.getKey()));
+                }
+                //Check all tiles for duplicates
+                if(cont){
+                    for(Tile t1 : entry.getKey().getTiles()){
+                        for(Tile t2 : m.getTiles()){
+                            //If they are the same, and there is no duplicate this set contains reused tiles
+                            if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
+                                containsDuplicate = false;
+                                hand.put(t1, hand.get(t1)-1);
+                            }
+                            else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
+                                containsDuplicate = false;
+                                hand.put(t2, hand.get(t2)-1);
+                            }
+                            else containsDuplicate |= t1.equals(t2);
                         }
-                        else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
-                            containsDuplicate = false;
-                            hand.put(t2, hand.get(t2)-1);
-                        }
-                        else containsDuplicate |= t1.equals(t2);
                     }
                 }
             }
             //If there are no reused tiles, add to the list of indeces
-            if(!containsDuplicate) results.add(i);
+            if(!containsDuplicate) results.add(entry.getKey());
         }
 
         //Return the list of indeces
@@ -290,7 +394,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     //Sort an arraylist of melds to put the longest ones first
-    protected ArrayList<Meld> sortByLength(ArrayList<Meld> a){
+    protected HashMap<Meld, Integer> sortByLength(HashMap<Meld, Integer> h){
+
+        HashMap<Meld, Integer> result = new HashMap<>();
 
         //Create a comparator
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
@@ -300,11 +406,16 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             }
         };
 
-        //Sort in descending order, then reverse
-        Collections.sort(a, meldLengthComparator);
-        Collections.reverse(a);
+        List<Meld> list = new ArrayList<>();
+        list.addAll(h.keySet());
 
-        return a;
+        //Sort in descending order, then reverse
+        Collections.sort(list, meldLengthComparator);
+        Collections.reverse(list);
+
+        list.forEach( m -> result.put(m, h.get(m)));
+
+        return result;
     }
 
 
