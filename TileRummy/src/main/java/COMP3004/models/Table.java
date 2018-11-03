@@ -58,6 +58,31 @@ public class Table {
         return null;
     }
 
+    public Meld replace(Meld toAdd, int index) {
+        if (index == 0 && melds.size() <= index) {
+            return null;
+        }
+        Meld m = melds.get(index).copy();
+        set(index, toAdd);
+        return m;
+    }
+
+    public Meld replace(Meld toAdd, Meld toReplace) {
+        int index = 0;
+        for (int i=1; i<melds.size(); i++) {
+            if (melds.get(i).equals(toReplace)) {
+                index = i;
+            }
+        }
+        if (index != 0) {
+            set(index, toAdd);
+            return toReplace;
+        }
+        else {
+            return null;
+        }
+    }
+
     public Meld set(int id, Meld m) {
         return melds.set(id, m);
     }

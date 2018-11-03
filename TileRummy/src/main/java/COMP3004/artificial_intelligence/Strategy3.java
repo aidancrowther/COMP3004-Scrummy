@@ -8,8 +8,9 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
 
     public Strategy3(){ }
 
-    public Table play(Meld m) {
-        return null;
+    @Override
+    public Table play() {
+        return play(hand);
     }
 
     public void update(int value, int index){
@@ -24,4 +25,19 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     public void setPlayerHandSize(int value, int index) {
         this.playerHandSizes[index] = value;
     }
+
+
+
+    public Table play(Meld hand) {
+        
+
+
+        return null;
+    }
+
+
+
+
+
+
 }
