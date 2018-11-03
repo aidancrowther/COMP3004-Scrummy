@@ -337,7 +337,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             }
 
             //if a meld is successfully split, add it to the output
-            if (m.getTiles().isEmpty() && aList.size() > 1) {
+            if (m.getTiles().isEmpty() && aList.size() > 1 && !hTiles.getTiles().isEmpty()) {
                 AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
                 tableSplits.put(hTiles.copy(), meldSplits);
             }
