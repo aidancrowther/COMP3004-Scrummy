@@ -165,9 +165,10 @@ public class Meld {
             return false;
         }
         for (int i=0; i<this.getTiles().size(); i++) {
-            if (!this.getTiles().get(i).equals(m.getTiles().get(i))) {
-                return false;
-            }
+            if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
+                this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
+                    return false;
+                }
         }
         return true;
     }
