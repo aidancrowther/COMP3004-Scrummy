@@ -17,7 +17,6 @@ public class Meld {
 
     public int size() { return tiles.size(); }
 
-
     /*
         Adds a tile to the current meld 
     */
