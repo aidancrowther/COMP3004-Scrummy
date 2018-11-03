@@ -135,7 +135,7 @@ public class Strategy4Test{
             for(int j=1; j<=13; j++){
                 toAdd.add(new Tile(colours[i%4], j));
             }
-            if(i!=0) table.add(toAdd);
+            if((i%4) != 0) table.add(toAdd);
         }
 
         hand = new Meld();
