@@ -177,7 +177,7 @@ public class Strategy1 extends ArtificialIntelligence
                 Boolean replaced = false;
                 for(Meld meld : result){
                     if(!replaced){
-                        output.replace(splitId, meld);
+                        output.replace(meld, splitId);
                         replaced = true;
                     }
                     else output.add(meld);
