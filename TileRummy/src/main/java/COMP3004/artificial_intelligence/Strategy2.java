@@ -180,7 +180,7 @@ public class Strategy2 extends ArtificialIntelligence
             //If the player is splitting
             else if(splitResults.get(m) != null){
                 //Build up local variables
-                HashMap<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
+                AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
                 ArrayList<Meld> meldsToAdd = new ArrayList<>();
                 ArrayList<Meld> result = new ArrayList<>();
                 int splitId = 0;
