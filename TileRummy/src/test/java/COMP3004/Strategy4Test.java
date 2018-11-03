@@ -150,14 +150,6 @@ public class Strategy4Test{
         //Assert that the AI doesn't play to the table due to the high odds of receiving tiles it can use
         output = AI.play(hand);
 
-        System.out.println("Table:");
-        for(Meld m : table.getMelds()) System.out.println(m.toString());
-        System.out.println("Output:");
-        for(Meld m : output.getMelds()) System.out.println(m.toString());
-
-
-        System.out.println(table.getMelds().size());
-
         assertTrue(output.getMelds().size() == table.getMelds().size());
     }
 
