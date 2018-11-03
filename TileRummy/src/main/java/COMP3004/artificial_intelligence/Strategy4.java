@@ -93,9 +93,12 @@ public class Strategy4 extends ArtificialIntelligence
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
             allMelds.put(pair.getKey(), 0);
         }
+        System.out.println("Before");
         for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
+            System.out.println(pair.getKey());
             allMelds.put(pair.getKey(), pair.getValue());
         }
+        System.out.println("After");
         for(Map.Entry<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
             allMelds.put(pair.getKey(), pair.getValue().getValue());
         }
