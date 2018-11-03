@@ -173,12 +173,14 @@ public class Strategy1 extends ArtificialIntelligence
                     result.add(toAdd);
                 }
 
-                //Remove the split meld from the table
-                output.remove(splitId);
-
                 //Add all of out new melds back to the table
+                Boolean replaced = false;
                 for(Meld meld : result){
-                    output.add(meld);
+                    if(!replaced){
+                        output.replace(splitId, meld);
+                        replaced = true;
+                    }
+                    else output.add(meld);
                 }
             }
         }
