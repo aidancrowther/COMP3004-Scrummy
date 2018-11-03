@@ -29,9 +29,11 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
 
 
     public Table play(Meld hand) {
+        /*
         
-
-
+        
+        
+        */
         return null;
     }
 
