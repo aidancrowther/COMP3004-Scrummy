@@ -103,7 +103,6 @@ public class Strategy4Test{
         hand.add(tile8); //O6
         hand.add(tile6); //O7
         AI.setHand(hand);
-        AI.setTable(table);
         //Set score to 30 so it will play
         AI.setScore(30);
 
@@ -111,6 +110,7 @@ public class Strategy4Test{
         table.add(tile1); //O10
         table.add(tile2); //O9
         table.add(tile3); //O8
+        AI.setTable(table);
 
         Meld expected = new Meld();
         expected.add(tile1); //O10
@@ -119,10 +119,13 @@ public class Strategy4Test{
         expected.add(tile6); //O7
         expected.add(tile8); //O6
 
+        System.out.println("\n\n\n");
         //Assert that a meld on the table is played to
         output = AI.play(hand);
         assertTrue(output.getMelds().size() == 2);
+        System.out.println(output.getMelds().get(1).toString()+" = "+expected.toString());
         assertTrue(output.getMelds().get(1).compare(expected));
+        System.out.println("\n\n\n");
     }
 
     @Test
