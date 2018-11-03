@@ -134,14 +134,13 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             Meld toAdd = new Meld();
 
             for (int j=0; j<h.size(); j++) {
-                m.add(h.get(j));
-                toAdd.add(h.get(j));
-                if (m.isValid()) {
-                    tMelds.put(toAdd.copy(), i);
-                } else {
-                    m.remove(h.get(j));
-                    toAdd.remove(h.get(j));
+                if (m.isValid(h.get(j))) {
+                    m.add(h.get(j));
+                    toAdd.add(h.get(j));
                 }
+            }
+            if (!toAdd.getTiles().isEmpty()) {
+                tMelds.put(toAdd.copy(), i);
             }
         }
 
