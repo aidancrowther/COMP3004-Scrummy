@@ -16,11 +16,6 @@ import org.junit.Test;
 
 public class Strategy3Test {
 
-    /*
-    - Test the observer
-    - Test playing when observer calls Strategy 1 (another player has 3 fewer tiles)
-    - Test playing when observer calls Strategy 2 (no other players have 3 fewer tiles)
-    */
 
 
     public void testBreak30() {
@@ -53,6 +48,31 @@ public class Strategy3Test {
         assertTrue(output.getMelds().size() == 2);
 
     }
+
+    @Test
+    public void testObserver() {
+        //Test the observer
+
+
+    }
+
+
+    @Test
+    public void testRegularPlay() {
+        //Test playing when observer calls Strategy 2 (no other players have 3 fewer tiles)
+    
+    }
+
+    @Test
+    public void testPlayWithHand() {
+        //Test playing when observer calls Strategy 1 (another player has 3 fewer tiles)
+        
+
+        
+
+
+    }
+
 
 
 
