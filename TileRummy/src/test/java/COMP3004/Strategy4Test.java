@@ -119,13 +119,10 @@ public class Strategy4Test{
         expected.add(tile6); //O7
         expected.add(tile8); //O6
 
-        System.out.println("\n\n\n");
         //Assert that a meld on the table is played to
         output = AI.play(hand);
         assertTrue(output.getMelds().size() == 2);
-        System.out.println(output.getMelds().get(1).toString()+" = "+expected.toString());
         assertTrue(output.getMelds().get(1).compare(expected));
-        System.out.println("\n\n\n");
     }
 
     @Test
@@ -152,7 +149,16 @@ public class Strategy4Test{
 
         //Assert that the AI doesn't play to the table due to the high odds of receiving tiles it can use
         output = AI.play(hand);
-        assertTrue(output.getMelds().size() == 1);
+
+        System.out.println("Table:");
+        for(Meld m : table.getMelds()) System.out.println(m.toString());
+        System.out.println("Output:");
+        for(Meld m : output.getMelds()) System.out.println(m.toString());
+
+
+        System.out.println(table.getMelds().size());
+
+        assertTrue(output.getMelds().size() == table.getMelds().size());
     }
 
 }
