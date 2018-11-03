@@ -39,8 +39,34 @@ public class Strategy4 extends ArtificialIntelligence
         return null;
     }
 
+    //Return a mapping of tiles and the probability of drawing them next
     private HashMap<String, Double> getOdds(){
-        return null;
+
+        HashMap<String, Double> results = new HashMap<>();
+        char colours[] = {'O', 'G', 'B', 'R'};
+        int totalSeen = 0;
+
+        for(int i=0; i<4; i++){
+            for(int j=1; j<=13; j++){
+                results.put(new Tile(colours[i], j).toString(), 0.0);
+            }
+        }
+
+        for(Meld m : table.getMelds()){
+            for(Tile t : m.getTiles()){results.put(t.toString(), results.get(t.toString())+1);
+                totalSeen++;
+            }
+        }
+
+        for(Tile t : hand.getTiles()){results.put(t.toString(), results.get(t.toString())+1);
+            totalSeen++;
+        }
+
+        for(Map.Entry<String, Double> e : results.entrySet()){
+            results.put(e.getKey(), ((2-e.getValue())/((52*2)-totalSeen)));
+        }
+
+        return results;
     }
 
 }
