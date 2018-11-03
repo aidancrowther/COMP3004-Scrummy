@@ -34,6 +34,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
      * */
     //protected Table table = new Table();
     protected Meld hand = null;
+
     protected void name() {
         
     } int score = 0;
@@ -257,7 +258,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
 
-    protected HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
+    public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
 
         if (t == null) {
@@ -275,7 +276,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 for (int j=0; j<m.size(); j++) {
                     Meld shortM = new Meld();
                     //for melds where we'll iterate through linearly, rather than consider every combination
-                    for (int k=j; k<m.size(); k++) { 
+                    for (int k=j; k<m.size(); k++) {
                         shortM.add(m.getTiles().get(k));
                         for (int p=0; p<h.size(); p++) {
                             addingForSplitting(shortM, h, p);
@@ -283,7 +284,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 							if (shortM.isValid()) {
 								addSplitToList(aList, shortM, m, hTiles, h);
 								k=999;
-								j--;
+                                j--;
+                                break;
 							}
                         }
                     }
@@ -312,8 +314,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             for (Meld a : aList) {
 				for (int k=0; k<m.size(); k++) {
 					if (a.isValid(m.getTiles().get(k))) {
-						a.add(m.getTiles().get(k));
-						hTiles.add(m.getTiles().remove(k));
+                        a.add(m.getTiles().get(k));
 					}
 				}
 				for (int k=0; k<h.size(); k++) {
@@ -328,7 +329,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             }
 
             //if a meld is successfully split, add it to the output
-            if (m.getTiles().isEmpty()) {
+            if (m.getTiles().isEmpty() && aList.size() > 1) {
                 AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> meldSplits = new AbstractMap.SimpleEntry<>(aList, i);
                 tableSplits.put(hTiles.copy(), meldSplits);
             }
@@ -388,6 +389,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             if(!containsDuplicate) results.add(entry.getKey());
         }
 
+        results = shortByShortest(results);
+
         //Return the list of indeces
         return results;
     }
@@ -415,6 +418,19 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         list.forEach( m -> result.put(m, h.get(m)));
 
         return result;
+    }
+
+    protected ArrayList<Meld> shortByShortest(ArrayList<Meld> a){
+        //Create a comparator
+        Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
+            @Override
+            public int compare(Meld m1, Meld m2){
+                return Integer.compare(m1.size(), m2.size());
+            }
+        };
+
+        Collections.sort(a, meldLengthComparator);
+        return a;
     }
 
 

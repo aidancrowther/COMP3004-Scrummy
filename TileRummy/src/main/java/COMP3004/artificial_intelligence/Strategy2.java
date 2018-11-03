@@ -223,7 +223,7 @@ public class Strategy2 extends ArtificialIntelligence
         //if ((longest < 30 && score < 30) || table.getMelds().size() < 2) return table;
         //else return output;
 
-        //Return the output tabl
+        //Return the output table
         if ((longest >= 30 || score >= 30) && table.getMelds().size() >= 2) {
             System.out.println("AI HAS MOVED!");
             this.table = output;
