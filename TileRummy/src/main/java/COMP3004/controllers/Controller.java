@@ -91,6 +91,8 @@ public class Controller
                 break;
             }
 
+            System.out.println("\n\n");
+
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
@@ -106,11 +108,25 @@ public class Controller
             /*
             * Instead check if all tiles in both tables melds are equal...
             * */
+            System.out.println("--- CHECK TABLE REFS: ---");
+            System.out.println(this.scrummy.getCurrentPlayer().getName() + " Table: ");
+            System.out.println(playedTable);
+            System.out.println("Scrummy Table: ");
+            System.out.println(this.scrummy.getTable());
+            System.out.println("--- ");
             if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
+                System.out.println(" did not move. ");
                 Tile t = scrummy.getDeck().pop();
-                if(t != null)
+                System.out.println("Player hand b4: ");
+                System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
+                if(t != null){
+                    System.out.println(" Player Drew Tile: " + t.toString());
                     scrummy.getCurrentPlayer().getHand().add(t);
+                    System.out.println("Player hand in controller: ");
+                    System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
+                }
+
             } else {
                 scrummy.validatePlayerMove(playedTable);
                 if(!playedTable.isValid()){

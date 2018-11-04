@@ -105,7 +105,14 @@ public class Table {
         return true;
     }
 
-    public String toString() {
+    public boolean isEquivalent() {
+        /*
+        *
+        * */
+        return false;
+    }
+
+    /*public String toString() {
         String str = "";
         //System.out.println(this.melds.size());
         for( Meld m : this.melds){
@@ -116,7 +123,7 @@ public class Table {
             str += "\n";
         }
         return str;
-    }
+    }*/
 
 
 
