@@ -28,29 +28,29 @@ public class Controller
     public Controller(){
         this.scrummy = new Scrummy();
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
-        //int[] handSizes = new int[this.scrummy.getPlayers().length-1];
 
         this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
+        this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
+        this.scrummy.registerTableObserver(this.playerControllers[0]);
+
         this.playerControllers[1] = new Strategy1();
+        this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
+        this.scrummy.registerTableObserver(this.playerControllers[1]);
+
         this.playerControllers[2] = new Strategy2();
+        this.playerControllers[2].setPlayer(this.scrummy.getPlayers()[2]);
+        this.scrummy.registerTableObserver(this.playerControllers[2]);
 
         //Special for S3 bc needs to count hands
         Strategy3 s3 = new Strategy3();
         this.playerControllers[3] = s3;
+        this.playerControllers[3].setPlayer(this.scrummy.getPlayers()[3]);
+        this.scrummy.registerTableObserver(this.playerControllers[3]);
 
         this.playerControllers[4] = new Strategy4();
+        this.playerControllers[4].setPlayer(this.scrummy.getPlayers()[4]);
+        this.scrummy.registerTableObserver(this.playerControllers[4]);
 
-        /*int index = 0;
-        for(int i = 0; i < this.scrummy.getPlayers().length; i++) {
-            this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
-            if(i != 3){ //no for s3
-                handSizes[index] = this.playerControllers[i].getPlayer().getHand().size();
-                index++;
-            }
-            this.scrummy.registerTableObserver(this.playerControllers[i]);
-        }
-        s3.setPlayerHandsArray(handSizes);
-        */
         s3.setPlayerHandSizes(this.scrummy.getPlayers());
         this.scrummy.registerPlayerHandObserver(s3);
         this.scrummy.notifyObservers();
@@ -111,11 +111,16 @@ public class Controller
             * */
             System.out.println("--- CHECK TABLE REFS: ---");
             System.out.println(this.scrummy.getCurrentPlayer().getName() + " Table: ");
-            System.out.println(playedTable);
+            System.out.println("ref: " + playedTable);
+            System.out.println(playedTable.prettyString());
+            System.out.println("\n");
             System.out.println("Scrummy Table: ");
-            System.out.println(this.scrummy.getTable());
+            System.out.println("ref: " + this.scrummy.getTable());
+            System.out.println(this.scrummy.getTable().prettyString());
             System.out.println("--- ");
-            if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+            System.out.println("Are tables equivalent? " + playedTable.isEquivalent(this.scrummy.getTable()));
+            System.out.println("--- ");
+            if(playedTable.equals(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
                 System.out.println(" did not move. ");
                 Tile t = scrummy.getDeck().pop();

@@ -97,7 +97,6 @@ public class PlayerInteractionController extends GameInteractionController
 
     public Meld selectMeldFromTable(int index){
         Meld selectedMeld = null;
-        System.out.println(this.getTable().getMelds().size());
         while(selectedMeld == null){
             if(this.getTable().getMelds().size() > index && index >= 0){
                 selectedMeld = this.getTable().getMelds().get(index);
