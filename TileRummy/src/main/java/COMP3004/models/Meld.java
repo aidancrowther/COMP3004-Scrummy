@@ -33,7 +33,8 @@ public class Meld {
     public Meld copy() {
         Meld m = new Meld();
         for (int i=0; i<this.getTiles().size(); i++) {
-            m.add(this.getTiles().get(i));
+            Tile t = new Tile(this.getTiles().get(i).getColour(), this.getTiles().get(i).getValue());
+            m.add(t);
         }
         return m;
     }
