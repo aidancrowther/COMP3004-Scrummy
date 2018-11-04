@@ -204,20 +204,22 @@ public class Strategy4 extends ArtificialIntelligence
         return result;
     }
 
+    //Return true if the AI should hold onto the tiles in this meld
     private Boolean shouldHold(Meld m){
         System.out.println(m.toString());
 
         if(m.size() <= 0) return false;
-
         HashMap<String, Double> chances = getOdds();
+        Boolean isRun = m.getTiles().get(0).getColour() == m.getTiles().get(m.getTiles().size()-1).getColour();
 
-        String preceeding = m.getTiles().get(0).toString().split("")[0] + (m.getTiles().get(0).getValue()-1);
-        String following = m.getTiles().get(m.size()-1).toString().split("")[0] + (m.getTiles().get(m.size()-1).getValue()+1);
+        //If it's a run only look for tiles before or after
+        if(isRun){
+            String preceeding = m.getTiles().get(0).toString().split("")[0] + (m.getTiles().get(0).getValue()-1);
+            String following = m.getTiles().get(m.size()-1).toString().split("")[0] + (m.getTiles().get(m.size()-1).getValue()+1);
 
-        System.out.println("p: " + preceeding);
-        System.out.println("f: " + following);
-        if(chances.get(preceeding) > 0.05) return true;
-        if(chances.get(following) > 0.05) return true;
+            if(chances.get(preceeding) != null) if(chances.get(preceeding) > 0.05) return true;
+            if(chances.get(following) != null) if(chances.get(following) > 0.05) return true;
+        }
 
         return false;
     }
