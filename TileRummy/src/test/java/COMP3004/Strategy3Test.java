@@ -178,12 +178,11 @@ public class Strategy3Test {
 
         //observer
         Scrummy s = new Scrummy();
+        s.getPlayers()[0].setHand(hand0); //player 0's hand is 3 less than p3
         s.registerPlayerHandObserver(AI3);
         AI3.setPlayerHandSizes(s.getPlayers());
         s.notifyObservers();
 
-        //set other player's hand
-        s.getPlayers()[0].setHand(hand0); //player 0's hand is 3 less than p3
 
         Table output = AI3.play(AI3.getHand());
         assertTrue(output.getMelds().size() == 3);
