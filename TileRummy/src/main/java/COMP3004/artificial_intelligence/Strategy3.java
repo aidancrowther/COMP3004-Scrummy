@@ -29,11 +29,41 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     public void setPlayerHandSize(int value, int index) {
         this.playerHandSizes[index] = value;
     }
+    
+    public int getPlayerHandSizesLength() {
+        return playerHandSizes.length;
+    }
 
 
 
     public Table play(Meld hand) {
-        return this.table;
+        boolean playWithHand = false;
+        for (int i=0; i<5; i++) {
+            int check = this.getPlayerHandSize(i);
+            if ((this.getHand().size() - check) > 0) {
+                playWithHand = true;
+            }
+        }
+
+        if (this.getScore() < 30) {
+            playWithHand = true;
+        }
+
+        if (playWithHand) {
+            Strategy1 player = new Strategy1();
+            player.setScore(this.getScore());
+            player.setHand(this.getHand());
+            player.setTable(this.getTable());
+            return player.play();
+        }
+        else {
+            Strategy2 player = new Strategy2();
+            player.setScore(this.getScore());
+            player.setHand(this.getHand());
+            player.setTable(this.getTable());
+            return player.play();
+        }
+
     }
 
 
