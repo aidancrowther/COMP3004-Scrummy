@@ -220,17 +220,6 @@ public class Strategy4 extends ArtificialIntelligence
             if(chances.get(preceeding) != null) if(chances.get(preceeding) > 0.05) return true;
             if(chances.get(following) != null) if(chances.get(following) > 0.05) return true;
         }
-        //Otherwise look for possibilities with other colours
-        else{
-
-            for(Tile t : m.getTiles()){
-                String preceeding = t.toString().split("")[0] + (t.getValue()-1);
-                String following = t.toString().split("")[0] + (t.getValue()+1);
-            
-                if(chances.get(preceeding) != null) if(chances.get(preceeding) > 0.05) return true;
-                if(chances.get(following) != null) if(chances.get(following) > 0.05) return true;
-            }
-        }
 
         return false;
     }
