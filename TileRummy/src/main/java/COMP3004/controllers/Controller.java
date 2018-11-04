@@ -18,14 +18,11 @@ import COMP3004.models.Table;
 import COMP3004.models.Meld;
 import COMP3004.models.Tile;
 import COMP3004.models.Player;
-import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
-import COMP3004.controllers.TerminalViewController;
 
 public class Controller
 {
     private Scrummy scrummy;
-    private GraphicalView graphicalView;
     private GameInteractionController[] playerControllers;
 
     public Controller(){
