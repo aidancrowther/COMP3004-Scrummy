@@ -47,10 +47,11 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     }
 
 
-
+    
     public Table play(Meld hand) {
         Table output = new Table();
 
+        //check with the observer
         boolean playWithHand = false;
         for (int i=0; i<this.playerHandSizes.length; i++) {
             int check = this.getPlayerHandSize(i);
@@ -60,7 +61,11 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
             }
         }
 
+        if (this.getScore() < 30) {
+            playWithHand = true;
+        }
 
+        //if someone has 3 cards less than p3, play all possible melds
         if (playWithHand) {
             Strategy1 strat = new Strategy1();
             strat.setScore(this.getScore());
@@ -68,6 +73,7 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
             strat.setTable(this.getTable());
             output = strat.play(hand);
         }
+        //otherwise, only interact with table
         else {
             Strategy2 strat = new Strategy2();
             strat.setScore(this.getScore());
