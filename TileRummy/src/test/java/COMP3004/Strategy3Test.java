@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;
 
 import COMP3004.artificial_intelligence.*;
-import COMP3004.controllers.TerminalViewController;
 import COMP3004.models.*;
 import org.junit.Test;
 
@@ -17,7 +16,20 @@ import org.junit.Test;
 public class Strategy3Test {
 
 
+    @Test
+    public void testObserver() {
+        Scrummy s = new Scrummy();
+        Strategy3 AI3 = new Strategy3();
+        s.registerPlayerHandObserver(AI3);
+        s.notifyObservers();
 
+        for (int i=0; i<AI3.getPlayerHandSizesLength()-1; i++) {
+            assertTrue(AI3.getPlayerHandSize(i) == 14);
+        }
+    }
+
+
+    @Test
     public void testCantBreak30() {
         //Ensure play() does not change the table if it cannot break 30
 
@@ -46,9 +58,13 @@ public class Strategy3Test {
         table.add(m1);
         AI3.setTable(table);
 
+        //observer
+        Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
+        s.registerPlayerHandObserver(AI3);
+
         //Assert that the player does not play onto the table
-        Table output1 = AI3.play(AI3.getHand());
-        assertTrue(output1.getMelds().size() == 2);
+        Table output = AI3.play(AI3.getHand());
+        assertTrue(output.getMelds().size() == 2);
     }
 
     @Test
@@ -74,6 +90,10 @@ public class Strategy3Test {
         Strategy3 AI3 = new Strategy3();
         AI3.setHand(hand);
         AI3.setScore(0);
+
+        //observer
+        Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
+        s.registerPlayerHandObserver(AI3);
 
         //Build a table
         Table table = new Table();
