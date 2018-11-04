@@ -12,8 +12,7 @@
 
 package COMP3004.controllers;
 
-import COMP3004.artificial_intelligence.ArtificialIntelligence;
-import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.*;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Meld;
@@ -27,27 +26,39 @@ public class Controller
 {
     private Scrummy scrummy;
     private GraphicalView graphicalView;
-    private GraphicalViewController graphicalInteractionController;
-    private GameInteractionController gameInteractionController;
-
-    private ArtificialIntelligence[] AIs;
-    private boolean[] isPlayer;
+    private GameInteractionController[] playerControllers;
 
     public Controller(){
         this.scrummy = new Scrummy();
-        AIs = new ArtificialIntelligence[4];
-        isPlayer = new boolean[4];
-        isPlayer[0] = true;
-        AIs[0] = null;
-        for (byte i = 1; i < 4; i++) {
-            isPlayer[i] = false;
-            AIs[i] = new Strategy1();
-            this.scrummy.registerTableObserver(AIs[i]);
+        this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
+        int[] handSizes = new int[this.scrummy.getPlayers().length-1];
+
+        this.playerControllers[0] = new TerminalViewController(); //PLAYER
+        this.playerControllers[1] = new Strategy1();
+        this.playerControllers[2] = new Strategy2();
+
+        //Special for S3 bc needs to count hands
+        Strategy3 s3 = new Strategy3();
+        this.playerControllers[3] = s3;
+
+        this.playerControllers[4] = new Strategy4();
+
+        int index = 0;
+        for(int i = 0; i < this.scrummy.getPlayers().length; i++) {
+            this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
+            if(i != 3){ //no for s3
+                handSizes[index] = this.playerControllers[i].getPlayer().getHand().size();
+                index++;
+            }
+            this.scrummy.registerTableObserver(this.playerControllers[i]);
         }
+
+        s3.setPlayerHandsArray(handSizes);
+        this.scrummy.registerPlayerHandObserver(s3);
         this.scrummy.notifyObservers();
     }
 
-    public void run(boolean enableHumanPlayer){
+    public void run(boolean AIOnly){
         /*
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
@@ -58,38 +69,30 @@ public class Controller
         * else
         *   have scrummy evaluate the table and update if valid reset player hand if not
         * */
+
         boolean play = true;
         int winnerIndex = -1;
         while(play){
+            if(AIOnly && scrummy.getCurrentPlayerIndex() == 0) {
+                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
+                continue;
+            }
+
             Meld playerHandCopy = new Meld();
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
                 playerHandCopy.add(t);
 
-            //Check current player and respond appropriately here
-            Table playedTable = null;
-            if(isPlayer[scrummy.getCurrentPlayerIndex()]) {
-                if (enableHumanPlayer) {
-                    System.out.println("HUMAN");
-                    playedTable = this.gameInteractionController.play(scrummy.getCurrentPlayer().getHand());
-                    winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
-                }
-            }
-            else{
-                System.out.println("AI");
-                playedTable = this.AIs[scrummy.getCurrentPlayerIndex()].play(this.scrummy.getCurrentPlayer().getHand());
-                winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
-            }
+            Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
+            winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
+
 
             //print winner
             if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
                 Player current = this.scrummy.getPlayers()[winnerIndex];
-                this.gameInteractionController.displayWinner(current.getName());
+                this.playerControllers[0].displayWinner(current.getName());
                 //TODO: ask if want to play again
                 break;
             }
-
-            if(!enableHumanPlayer)
-                play = false;
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
@@ -102,18 +105,20 @@ public class Controller
     public int checkPlayerMove(Table playedTable, Meld playerHandCopy){
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
-        if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
-            System.out.println("Player no move");
-            scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
-            Tile t = scrummy.getDeck().pop();
-            if(t != null)
-                scrummy.getCurrentPlayer().getHand().add(t);
-        } else {
-            System.out.println("Player move");
-            scrummy.validatePlayerMove(playedTable);
-            if(!playedTable.isValid()){
-                System.out.println("Player invalid");
-                scrummy.getCurrentPlayer().setHand(playerHandCopy);
+        if(playedTable != null){
+            if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
+                System.out.println("Player no move");
+                scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
+                Tile t = scrummy.getDeck().pop();
+                if(t != null)
+                    scrummy.getCurrentPlayer().getHand().add(t);
+            } else {
+                System.out.println("Player move");
+                scrummy.validatePlayerMove(playedTable);
+                if(!playedTable.isValid()){
+                    System.out.println("Player invalid");
+                    scrummy.getCurrentPlayer().setHand(playerHandCopy);
+                }
             }
         }
 
@@ -125,46 +130,14 @@ public class Controller
         return winnerIndex;
     }
 
-    // FOR TESTING
-    /*public void run(String message){
-        Table playedTable = this.strategy1.play(this.scrummy.getCurrentPlayer().getHand());
-    }*/
-
-    // TODO: clean up if possible
-    public void setInteractionType(char selection){
-        if(selection == 't') {
-            this.gameInteractionController = new TerminalViewController();
-            //this.terminalInteractionController = new TerminalViewController();
-            //this.gameInteractionController = this.terminalInteractionController; //to access controller generally
-        } else {
-            this.graphicalInteractionController = new GraphicalViewController();
-            this.gameInteractionController = this.graphicalInteractionController; //to access controller generally
-        }
-
-        this.scrummy.registerTableObserver(this.gameInteractionController);
-        this.scrummy.notifyObservers();
-    }
-
-    public void launchGraphicalView(String[] args){
-        // SET UP 2 WAY COMMUNICATION THEN LAUNCH GUI
-        GraphicalView.setController(graphicalInteractionController);
-        this.graphicalView = new GraphicalView();
-        this.graphicalInteractionController.setGameView(graphicalView);
-        this.graphicalView.initInterface(args);
-    }
-
-    public GameInteractionController getInteractionController(){
-        return this.gameInteractionController;
-    }
-
     public Scrummy getScrummy(){
         return this.scrummy;
     }
 
-    public ArtificialIntelligence getAI(int id) {
+    public GameInteractionController getPlayerController(int id) {
         if (id > 4 || id < 0)
-            if (isPlayer[id])
+            if (this.playerControllers[id].getClass().isInstance(TerminalView.class))
                 return null;
-        return AIs[id];
+        return this.playerControllers[id];
     }
 }

@@ -33,7 +33,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
      * also be updated.
      * */
     //protected Table table = new Table();
-    protected Meld hand = null;
+    //protected Meld hand = null;
 
     protected void name() {
         
@@ -47,13 +47,13 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
     public Table play(){return null;}
 
-    public Meld getHand() { return this.hand; }
+    public Meld getHand() { return this.player.getHand(); }
 
     public int getScore() { return this.score; }
 
     //The hand needs a setter since there are more than one hand in the game, making it unsuitable to observe
     public void setHand(Meld hand){
-        this.hand = hand;
+        this.player.setHand(hand);
     }
 
     public void setScore(int score){
@@ -74,7 +74,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     protected HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<>();
         int n = 0;
-        ArrayList<Tile> h = this.hand.getTiles();
+        ArrayList<Tile> h = this.player.getHand().getTiles();
 
         //runs
         for (int i=0; i<h.size()-2; i++) {
@@ -123,7 +123,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
     protected HashMap<Meld, Integer> searchTable(Table t) {
         HashMap<Meld, Integer> tMelds = new HashMap<>();
-        ArrayList<Tile> h = hand.getTiles();
+        ArrayList<Tile> h = this.player.getHand().getTiles();
 
         if (t == null) {
             return tMelds;
@@ -275,7 +275,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             Meld hTiles = new Meld();
             ArrayList<Meld> aList = new ArrayList<Meld>();      //arraylist of melds created from a split
             Meld m = t.getMelds().get(i).copy();                //the meld about to be split
-            ArrayList<Tile> h = hand.copy().getTiles();         //Copy of the hand
+            ArrayList<Tile> h = this.player.getHand().copy().getTiles();         //Copy of the hand
 
             //Trying to split a run
             if (t.getMelds().get(i).isRun()) {

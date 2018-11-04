@@ -40,6 +40,7 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         players[1].setName("AI 1");
         players[2].setName("AI 2");
         players[3].setName("AI 3");
+        players[4].setName("AI 4");
     }
 
     public void validatePlayerMove(Table playedTable) {
@@ -71,10 +72,15 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
             observer.update(this.table);
         }
 
+
         int index = 0;
         for(Strategy3 observer : this.playerHandObservers) {
-            observer.update(this.getPlayerHandByIndex(index).size(), index);
-            index++;
+            for(int i = 0; i < this.players.length; i++) {
+                if(i != 3) { //no for s3
+                    observer.update(this.getPlayerHandByIndex(i).size(), index);
+                    index++;
+                }
+            }
         }
     }
 
