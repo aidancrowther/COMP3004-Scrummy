@@ -24,7 +24,7 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
     public Scrummy(){
         deck.shuffle();
         // Give players hands here
-        for(int i = 0; i < this.players.length; i++){
+        for(int i = 0; i < 1; i++){//this.players.length; i++){
             players[i] = new Player();
             Meld hand = new Meld();
             for(int j = 0; j < 14; j++){
@@ -34,10 +34,10 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         }
 
         players[0].setName("Player");
-        players[1].setName("AI 1");
+        /*players[1].setName("AI 1");
         players[2].setName("AI 2");
         players[3].setName("AI 3");
-        players[4].setName("AI 4");
+        players[4].setName("AI 4");*/
     }
 
     public void validatePlayerMove(Table playedTable) {

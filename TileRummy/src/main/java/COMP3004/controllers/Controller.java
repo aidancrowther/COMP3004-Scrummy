@@ -33,7 +33,7 @@ public class Controller
         this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
         this.scrummy.registerTableObserver(this.playerControllers[0]);
 
-        this.playerControllers[1] = new Strategy1();
+        /*this.playerControllers[1] = new Strategy1();
         this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
         this.scrummy.registerTableObserver(this.playerControllers[1]);
 
@@ -52,7 +52,7 @@ public class Controller
         this.scrummy.registerTableObserver(this.playerControllers[4]);
 
         s3.setPlayerHandSizes(this.scrummy.getPlayers());
-        this.scrummy.registerPlayerHandObserver(s3);
+        this.scrummy.registerPlayerHandObserver(s3);*/
         this.scrummy.notifyObservers();
     }
 
@@ -120,7 +120,7 @@ public class Controller
             System.out.println("--- ");
             System.out.println("Are tables equivalent? " + playedTable.isEquivalent(this.scrummy.getTable()));
             System.out.println("--- ");
-            if(playedTable.equals(this.scrummy.getTable())) { // PLAYER NOT MOVE
+            if(playedTable.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
                 System.out.println(" did not move. ");
                 Tile t = scrummy.getDeck().pop();

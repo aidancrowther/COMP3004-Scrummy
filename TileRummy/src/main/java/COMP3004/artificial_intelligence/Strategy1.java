@@ -159,7 +159,7 @@ public class Strategy1 extends ArtificialIntelligence
                 splitId = splitResults.get(m).getValue();
 
                 //Get the meld that is being split from the table using the id
-                Meld beingSplit = table.getMelds().get(splitId);
+                Meld beingSplit = output.getMelds().get(splitId);
 
                 //For each meld involved in the split
                 for(Meld meld : meldsToAdd){

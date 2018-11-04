@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public abstract class MultiSubject implements MultiSubjectInterface{
     protected Table table = new Table();
-    protected Player[] players = new Player[5];
+    protected Player[] players = new Player[1];//[5];
 
     protected ArrayList<GameInteractionController> tableObservers = new ArrayList<>();
     protected ArrayList<Strategy3> playerHandObservers = new ArrayList<>(); //TODO: if you need this more general create a super class
