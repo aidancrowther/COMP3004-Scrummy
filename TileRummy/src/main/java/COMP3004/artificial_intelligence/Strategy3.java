@@ -1,5 +1,6 @@
 package COMP3004.artificial_intelligence;
 import COMP3004.models.Meld;
+import COMP3004.models.Player;
 import COMP3004.models.Table;
 import COMP3004.oberver_pattern.PlayerHandObserverInterface;
 
@@ -16,6 +17,17 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     public void update(int value, int index){
         if(index >= 0 && index < playerHandSizes.length){
             this.playerHandSizes[index] = value;
+        }
+    }
+
+    public void setPlayerHandSizes(Player[] players) {
+        this.playerHandSizes = new int[players.length-1];
+        int index = 0;
+        for(int i = 0; i < players.length; i++) {
+            if(i != 3){ //Don't track self - strat 3
+                this.playerHandSizes[index] = players[i].getHand().size();
+                index++;
+            }
         }
     }
 
@@ -38,7 +50,7 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
 
     public Table play(Meld hand) {
         boolean playWithHand = false;
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<this.playerHandSizes.length; i++) {
             int check = this.getPlayerHandSize(i);
             if ((this.getHand().size() - check) > 0) {
                 playWithHand = true;

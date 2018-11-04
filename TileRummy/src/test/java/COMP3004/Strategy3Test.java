@@ -20,10 +20,11 @@ public class Strategy3Test {
     public void testObserver() {
         Scrummy s = new Scrummy();
         Strategy3 AI3 = new Strategy3();
+        AI3.setPlayerHandSizes(s.getPlayers());
+
         s.registerPlayerHandObserver(AI3);
         s.notifyObservers();
-
-        for (int i=0; i<AI3.getPlayerHandSizesLength()-1; i++) {
+        for (int i=0; i<AI3.getPlayerHandSizesLength(); i++) {
             assertTrue(AI3.getPlayerHandSize(i) == 14);
         }
     }
@@ -61,6 +62,8 @@ public class Strategy3Test {
         //observer
         Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
         s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
 
         //Assert that the player does not play onto the table
         Table output = AI3.play(AI3.getHand());
@@ -94,6 +97,8 @@ public class Strategy3Test {
         //observer
         Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
         s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
 
         //Build a table
         Table table = new Table();
@@ -126,17 +131,19 @@ public class Strategy3Test {
         table.add(m1);
 
         //initialize strategy
-        Strategy3 ai3 = new Strategy3();
-        ai3.setScore(30);
-        ai3.setHand(hand3);
-        ai3.setTable(table);
+        Strategy3 AI3 = new Strategy3();
+        AI3.setScore(30);
+        AI3.setHand(hand3);
+        AI3.setTable(table);
 
         //observer
         Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
-        s.registerPlayerHandObserver(ai3);
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
 
         //ai3 can't make new melds, but it can add to preexisting ones
-        Table output = ai3.play(ai3.getHand());
+        Table output = AI3.play(AI3.getHand());
         assertTrue(output.getMelds().size() == 2);      
         assertTrue(output.getMelds().get(1).size() == 4);
     
@@ -166,19 +173,21 @@ public class Strategy3Test {
         table.add(m1);
 
         //initialize strategy
-        Strategy3 ai3 = new Strategy3();
-        ai3.setScore(30);
-        ai3.setHand(hand3);
-        ai3.setTable(table);
+        Strategy3 AI3 = new Strategy3();
+        AI3.setScore(30);
+        AI3.setHand(hand3);
+        AI3.setTable(table);
 
         //observer
         Scrummy s = new Scrummy();
-        s.registerPlayerHandObserver(ai3);
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
 
         //set other player's hand
         s.getPlayers()[0].setHand(hand0); //player 0's hand is 3 less than p3
 
-        Table output = ai3.play(ai3.getHand());
+        Table output = AI3.play(AI3.getHand());
         assertTrue(output.getMelds().size() == 3);
 
     }

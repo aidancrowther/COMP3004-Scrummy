@@ -28,7 +28,7 @@ public class Controller
     public Controller(){
         this.scrummy = new Scrummy();
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
-        int[] handSizes = new int[this.scrummy.getPlayers().length-1];
+        //int[] handSizes = new int[this.scrummy.getPlayers().length-1];
 
         this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
         this.playerControllers[1] = new Strategy1();
@@ -40,7 +40,7 @@ public class Controller
 
         this.playerControllers[4] = new Strategy4();
 
-        int index = 0;
+        /*int index = 0;
         for(int i = 0; i < this.scrummy.getPlayers().length; i++) {
             this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
             if(i != 3){ //no for s3
@@ -49,8 +49,9 @@ public class Controller
             }
             this.scrummy.registerTableObserver(this.playerControllers[i]);
         }
-
         s3.setPlayerHandsArray(handSizes);
+        */
+        s3.setPlayerHandSizes(this.scrummy.getPlayers());
         this.scrummy.registerPlayerHandObserver(s3);
         this.scrummy.notifyObservers();
     }
