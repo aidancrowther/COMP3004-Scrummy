@@ -69,11 +69,7 @@ public class Table {
 
     public Meld replace(Meld toAdd, Meld toReplace) {
         int index = 0;
-        for (int i=1; i<melds.size(); i++) {
-            if (melds.get(i).equals(toReplace)) {
-                index = i;
-            }
-        }
+        index = this.getMelds().indexOf(toReplace);
         if (index != 0) {
             set(index, toAdd);
             return toReplace;
