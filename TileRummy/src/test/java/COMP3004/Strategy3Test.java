@@ -74,9 +74,8 @@ public class Strategy3Test {
     public void testCanBreak30() {
         //Generate tiles to use
         Tile tile1 = new Tile('O', 9);
-        Tile tile2 = new Tile('O', 8);
-        Tile tile3 = new Tile('O', 7);
-        Tile tile4 = new Tile('O', 10);
+        Tile tile2 = new Tile('O', 10);
+        Tile tile3 = new Tile('O', 11);
         Meld m1 = new Meld();
         m1.add(new Tile('R', 1));
         m1.add(new Tile('R', 2));
@@ -87,7 +86,7 @@ public class Strategy3Test {
         hand.add(tile1);
         hand.add(tile2);
         hand.add(tile3);
-        hand.add(tile4);
+    
 
         //Initialize AI with the specified hand
         Strategy3 AI3 = new Strategy3();
@@ -105,8 +104,8 @@ public class Strategy3Test {
         table.add(m1);
         AI3.setTable(table);
 
-        Table output2 = AI3.play(AI3.getHand());
-        assertTrue(output2.getMelds().size() == 3);
+        Table output = AI3.play(AI3.getHand());
+        assertTrue(output.getMelds().size() == 3);
 
     }
 
@@ -118,8 +117,8 @@ public class Strategy3Test {
         hand3.add(new Tile('O', 1));
         hand3.add(new Tile('O', 2));
         hand3.add(new Tile('O', 3));
-        hand3.add(new Tile('O', 4));
         hand3.add(new Tile('G', 9));
+        hand3.add(new Tile('R', 12));
 
         Meld m1 = new Meld();
         m1.add(new Tile('R', 9));
@@ -145,7 +144,6 @@ public class Strategy3Test {
         //ai3 can't make new melds, but it can add to preexisting ones
         Table output = AI3.play(AI3.getHand());
         assertTrue(output.getMelds().size() == 2);      
-        assertTrue(output.getMelds().get(1).size() == 4);
     
     }
 
@@ -161,7 +159,7 @@ public class Strategy3Test {
         hand3.add(new Tile('O', 1));
         hand3.add(new Tile('O', 2));
         hand3.add(new Tile('O', 3));
-        hand3.add(new Tile('O', 4));
+        hand3.add(new Tile('O', 11));
 
         Meld m1 = new Meld();
         m1.add(new Tile('R', 9));

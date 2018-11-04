@@ -137,6 +137,7 @@ public class Strategy2 extends ArtificialIntelligence
 
             //Find all sets of melds that can go together
             allMelds = sortByLength(allMelds);
+            results.clear();
             for(Map.Entry<Meld, Integer> m : allMelds.entrySet()){
                 ArrayList<Meld> result = new ArrayList<>();
                 results.add(findUnique(m.getKey(), allMelds, inHand));
