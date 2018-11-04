@@ -4,13 +4,13 @@ import COMP3004.models.Meld;
 import COMP3004.models.Player;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import COMP3004.oberver_pattern.TableObserverInterface;
 
-public class GameInteractionController implements GameInteractionInterface {
+public class GameInteractionController implements TableObserverInterface {
     protected Table table;
     protected Player player;
 
     public GameInteractionController(){
-        //this.hand = new Meld();
         this.table = new Table();
         this.player = new Player();
     }
@@ -59,7 +59,6 @@ public class GameInteractionController implements GameInteractionInterface {
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
-        System.out.println("Player" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }
