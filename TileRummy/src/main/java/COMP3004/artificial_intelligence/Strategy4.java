@@ -34,7 +34,7 @@ public class Strategy4 extends ArtificialIntelligence
 
     @Override
     public Table play(){
-        return play(hand);
+        return play(this.player.getHand());
     }
 
     public Table play(Meld hand){
@@ -55,7 +55,7 @@ public class Strategy4 extends ArtificialIntelligence
             -> Return the brand new table :)
 
         */
-        this.hand = hand;
+        this.player.setHand(hand);
 
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
@@ -93,12 +93,9 @@ public class Strategy4 extends ArtificialIntelligence
         for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
             allMelds.put(pair.getKey(), 0);
         }
-        System.out.println("Before");
         for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
-            System.out.println(pair.getKey());
             allMelds.put(pair.getKey(), pair.getValue());
         }
-        System.out.println("After");
         for(Map.Entry<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
             allMelds.put(pair.getKey(), pair.getValue().getValue());
         }
@@ -134,7 +131,7 @@ public class Strategy4 extends ArtificialIntelligence
                 for(Tile t : m.getTiles()){
                     this.score += t.getValue(); // this.hand.get(t);
                     toAdd.add(t); //this.hand.remove(t));
-                    this.hand.remove(t);
+                    this.player.getHand().remove(t);
                 }
                 output.add(toAdd);
             }
@@ -187,7 +184,7 @@ public class Strategy4 extends ArtificialIntelligence
 
         //Return the output table
         if (longest >= 30 || score >= 30) {
-            System.out.println("AI HAS MOVED!");
+            System.out.println(this.player.getName() + " HAS MOVED!");
             this.table = output;
         }
         
@@ -208,16 +205,19 @@ public class Strategy4 extends ArtificialIntelligence
     }
 
     private Boolean shouldHold(Meld m){
+        System.out.println(m.toString());
 
         if(m.size() <= 0) return false;
 
         HashMap<String, Double> chances = getOdds();
 
         String preceeding = m.getTiles().get(0).toString().split("")[0] + (m.getTiles().get(0).getValue()-1);
-        String following = m.getTiles().get(m.getTiles().size()-1).toString().split("")[0] + (m.getTiles().get(m.getTiles().size()-1).getValue()-1);
+        String following = m.getTiles().get(m.size()-1).toString().split("")[0] + (m.getTiles().get(m.size()-1).getValue()+1);
 
-        if(chances.get(preceeding) > 0.5) return true;
-        if(chances.get(following) > 0.5) return true;
+        System.out.println("p: " + preceeding);
+        System.out.println("f: " + following);
+        if(chances.get(preceeding) > 0.05) return true;
+        if(chances.get(following) > 0.05) return true;
 
         return false;
     }
@@ -235,20 +235,21 @@ public class Strategy4 extends ArtificialIntelligence
             }
         }
 
-        for(Meld m : table.getMelds()){
+        for(Meld m : this.table.getMelds()){
             for(Tile t : m.getTiles()){results.put(t.toString(), results.get(t.toString())+1);
                 totalSeen++;
             }
         }
 
-        for(Tile t : hand.getTiles()){results.put(t.toString(), results.get(t.toString())+1);
+        for(Tile t : this.player.getHand().getTiles()){results.put(t.toString(), results.get(t.toString())+1);
             totalSeen++;
         }
 
         for(Map.Entry<String, Double> e : results.entrySet()){
             results.put(e.getKey(), ((2-e.getValue())/((52*2)-totalSeen)));
         }
-
+        System.out.println("r");
+        System.out.println(results);
         return results;
     }
 

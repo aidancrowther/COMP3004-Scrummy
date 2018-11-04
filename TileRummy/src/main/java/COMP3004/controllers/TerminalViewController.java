@@ -25,13 +25,12 @@ public class TerminalViewController extends GameInteractionController
     }
 
     public Table play(Meld hand){
-        this.hand = hand;
         this.terminalView.printTable(this.getTable());
-        this.terminalView.printActivePlayerHand(this.hand);
+        this.terminalView.printActivePlayerHand(hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         if(this.terminalView.readPlayerInput().equals("y")){
             this.indicatePlayerMove();
-            while(this.move()){}
+            while(this.move(hand)){}
         }
         this.terminalView.printMessage("You are done your turn. The game table now looks like:");
         this.terminalView.printTable(this.getTable());
@@ -44,9 +43,9 @@ public class TerminalViewController extends GameInteractionController
         return this.getTable();
     }
 
-    private boolean move(){
+    private boolean move(Meld hand){
         //SELECT AN ACTIVE MELD (OR HAND)
-        Meld fromMeld = this.hand;
+        Meld fromMeld = hand;
         if(this.getTable().getMelds().size() > 1){
             this.terminalView.printMessage("Do you want to move a tile on the table, or play from your hand (t/h)?");
             String response = this.terminalView.readPlayerInput();
@@ -74,12 +73,12 @@ public class TerminalViewController extends GameInteractionController
             this.selectTile(fromMeld, toMeld, selectedTile);
         } else {
             this.getTable().add(selectedTile);
-            this.hand.remove(selectedTile);
+            hand.remove(selectedTile);
         }
 
         this.terminalView.printPlayerAction("\nThe tile has been moved.");
         this.terminalView.printTable(this.getTable());
-        this.terminalView.printActivePlayerHand(this.hand);
+        this.terminalView.printActivePlayerHand(hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         return this.terminalView.readPlayerInput().equals("y");
     }

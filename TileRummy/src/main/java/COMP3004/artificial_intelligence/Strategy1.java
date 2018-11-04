@@ -33,7 +33,7 @@ public class Strategy1 extends ArtificialIntelligence
 
     @Override
     public Table play(){
-        return play(hand);
+        return play(this.player.getHand());
     }
 
 
@@ -60,7 +60,7 @@ public class Strategy1 extends ArtificialIntelligence
             -> Return the brand new table :)
 
         */
-        this.hand = hand;
+        this.player.setHand(hand);
 
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
@@ -134,7 +134,7 @@ public class Strategy1 extends ArtificialIntelligence
                 for(Tile t : m.getTiles()){
                     this.score += t.getValue(); // this.hand.get(t);
                     toAdd.add(t); //this.hand.remove(t));
-                    this.hand.remove(t);
+                    this.player.getHand().remove(t);
                 }
                 output.add(toAdd);
             }
@@ -187,7 +187,7 @@ public class Strategy1 extends ArtificialIntelligence
 
         //Return the output table
         if (longest >= 30 || score >= 30) {
-            System.out.println("AI HAS MOVED!");
+            System.out.println(this.player.getName() + " AI HAS MOVED!");
             this.table = output;
         }
         
