@@ -45,7 +45,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         
     }
 
-    public Table play(){return null;}
+    public Table play(){ return null;}
 
     public Meld getHand() { return this.player.getHand(); }
 
