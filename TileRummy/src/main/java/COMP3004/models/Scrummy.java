@@ -10,12 +10,9 @@
  * This is the TileRummy game, main class which will manage the game engine and game initialization
  */
 package COMP3004.models;
-import COMP3004.artificial_intelligence.Strategy1;
 import COMP3004.artificial_intelligence.Strategy3;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.oberver_pattern.MultiSubject;
-import COMP3004.oberver_pattern.TableObserverInterface;
-import COMP3004.oberver_pattern.PlayerHandObserverInterface;
 
 import java.util.ArrayList;
 

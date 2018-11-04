@@ -20,7 +20,6 @@ import COMP3004.models.Tile;
 import COMP3004.models.Player;
 import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
-import COMP3004.controllers.TerminalViewController;
 
 public class Controller
 {
@@ -107,16 +106,13 @@ public class Controller
         // CHECK WHAT PLAYER DID
         if(playedTable != null){
             if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
-                System.out.println("Player no move");
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
                 Tile t = scrummy.getDeck().pop();
                 if(t != null)
                     scrummy.getCurrentPlayer().getHand().add(t);
             } else {
-                System.out.println("Player move");
                 scrummy.validatePlayerMove(playedTable);
                 if(!playedTable.isValid()){
-                    System.out.println("Player invalid");
                     scrummy.getCurrentPlayer().setHand(playerHandCopy);
                 }
             }
