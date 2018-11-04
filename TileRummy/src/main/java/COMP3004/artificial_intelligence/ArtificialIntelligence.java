@@ -310,7 +310,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         if (shortM.isValid()) {
                             addSplitToList(aList, shortM, m, hTiles, h);
                             perms = permute(m);
-							j = -1;
+                            j = -1;
+                            break;
                         }
                     }          
                 }
