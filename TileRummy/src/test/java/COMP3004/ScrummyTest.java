@@ -1,9 +1,8 @@
 package COMP3004;
 
-import COMP3004.artificial_intelligence.Strategy1;
 import COMP3004.artificial_intelligence.Strategy3;
 import COMP3004.controllers.GameInteractionController;
-import COMP3004.controllers.TerminalViewController;
+import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
@@ -31,7 +30,7 @@ public class ScrummyTest
 
     @Test
     public void testAddObserver() {
-        TerminalViewController t = new TerminalViewController();
+        PlayerInteractionController t = new PlayerInteractionController();
         Scrummy s = new Scrummy();
         int prevLen = s.getTableObservers().size();
         s.registerTableObserver(t);
@@ -47,7 +46,7 @@ public class ScrummyTest
 
     @Test
     public void testRemoveObserver() {
-        TerminalViewController t = new TerminalViewController();
+        PlayerInteractionController t = new PlayerInteractionController();
         Scrummy s = new Scrummy();
         s.registerTableObserver(t);
 
@@ -70,7 +69,7 @@ public class ScrummyTest
 
     @Test
     public void testNotifyObservers(){
-        TerminalViewController t = new TerminalViewController();
+        PlayerInteractionController t = new PlayerInteractionController();
         Scrummy s = new Scrummy();
         s.registerTableObserver(t);
 

@@ -30,7 +30,7 @@ public class Controller
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
         int[] handSizes = new int[this.scrummy.getPlayers().length-1];
 
-        this.playerControllers[0] = new TerminalViewController(); //PLAYER
+        this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
         this.playerControllers[1] = new Strategy1();
         this.playerControllers[2] = new Strategy2();
 
@@ -103,6 +103,9 @@ public class Controller
         int winnerIndex = -1;
         // CHECK WHAT PLAYER DID
         if(playedTable != null){
+            /*
+            * Instead check if all tiles in both tables melds are equal...
+            * */
             if(playedTable.equals(scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
                 Tile t = scrummy.getDeck().pop();

@@ -1,8 +1,6 @@
 package COMP3004;
 
 import COMP3004.controllers.Controller;
-import COMP3004.controllers.GraphicalViewController;
-import COMP3004.controllers.TerminalViewController;
 import COMP3004.models.Meld;
 import COMP3004.models.Player;
 import COMP3004.models.Table;
@@ -94,7 +92,7 @@ public class ControllerTest {
         char response = 't';
         controller.setInteractionType(response);
         assertNotNull(controller.getInteractionController());
-        assertTrue(controller.getInteractionController() instanceof TerminalViewController);
+        assertTrue(controller.getInteractionController() instanceof PlayerInteractionController);
 
         response = 'g';
         controller.setInteractionType(response);

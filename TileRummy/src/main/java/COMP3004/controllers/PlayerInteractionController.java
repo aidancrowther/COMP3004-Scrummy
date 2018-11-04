@@ -17,10 +17,9 @@ import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import COMP3004.views.TerminalView;
 
-public class TerminalViewController extends GameInteractionController
+public class PlayerInteractionController extends GameInteractionController
 {
-    private TerminalView terminalView;
-    public TerminalViewController(){
+    public PlayerInteractionController(){
         terminalView = new TerminalView();
     }
 
