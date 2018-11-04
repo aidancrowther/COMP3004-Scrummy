@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;
 
 import COMP3004.artificial_intelligence.*;
-import COMP3004.controllers.Controller;
+import COMP3004.controllers.TerminalViewController;
 import COMP3004.models.*;
 import org.junit.Test;
 
@@ -85,31 +85,81 @@ public class Strategy3Test {
 
     }
 
-    @Test
-    public void testObserver() {
-        Controller controller = new Controller();
-        
-
-        
-
-
-
-    }
-
 
     @Test
     public void testPlayWithoutHand() {
-        //Test playing when observer results give Strategy 2 (no other players have 3 fewer tiles)
+
+        Meld hand3 = new Meld();
+        hand3.add(new Tile('O', 1));
+        hand3.add(new Tile('O', 2));
+        hand3.add(new Tile('O', 3));
+        hand3.add(new Tile('O', 4));
+        hand3.add(new Tile('G', 9));
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('R', 9));
+        m1.add(new Tile('O', 9));
+        m1.add(new Tile('B', 9));
+
+        //set table
+        Table table = new Table();
+        table.add(m1);
+
+        //initialize strategy
+        Strategy3 ai3 = new Strategy3();
+        ai3.setScore(30);
+        ai3.setHand(hand3);
+        ai3.setTable(table);
+
+        //observer
+        Scrummy s = new Scrummy(); //everyone else's hands should be at 14 cards
+        s.registerPlayerHandObserver(ai3);
+
+        //ai3 can't make new melds, but it can add to preexisting ones
+        Table output = ai3.play(ai3.getHand());
+        assertTrue(output.getMelds().size() == 2);      
+        assertTrue(output.getMelds().get(1).size() == 4);
     
     }
 
     @Test
     public void testPlayWithHand() {
         //Test playing when observer results give Strategy 1 (another player has 3 fewer tiles)
-        
 
-        
+        //melds
+        Meld hand0 = new Meld();
+        hand0.add(new Tile('G', 12));
 
+        Meld hand3 = new Meld();
+        hand3.add(new Tile('O', 1));
+        hand3.add(new Tile('O', 2));
+        hand3.add(new Tile('O', 3));
+        hand3.add(new Tile('O', 4));
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('R', 9));
+        m1.add(new Tile('O', 9));
+        m1.add(new Tile('B', 9));
+
+        //set table
+        Table table = new Table();
+        table.add(m1);
+
+        //initialize strategy
+        Strategy3 ai3 = new Strategy3();
+        ai3.setScore(30);
+        ai3.setHand(hand3);
+        ai3.setTable(table);
+
+        //observer
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(ai3);
+
+        //set other player's hand
+        s.getPlayers()[0].setHand(hand0); //player 0's hand is 3 less than p3
+
+        Table output = ai3.play(ai3.getHand());
+        assertTrue(output.getMelds().size() == 3);
 
     }
 
