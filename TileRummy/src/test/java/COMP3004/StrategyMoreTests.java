@@ -459,6 +459,57 @@ public class StrategyMoreTests {
         assertTrue(output4.getMelds().size() == 4);
     }
 
+    @Test
+    public void testPlayRunsAndSets() {
+        //ITERATION GRID 8e
+
+        Table table = new Table();
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        Meld m2 = new Meld();
+        m2.add(new Tile('O', 9));
+        m2.add(new Tile('O', 10));
+        m2.add(new Tile('O', 11));
+        m2.add(new Tile('R', 4));
+        m2.add(new Tile('R', 5));
+        m2.add(new Tile('R', 6));
+
+        table.add(m1);
+
+        //Try working with one meld first (8a)
+        AI1.setHand(m2.copy());
+        AI1.setScore(30);
+        AI1.setTable(table);
+        Table output1 = AI1.play(AI1.getHand());
+        assertTrue(output1.getMelds().size() == 4);
+
+        AI2.setHand(m2.copy());
+        AI2.setScore(30);
+        AI2.setTable(table);
+        Table output2 = AI2.play(AI2.getHand());
+        assertTrue(output2.getMelds().size() == 4);
+
+        AI3.setHand(m2.copy());
+        AI3.setScore(30);
+        AI3.setTable(table);
+        Table output3 = AI3.play(AI3.getHand());
+        assertTrue(output3.getMelds().size() == 4);
+
+        AI4.setHand(m2.copy());
+        AI4.setScore(30);
+        AI4.setTable(table);
+        Table output4 = AI4.play(AI4.getHand());
+        assertTrue(output4.getMelds().size() == 4);
+
+    }
+
 
 
 
