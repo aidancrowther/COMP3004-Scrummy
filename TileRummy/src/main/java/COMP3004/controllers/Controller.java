@@ -131,9 +131,9 @@ public class Controller
         boolean play = true;
         int winnerIndex = -1;
 
-        boolean[] hasSkippedAfterEmpty = new boolean[this.playerControllers.length];
+        int[] hasSkippedAfterEmpty = new int[this.playerControllers.length];
         for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
-            hasSkippedAfterEmpty[i] = false;
+            hasSkippedAfterEmpty[i] = 0;
         }
 
         while(play){
@@ -145,30 +145,6 @@ public class Controller
 
             //System.out.println("One");
             Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
-            //System.out.println("One - b");
-            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
-                /*
-                 * Keep track of if everyone skips a turn, if so then no one will ever win and break
-                 * */
-
-                //System.out.println("two");
-                System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
-                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
-
-                int skippedNum = 0;
-                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
-                    if(hasSkippedAfterEmpty[i]){
-                        skippedNum++;
-                    }
-                }
-
-
-                if(skippedNum == hasSkippedAfterEmpty.length){
-                    //TODO: ask if want to play again
-                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
-                    break;
-                }
-            }
 
             //System.out.println("three");
 
@@ -187,6 +163,25 @@ public class Controller
             }
 
             System.out.println("\n");
+
+            //System.out.println("One - b");
+            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
+                //System.out.println("two");
+                System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
+                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] += 1;
+
+                int skippedNum = 0;
+                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+                    if(hasSkippedAfterEmpty[i] == 2){
+                        skippedNum++;
+                    }
+                }
+                if(skippedNum == hasSkippedAfterEmpty.length){
+                    //TODO: ask if want to play again
+                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
+                    break;
+                }
+            }
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
