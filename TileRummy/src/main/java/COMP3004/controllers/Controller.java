@@ -29,27 +29,57 @@ public class Controller
         this.scrummy = new Scrummy();
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
 
+        //Make all of the "people" playing
         this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
-        this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
-        this.scrummy.registerTableObserver(this.playerControllers[0]);
-
         this.playerControllers[1] = new Strategy1();
-        this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
-        this.scrummy.registerTableObserver(this.playerControllers[1]);
-
         this.playerControllers[2] = new Strategy2();
-        this.playerControllers[2].setPlayer(this.scrummy.getPlayers()[2]);
-        this.scrummy.registerTableObserver(this.playerControllers[2]);
-
         //Special for S3 bc needs to count hands
         Strategy3 s3 = new Strategy3();
         this.playerControllers[3] = s3;
-        this.playerControllers[3].setPlayer(this.scrummy.getPlayers()[3]);
-        this.scrummy.registerTableObserver(this.playerControllers[3]);
-
         this.playerControllers[4] = new Strategy4();
-        this.playerControllers[4].setPlayer(this.scrummy.getPlayers()[4]);
-        this.scrummy.registerTableObserver(this.playerControllers[4]);
+        
+        for (int i = 0; i <= 4; i++){//Register everyone
+            this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
+            this.scrummy.registerTableObserver(this.playerControllers[i]);
+        }
+
+        s3.setPlayerHandSizes(this.scrummy.getPlayers());
+        this.scrummy.registerPlayerHandObserver(s3);
+        this.scrummy.notifyObservers();
+    }
+
+    public Controller(String[] args){
+        char viewType = args[0].charAt(0);
+        this.scrummy = new Scrummy();
+        this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
+
+        //Make all of the "people" playing
+        switch (viewType) {//Specify which view the user is using
+            case 'f':
+                if (args.length == 2)
+                    this.playerControllers[0] = new FileInputController(args[1]); //PLAYER
+                else
+                this.playerControllers[0] = new FileInputController(args[1], args[3]); //PLAYER
+                scrummy = new Scrummy(((FileInputController)this.playerControllers[0]).getDeck());
+                break;
+            case 'g':
+                this.playerControllers[0] = new GraphicalViewController(); //PLAYER
+                break;
+            case 't':
+                this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
+                break;
+        }
+        this.playerControllers[1] = new Strategy1();
+        this.playerControllers[2] = new Strategy2();
+        //Special for S3 bc needs to count hands
+        Strategy3 s3 = new Strategy3();
+        this.playerControllers[3] = s3;
+        this.playerControllers[4] = new Strategy4();
+        
+        for (int i = 0; i <= 4; i++){//Register everyone
+            this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
+            this.scrummy.registerTableObserver(this.playerControllers[i]);
+        }
 
         s3.setPlayerHandSizes(this.scrummy.getPlayers());
         this.scrummy.registerPlayerHandObserver(s3);
