@@ -1,15 +1,15 @@
 /* Carleton University
  * Fall 2018
- * 
+ *
  * COMP 3004
  * JP Coriveau
- * 
+ *
  * Group 6
  * David N. Zilio
  * Aidan Crowther
  * Ellis Glennie
  * Brittny Lapierre
- * 
+ *
  * AI Strategy1 should do exactly as the spec requires
  * --play when it can, all that it can
  */
@@ -28,7 +28,7 @@ public class Strategy2 extends ArtificialIntelligence
 {
 
     public Strategy2(){
-        
+
     }
 
     @Override
@@ -38,21 +38,16 @@ public class Strategy2 extends ArtificialIntelligence
 
     public Table play(Meld hand){
         /*  
-
             -> HashMap<Meld, int> handResults = searchHand();
             -> HashMap<Meld, int> tableResults = searchTable(table);
-
             -> ArrayList<ArrayList<Meld>> results
-
             -> results contains every combination of the Melds within handResults and tableResults
                 that do not use the same elements from hand
             -> Pick the largest ArrayList. Remove every tile from hand that is there.
             -> From the largest ArrayList of melds, search for the keyvalue of each meld within its
                 original hashmap, and append said meld to the meld specified in the Hashmap
             -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
-
             -> Return the brand new table :)
-
         */
         this.player.setHand(hand);
 
@@ -62,11 +57,11 @@ public class Strategy2 extends ArtificialIntelligence
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> splitResults = new HashMap<>();
 
         if(table.getMelds().size() < 2) return table;
-        
+
         handResults = searchHand();
         if (score >= 30) {
             tableResults = searchTable(table);
-            //splitResults = searchSplit(table);
+            splitResults = searchSplit(table);
         }
 
         //Lists to track hand status
