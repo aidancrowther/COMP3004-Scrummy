@@ -109,7 +109,7 @@ public class ScrummyTest
 
         assertNotEquals(scrummy.getTable(), inValidTable);
         assertNotEquals(gameInteractionController.getTable(), inValidTable);
-        assertEquals(gameInteractionController.getTable(), scrummy.getTable());
+        assertTrue(gameInteractionController.getTable().isEquivalent(scrummy.getTable()));
 
         Meld good = new Meld();
         good.add(new Tile('R', 1));

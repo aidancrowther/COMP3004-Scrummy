@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
-public class TerminalUITest {
+public class PlayerInteractionTest {
 
     @Test
     //Assert that the selectTile method will move tiles between melds correctly
