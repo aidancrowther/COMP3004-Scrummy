@@ -149,4 +149,8 @@ public class PlayerInteractionController extends GameInteractionController
     public void setScore(int score) {
         this.score = score;
     }
+
+    public void setPlayedTable(Table table) {
+        this.playedTable = this.getTableCopy(table);
+    }
 }

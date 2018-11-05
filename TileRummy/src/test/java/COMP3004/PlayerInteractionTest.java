@@ -115,8 +115,9 @@ public class PlayerInteractionTest {
 
     @Test
     public void testSelectingMeldsFromTableOnInput() {
-        PlayerInteractionController terminal = new PlayerInteractionController();
         Table table = new Table();
+        PlayerInteractionController terminal = new PlayerInteractionController();
+        terminal.setScore(30);
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i=1; i<=9; i++) tiles.add(new Tile('O', i));
@@ -138,7 +139,7 @@ public class PlayerInteractionTest {
         meld2.add(tiles.get(7));
         meld2.add(tiles.get(8));
         table.add(meld3);
-        terminal.update(table);
+        terminal.setPlayedTable(table);
 
         //These variable simulate player input
         int fromMeldIndex = 1;
@@ -148,8 +149,8 @@ public class PlayerInteractionTest {
         Meld toMeld = terminal.selectMeldFromTable(toMeldIndex);
 
         assertNotNull(fromMeld);
-        assertEquals(fromMeld, meld2);
+        assertEquals(fromMeld.getTiles(), meld2.getTiles());
         assertNotNull(toMeld);
-        assertEquals(toMeld, meld3);
+        assertEquals(toMeld.getTiles(), meld3.getTiles());
     }
 }
