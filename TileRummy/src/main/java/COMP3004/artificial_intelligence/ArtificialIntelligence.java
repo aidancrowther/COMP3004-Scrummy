@@ -309,7 +309,11 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         System.out.println("Split 4");
                         break;
                     }
-                    Meld shortM = perms.get(j);
+                    Meld shortM = new Meld();
+                    for (int p=0; p<perms.get(j).size(); p++) {
+                        shortM.add(m.sameValue(perms.get(j).get(p)));
+                    }
+
                     for (int k=0; k<h.size(); k++) {
                         addingForSplitting(shortM, h, k);
                         if (shortM.isValid()) {
