@@ -90,6 +90,7 @@ public class Controller
     }
 
     public Controller(boolean AIOnly){
+        this.view = new TerminalView();
         this.scrummy = new Scrummy(AIOnly);
         this.playerControllers = new GameInteractionController[4];
 
@@ -141,7 +142,9 @@ public class Controller
             playerControllers[0].getTerminalView().printMessagePlain(p.getName() + "'s hand: " + p.getHand().toString());
 
         while(play){
-            this.view.printTable(this.scrummy.getTable());
+            if(this.view != null && this.scrummy.getTable() != null){
+                this.view.printTable(this.scrummy.getTable());
+            }
 
             Meld playerHandCopy = new Meld();
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
@@ -177,9 +180,10 @@ public class Controller
                 }
             }
 
-
-            this.view.printLine();
-            this.view.printLine();
+            if(this.view != null){
+                this.view.printLine();
+                this.view.printLine();
+            }
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
@@ -203,9 +207,13 @@ public class Controller
                 Tile t = scrummy.getDeck().pop();
                 if(t != null){
                     scrummy.getCurrentPlayer().getHand().add(t);
-                    this.view.printMessagePlain(scrummy.getCurrentPlayer().getName() + " has drawn tile " + this.view.generateTileString(t));
+                    if(this.view != null) {
+                        this.view.printMessagePlain(scrummy.getCurrentPlayer().getName() + " has drawn tile " + this.view.generateTileString(t));
+                    }
                 } else {
-                    this.view.printMessage("Out of tiles to be drawn.");
+                    if(this.view != null) {
+                        this.view.printMessage("Out of tiles to be drawn.");
+                    }
                 }
 
             } else {
