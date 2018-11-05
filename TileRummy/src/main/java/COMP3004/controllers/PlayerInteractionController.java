@@ -27,7 +27,10 @@ public class PlayerInteractionController extends GameInteractionController
 
     public Table play(Meld hand){
         this.playedTable = this.getTableCopy(this.table);
-        this.getPlayer().setHand(hand);
+
+        this.terminalView.printMessage("Current Player: " + this.player.getName());
+        this.player.setHand(hand);
+
         this.terminalView.printTable(this.getTable());
         this.terminalView.printActivePlayerHand(hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");

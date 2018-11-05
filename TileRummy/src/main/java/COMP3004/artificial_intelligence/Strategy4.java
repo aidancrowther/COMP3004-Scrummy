@@ -50,7 +50,9 @@ public class Strategy4 extends ArtificialIntelligence
             -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
             -> Return the brand new table :)
         */
+        this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
+        this.terminalView.printMessage(this.player.getName() + " hand: " + this.player.getHand().toString());
         //Output table
         Table output = this.getTableCopy(table);
 
@@ -190,10 +192,19 @@ public class Strategy4 extends ArtificialIntelligence
             }
         }
 
+
+        this.terminalView.printMessage(this.player.getName() + " has ended their turn.");
+        this.player.setHand(hand);
+        this.terminalView.printMessage(this.player.getName() + " hand after their turn: " + this.player.getHand().toString());
+
         //Return the output table
         if (longest >= 30 || score >= 30) {
+            this.terminalView.printPlayerAction("\nTable now looks like:");
+            this.terminalView.printTable(output);
             return output;
         }
+        this.terminalView.printPlayerAction("\nTable now looks like:");
+        this.terminalView.printTable(this.table);
 
         return this.table;
     }

@@ -57,7 +57,7 @@ public class Strategy1 extends ArtificialIntelligence
         */
         this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
-        this.terminalView.printMessage("Current Player Hand: " + this.player.getHand().toString());
+        this.terminalView.printMessage(this.player.getName() + " hand: " + this.player.getHand().toString());
 
         //Output table
         Table output = this.getTableCopy(table);
@@ -125,9 +125,9 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
-        for(ArrayList<Meld> a : results){
+        /*for(ArrayList<Meld> a : results){
             for(Meld m : a) System.out.println(m.toString());
-        }
+        }*/
 
         //Add each meld to the correct meld on the table, removing the tiles from the players hand
         for(Meld m : longestList){
@@ -201,10 +201,19 @@ public class Strategy1 extends ArtificialIntelligence
             }
         }
 
+        this.terminalView.printMessage(this.player.getName() + " has ended their turn.");
+        this.player.setHand(hand);
+        this.terminalView.printMessage(this.player.getName() + " hand after their turn: " + this.player.getHand().toString());
+
         //Return the output table
         if (longest >= 30 || score >= 30) {
+            this.terminalView.printPlayerAction("\nTable now looks like:");
+            this.terminalView.printTable(output);
             return output;
         }
+
+        this.terminalView.printPlayerAction("\nTable now looks like:");
+        this.terminalView.printTable(this.table);
 
         return this.table;
     }

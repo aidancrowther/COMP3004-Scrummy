@@ -186,8 +186,7 @@ public class Controller
                 break;
             }
 
-
-            System.out.println("\n\n");
+            System.out.println("\n");
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
