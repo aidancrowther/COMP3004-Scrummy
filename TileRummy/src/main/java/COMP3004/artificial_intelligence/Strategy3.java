@@ -11,7 +11,7 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
 
     @Override
     public Table play() {
-        return play(this.player.getHand());
+        return this.table; //play(this.player.getHand());
     }
 
     public void update(int value, int index){
