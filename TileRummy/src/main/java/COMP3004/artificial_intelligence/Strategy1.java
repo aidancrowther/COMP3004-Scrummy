@@ -116,7 +116,7 @@ public class Strategy1 extends ArtificialIntelligence
             int count = 0;
             for(Meld m : a) count += m.size();
             if(count > longest && score >= 30){
-                longest = a.size();
+                longest = count;
                 longestList = a;
             }
             else if(listScore(a) > longest && score < 30){
