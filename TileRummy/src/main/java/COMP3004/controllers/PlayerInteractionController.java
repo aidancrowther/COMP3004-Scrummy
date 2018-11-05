@@ -31,7 +31,6 @@ public class PlayerInteractionController extends GameInteractionController
         this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
 
-        this.terminalView.printTable(this.getTable());
         this.terminalView.printActivePlayerHand(hand);
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         if(this.terminalView.readPlayerInput().equals("y")){
@@ -39,15 +38,11 @@ public class PlayerInteractionController extends GameInteractionController
         }
 
         if(score >= 30){ //Only let the player move if the score >= 30.
-            this.terminalView.printMessage("You are done your turn. The game table now looks like:");
-            this.terminalView.printTable(this.playedTable);
-            this.terminalView.printLine();
+            this.terminalView.printMessage("You are done your turn. ");
             return this.playedTable;
         }
 
         this.terminalView.printMessage("You chose not to move.\n");
-        this.terminalView.printLine();
-        this.terminalView.printLine();
         return this.table; //will be the same if player doesn't move
     }
 
@@ -148,5 +143,9 @@ public class PlayerInteractionController extends GameInteractionController
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setPlayedTable(Table table) {
+        this.playedTable = this.getTableCopy(table);
     }
 }

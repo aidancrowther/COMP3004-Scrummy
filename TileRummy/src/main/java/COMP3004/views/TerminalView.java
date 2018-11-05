@@ -84,6 +84,14 @@ public class TerminalView
         this.printMessagePlain(row);
     }
 
+    public void printPlayerHand(Meld hand) {
+        String row = "";
+        for(Tile tile : hand.getTiles()){
+            row += this.generateTileString(tile);
+        }
+        this.printMessagePlain(row);
+    }
+
     public void printTable(Table t) {
         this.printMessage("\nGAME TABLE");
         int currMeld = 0;

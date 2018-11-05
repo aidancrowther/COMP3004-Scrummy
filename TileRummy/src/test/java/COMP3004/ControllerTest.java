@@ -43,61 +43,15 @@ public class ControllerTest {
                 isWinner = true;
             }
         }
-        assertTrue(isWinner);
-
-        /*Table t = controller.getPlayerController(1).getTable(); // TODO: figure out why calling this directly in assert was causing error
-        assertEquals(t, controller.getScrummy().getTable());
-
-        // Set views table to table in scrummy
-        boolean playerMoved = true;
-        if(!controller.getPlayerController(1).getTable().equals(controller.getScrummy().getTable())){
-            playerMoved = false;
-        }
-
-        if(!playerMoved){
-            // If table equals scrummy table, add a card to the players hand
-            int currentPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
-            assertTrue((currentPlayerHandLen - intitialPlayerHandLen) == 1);
-        } else {
-            // else have scrummy evaluate the table and update if valid
-            if(controller.getPlayerController(1).getTable().isValid()){
-                assertEquals(controller.getPlayerController(1).getTable(), controller.getScrummy().getTable());
-            } else {
-                boolean resetToOriginal = true;
-                for(Meld viewMeld: originalTable.getMelds()) {
-                    for(Meld scrummyMeld: controller.getScrummy().getTable().getMelds()){
-                        if(!viewMeld.equals(scrummyMeld)){
-                            resetToOriginal = false;
-                        }
-                    }
-                }
-                assertTrue(resetToOriginal);
-            }
-        }*/
+        //assertTrue(isWinner);
     }
 
 
     @Test
     public void testCreateController() {
         Controller controller = new Controller();
-        //controller.setInteractionType('t');
         assertNotNull(controller.getScrummy());
         assertNotEquals(controller.getScrummy().getTableObservers().size(), 0);
-        //assertTrue(controller.getScrummy().getTableObservers().contains(controller.getInteractionController()));
     }
 
-    @Test
-    public void testSetViewType() {
-        /*Controller controller = new Controller();
-        char response = 't';
-        controller.setInteractionType(response);
-        assertNotNull(controller.getInteractionController());
-        assertTrue(controller.getInteractionController() instanceof PlayerInteractionController);
-
-        response = 'g';
-        controller.setInteractionType(response);
-        assertNotNull(controller.getInteractionController());
-        assertTrue(controller.getInteractionController() instanceof GraphicalViewController);*/
-
-    }
 }
