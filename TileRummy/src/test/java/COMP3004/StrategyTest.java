@@ -36,11 +36,11 @@ public class StrategyTest{
 
         for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
 
-        assertTrue(AI1.getHand() == null);
+        assertTrue(AI1.getPlayer().getHand().compare(new Meld()));
         AI1.setHand(meld1);
-        assertTrue(AI1.getHand().equals(meld1));
+        assertTrue(AI1.getPlayer().getHand().equals(meld1));
         meld1 = null;
-        assertFalse(AI1.getHand() == null);
+        assertFalse(AI1.getPlayer().getHand().compare(new Meld()));
     }
 
     @Test

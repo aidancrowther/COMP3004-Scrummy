@@ -83,6 +83,7 @@ public class Controller
 
             Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
+            if(!playedTable.isValid()) break;
 
 
             //print winner
