@@ -266,8 +266,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
     public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
-
+        System.out.println("Split 1");
         if (t == null) {
+            System.out.println("Split 2");
             return tableSplits;
         }
 
@@ -291,6 +292,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                                 addSplitToList(aList, shortM, m, hTiles, h);
                                 k=999;
                                 j--;
+                                System.out.println("Split 3");
                                 break;
                             }
                         }
@@ -300,8 +302,11 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             //trying to split a set
             else if (!t.getMelds().get(i).isRun())  {
                 ArrayList<Meld> perms = permute(m);
+
+                boolean found = false;
                 for (int j=0; j<perms.size(); j++) {
-                    if (perms.size() == 0) {
+                    if (perms.size() == 0) { // || found) {
+                        System.out.println("Split 4");
                         break;
                     }
                     Meld shortM = perms.get(j);
@@ -311,6 +316,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                             addSplitToList(aList, shortM, m, hTiles, h);
                             perms = permute(m);
                             j = -1;
+                            System.out.println("Split 5");
+                            //found = true;
                             break;
                         }
                     }

@@ -50,6 +50,8 @@ public class Strategy2 extends ArtificialIntelligence
             -> Return the brand new table :)
         */
         this.player.setHand(hand);
+        //Output table
+        Table output = this.getTableCopy(table);// table; needs to be copy
 
         //Get all possible melds
         HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
@@ -60,16 +62,14 @@ public class Strategy2 extends ArtificialIntelligence
 
         handResults = searchHand();
         if (score >= 30) {
-            tableResults = searchTable(table);
-            splitResults = searchSplit(table);
+            tableResults = searchTable(output);
+            splitResults = searchSplit(output);
         }
 
         //Lists to track hand status
         HashMap<String, Integer> inHand = new HashMap<>();
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
-        //Output table
-        Table output = this.getTableCopy(table);// table; needs to be copy
 
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){

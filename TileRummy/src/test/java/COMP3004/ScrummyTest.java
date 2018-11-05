@@ -75,6 +75,7 @@ public class ScrummyTest
 
         Strategy3 strat = new Strategy3();
         s.registerPlayerHandObserver(strat);
+        strat.setPlayerHandSizes(s.getPlayers());
 
         s.notifyObservers();
 
