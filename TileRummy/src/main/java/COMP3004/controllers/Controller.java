@@ -187,13 +187,10 @@ public class Controller
             }
 
             // SET NEXT PLAYER
-            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
-
-            }
-            else{
+            else
                 this.scrummy.setCurrentPlayerIndex(0);
-            }
         }
     }
 
@@ -224,6 +221,7 @@ public class Controller
                 if(t != null){
                     //System.out.println(this.scrummy.getCurrentPlayer().getName() + " drew Tile: " + t.toString());
                     scrummy.getCurrentPlayer().getHand().add(t);
+                    playerControllers[0].getTerminalView().printMessagePlain(playerControllers[scrummy.getCurrentPlayerIndex()].getPlayer().getName() + " drew from the deck tile: " + t.toString());
                     //System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
                     //System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                 }
