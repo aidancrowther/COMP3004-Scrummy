@@ -39,7 +39,6 @@ public class Meld {
         return m;
     }
 
-
     /*
         Removes a tile from the meld
         Walks through the arraylist until it finds an identical tile, then removes it.
@@ -62,6 +61,10 @@ public class Meld {
         return null;
     }
 
+    public Tile get(int id) {
+     return tiles.get(id);
+    }
+    
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
