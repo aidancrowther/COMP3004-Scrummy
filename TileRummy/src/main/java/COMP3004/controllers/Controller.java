@@ -56,6 +56,33 @@ public class Controller
         this.scrummy.notifyObservers();
     }
 
+    public Controller(boolean AIOnly){
+        this.scrummy = new Scrummy(AIOnly);
+        this.playerControllers = new GameInteractionController[4];
+
+        this.playerControllers[0] = new Strategy1();
+        this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
+        this.scrummy.registerTableObserver(this.playerControllers[0]);
+
+        this.playerControllers[1] = new Strategy2();
+        this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
+        this.scrummy.registerTableObserver(this.playerControllers[1]);
+
+        //Special for S3 bc needs to count hands
+        Strategy3 s3 = new Strategy3();
+        this.playerControllers[2] = s3;
+        this.playerControllers[2].setPlayer(this.scrummy.getPlayers()[2]);
+        this.scrummy.registerTableObserver(this.playerControllers[2]);
+
+        this.playerControllers[3] = new Strategy4();
+        this.playerControllers[3].setPlayer(this.scrummy.getPlayers()[3]);
+        this.scrummy.registerTableObserver(this.playerControllers[3]);
+
+        s3.setPlayerHandSizes(this.scrummy.getPlayers());
+        this.scrummy.registerPlayerHandObserver(s3);
+        this.scrummy.notifyObservers();
+    }
+
     public void run(boolean AIOnly){
         /*
         * While everyone has cards in their hand...
@@ -70,17 +97,41 @@ public class Controller
 
         boolean play = true;
         int winnerIndex = -1;
-        while(play){
-            if(AIOnly && scrummy.getCurrentPlayerIndex() == 0) {
-                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
-                continue;
-            }
 
+        boolean[] hasSkippedAfterEmpty = new boolean[this.playerControllers.length];
+        for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+            hasSkippedAfterEmpty[i] = false;
+        }
+
+        while(play){
             Meld playerHandCopy = new Meld();
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
                 playerHandCopy.add(t);
 
             Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
+            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
+                /*
+                 * Keep track of if everyone skips a turn, if so then no one will ever win and break
+                 * */
+
+                System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
+                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
+
+                int skippedNum = 0;
+                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+                    if(hasSkippedAfterEmpty[i]){
+                        skippedNum++;
+                    }
+                }
+
+
+                if(skippedNum == hasSkippedAfterEmpty.length){
+                    //TODO: ask if want to play again
+                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
+                    break;
+                }
+            }
+
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
             if(!playedTable.isValid()) break;
 
@@ -92,6 +143,7 @@ public class Controller
                 //TODO: ask if want to play again
                 break;
             }
+
 
             System.out.println("\n\n");
 
