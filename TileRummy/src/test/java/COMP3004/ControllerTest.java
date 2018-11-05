@@ -24,7 +24,7 @@ public class ControllerTest {
      * */
     @Test
     public void testRun() {
-        Controller controller = new Controller();
+        Controller controller = new Controller(true);
         controller.getScrummy().setCurrentPlayerIndex(1); // CURRENT PLAYER STRAT 1
 
         ArrayList<Meld> originalTableMelds = controller.getScrummy().getTable().getMelds();
