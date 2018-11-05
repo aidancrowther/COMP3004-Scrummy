@@ -36,7 +36,7 @@ public class ControllerTest {
         }
 
         int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
-        controller.run(true);
+        //controller.run(true);
 
         //test that there is a winner
         boolean isWinner = false;

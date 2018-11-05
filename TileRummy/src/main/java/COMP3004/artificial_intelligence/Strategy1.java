@@ -74,7 +74,7 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         //Lists to track hand status
-        HashMap<Tile, Integer> inHand = new HashMap<>();
+        HashMap<String, Integer> inHand = new HashMap<>();
         ArrayList<ArrayList<Meld>> results = new ArrayList<>();
 
         //Output table
@@ -83,14 +83,14 @@ public class Strategy1 extends ArtificialIntelligence
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){
             Boolean found = false;
-            for(Map.Entry<Tile, Integer> pair : inHand.entrySet()){
-                if(tile.equals(pair.getKey())){
-                    inHand.put(pair.getKey(), pair.getValue()+1);
+            for(Map.Entry<String, Integer> pair : inHand.entrySet()){
+                if(tile.toString().equals(pair.getKey())){
+                    inHand.put(pair.getKey().toString(), pair.getValue()+1);
                     found = true;
                     break;
                 }
             }
-            if(!found) inHand.put(tile, 1);
+            if(!found) inHand.put(tile.toString(), 1);
         }
 
         //Generate array lists of moves to make
@@ -115,7 +115,9 @@ public class Strategy1 extends ArtificialIntelligence
         int longest = 0;
         ArrayList<Meld> longestList = new ArrayList<>();
         for(ArrayList<Meld> a : results){
-            if(a.size() > longest && score >= 30){
+            int count = 0;
+            for(Meld m : a) count += m.size();
+            if(count > longest && score >= 30){
                 longest = a.size();
                 longestList = a;
             }
@@ -161,13 +163,23 @@ public class Strategy1 extends ArtificialIntelligence
                 //Get the meld that is being split from the table using the id
                 Meld beingSplit = table.getMelds().get(splitId);
 
+                Meld beingRemoved = new Meld();
+                for(Tile t : m.getTiles()){
+                    for(int i=0; i<hand.size(); i++){
+                        if(hand.getTiles().get(i).equals(t)){
+                            beingRemoved.add(hand.remove(t));
+                            i = 110;
+                        }
+                    }
+                }
+
                 //For each meld involved in the split
                 for(Meld meld : meldsToAdd){
                     //Build up a meld to add, removing tiles from hand, or getting the reference
                     Meld toAdd = new Meld();
                     for(Tile t : meld.getTiles()){
-                        if(indexOf(beingSplit, t) >= 0) toAdd.add(beingSplit.getTiles().get(indexOf(beingSplit, t)));
-                        else if(indexOf(hand, t) >= 0) toAdd.add(hand.remove(t));
+                        if(indexOf(beingRemoved, t) >= 0) toAdd.add(beingRemoved.getTiles().get(indexOf(beingRemoved, t)));
+                        else if(indexOf(beingSplit, t) >= 0) toAdd.add(beingSplit.getTiles().get(indexOf(beingSplit, t)));
                     }
 
                     result.add(toAdd);
@@ -180,7 +192,9 @@ public class Strategy1 extends ArtificialIntelligence
                         output.replace(meld, splitId);
                         replaced = true;
                     }
-                    else output.add(meld);
+                    else{
+                        output.add(meld);
+                    }
                 }
             }
         }
@@ -188,7 +202,7 @@ public class Strategy1 extends ArtificialIntelligence
         //Return the output table
         if (longest >= 30 || score >= 30) {
             System.out.println(this.player.getName() + " AI HAS MOVED!");
-            this.table = output;
+            return output;
         }
         
         return this.table;

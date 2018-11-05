@@ -103,12 +103,13 @@ public class Strategy2Test{
     @Test
     //Test the AI with a hand that it can break with
     public void testCanBreak(){
-        //Give them a hand that can't break 30
+        //Give them a hand that can break 30
         hand.clear();
         hand.add(tile2); //O9
         hand.add(tile3); //O8
         hand.add(tile6); //O7
         hand.add(tile8); //O6
+        AI.setHand(hand);
 
         //Give it a used table
         table = new Table();
