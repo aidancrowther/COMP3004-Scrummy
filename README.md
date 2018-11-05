@@ -18,10 +18,10 @@ Status:
    - Decks of Tiles that can be generated and shuffled.
    - Players which can have hands of tiles and draw from the deck.
    - AI players utilizing varying strategies:
-    - Strategy 1: Play everything it can
-    - Strategy 2: Play everyhing at once, or only modify the table
-    - Strategy 3: Play as Stratgey 2, unless someone has 3 fewer cards, then play as Strategy 1
-    - Strategy 4: Play as strategy 1, but hold onto melds with a high chance of getting related tiles
+      - Strategy 1: Play everything it can
+      - Strategy 2: Play everyhing at once, or only modify the table
+      - Strategy 3: Play as Stratgey 2, unless someone has 3 fewer cards, then play as Strategy 1
+      - Strategy 4: Play as strategy 1, but hold onto melds with a high chance of getting related tiles
    - Textual user interface, allowing for user input
    - All rules (excluding jokers) of Tile Rummy implemented, including splitting
 
