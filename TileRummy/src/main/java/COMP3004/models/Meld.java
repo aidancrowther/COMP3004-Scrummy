@@ -39,18 +39,13 @@ public class Meld {
         return m;
     }
 
-
     /*
         Removes a tile from the meld
         Walks through the arraylist until it finds an identical tile, then removes it.
     */
     public Tile remove(Tile t) {
-        for (int i=0; i<tiles.size(); i++) {
-            if (tiles.get(i).equals(t)) {
-                return tiles.remove(i);   
-            }
-        }
-        return null;
+        int i = tiles.indexOf(t);
+        return tiles.remove(i);
     }
 
     public Tile get(Tile t) {
@@ -62,6 +57,10 @@ public class Meld {
         return null;
     }
 
+    public Tile get(int id) {
+     return tiles.get(id);
+    }
+    
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
@@ -164,13 +163,25 @@ public class Meld {
         if(this.size() != m.size()){
             return false;
         }
-        for (int i=0; i<this.getTiles().size(); i++) {
-            if (this.getTiles().get(i).getColour() != m.getTiles().get(i).getColour() ||
-                this.getTiles().get(i).getValue() != m.getTiles().get(i).getValue()) {
+        for (int i=0; i<this.size(); i++) {
+            if (this.get(i).getColour() != m.get(i).getColour() ||
+                this.get(i).getValue() != m.get(i).getValue()) {
                     return false;
                 }
         }
         return true;
+    }
+
+    public Tile sameValue(Tile t) {
+        //finds a card of the same value
+        for (int i=0; i<this.size(); i++) {
+            if (this.get(i).getColour() == t.getColour() &&
+                this.get(i).getValue() == t.getValue()) {
+                    return this.get(i);
+            }
+        }
+        return null;
+
     }
 
     public boolean isRun() { //-1 is invalid, 0 is set, 1 is run

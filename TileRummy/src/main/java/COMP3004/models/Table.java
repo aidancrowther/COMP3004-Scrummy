@@ -59,9 +59,11 @@ public class Table {
     }
 
     public Meld replace(Meld toAdd, int index) {
+
         if (index == 0 && melds.size() <= index) {
             return null;
         }
+
         Meld m = melds.get(index).copy();
         set(index, toAdd);
         return m;

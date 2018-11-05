@@ -36,16 +36,16 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     //protected Meld hand = null;
 
     protected void name() {
-        
+
     } int score = 0;
 
 
 
     protected ArtificialIntelligence() {
-        
+
     }
 
-    public Table play(){ return null;}
+    public Table play(){return null;}
 
     public Meld getHand() { return this.player.getHand(); }
 
@@ -59,7 +59,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     public void setScore(int score){
         this.score = score;
     }
-    
+
     ////////////////////
     //Helper Functions//
     ////////////////////
@@ -106,12 +106,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             a.add(h.get(i).getColour());
             for (int j=i; j<h.size(); j++) {
                 if (h.get(j).getValue() == h.get(i).getValue() &&
-                    !a.contains(h.get(j).getColour())) {
+                        !a.contains(h.get(j).getColour())) {
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
                     if (m.isValid()) {
-                            handMelds.put(m.copy(), n);
-                            n++;
+                        handMelds.put(m.copy(), n);
+                        n++;
                     }
                 }
             }
@@ -159,9 +159,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         //returns 1 if toAdd is addable as a run to t
         //returns -1 if toAdd is not addable to t
         if (toAdd.getColour() == t.getColour()) {
-            if (toAdd.getValue() - t.getValue() == 1 || 
-                t.getValue() - toAdd.getValue() == 1) {
-                    return 1;
+            if (toAdd.getValue() - t.getValue() == 1 ||
+                    t.getValue() - toAdd.getValue() == 1) {
+                return 1;
             }
         }
         else {
@@ -188,12 +188,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
     //adds either 2 cards to a meld of 1, or one card to a meld of 2.
     protected void addingForSplitting(Meld shortM, ArrayList<Tile> h, int k) {
-		if (shortM.size() == 1) {
+        if (shortM.size() == 1) {
             Tile t = shortM.getTiles().get(0);
             int start;
             if (isAddable(h.get(k), t) >= 0) {
                 if (k != 0) {
-                    start = k-1; 
+                    start = k-1;
                 }
                 else {
                     start = k;
@@ -205,28 +205,28 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         break;
                     }
                 }
-            } 
-        } 
+            }
+        }
         else {
             if (shortM.isValid(h.get(k))) {
                 shortM.add(h.get(k));
-            }																	
+            }
         }
     }
 
-    //adds a meld from a split to its arraylist. In doing so, it removes these cards from the 
+    //adds a meld from a split to its arraylist. In doing so, it removes these cards from the
     //local copy of the table's meld as well as the local copy of the AI's hand
     protected void addSplitToList(ArrayList<Meld> aList, Meld shortM, Meld m, Meld hTiles, ArrayList<Tile> h) {
         aList.add(shortM.copy());
-	    for (int q=0; q<shortM.size(); q++) {
-		    if (h.contains(shortM.getTiles().get(q))) {
-			    hTiles.add(shortM.getTiles().get(q));
-				h.remove(shortM.getTiles().get(q));
-			}			
-			else if (m.getTiles().contains(shortM.getTiles().get(q))) {
-				m.remove(shortM.getTiles().get(q));
-			}
-		} 
+        for (int q=0; q<shortM.size(); q++) {
+            if (h.contains(shortM.getTiles().get(q))) {
+                hTiles.add(shortM.getTiles().get(q));
+                h.remove(shortM.getTiles().get(q));
+            }
+            else if (m.getTiles().contains(shortM.getTiles().get(q))) {
+                m.remove(shortM.getTiles().get(q));
+            }
+        }
     }
 
     //Splits a set into every possible combination of cards. Changes depending on length of set
@@ -250,24 +250,25 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 }
             }
         }
-		if (m.size() > 2) {
-			for (int i=m.size()-1; i>=0; i--) {
-				Meld m2 = m.copy();
-				m2.getTiles().remove(i);
-				output.add(m2.copy());
-			}
-		}
-		else if (m.size() == 2) {
-			output.add(m.copy());
-		}
+        if (m.size() > 2) {
+            for (int i=m.size()-1; i>=0; i--) {
+                Meld m2 = m.copy();
+                m2.getTiles().remove(i);
+                output.add(m2.copy());
+            }
+        }
+        else if (m.size() == 2) {
+            output.add(m.copy());
+        }
         return output;
     }
 
 
     public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
-
+        System.out.println("Split 1");
         if (t == null) {
+            System.out.println("Split 2");
             return tableSplits;
         }
 
@@ -287,12 +288,13 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         for (int p=0; p<h.size(); p++) {
                             addingForSplitting(shortM, h, p);
 
-							if (shortM.isValid()) {
-								addSplitToList(aList, shortM, m, hTiles, h);
-								k=999;
+                            if (shortM.isValid()) {
+                                addSplitToList(aList, shortM, m, hTiles, h);
+                                k=999;
                                 j--;
+                                System.out.println("Split 3");
                                 break;
-							}
+                            }
                         }
                     }
                 }
@@ -300,25 +302,35 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             //trying to split a set
             else if (!t.getMelds().get(i).isRun())  {
                 ArrayList<Meld> perms = permute(m);
+
+                boolean found = false;
                 for (int j=0; j<perms.size(); j++) {
-                    if (perms.size() == 0) {
+                    if (perms.size() == 0) { // || found) {
+                        System.out.println("Split 4");
                         break;
                     }
-                    Meld shortM = perms.get(j);
+                    Meld shortM = new Meld();
+                    for (int p=0; p<perms.get(j).size(); p++) {
+                        shortM.add(m.sameValue(perms.get(j).get(p)));
+                    }
+
                     for (int k=0; k<h.size(); k++) {
                         addingForSplitting(shortM, h, k);
                         if (shortM.isValid()) {
                             addSplitToList(aList, shortM, m, hTiles, h);
                             perms = permute(m);
                             j = -1;
+                            System.out.println("Split 5");
+                            //found = true;
                             break;
                         }
-                    }          
+                    }
                 }
             }
 
             //edge cases
             if (!aList.isEmpty() && !m.getTiles().isEmpty()) {
+				System.out.println(m.toString());
                 for (Meld a : aList) {
 				    for (int k=0; k<m.size(); k++) {
 					    if (a.isValid(m.getTiles().get(k))) {
@@ -333,7 +345,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                     }
                 }
                 if (!m.equals(t.getMelds().get(i)) && m.isValid()) {
-				    addSplitToList(aList, m.copy(), m, hTiles, h);
+				    aList.add(m.copy());
+					m.clear();
+					System.out.println(m.toString());
                 }
             }
 
@@ -358,47 +372,43 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    protected ArrayList<Meld> findUnique(Meld m, HashMap<Meld, Integer> h, HashMap<Tile, Integer> inHand){
+    protected ArrayList<Meld> findUnique(Meld m, HashMap<Meld, Integer> h, HashMap<String, Integer> inHand){
 
         ArrayList<Meld> results = new ArrayList<>();
+        HashMap<String, Integer> handUsed = new HashMap<String, Integer>(inHand);
+        ArrayList<Integer> usedMelds = new ArrayList<>();
+
+        for(Tile t : m.getTiles()) handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+        results.add(m);
 
         //Iterate over the set to compare against
         for(Map.Entry<Meld, Integer> entry : h.entrySet()){
             //Initialize tracking variables
             Boolean containsDuplicate = false;
-            HashMap<Tile, Integer> hand = inHand;
-            ArrayList<Integer> usedMelds = new ArrayList<>();
-            //Iterate over both tile sets
-            if(entry.getKey() != m){
-                Boolean cont = true;
-                //Make sure we aren't reusing a split
-                if(h.get(entry.getKey()) != 0){
-                    if(!usedMelds.contains(h.get(entry.getKey()))) cont = false;
-                    else usedMelds.add(h.get(entry.getKey()));
-                }
-                //Check all tiles for duplicates
-                if(cont){
-                    for(Tile t1 : entry.getKey().getTiles()){
-                        for(Tile t2 : m.getTiles()){
-                            //If they are the same, and there is no duplicate this set contains reused tiles
-                            if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
-                                containsDuplicate = false;
-                                hand.put(t1, hand.get(t1)-1);
-                            }
-                            else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
-                                containsDuplicate = false;
-                                hand.put(t2, hand.get(t2)-1);
-                            }
-                            else containsDuplicate |= t1.equals(t2);
-                        }
-                    }
-                }
+            ArrayList<Integer> usedMeldsLocal = new ArrayList<>(usedMelds);
+            HashMap<String, Integer> handUsedLocal = new HashMap<String, Integer>(handUsed);
+
+            //Make sure we aren't modifying the same meld twice
+            if(h.get(entry.getKey()) != 0){
+                if(usedMeldsLocal.contains(h.get(entry.getKey()))) continue;
+                else usedMeldsLocal.add(h.get(entry.getKey()));
             }
+
+            //Check for duplicate tiles
+            for(Tile t : entry.getKey().getTiles()){
+                if(handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
+                else containsDuplicate = true;
+            }
+
             //If there are no reused tiles, add to the list of indeces
-            if(!containsDuplicate) results.add(entry.getKey());
+            if(!containsDuplicate && !entry.getKey().compare(m)){
+                results.add(entry.getKey());
+                handUsed = handUsedLocal;
+                usedMelds = usedMeldsLocal;
+            }
         }
 
-        results = shortByShortest(results);
+        results = sortByShortest(results);
 
         //Return the list of indeces
         return results;
@@ -429,7 +439,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         return result;
     }
 
-    protected ArrayList<Meld> shortByShortest(ArrayList<Meld> a){
+    protected ArrayList<Meld> sortByShortest(ArrayList<Meld> a){
         //Create a comparator
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
             @Override
@@ -459,13 +469,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         for (int i=0; i<m.getTiles().size(); i++)
             if (m.getTiles().get(i).equals(t))
                 return i;
-        
+
         return -1;
     }
 
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
+        System.out.println("AI" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }

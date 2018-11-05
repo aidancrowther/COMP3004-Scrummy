@@ -58,6 +58,25 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         players[4].setName("AI 4");
     }
 
+    public Scrummy(boolean AIonly){
+        deck.shuffle();
+        // Give players hands here
+        this.players = new Player[4];
+        for(int i = 0; i < this.players.length; i++){
+            players[i] = new Player();
+            Meld hand = new Meld();
+            for(int j = 0; j < 14; j++){
+                hand.add(this.deck.pop());
+            }
+            players[i].setHand(hand);
+        }
+
+        players[0].setName("AI 1");
+        players[1].setName("AI 2");
+        players[2].setName("AI 3");
+        players[3].setName("AI 4");
+    }
+
     public void validatePlayerMove(Table playedTable) {
         /*
          * If valid table then update game table, set the player hand, and notify observers
