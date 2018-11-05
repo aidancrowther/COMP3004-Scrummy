@@ -203,7 +203,6 @@ public class Strategy1 extends ArtificialIntelligence
 
         //Return the output table
         if (longest >= 30 || score >= 30) {
-            System.out.println(this.player.getName() + " AI HAS MOVED!");
             return output;
         }
 

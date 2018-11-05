@@ -34,12 +34,14 @@ public class PlayerInteractionController extends GameInteractionController
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         if(this.terminalView.readPlayerInput().equals("y")){
             while(this.move(hand)){}
-            if(score >= 30){ //Only let the player move if the score >= 30.
-                this.terminalView.printMessage("You are done your turn. The game table now looks like:");
-                this.terminalView.printTable(this.playedTable);
-                return this.playedTable;
-            }
         }
+
+        if(score >= 30){ //Only let the player move if the score >= 30.
+            this.terminalView.printMessage("You are done your turn. The game table now looks like:");
+            this.terminalView.printTable(this.playedTable);
+            return this.playedTable;
+        }
+        
         this.terminalView.printMessage("You chose not to move.");
         return this.table; //will be the same if player doesn't move
     }

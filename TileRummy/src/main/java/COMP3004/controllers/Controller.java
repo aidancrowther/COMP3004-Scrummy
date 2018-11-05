@@ -170,7 +170,7 @@ public class Controller
             System.out.println("three");
 
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
-            if(!playedTable.isValid()) break;
+            //if(!playedTable.isValid()) break;
 
 
             System.out.println("four");
