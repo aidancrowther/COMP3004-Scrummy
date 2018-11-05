@@ -114,8 +114,8 @@ public class Table {
         if(other.getMelds().size() != this.melds.size()){
             return false;
         }
-        System.out.println(other.getMelds().size());
-        System.out.println(this.melds.size());
+        //System.out.println(other.getMelds().size());
+        //System.out.println(this.melds.size());
         if(other.getMelds().size() == 1 && this.melds.size() == 1){ //Only blank melds
             return true;
         }
@@ -153,10 +153,10 @@ public class Table {
                     for(Tile t2 : other.getMelds().get(j).getTiles()) {
                         //IF T1 IS EQUAL TO T2 SET T1 TO FOUND
                         if(t1.equals(t2)){
-                            System.out.println(t1.toString() + " = " + t2.toString());
+                            //System.out.println(t1.toString() + " = " + t2.toString());
                             areTilesPresent[tileIndex] = true;
                         } else {
-                            System.out.println(t1.toString() + " != " + t2.toString());
+                            //System.out.println(t1.toString() + " != " + t2.toString());
                         }
                     }
                     tileIndex++;
@@ -180,7 +180,7 @@ public class Table {
 
         //IF ANY MELD WASN'T FOUND RETURN FALSE
         for(int j = 0; j < isMeldPresent.length; j++){
-            System.out.print(isMeldPresent[j]);
+            //System.out.print(isMeldPresent[j]);
             if(!isMeldPresent[j]){
                 return false;
             }

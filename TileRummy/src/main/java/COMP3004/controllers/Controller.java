@@ -122,14 +122,14 @@ public class Controller
             System.out.println("--- ");
             if(playedTable.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
-                System.out.println(" did not move. ");
+                System.out.println(this.scrummy.getCurrentPlayer().getName() + " did not move. ");
                 Tile t = scrummy.getDeck().pop();
-                System.out.println("Player hand b4: ");
+                System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand b4: ");
                 System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                 if(t != null){
-                    System.out.println(" Player Drew Tile: " + t.toString());
+                    System.out.println(this.scrummy.getCurrentPlayer().getName() + " drew Tile: " + t.toString());
                     scrummy.getCurrentPlayer().getHand().add(t);
-                    System.out.println("Player hand in controller: ");
+                    System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
                     System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                 }
 
