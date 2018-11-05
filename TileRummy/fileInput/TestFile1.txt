@@ -1,0 +1,21 @@
+Deck1.txt
+y
+h
+1
+0
+y
+h
+1
+0
+y
+h
+1
+0
+/should've just played R1-R3
+y
+h
+1
+0
+/moving on the table now
+
+n

@@ -136,6 +136,9 @@ public class Controller
             hasSkippedAfterEmpty[i] = 0;
         }
 
+        // for (GameInteractionController g : playerControllers)
+        for (Player p : scrummy.getPlayers())//broadcast hands
+            playerControllers[0].getTerminalView().printMessagePlain(p.getName() + "'s hand: " + p.getHand().toString());
         while(play){
             //System.out.println("Current Player: " + this.scrummy.getCurrentPlayer().getName());
 

@@ -1,0 +1,11 @@
+Do you want to make a move? (y/n)
+    y. 
+        1. Do you want to move a tile on the table, or play from your hand (t/h)?
+            t. 
+                1. Which meld would you like select the tile from? (Enter meld #)
+                2. Which tile do you want to select? (Enter tile position # as shown above the tiles.)
+                3. Which meld would you like to move the tile to? (Enter meld # or 0 to create add to a tentative meld)
+            h
+                1. Which tile do you want to select? (Enter tile position # as shown above the tiles.)
+                2. Which meld would you like to move the tile to? (Enter meld # or 0 to create add to a tentative meld)
+    n. exit

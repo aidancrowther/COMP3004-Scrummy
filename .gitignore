@@ -3,4 +3,4 @@
 *.iml
 *.idea
 *.xml
-*.txt
+TileRummy/target/surefire-reports/*
