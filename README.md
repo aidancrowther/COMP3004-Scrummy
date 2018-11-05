@@ -27,7 +27,17 @@ Status:
 
 Roadmap:
 
-  [ ] Iteration 2...
+  - [X] Base game elements (Tiles, deck, ...) implemented
+  - [X] AI strategy 1
+  - [X] AI strategy 2
+  - [X] AI strategy 3
+  - [X] AI strategy 4
+  - [X] Text input
+  - [X] File input
+  - [X] Verify game state is legal
+  - [X] Handle user input correctly
+  - [X] Functioning game
+  - [ ] Iteration 2...
 
 Design Documentation:
 
