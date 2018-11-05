@@ -57,7 +57,8 @@ public class Strategy1 extends ArtificialIntelligence
         */
         this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
-        this.terminalView.printMessage(this.player.getName() + " hand: " + this.player.getHand().toString());
+        this.terminalView.printMessage(this.player.getName() + " hand: ");
+        this.terminalView.printPlayerHand(this.player.getHand());
 
         //Output table
         Table output = this.getTableCopy(table);
@@ -203,7 +204,8 @@ public class Strategy1 extends ArtificialIntelligence
 
         this.terminalView.printMessage(this.player.getName() + " has ended their turn.");
         this.player.setHand(hand);
-        this.terminalView.printMessage(this.player.getName() + " hand after their turn: " + this.player.getHand().toString());
+        this.terminalView.printMessage(this.player.getName() + " hand after their turn: ");
+        this.terminalView.printPlayerHand(this.player.getHand());
 
         //Return the output table
         if (longest >= 30 || score >= 30) {
