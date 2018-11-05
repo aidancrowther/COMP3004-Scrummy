@@ -1,0 +1,224 @@
+# Created on 2018-11-04T17:11:38.401
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: DEFAULT
+java.io.EOFException
+	at java.io.DataInputStream.readInt(DataInputStream.java:392)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+# Created on 2018-11-04T17:11:38.797
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:38.812
+Unexpected IOException with stream: --- 
+
+
+# Created on 2018-11-04T17:11:38.812
+Unexpected IOException with stream: AI 4 Move was valid
+
+
+
+
+# Created on 2018-11-04T17:11:38.828
+Unexpected IOException with stream: 
+
+
+
+
+# Created on 2018-11-04T17:11:38.844
+Unexpected IOException with stream: player AI HAS MOVED!
+
+
+# Created on 2018-11-04T17:11:38.897
+Unexpected IOException with stream: --- CHECK TABLE REFS: ---
+
+
+# Created on 2018-11-04T17:11:38.897
+Unexpected IOException with stream: AI 1 Table: 
+
+
+# Created on 2018-11-04T17:11:38.912
+Unexpected IOException with stream: COMP3004.models.Table@704a52ec
+
+# Created on 2018-11-04T17:11:38.912
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:38.928
+Unexpected IOException with stream: Scrummy Table: 
+
+
+# Created on 2018-11-04T17:11:38.944
+Unexpected IOException with stream: COMP3004.models.Table@3ac42916
+
+# Created on 2018-11-04T17:11:38.944
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:38.966
+Unexpected IOException with stream: --- 
+
+
+# Created on 2018-11-04T17:11:38.966
+Unexpected IOException with stream: AI 1 Move was valid
+
+
+
+
+# Created on 2018-11-04T17:11:38.980
+Unexpected IOException with stream: 
+
+
+
+
+# Created on 2018-11-04T17:11:38.996
+Unexpected IOException with stream: --- CHECK TABLE REFS: ---
+
+
+# Created on 2018-11-04T17:11:39.011
+Unexpected IOException with stream: AI 2 Table: 
+
+
+# Created on 2018-11-04T17:11:39.011
+Unexpected IOException with stream: COMP3004.models.Table@27082746
+
+# Created on 2018-11-04T17:11:39.027
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.043
+Unexpected IOException with stream: Scrummy Table: 
+
+
+# Created on 2018-11-04T17:11:39.043
+Unexpected IOException with stream: COMP3004.models.Table@704a52ec
+
+# Created on 2018-11-04T17:11:39.068
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.080
+Unexpected IOException with stream: --- 
+
+
+# Created on 2018-11-04T17:11:39.091
+Unexpected IOException with stream: AI 2 Move was valid
+
+
+
+
+# Created on 2018-11-04T17:11:39.101
+Unexpected IOException with stream: 
+
+
+
+
+# Created on 2018-11-04T17:11:39.114
+Unexpected IOException with stream: Playing with the hand because 30 is not broken.
+
+
+# Created on 2018-11-04T17:11:39.126
+Unexpected IOException with stream: --- CHECK TABLE REFS: ---
+
+
+# Created on 2018-11-04T17:11:39.137
+Unexpected IOException with stream: AI 3 Table: 
+
+
+# Created on 2018-11-04T17:11:39.148
+Unexpected IOException with stream: COMP3004.models.Table@22a71081
+
+# Created on 2018-11-04T17:11:39.160
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.165
+Unexpected IOException with stream: Scrummy Table: 
+
+
+# Created on 2018-11-04T17:11:39.181
+Unexpected IOException with stream: COMP3004.models.Table@27082746
+
+# Created on 2018-11-04T17:11:39.196
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.196
+Unexpected IOException with stream: --- 
+
+
+# Created on 2018-11-04T17:11:39.212
+Unexpected IOException with stream: AI 3 Move was valid
+
+
+
+
+# Created on 2018-11-04T17:11:39.227
+Unexpected IOException with stream: 
+
+
+
+
+# Created on 2018-11-04T17:11:39.227
+Unexpected IOException with stream: --- CHECK TABLE REFS: ---
+
+
+# Created on 2018-11-04T17:11:39.243
+Unexpected IOException with stream: AI 4 Table: 
+
+
+# Created on 2018-11-04T17:11:39.259
+Unexpected IOException with stream: COMP3004.models.Table@3ac42916
+
+# Created on 2018-11-04T17:11:39.259
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.274
+Unexpected IOException with stream: Scrummy Table: 
+
+
+# Created on 2018-11-04T17:11:39.290
+Unexpected IOException with stream: COMP3004.models.Table@22a71081
+
+# Created on 2018-11-04T17:11:39.321
+Unexpected IOException with stream: 
+
+
+# Created on 2018-11-04T17:11:39.321
+Unexpected IOException with stream: --- 
+
+
+# Created on 2018-11-04T17:11:39.360
+Unexpected IOException with stream: AI 4 Move was valid
+
+
+
+
+# Created on 2018-11-04T17:11:39.374
+Unexpected IOException with stream: 
+
+
+
+
+# Created on 2018-11-04T17:11:39.385
+Unexpected IOException with stream: player AI HAS MOVED!
+
+
+# Created on 2018-11-04T17:11:39.395
+Unexpected IOException with stream: --- CHECK TABLE REFS: ---
+
+
+# Created on 2018-11-04T17:11:39.395
+Unexpected IOException with stream: AI 1 Table: 
+
+
+# Created on 2018-11-04T17:11:39.411
+Unexpected IOException with stream: COMP3004.models.Table@6ee52dcd
+
+# Created on 2018-11-04T17:11:39.427
+Unexpected IOException with stream: 
+
+

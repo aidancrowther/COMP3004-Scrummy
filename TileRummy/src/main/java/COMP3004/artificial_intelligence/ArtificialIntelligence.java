@@ -45,7 +45,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         
     }
 
-    public Table play(){return null;}
+    public Table play(){ return null;}
 
     public Meld getHand() { return this.player.getHand(); }
 
@@ -462,7 +462,6 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
-        System.out.println("AI" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }

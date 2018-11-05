@@ -1,45 +1,19 @@
 package COMP3004;
 
-import COMP3004.controllers.TerminalViewController;
+import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
-
-//Test all AI strategies
 public class TerminalUITest {
-
-
-    //Assert that update will change the table
-    /*@Test
-    public void testSetHand() {
-        TerminalViewController terminal = new TerminalViewController();
-        //Generate a small list of tiles and melds for the test
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
-
-        Meld meld1 = new Meld();
-        meld1.add(tiles.get(0));
-        meld1.add(tiles.get(1));
-        meld1.add(tiles.get(2));
-
-        for(int i=1; i<=3; i++) assertTrue(meld1.getTiles().get(i-1).toString().equals("O"+i));
-
-        terminal.setHand(meld1);
-        assertTrue(terminal.getHand().equals(meld1));
-        meld1 = null;
-        assertFalse(terminal.getHand() == null);
-    }*/
 
     @Test
     //Assert that the selectTile method will move tiles between melds correctly
     public void testSelectTile(){
-        TerminalViewController terminal = new TerminalViewController();
+        PlayerInteractionController terminal = new PlayerInteractionController();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
         for(int i=1; i<=6; i++) tiles.add(new Tile('O', i));
@@ -70,7 +44,7 @@ public class TerminalUITest {
 
     @Test
     public void testGenerateTileString() {
-        TerminalViewController terminal = new TerminalViewController();
+        PlayerInteractionController terminal = new PlayerInteractionController();
         ArrayList<Tile> allTiles = new ArrayList<>();
         char colours[] = {'R', 'G', 'B', 'O'};
         int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
@@ -99,7 +73,7 @@ public class TerminalUITest {
     @Test
     //Assert that the selectTile method will move tiles between melds correctly
     public void testMoveOnInput(){
-        TerminalViewController terminal = new TerminalViewController();
+        PlayerInteractionController terminal = new PlayerInteractionController();
         Table table = new Table();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -141,7 +115,7 @@ public class TerminalUITest {
 
     @Test
     public void testSelectingMeldsFromTableOnInput() {
-        TerminalViewController terminal = new TerminalViewController();
+        PlayerInteractionController terminal = new PlayerInteractionController();
         Table table = new Table();
         //Generate a small list of tiles and melds for the test
         ArrayList<Tile> tiles = new ArrayList<>();
