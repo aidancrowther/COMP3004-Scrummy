@@ -97,6 +97,12 @@ public class Controller
 
         boolean play = true;
         int winnerIndex = -1;
+
+        boolean[] hasSkippedAfterEmpty = new boolean[this.playerControllers.length];
+        for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+            hasSkippedAfterEmpty[i] = false;
+        }
+        
         while(play){
             if(AIOnly && scrummy.getCurrentPlayerIndex() == 0) {
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
@@ -119,9 +125,24 @@ public class Controller
                 break;
             }
 
-            if(scrummy.getDeck().isEmpty()){
-                System.out.println("DECK EMPTY! :(");
-                break;
+            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
+                /*
+                * Keep track of if everyone skips a turn, if so then no one will ever win and break
+                * */
+                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
+                int skippedNum = 0;
+                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+                    if(hasSkippedAfterEmpty[i]){
+                        skippedNum++;
+                    }
+                }
+
+
+                if(skippedNum == hasSkippedAfterEmpty.length-1){
+                    //TODO: ask if want to play again
+                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
+                    break;
+                }
             }
 
             System.out.println("\n\n");
