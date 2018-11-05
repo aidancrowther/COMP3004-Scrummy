@@ -13,6 +13,7 @@ public class GameInteractionController implements TableObserverInterface {
     protected Player player;
 
     public GameInteractionController(){
+        this.terminalView = new TerminalView();
         this.table = new Table();
         this.player = new Player();
     }
