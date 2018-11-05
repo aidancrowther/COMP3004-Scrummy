@@ -10,8 +10,10 @@ public class Deck{
 
     private Stack<Tile> deck = new Stack<>();
 
-    //Generate a new deck object containing 52 cards
-    public Deck(){
+    //Generate a new deck object containing 104 tiles
+    public Deck(){ populateDeck(); }
+    public Deck(boolean empty) { if (!empty) populateDeck(); }
+    private void populateDeck() {
         char colours[] = {'R', 'G', 'B', 'O'};
         int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 

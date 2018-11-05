@@ -80,12 +80,12 @@ Taken By: --No meeting?
 
 ### Tuesday 30<sup>th</sup>
 
-Taken By: David N Zilio
+Taken By:
 
-Schedule:
+Agenda:
 
-1. Do we need to test "all funcitons" including helper funcitons?
-2. The View Abstract class doesn't exist and 
+1. Do we need to test "all functions" including helper functions?
+2. The View Abstract class doesn't exist
 3. Why the "this.getScrummy()" in Controller?
 4. enableHumanPlayer???
 5. TODOs in controller
@@ -93,8 +93,13 @@ Schedule:
 
 Minutes:
 
-dasf
+* Strategy 3 needs to observe all other players??? -- we sent an email
+* planned who's doing what
+* reviewed the marking scheme
 
 ### thursday 1<sup>st</sup>
 
 Taken By: David N Zilio
+
+1. Theoretically solve final requirements.
+2. l
