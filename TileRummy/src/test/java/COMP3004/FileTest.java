@@ -42,9 +42,9 @@ public class FileTest {
         Main.main(arg);
         s = outStream.toString();
 
-        //Req 2
+        //Req 2FileTest : test1
         assertTrue(s.indexOf("Current Player: AI 1") < s.indexOf("Current Player: AI 2") && s.indexOf("Current Player: AI 2") < s.indexOf("Current Player: AI 3"));//turn order's working and it's displayed
-        
+        assertTrue(s.contains("Player drew from the deck tile: B6"));//Req 6
         p.close();
     }
  }
