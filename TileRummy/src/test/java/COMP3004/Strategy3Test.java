@@ -86,7 +86,6 @@ public class Strategy3Test {
         hand.add(tile1);
         hand.add(tile2);
         hand.add(tile3);
-    
 
         //Initialize AI with the specified hand
         Strategy3 AI3 = new Strategy3();
@@ -187,6 +186,85 @@ public class Strategy3Test {
         Table output = AI3.play(AI3.getHand());
         assertTrue(output.getMelds().size() == 3);
 
+    }
+
+    @Test
+    public void testWinsWithoutTable() {
+
+        Meld hand3 = new Meld();
+        hand3.add(new Tile('O', 1));
+        hand3.add(new Tile('O', 2));
+        hand3.add(new Tile('O', 3));
+        hand3.add(new Tile('O', 4));
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('R', 9));
+        m1.add(new Tile('O', 9));
+        m1.add(new Tile('B', 9));
+
+        //set table
+        Table table = new Table();
+        table.add(m1);
+
+        //initialize strategy
+        Strategy3 AI3 = new Strategy3();
+        AI3.setScore(30);
+        AI3.setHand(hand3);
+        AI3.setTable(table);
+
+        //observer
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
+
+
+        Table output = AI3.play(AI3.getHand());
+        assertTrue(AI3.getHand().size() == 0);
+    }
+
+    @Test
+    public void testWinsUsingTable() {
+
+        Meld hand3 = new Meld();
+        hand3.add(new Tile('O', 1));
+        hand3.add(new Tile('O', 2));
+        hand3.add(new Tile('O', 3));
+        hand3.add(new Tile('O', 4));
+        hand3.add(new Tile('G', 9));
+        hand3.add(new Tile('R', 12));
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('R', 9));
+        m1.add(new Tile('O', 9));
+        m1.add(new Tile('B', 9));
+
+        Meld m2 = new Meld();
+        m2.add(new Tile('R', 8));
+        m2.add(new Tile('R', 9));
+        m2.add(new Tile('R', 10));
+        m2.add(new Tile('R', 11));
+
+        //set table
+        Table table = new Table();
+        table.add(m1);
+        table.add(m2);
+
+        //initialize strategy
+        Strategy3 AI3 = new Strategy3();
+        AI3.setScore(30);
+        AI3.setHand(hand3);
+        AI3.setTable(table);
+
+        //observer
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
+
+
+        Table output = AI3.play(AI3.getHand());
+        assertTrue(AI3.getHand().size() == 0);
     }
 
 
