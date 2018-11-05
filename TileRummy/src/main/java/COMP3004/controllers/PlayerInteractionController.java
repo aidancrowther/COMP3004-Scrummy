@@ -148,4 +148,7 @@ public class PlayerInteractionController extends GameInteractionController
     public void setPlayedTable(Table table) {
         this.playedTable = this.getTableCopy(table);
     }
+    public Table getPlayedTable() {
+        return this.playedTable;
+    }
 }

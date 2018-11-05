@@ -1,7 +1,9 @@
 package COMP3004;
 
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
+import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import org.junit.Test;
@@ -152,5 +154,44 @@ public class PlayerInteractionTest {
         assertEquals(fromMeld.getTiles(), meld2.getTiles());
         assertNotNull(toMeld);
         assertEquals(toMeld.getTiles(), meld3.getTiles());
+    }
+
+    @Test
+    public void testNoMove() {
+        Scrummy scrummy = new Scrummy();
+        Table table = new Table();
+
+        PlayerInteractionController gameInteractionController = new PlayerInteractionController();
+        scrummy.registerTableObserver(gameInteractionController);
+        //Generate a small list of tiles and melds for the test
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for(int i=1; i<=9; i++) tiles.add(new Tile('O', i));
+
+        Meld hand = new Meld();
+        hand.add(tiles.get(0));
+        hand.add(tiles.get(1));
+        hand.add(tiles.get(2));
+        gameInteractionController.getPlayer().setHand(hand);
+
+        Meld meld2= new Meld();
+        meld2.add(tiles.get(3));
+        meld2.add(tiles.get(4));
+        meld2.add(tiles.get(5));
+        table.add(meld2);
+
+        Meld meld3= new Meld();
+        meld2.add(tiles.get(6));
+        meld2.add(tiles.get(7));
+        meld2.add(tiles.get(8));
+        table.add(meld3);
+
+        gameInteractionController.setPlayedTable(table);
+        assertTrue(gameInteractionController.getPlayedTable().isEquivalent(table));
+
+        Tile newTile = scrummy.getDeck().pop();
+        assertNotNull(newTile);
+
+        gameInteractionController.getPlayer().getHand().add(newTile);
+        assertTrue(gameInteractionController.getPlayer().getHand().getTiles().contains(newTile));
     }
 }
