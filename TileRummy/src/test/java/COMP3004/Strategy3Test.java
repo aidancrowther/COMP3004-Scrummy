@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Collections;
 import java.util.Iterator;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNoException;
 
 import COMP3004.artificial_intelligence.*;
 import COMP3004.models.*;
@@ -28,6 +27,8 @@ public class Strategy3Test {
             assertTrue(AI3.getPlayerHandSize(i) == 14);
         }
     }
+
+
 
 
     @Test
