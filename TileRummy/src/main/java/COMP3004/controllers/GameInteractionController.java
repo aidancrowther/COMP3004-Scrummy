@@ -60,4 +60,13 @@ public class GameInteractionController implements TableObserverInterface {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+
+    public void setTerminalView(TerminalView t) {
+        this.terminalView = t;
+    }
+
+    public TerminalView getTerminalView() {
+        return this.terminalView;
+    }
 }

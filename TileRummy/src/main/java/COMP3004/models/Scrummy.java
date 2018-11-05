@@ -86,7 +86,6 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
          *   reset player hand if not
          * */
         if(playedTable != null && playedTable.isValid()){
-            System.out.println(this.getCurrentPlayer().getName() + " Move was valid\n\n");
             this.table = playedTable;
             this.notifyObservers();
         }

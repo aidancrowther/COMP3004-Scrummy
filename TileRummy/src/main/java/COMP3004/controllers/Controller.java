@@ -23,9 +23,11 @@ import COMP3004.views.TerminalView;
 public class Controller
 {
     private Scrummy scrummy;
+    private TerminalView view;
     private GameInteractionController[] playerControllers;
 
     public Controller(){
+        this.view = new TerminalView();
         this.scrummy = new Scrummy();
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
 
@@ -38,8 +40,9 @@ public class Controller
         this.playerControllers[3] = s3;
         this.playerControllers[4] = new Strategy4();
         
-        for (int i = 0; i <= 4; i++){//Register everyone
+        for (int i = 0; i < this.scrummy.getPlayers().length; i++){//Register everyone
             this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
+            this.playerControllers[i].setTerminalView(this.view);
             this.scrummy.registerTableObserver(this.playerControllers[i]);
         }
 
@@ -179,7 +182,7 @@ public class Controller
                 Player current = this.scrummy.getPlayers()[winnerIndex];
                 this.playerControllers[0].displayWinner(current.getName());
                 //TODO: ask if want to play again
-                System.out.println("five");
+                //System.out.println("five");
                 break;
             }
 

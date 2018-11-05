@@ -23,7 +23,6 @@ public class PlayerInteractionController extends GameInteractionController
     private boolean enableTableInteraction = false;
     private Table playedTable = new Table();
     public PlayerInteractionController(){
-        terminalView = new TerminalView();
     }
 
     public Table play(Meld hand){
