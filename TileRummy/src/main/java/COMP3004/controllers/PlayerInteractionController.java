@@ -23,7 +23,6 @@ public class PlayerInteractionController extends GameInteractionController
     private boolean enableTableInteraction = false;
     private Table playedTable = new Table();
     public PlayerInteractionController(){
-        terminalView = new TerminalView();
     }
 
     public Table play(Meld hand){
@@ -34,12 +33,14 @@ public class PlayerInteractionController extends GameInteractionController
         this.terminalView.printMessage("\nDo you want to make a move? (y/n)");
         if(this.terminalView.readPlayerInput().equals("y")){
             while(this.move(hand)){}
-            if(score >= 30){ //Only let the player move if the score >= 30.
-                this.terminalView.printMessage("You are done your turn. The game table now looks like:");
-                this.terminalView.printTable(this.playedTable);
-                return this.playedTable;
-            }
         }
+
+        if(score >= 30){ //Only let the player move if the score >= 30.
+            this.terminalView.printMessage("You are done your turn. The game table now looks like:");
+            this.terminalView.printTable(this.playedTable);
+            return this.playedTable;
+        }
+
         this.terminalView.printMessage("You chose not to move.");
         return this.table; //will be the same if player doesn't move
     }
@@ -80,6 +81,12 @@ public class PlayerInteractionController extends GameInteractionController
         if(enableTableInteraction && this.playedTable.getMelds().size() > 1){
             Meld toMeld = this.selectMeldFromTable("Which meld would you like to move the tile to? (Enter meld # or 0 to create add to a tentative meld)");
             this.selectTile(fromMeld, toMeld, selectedTile);
+            if(fromMeld.getTiles().size() == 0){
+                this.playedTable.remove(fromMeld);
+            }
+            if(toMeld.getTiles().size() == 0){
+                this.playedTable.remove(toMeld);
+            }
             this.playedTable.checkMeldZeroValidAndAppend();
         } else {
             this.score += selectedTile.getValue();

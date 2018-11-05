@@ -55,7 +55,9 @@ public class Strategy1 extends ArtificialIntelligence
             -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
             -> Return the brand new table :)
         */
+        this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
+        this.terminalView.printMessage("Current Player Hand: " + this.player.getHand().toString());
 
         //Output table
         Table output = this.getTableCopy(table);
@@ -113,7 +115,6 @@ public class Strategy1 extends ArtificialIntelligence
         for(ArrayList<Meld> a : results){
             int count = 0;
             for(Meld m : a) count += m.size();
-            System.out.println(count);
             if(count > longest && score >= 30){
                 longest = a.size();
                 longestList = a;
@@ -125,7 +126,6 @@ public class Strategy1 extends ArtificialIntelligence
         }
 
         for(ArrayList<Meld> a : results){
-            System.out.println("New:");
             for(Meld m : a) System.out.println(m.toString());
         }
 
@@ -203,7 +203,6 @@ public class Strategy1 extends ArtificialIntelligence
 
         //Return the output table
         if (longest >= 30 || score >= 30) {
-            System.out.println(this.player.getName() + " AI HAS MOVED!");
             return output;
         }
 

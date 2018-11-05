@@ -42,7 +42,6 @@ public class GraphicalView extends Application {
     }
 
     public void printTable(){
-        System.out.println("Table:");
         System.out.println(getController().getTable().toString());
     }
 

@@ -29,7 +29,11 @@ public class GameInteractionController implements TableObserverInterface {
         int i = 0;
         for(Meld m : t.getMelds()) {
             if(i != 0){
-                output.add(m);
+                Meld m2 = new Meld();
+                for(Tile tile : m.getTiles()){
+                    m2.add(tile);
+                }
+                output.add(m2);
             }
             i++;
         }
@@ -55,5 +59,14 @@ public class GameInteractionController implements TableObserverInterface {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+
+    public void setTerminalView(TerminalView t) {
+        this.terminalView = t;
+    }
+
+    public TerminalView getTerminalView() {
+        return this.terminalView;
     }
 }

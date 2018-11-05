@@ -266,9 +266,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
     public HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> searchSplit(Table t) {
         HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> tableSplits = new HashMap<>();
-        System.out.println("Split 1");
+
         if (t == null) {
-            System.out.println("Split 2");
             return tableSplits;
         }
 
@@ -292,7 +291,6 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                                 addSplitToList(aList, shortM, m, hTiles, h);
                                 k=999;
                                 j--;
-                                System.out.println("Split 3");
                                 break;
                             }
                         }
@@ -303,10 +301,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             else if (!t.getMelds().get(i).isRun())  {
                 ArrayList<Meld> perms = permute(m);
 
-                boolean found = false;
                 for (int j=0; j<perms.size(); j++) {
-                    if (perms.size() == 0) { // || found) {
-                        System.out.println("Split 4");
+                    if (perms.size() == 0) {
                         break;
                     }
                     Meld shortM = new Meld();
@@ -320,8 +316,6 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                             addSplitToList(aList, shortM, m, hTiles, h);
                             perms = permute(m);
                             j = -1;
-                            System.out.println("Split 5");
-                            //found = true;
                             break;
                         }
                     }
@@ -330,7 +324,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
             //edge cases
             if (!aList.isEmpty() && !m.getTiles().isEmpty()) {
-				System.out.println(m.toString());
+				//System.out.println(m.toString());
                 for (Meld a : aList) {
 				    for (int k=0; k<m.size(); k++) {
 					    if (a.isValid(m.getTiles().get(k))) {
@@ -347,7 +341,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 if (!m.equals(t.getMelds().get(i)) && m.isValid()) {
 				    aList.add(m.copy());
 					m.clear();
-					System.out.println(m.toString());
+					//System.out.println(m.toString());
                 }
             }
 
@@ -476,7 +470,6 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     // OBSERVER PATTERN CODE
     public void update(Table table) {
         this.table = table;
-        System.out.println("AI" + this.table.toString());
     }
     public Table getTable() { return this.table; }
     public void setTable(Table table) { this.table = table; }

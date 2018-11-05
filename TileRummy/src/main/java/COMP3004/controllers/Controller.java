@@ -23,9 +23,11 @@ import COMP3004.views.TerminalView;
 public class Controller
 {
     private Scrummy scrummy;
+    private TerminalView view;
     private GameInteractionController[] playerControllers;
 
     public Controller(){
+        this.view = new TerminalView();
         this.scrummy = new Scrummy();
         this.playerControllers = new GameInteractionController[this.scrummy.getPlayers().length];
 
@@ -38,8 +40,9 @@ public class Controller
         this.playerControllers[3] = s3;
         this.playerControllers[4] = new Strategy4();
         
-        for (int i = 0; i <= 4; i++){//Register everyone
+        for (int i = 0; i < this.scrummy.getPlayers().length; i++){//Register everyone
             this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
+            this.playerControllers[i].setTerminalView(this.view);
             this.scrummy.registerTableObserver(this.playerControllers[i]);
         }
 
@@ -134,21 +137,21 @@ public class Controller
         }
 
         while(play){
-            System.out.println("Current Player: " + this.scrummy.getCurrentPlayer().getName());
+            //System.out.println("Current Player: " + this.scrummy.getCurrentPlayer().getName());
 
             Meld playerHandCopy = new Meld();
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
                 playerHandCopy.add(t);
 
-            System.out.println("One");
+            //System.out.println("One");
             Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
-            System.out.println("One - b");
+            //System.out.println("One - b");
             if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
                 /*
                  * Keep track of if everyone skips a turn, if so then no one will ever win and break
                  * */
 
-                System.out.println("two");
+                //System.out.println("two");
                 System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
                 hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
 
@@ -167,19 +170,19 @@ public class Controller
                 }
             }
 
-            System.out.println("three");
+            //System.out.println("three");
 
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
-            if(!playedTable.isValid()) break;
+            //if(!playedTable.isValid()) break;
 
 
-            System.out.println("four");
+            //System.out.println("four");
             //print winner
             if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().length){
                 Player current = this.scrummy.getPlayers()[winnerIndex];
                 this.playerControllers[0].displayWinner(current.getName());
                 //TODO: ask if want to play again
-                System.out.println("five");
+                //System.out.println("five");
                 break;
             }
 
@@ -188,12 +191,10 @@ public class Controller
 
             // SET NEXT PLAYER
             if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
-                System.out.println("six");
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
 
             }
             else{
-                System.out.println("secen");
                 this.scrummy.setCurrentPlayerIndex(0);
             }
         }
@@ -206,7 +207,7 @@ public class Controller
             /*
             * Instead check if all tiles in both tables melds are equal...
             * */
-            System.out.println("--- CHECK TABLE REFS: ---");
+            /*System.out.println("--- CHECK TABLE REFS: ---");
             System.out.println(this.scrummy.getCurrentPlayer().getName() + " Table: ");
             System.out.println("ref: " + playedTable);
             System.out.println(playedTable.prettyString());
@@ -216,18 +217,18 @@ public class Controller
             System.out.println(this.scrummy.getTable().prettyString());
             System.out.println("--- ");
             System.out.println("Are tables equivalent? " + playedTable.isEquivalent(this.scrummy.getTable()));
-            System.out.println("--- ");
+            System.out.println("--- ");*/
             if(playedTable.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
-                System.out.println(this.scrummy.getCurrentPlayer().getName() + " did not move. ");
+                //System.out.println(this.scrummy.getCurrentPlayer().getName() + " did not move. ");
                 Tile t = scrummy.getDeck().pop();
-                System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand b4: ");
-                System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
+                //System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand b4: ");
+                //System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                 if(t != null){
-                    System.out.println(this.scrummy.getCurrentPlayer().getName() + " drew Tile: " + t.toString());
+                    //System.out.println(this.scrummy.getCurrentPlayer().getName() + " drew Tile: " + t.toString());
                     scrummy.getCurrentPlayer().getHand().add(t);
-                    System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
-                    System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
+                    //System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
+                    //System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                 }
 
             } else {

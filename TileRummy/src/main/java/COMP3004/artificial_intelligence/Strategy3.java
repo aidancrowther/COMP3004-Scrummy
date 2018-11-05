@@ -68,6 +68,8 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
         //if someone has 3 cards less than p3, play all possible melds
         if (playWithHand) {
             Strategy1 strat = new Strategy1();
+            strat.getPlayer().setName(this.getPlayer().getName());
+            strat.setTerminalView(this.terminalView);
             strat.setScore(this.getScore());
             strat.setHand(hand);
             strat.setTable(this.getTable());
@@ -76,6 +78,8 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
         //otherwise, only interact with table
         else {
             Strategy2 strat = new Strategy2();
+            strat.getPlayer().setName(this.getPlayer().getName());
+            strat.setTerminalView(this.terminalView);
             strat.setScore(this.getScore());
             strat.setHand(hand);
             strat.setTable(this.getTable());
