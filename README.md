@@ -8,7 +8,7 @@ Description:
 
 Status:
   
-   This project is still in initial stages, and currently offers no functionality
+   This project has met the requirements for iteration 1 of the submission.
 
    Currently Supports:
 
@@ -17,14 +17,22 @@ Status:
    - Tiles with varying "Colours" and "Values".
    - Decks of Tiles that can be generated and shuffled.
    - Players which can have hands of tiles and draw from the deck.
+   - AI players utilizing varying strategies:
+    - Strategy 1: Play everything it can
+    - Strategy 2: Play everyhing at once, or only modify the table
+    - Strategy 3: Play as Stratgey 2, unless someone has 3 fewer cards, then play as Strategy 1
+    - Strategy 4: Play as strategy 1, but hold onto melds with a high chance of getting related tiles
+   - Textual user interface, allowing for user input
+   - All rules (excluding jokers) of Tile Rummy implemented, including splitting
 
 Roadmap:
 
+  [ ] Iteration 2...
 
 Design Documentation:
 
    - [Draw.io UML Diagram](https://drive.google.com/file/d/1Bs36zHr1ql-CJrYGhb1J1I1Hmx0dcjDD/view?usp=sharing)
-   - ...
+   - Documentation directory
 
 ***
 
@@ -40,7 +48,7 @@ Usage:
 
       mvn -B verify
 
-   ~~The application can be run by executing
+   The application can be run by executing
 
       mvn exec:java
 
