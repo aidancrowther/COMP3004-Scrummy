@@ -24,18 +24,6 @@ public class GameInteractionController implements TableObserverInterface {
         }
     }
 
-    public void indicatePlayerMove() {
-        Table copy = new Table();
-        int i = 0;
-        for(Meld m : this.table.getMelds()) {
-            if(i != 0){ //Don't copy the tentative meld
-                copy.add(m);
-            }
-            i++;
-        }
-        this.table = copy;
-    }
-
     public Table getTableCopy(Table t){
         Table output = new Table();//table; no set yet - want to make a copy
         int i = 0;
@@ -49,10 +37,6 @@ public class GameInteractionController implements TableObserverInterface {
     }
 
     public Table play(Meld hand) {
-        return null;
-    }
-
-    public Table play(Meld hand, String message) {
         return null;
     }
 
