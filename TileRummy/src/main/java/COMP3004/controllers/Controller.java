@@ -133,6 +133,7 @@ public class Controller
             }
 
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
+            if(!playedTable.isValid()) break;
 
 
             //print winner

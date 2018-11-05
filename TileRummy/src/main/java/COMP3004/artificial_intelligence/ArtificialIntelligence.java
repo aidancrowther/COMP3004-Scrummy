@@ -358,47 +358,43 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     //Return an arrayList of indeces for melds that do not share tiles
-    protected ArrayList<Meld> findUnique(Meld m, HashMap<Meld, Integer> h, HashMap<Tile, Integer> inHand){
+    protected ArrayList<Meld> findUnique(Meld m, HashMap<Meld, Integer> h, HashMap<String, Integer> inHand){
 
         ArrayList<Meld> results = new ArrayList<>();
+        HashMap<String, Integer> handUsed = new HashMap<String, Integer>(inHand);
+        ArrayList<Integer> usedMelds = new ArrayList<>();
+
+        for(Tile t : m.getTiles()) handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+        results.add(m);
 
         //Iterate over the set to compare against
         for(Map.Entry<Meld, Integer> entry : h.entrySet()){
             //Initialize tracking variables
             Boolean containsDuplicate = false;
-            HashMap<Tile, Integer> hand = inHand;
-            ArrayList<Integer> usedMelds = new ArrayList<>();
-            //Iterate over both tile sets
-            if(entry.getKey() != m){
-                Boolean cont = true;
-                //Make sure we aren't reusing a split
-                if(h.get(entry.getKey()) != 0){
-                    if(!usedMelds.contains(h.get(entry.getKey()))) cont = false;
-                    else usedMelds.add(h.get(entry.getKey()));
-                }
-                //Check all tiles for duplicates
-                if(cont){
-                    for(Tile t1 : entry.getKey().getTiles()){
-                        for(Tile t2 : m.getTiles()){
-                            //If they are the same, and there is no duplicate this set contains reused tiles
-                            if(hand.get(t1) != null) if(hand.get(t1) > 1 && t1.equals(t2) && !containsDuplicate){
-                                containsDuplicate = false;
-                                hand.put(t1, hand.get(t1)-1);
-                            }
-                            else if(hand.get(t2) != null) if(hand.get(t2) > 1 && t1.equals(t2) && !containsDuplicate){
-                                containsDuplicate = false;
-                                hand.put(t2, hand.get(t2)-1);
-                            }
-                            else containsDuplicate |= t1.equals(t2);
-                        }
-                    }
-                }
+            ArrayList<Integer> usedMeldsLocal = new ArrayList<>(usedMelds);
+            HashMap<String, Integer> handUsedLocal = new HashMap<String, Integer>(handUsed);
+            
+            //Make sure we aren't modifying the same meld twice
+            if(h.get(entry.getKey()) != 0){
+                if(usedMeldsLocal.contains(h.get(entry.getKey()))) continue;
+                else usedMeldsLocal.add(h.get(entry.getKey()));
             }
+
+            //Check for duplicate tiles
+            for(Tile t : entry.getKey().getTiles()){
+                if(handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
+                else containsDuplicate = true;
+            }
+
             //If there are no reused tiles, add to the list of indeces
-            if(!containsDuplicate) results.add(entry.getKey());
+            if(!containsDuplicate && !entry.getKey().compare(m)){
+                results.add(entry.getKey());
+                handUsed = handUsedLocal;
+                usedMelds = usedMeldsLocal;
+            }
         }
 
-        results = shortByShortest(results);
+        results = sortByShortest(results);
 
         //Return the list of indeces
         return results;
@@ -429,7 +425,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         return result;
     }
 
-    protected ArrayList<Meld> shortByShortest(ArrayList<Meld> a){
+    protected ArrayList<Meld> sortByShortest(ArrayList<Meld> a){
         //Create a comparator
         Comparator<Meld> meldLengthComparator = new Comparator<Meld>(){
             @Override
