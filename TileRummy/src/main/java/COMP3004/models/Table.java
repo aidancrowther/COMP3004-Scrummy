@@ -202,6 +202,6 @@ public class Table {
         return str;
     }
 
-    //@Override
-    //public String toString() { return prettyString(); }
+    @Override
+    public String toString() { return prettyString(); }
 }
