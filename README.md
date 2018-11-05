@@ -42,7 +42,8 @@ Roadmap:
 Design Documentation:
 
    - [Draw.io UML Diagram](https://drive.google.com/file/d/1Bs36zHr1ql-CJrYGhb1J1I1Hmx0dcjDD/view?usp=sharing)
-   - Documentation directory
+   - [Reports](https://github.com/l3rittny/Scrummy/tree/master/Documentation)
+   - [Iteration1 Grid](https://docs.google.com/spreadsheets/d/1KXhiNsOeUnJxom1icK8RAqwpGoW4P9rRsnrB9mZolRU/edit#gid=616273153)
 
 ***
 
@@ -51,6 +52,7 @@ Requirements:
    - The use of this game presently requires the user to have installed jUnit and Maven in order to perform unit testing.
    - No installation is required in order to operate the application.
    - ensure when compiling with maven and trying execution that your JAVA_HOME environment variable is set
+   - Currently developed for use with the JRE v.1.8.x
 
 Usage:
 
