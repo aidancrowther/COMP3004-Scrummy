@@ -8,11 +8,12 @@ import COMP3004.oberver_pattern.TableObserverInterface;
 import COMP3004.views.TerminalView;
 
 public class GameInteractionController implements TableObserverInterface {
-    protected TerminalView terminalView;
+    protected TerminalView terminalView = new TerminalView();
     protected Table table;
     protected Player player;
 
     public GameInteractionController(){
+        //this.terminalView = new TerminalView();
         this.table = new Table();
         this.player = new Player();
     }

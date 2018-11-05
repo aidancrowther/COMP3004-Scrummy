@@ -107,6 +107,7 @@ public class TerminalView
 
             currMeld++;
         }
+        this.printMessagePlain("\n\n");
     }
 
     public String readPlayerInput(){
@@ -145,5 +146,8 @@ public class TerminalView
         this.printMessagePlain(this.generateTileString(testTile));
     }
 
+    public void printLine(){
+        this.printMessagePlain("------------------------------------------------------------------------------------------------");
+    }
 
 }

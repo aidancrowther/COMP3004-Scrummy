@@ -50,6 +50,7 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     
     public Table play(Meld hand) {
         Table output = new Table();
+        this.player.setHand(hand);
 
         //check with the observer
         boolean playWithHand = false;
