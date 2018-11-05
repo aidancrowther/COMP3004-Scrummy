@@ -29,7 +29,6 @@ public class Table {
         melds.get(0).add(t);
 
         if (melds.get(0).isValid()) {
-            System.out.println("Meld 0 valid! Clearing it and appending meld ");
             add(melds.get(0).copy());
             melds.get(0).clear();
         }
@@ -104,7 +103,6 @@ public class Table {
 
     public boolean checkMeldZeroValidAndAppend(){
         if (melds.get(0).isValid()) {
-            System.out.println("Meld 0 valid! Clearing it and appending meld ");
             add(melds.get(0).copy());
             melds.get(0).clear();
             return true;

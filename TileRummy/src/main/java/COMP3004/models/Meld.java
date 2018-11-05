@@ -99,36 +99,27 @@ public class Meld {
     */
     public boolean isValid() {
         //valid melds must have 3+ tile
-        System.out.println("Testing meld: " + this.toString());
         if (tiles.size() < 3) {
-            System.out.println("too small");
             return false;
         }
         if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //test a run
-            System.out.println("Test a run");
             for (int i=1; i<tiles.size(); i++) {
                 if (tiles.get(i).getColour() != tiles.get(0).getColour()) { //make sure all are same colour
-                    System.out.println("one");
                     return false;
                 }
                 if (tiles.get(i).getValue() != (tiles.get(0).getValue() + i)) { //make sure all values make a run
-                    System.out.println("two");
                     return false;
                 }
             }
         } else { //test a set
-            System.out.println("Test a set");
             Set<Character> colours = new HashSet<Character>();
             for (int i=0; i<tiles.size(); i++) {
                 if (tiles.get(i).getValue() != tiles.get(0).getValue()) { //all are same value
-                    System.out.println("one");
                     return false;
                 }
                 if (colours.contains(tiles.get(i).getColour())) { //check for duplicate colours
-                    System.out.println("two");
                     return false;
                 } else {
-                    System.out.println("three");
                     colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
                 }
             }
