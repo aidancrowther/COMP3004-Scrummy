@@ -16,21 +16,6 @@ import org.junit.Test;
 public class StrategyMoreTests {
 
 
-    Tile t1 = new Tile('B', 2);
-    Tile t2 = new Tile('G', 2);
-    Tile t3 = new Tile('O', 2);
-    Tile t4 = new Tile('R', 2);
-    Tile t5 = new Tile('B', 10);
-    Tile t6 = new Tile('G', 10);
-    Tile t7 = new Tile('O', 10);
-    Tile t8 = new Tile('R', 10);
-    Tile t9 = new Tile('B', 6);
-    Tile t10 = new Tile('G', 6);
-    Tile t11 = new Tile('O', 6);
-    Tile t12 = new Tile('R', 6);
-
- 
-
     Strategy1 AI1 = new Strategy1();
     Strategy2 AI2 = new Strategy2();
     Strategy3 AI3 = new Strategy3();
@@ -49,13 +34,13 @@ public class StrategyMoreTests {
         s.notifyObservers();
 
         Meld m1 = new Meld(); 
-        m1.add(t9);
-        m1.add(t10);
-        m1.add(t11);
+        m1.add(new Tile('B', 6));
+        m1.add(new Tile('G', 6));
+        m1.add(new Tile('O', 6));
         Meld m2 = new Meld();
-        m2.add(t5);
-        m2.add(t6);
-        m2.add(t7);
+        m2.add(new Tile('B', 10));
+        m2.add(new Tile('G', 10));
+        m2.add(new Tile('O', 10));
 
         table.add(m1);
 
@@ -103,14 +88,14 @@ public class StrategyMoreTests {
         s.notifyObservers();
 
         Meld m1 = new Meld(); ;
-        m1.add(t9);
-        m1.add(t10);
-        m1.add(t11);
+        m1.add(new Tile('B', 6));
+        m1.add(new Tile('G', 6));
+        m1.add(new Tile('O', 6));
         Meld m2 = new Meld();
-        m2.add(t5);
-        m2.add(t6);
-        m2.add(t7);
-        m2.add(t8);
+        m2.add(new Tile('B', 10));
+        m2.add(new Tile('G', 10));
+        m2.add(new Tile('O', 10));
+        m2.add(new Tile('R', 10));
 
         table.add(m1);
 
@@ -159,17 +144,17 @@ public class StrategyMoreTests {
         s.notifyObservers();
 
         Meld m1 = new Meld();
-        m1.add(t1);
-        m1.add(t2);
-        m1.add(t3);
-        m1.add(t9);
-        m1.add(t10);
-        m1.add(t11);
-        m1.add(t12);
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        m1.add(new Tile('B', 6));
+        m1.add(new Tile('G', 6));
+        m1.add(new Tile('O', 6));
+        m1.add(new Tile('R', 6));
         Meld m2 = new Meld();
-        m2.add(t5);
-        m2.add(t6);
-        m2.add(t7);
+        m2.add(new Tile('B', 10));
+        m2.add(new Tile('G', 10));
+        m2.add(new Tile('O', 10));
        
 
         table.add(m2);
@@ -216,16 +201,16 @@ public class StrategyMoreTests {
         s.notifyObservers();
 
         Meld m1 = new Meld();
-        m1.add(t2);
-        m1.add(t3);
-        m1.add(t4);
-        m1.add(t5);
-        m1.add(t6);
-        m1.add(t7);
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        m1.add(new Tile('R', 2));
+        m1.add(new Tile('B', 10));
+        m1.add(new Tile('G', 10));
+        m1.add(new Tile('O', 10));
         Meld m2 = new Meld();
-        m2.add(t9);
-        m2.add(t10);
-        m2.add(t11);
+        m2.add(new Tile('B', 6));
+        m2.add(new Tile('G', 6));
+        m2.add(new Tile('O', 6));
        
 
         table.add(m2);
@@ -272,12 +257,12 @@ public class StrategyMoreTests {
 
         Meld m1 = new Meld();
         Meld m2 = new Meld();
-        m1.add(t1);
-        m1.add(t2);
-        m1.add(t3);
-        m2.add(t5);
-        m2.add(t6);
-        m2.add(t7);
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        m2.add(new Tile('B', 10));
+        m2.add(new Tile('G', 10));
+        m2.add(new Tile('O', 10));
 
         table.add(m1);
 
@@ -312,13 +297,166 @@ public class StrategyMoreTests {
 
     }
 
+    @Test
     public void testCanPlayRuns() {
+        //ITERATION GRID 8a AND 8c
 
+        Table table = new Table();
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
 
+        Meld m1 = new Meld();
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        Meld m2 = new Meld();
+        m2.add(new Tile('O', 9));
+        m2.add(new Tile('O', 10));
+        m2.add(new Tile('O', 11));
 
+        table.add(m1);
 
+        //Try working with one meld first (8a)
+        AI1.setHand(m2.copy());
+        AI1.setScore(30);
+        AI1.setTable(table);
+        Table output1 = AI1.play(AI1.getHand());
+        assertTrue(output1.getMelds().get(2).isRun());
 
+        AI2.setHand(m2.copy());
+        AI2.setScore(30);
+        AI2.setTable(table);
+        Table output2 = AI2.play(AI2.getHand());
+        assertTrue(output2.getMelds().get(2).isRun());
 
+        AI3.setHand(m2.copy());
+        AI3.setScore(30);
+        AI3.setTable(table);
+        Table output3 = AI3.play(AI3.getHand());
+        assertTrue(output3.getMelds().get(2).isRun());
+
+        AI4.setHand(m2.copy());
+        AI4.setScore(30);
+        AI4.setTable(table);
+        Table output4 = AI4.play(AI4.getHand());
+        assertTrue(output4.getMelds().get(2).isRun());
+
+        //Try adding multiple runs at once (8c)
+        m2.add(new Tile('G', 6));
+        m2.add(new Tile('G', 7));
+        m2.add(new Tile('G', 8));
+        m2.add(new Tile('G', 9));
+
+        AI1.setHand(m2.copy());
+        AI1.setScore(30);
+        AI1.setTable(table);
+        output1 = AI1.play(AI1.getHand());
+        assertTrue(output1.getMelds().get(3).isRun());
+        assertTrue(output1.getMelds().size() == 4);
+
+        AI2.setHand(m2.copy());
+        AI2.setScore(30);
+        AI2.setTable(table);
+        output2 = AI2.play(AI2.getHand());
+        assertTrue(output2.getMelds().get(3).isRun());
+        assertTrue(output2.getMelds().size() == 4);
+
+        AI3.setHand(m2.copy());
+        AI3.setScore(30);
+        AI3.setTable(table);
+        output3 = AI3.play(AI3.getHand());
+        assertTrue(output3.getMelds().get(3).isRun());
+        assertTrue(output3.getMelds().size() == 4);
+
+        AI4.setHand(m2.copy());
+        AI4.setScore(30);
+        AI4.setTable(table);
+        output4 = AI4.play(AI4.getHand());
+        assertTrue(output4.getMelds().get(3).isRun());
+        assertTrue(output4.getMelds().size() == 4);
+    }
+
+    @Test
+    public void testCanPlaySets() {
+        //ITERATION GRID 8b AND 8d
+
+        Table table = new Table();
+        Scrummy s = new Scrummy();
+        s.registerPlayerHandObserver(AI3);
+        AI3.setPlayerHandSizes(s.getPlayers());
+        s.notifyObservers();
+
+        Meld m1 = new Meld();
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('G', 2));
+        m1.add(new Tile('O', 2));
+        Meld m2 = new Meld();
+        m2.add(new Tile('O', 9));
+        m2.add(new Tile('R', 9));
+        m2.add(new Tile('G', 9));
+
+        table.add(m1);
+
+        //Try working with one set first (8b)
+        AI1.setHand(m2.copy());
+        AI1.setScore(30);
+        AI1.setTable(table);
+        Table output1 = AI1.play(AI1.getHand());
+        assertFalse(output1.getMelds().get(2).isRun());
+
+        AI2.setHand(m2.copy());
+        AI2.setScore(30);
+        AI2.setTable(table);
+        Table output2 = AI2.play(AI2.getHand());
+        assertFalse(output2.getMelds().get(2).isRun());
+
+        AI3.setHand(m2.copy());
+        AI3.setScore(30);
+        AI3.setTable(table);
+        Table output3 = AI3.play(AI3.getHand());
+        assertFalse(output3.getMelds().get(2).isRun());
+
+        AI4.setHand(m2.copy());
+        AI4.setScore(30);
+        AI4.setTable(table);
+        Table output4 = AI4.play(AI4.getHand());
+        assertFalse(output4.getMelds().get(2).isRun());
+
+        //Try adding multiple sets at once (8d)
+        m2.add(new Tile('G', 6));
+        m2.add(new Tile('R', 6));
+        m2.add(new Tile('O', 6));
+        m2.add(new Tile('B', 6));
+
+        AI1.setHand(m2.copy());
+        AI1.setScore(30);
+        AI1.setTable(table);
+        output1 = AI1.play(AI1.getHand());
+        assertFalse(output1.getMelds().get(3).isRun());
+        assertTrue(output1.getMelds().size() == 4);
+
+        AI2.setHand(m2.copy());
+        AI2.setScore(30);
+        AI2.setTable(table);
+        output2 = AI2.play(AI2.getHand());
+        assertFalse(output2.getMelds().get(3).isRun());
+        assertTrue(output2.getMelds().size() == 4);
+
+        AI3.setHand(m2.copy());
+        AI3.setScore(30);
+        AI3.setTable(table);
+        output3 = AI3.play(AI3.getHand());
+        assertFalse(output3.getMelds().get(3).isRun());
+        assertTrue(output3.getMelds().size() == 4);
+
+        AI4.setHand(m2.copy());
+        AI4.setScore(30);
+        AI4.setTable(table);
+        output4 = AI4.play(AI4.getHand());
+        assertFalse(output4.getMelds().get(3).isRun());
+        assertTrue(output4.getMelds().size() == 4);
     }
 
 
