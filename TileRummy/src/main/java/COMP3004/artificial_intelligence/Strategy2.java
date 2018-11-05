@@ -241,12 +241,16 @@ public class Strategy2 extends ArtificialIntelligence
         if ((longest >= 30 || score >= 30) && table.getMelds().size() >= 2) {
             this.terminalView.printPlayerAction("\nTable now looks like:");
             this.terminalView.printTable(output);
+            this.terminalView.printLine();
+            this.terminalView.printLine();
             return output;
         }
 
 
         this.terminalView.printPlayerAction("\nTable now looks like:");
         this.terminalView.printTable(this.table);
+        this.terminalView.printLine();
+        this.terminalView.printLine();
         return this.table;
     }
 
