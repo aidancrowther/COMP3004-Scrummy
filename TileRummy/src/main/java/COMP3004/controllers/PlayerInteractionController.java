@@ -41,7 +41,7 @@ public class PlayerInteractionController extends GameInteractionController
             this.terminalView.printTable(this.playedTable);
             return this.playedTable;
         }
-        
+
         this.terminalView.printMessage("You chose not to move.");
         return this.table; //will be the same if player doesn't move
     }
@@ -82,6 +82,12 @@ public class PlayerInteractionController extends GameInteractionController
         if(enableTableInteraction && this.playedTable.getMelds().size() > 1){
             Meld toMeld = this.selectMeldFromTable("Which meld would you like to move the tile to? (Enter meld # or 0 to create add to a tentative meld)");
             this.selectTile(fromMeld, toMeld, selectedTile);
+            if(fromMeld.getTiles().size() == 0){
+                this.playedTable.remove(fromMeld);
+            }
+            if(toMeld.getTiles().size() == 0){
+                this.playedTable.remove(toMeld);
+            }
             this.playedTable.checkMeldZeroValidAndAppend();
         } else {
             this.score += selectedTile.getValue();
