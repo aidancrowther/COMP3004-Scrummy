@@ -102,18 +102,36 @@ public class Controller
         for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
             hasSkippedAfterEmpty[i] = false;
         }
-        
-        while(play){
-            if(AIOnly && scrummy.getCurrentPlayerIndex() == 0) {
-                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
-                continue;
-            }
 
+        while(play){
             Meld playerHandCopy = new Meld();
             for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
                 playerHandCopy.add(t);
 
             Table playedTable = this.playerControllers[scrummy.getCurrentPlayerIndex()].play(scrummy.getCurrentPlayer().getHand());
+            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
+                /*
+                 * Keep track of if everyone skips a turn, if so then no one will ever win and break
+                 * */
+
+                System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
+                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
+
+                int skippedNum = 0;
+                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+                    if(hasSkippedAfterEmpty[i]){
+                        skippedNum++;
+                    }
+                }
+
+
+                if(skippedNum == hasSkippedAfterEmpty.length){
+                    //TODO: ask if want to play again
+                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
+                    break;
+                }
+            }
+
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
 
 
@@ -125,25 +143,6 @@ public class Controller
                 break;
             }
 
-            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
-                /*
-                * Keep track of if everyone skips a turn, if so then no one will ever win and break
-                * */
-                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] = true;
-                int skippedNum = 0;
-                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
-                    if(hasSkippedAfterEmpty[i]){
-                        skippedNum++;
-                    }
-                }
-
-
-                if(skippedNum == hasSkippedAfterEmpty.length-1){
-                    //TODO: ask if want to play again
-                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
-                    break;
-                }
-            }
 
             System.out.println("\n\n");
 
