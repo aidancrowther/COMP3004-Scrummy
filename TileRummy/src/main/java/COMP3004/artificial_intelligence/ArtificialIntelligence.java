@@ -326,21 +326,24 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
             //edge cases
             if (!aList.isEmpty() && !m.getTiles().isEmpty()) {
+				System.out.println(m.toString());
                 for (Meld a : aList) {
-                    for (int k=0; k<m.size(); k++) {
-                        if (a.isValid(m.getTiles().get(k))) {
-                            a.add(m.getTiles().remove(k));
-                        }
-                    }
-                    for (int k=0; k<h.size(); k++) {
-                        if (a.isValid(h.get(k))) {
-                            a.add(h.get(k));
-                            hTiles.add(h.remove(k));
-                        }
+				    for (int k=0; k<m.size(); k++) {
+					    if (a.isValid(m.getTiles().get(k))) {
+						    a.add(m.getTiles().remove(k));
+					    }
+			    	}
+				    for (int k=0; k<h.size(); k++) {
+					    if (a.isValid(h.get(k))) {
+						    a.add(h.get(k));
+						    hTiles.add(h.remove(k));
+					    }
                     }
                 }
                 if (!m.equals(t.getMelds().get(i)) && m.isValid()) {
-                    addSplitToList(aList, m.copy(), m, hTiles, h);
+				    aList.add(m.copy());
+					m.clear();
+					System.out.println(m.toString());
                 }
             }
 
