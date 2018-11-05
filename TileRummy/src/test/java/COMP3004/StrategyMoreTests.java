@@ -606,17 +606,6 @@ public class StrategyMoreTests {
     }
 
 
-    @Test
-    public void testTakeACard() {
-        //ITERATION GRID 9d AND 9e
-
-    }
-
-
-
-
-
-
 
 
 
