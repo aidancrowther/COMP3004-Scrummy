@@ -117,6 +117,7 @@ public class Strategy1 extends ArtificialIntelligence
         for(ArrayList<Meld> a : results){
             int count = 0;
             for(Meld m : a) count += m.size();
+            System.out.println(count);
             if(count > longest && score >= 30){
                 longest = a.size();
                 longestList = a;
@@ -125,6 +126,11 @@ public class Strategy1 extends ArtificialIntelligence
                 longest = listScore(a);
                 longestList = a;
             }
+        }
+
+        for(ArrayList<Meld> a : results){
+            System.out.println("New:");
+            for(Meld m : a) System.out.println(m.toString());
         }
 
         //Add each meld to the correct meld on the table, removing the tiles from the players hand

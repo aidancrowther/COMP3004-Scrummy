@@ -394,6 +394,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             }
         }
 
+        results = sortByShortest(results);
+
         //Return the list of indeces
         return results;
     }
