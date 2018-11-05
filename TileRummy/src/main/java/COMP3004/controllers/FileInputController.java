@@ -115,6 +115,7 @@ public class FileInputController extends GameInteractionController {
                 }
                 else
                     invalidCommand("Expected t/h selection recieved: " + cmd);
+                table.checkMeldZeroValidAndAppend();
             }
             else if (cmd.equals("n"))
                 break;

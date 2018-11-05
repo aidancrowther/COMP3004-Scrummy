@@ -9,14 +9,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;
 
-import COMP3004.artificial_intelligence.ArtificialIntelligence;
-import COMP3004.artificial_intelligence.Strategy1;
+import COMP3004.artificial_intelligence.*;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import org.junit.Test;
 
-//Test all AI strategies 1 - 4
+//Test all AI strategies basic functions
 public class StrategyTest{
 
  
@@ -408,6 +407,12 @@ public class StrategyTest{
         assertTrue(AI1.listScore(a) == 92);
 
     }
+
+
+
+
+
+
 
     
 }

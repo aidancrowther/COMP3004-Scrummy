@@ -75,6 +75,9 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
             strat.setHand(hand);
             strat.setTable(this.getTable());
             output = strat.play(hand);
+            if(this.getScore() < 30) {
+                this.setScore(strat.getScore());
+            }
         }
         //otherwise, only interact with table
         else {

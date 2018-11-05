@@ -185,13 +185,10 @@ public class Controller
                 this.view.printLine();
             }
             // SET NEXT PLAYER
-            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1){
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().length - 1)
                 this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
-
-            }
-            else{
+            else
                 this.scrummy.setCurrentPlayerIndex(0);
-            }
         }
     }
 
@@ -207,6 +204,11 @@ public class Controller
                 Tile t = scrummy.getDeck().pop();
                 if(t != null){
                     scrummy.getCurrentPlayer().getHand().add(t);
+<<<<<<< HEAD
+                    playerControllers[0].getTerminalView().printMessagePlain(playerControllers[scrummy.getCurrentPlayerIndex()].getPlayer().getName() + " drew from the deck tile: " + t.toString());
+                    //System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
+                    //System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
+=======
                     if(this.view != null) {
                         this.view.printMessagePlain(scrummy.getCurrentPlayer().getName() + " has drawn tile " + this.view.generateTileString(t));
                     }
@@ -214,6 +216,7 @@ public class Controller
                     if(this.view != null) {
                         this.view.printMessage("Out of tiles to be drawn.");
                     }
+>>>>>>> 37d0eb567a46911ce19e41542a3312f8a3e5a268
                 }
 
             } else {

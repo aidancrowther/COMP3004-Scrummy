@@ -44,10 +44,9 @@ public class Meld {
         Walks through the arraylist until it finds an identical tile, then removes it.
     */
     public Tile remove(Tile t) {
-        for (int i=0; i<this.size(); i++) {
-            if (this.get(i).getColour() == t.getColour() &&
-                this.get(i).getValue() == t.getValue()) {
-                    return this.tiles.remove(i);
+        for (int i=0; i<tiles.size(); i++) {
+            if (tiles.get(i).equals(t)) {
+                return tiles.remove(i);   
             }
         }
         return null;
