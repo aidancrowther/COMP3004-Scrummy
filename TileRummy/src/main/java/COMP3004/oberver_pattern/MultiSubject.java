@@ -1,7 +1,6 @@
 package COMP3004.oberver_pattern;
 
 import COMP3004.artificial_intelligence.ArtificialIntelligence;
-import COMP3004.artificial_intelligence.Strategy1;
 import COMP3004.artificial_intelligence.Strategy3;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Player;

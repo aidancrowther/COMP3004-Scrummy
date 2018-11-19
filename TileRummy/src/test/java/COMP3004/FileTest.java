@@ -15,9 +15,7 @@
  import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.PrintStream;
-import java.io.FileReader;
 import java.io.ByteArrayOutputStream;
 
 public class FileTest {

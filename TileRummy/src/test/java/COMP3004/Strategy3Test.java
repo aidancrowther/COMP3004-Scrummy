@@ -1,10 +1,5 @@
 package COMP3004;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Collections;
-import java.util.Iterator;
 import static org.junit.Assert.assertTrue;
 
 import COMP3004.artificial_intelligence.*;
@@ -220,7 +215,8 @@ public class Strategy3Test {
         s.notifyObservers();
 
 
-        Table output = AI3.play(AI3.getHand());
+        // Table output = 
+        AI3.play(AI3.getHand());
         assertTrue(AI3.getHand().size() == 0);
     }
 
@@ -264,7 +260,8 @@ public class Strategy3Test {
         s.notifyObservers();
 
 
-        Table output = AI3.play(AI3.getHand());
+        // Table output = 
+        AI3.play(AI3.getHand());
         assertTrue(AI3.getHand().size() == 0);
     }
 

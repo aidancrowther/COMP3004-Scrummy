@@ -1,5 +1,4 @@
 package COMP3004.oberver_pattern;
-import COMP3004.models.Player;
 
 public interface PlayerHandObserverInterface {
     /*

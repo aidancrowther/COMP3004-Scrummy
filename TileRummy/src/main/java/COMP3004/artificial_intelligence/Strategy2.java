@@ -125,7 +125,7 @@ public class Strategy2 extends ArtificialIntelligence
         }
 
         int count = 0;
-        for(Meld m : longestList) for(Tile t : m.getTiles()) count++;
+        for(Meld m : longestList) count += m.getTiles().size();
 
         if(count < hand.size() || (longest < 30 && score < 30)){
             //Generate array lists of moves to make
@@ -186,7 +186,7 @@ public class Strategy2 extends ArtificialIntelligence
                 //If the player is splitting
                 else if(splitResults.get(m) != null){
                     //Build up local variables
-                    AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
+                    // AbstractMap.SimpleEntry<ArrayList<Meld>, Integer> toSplit = splitResults.get(m);
                     ArrayList<Meld> meldsToAdd = new ArrayList<>();
                     ArrayList<Meld> result = new ArrayList<>();
                     int splitId = 0;

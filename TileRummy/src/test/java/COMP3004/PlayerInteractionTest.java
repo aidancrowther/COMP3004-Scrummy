@@ -1,11 +1,12 @@
 package COMP3004;
 
-import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import COMP3004.views.TerminalView;
+
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -58,16 +59,16 @@ public class PlayerInteractionTest {
         }
 
         for(Tile t : allTiles) {
-            String tileColour = terminal.getGameView().ANSI_BLUE;
+            String tileColour = TerminalView.ANSI_BLUE;
             if(t.getColour() == 'R'){
-                tileColour = terminal.getGameView().ANSI_RED;
+                tileColour = TerminalView.ANSI_RED;
             } else if(t.getColour() == 'G') {
-                tileColour = terminal.getGameView().ANSI_GREEN;
+                tileColour = TerminalView.ANSI_GREEN;
 
             } else if (t.getColour() == 'O') {
-                tileColour = terminal.getGameView().ANSI_YELLOW; //best i can do
+                tileColour = TerminalView.ANSI_YELLOW; //best i can do
             }
-            assertEquals("|" + tileColour + t.getValue() + terminal.getGameView().ANSI_RESET + "|", terminal.getGameView().generateTileString(t).replace(" ", ""));
+            assertEquals("|" + tileColour + t.getValue() + TerminalView.ANSI_RESET + "|", terminal.getGameView().generateTileString(t).replace(" ", ""));
         }
     }
 

@@ -2,7 +2,6 @@ package COMP3004;
 
 import COMP3004.controllers.Controller;
 import COMP3004.models.Meld;
-import COMP3004.models.Player;
 import COMP3004.models.Table;
 import org.junit.Test;
 
@@ -33,17 +32,17 @@ public class ControllerTest {
             originalTable.add(m);
         }
 
-        int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
+        // int intitialPlayerHandLen = controller.getScrummy().getCurrentPlayer().getHand().getTiles().size();
         controller.run(true);
 
-        //test that there is a winner
-        boolean isWinner = false;
-        for(Player p : controller.getScrummy().getPlayers()){
-            if(p.getHand().size() == 0){
-                isWinner = true;
-            }
-        }
-        //assertTrue(isWinner);
+        //test that there is a winner -- this is no longer accurate
+        // boolean isWinner = false;
+        // for(Player p : controller.getScrummy().getPlayers()){
+        //     if(p.getHand().size() == 0){
+        //         isWinner = true;
+        //     }
+        // }
+        // assertTrue(isWinner);
     }
 
 

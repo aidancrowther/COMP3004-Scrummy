@@ -69,11 +69,8 @@ public class TerminalView
     public void printActivePlayerHand(Meld hand) {
         String row = "\nPLAYER HAND:\n";
 
-        int num = 1;
-        for(Tile tile : hand.getTiles()){
+        for (int num = 1; num-1 < hand.getTiles().size(); num++)
             row += "  " + num + (num < 10 ? " " : "") + "  ";
-            num++;
-        }
 
 
         row += "\n";
