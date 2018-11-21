@@ -46,14 +46,13 @@ public class JokerTest {
     //assert that a joker can be used in a meld (isValid() passes)
 
     public void testValidity() {
-        Joker j1 = new Joker();
-        Joker j2 = new Joker();
+        Joker j = new Joker();
         Tile t1 = new Tile('B', 9);
         Tile t2 = new Tile('B', 10);
         Tile t3 = new Tile('B', 12);
-
-        j1.setColour('B');
-        j1.setValue(11);
+        Tile t4 = new Tile('G', 1);
+        Tile t5 = new Tile('O', 1);
+        Tile t6 = new Tile('R', 1);
 
         Meld m1 = new Meld();
         Meld m2 = new Meld();
@@ -61,27 +60,35 @@ public class JokerTest {
 
         m1.add(t1);
         m1.add(t2);
-        m1.add(t3);
-        m1.add(j1);
+        m1.add(j);
         assertTrue(m1.isValid());
 
-        m2.add(t1);
         m2.add(t2);
-        m2.add(j2);
+        m2.add(t3);
+        m2.add(j);
         assertTrue(m2.isValid());
 
-        m3.add(t2);
-        m3.add(t3);
-        m3.add(j2);
-        assertTrue(m2.isValid());
+        m1.add(t4);
+        m1.add(t5);
+        m2.add(t6);
     }
 
-
-
-
     //assert that a joker is counted as 30 points in meld.getScore()
+    @Test
+    public void testGetScore() {
+        Meld m1 = new Meld();
+        m1.add(new Tile('O', 1));
+        m1.add(new Tile('B', 1));
+        m1.add(new Tile('R', 1));
 
-    //assert that Table.prettyString() shows the jokers properly
+        assertTrue(m1.getScore() == 3);
+
+        m1.add(new Joker());
+        assertTrue(m1.isValid());
+        assertTrue(m1.getScore() == 33);
+
+
+    }
 
     //assert that a joker will change its colour to suit the meld it is being added to
 
