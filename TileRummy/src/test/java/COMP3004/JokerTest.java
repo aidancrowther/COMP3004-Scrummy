@@ -2,6 +2,7 @@ package COMP3004;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNoException;
 
 import COMP3004.models.Tile;
 import COMP3004.models.Joker;
@@ -31,15 +32,60 @@ public class JokerTest {
     //assert that isJoker() can identify which cards are jokers and which are not
     @Test
     public void testIsJoker() {
+        Joker j = new Joker();
+        Tile t = new Tile('B', 12);
 
+        j.setColour('B');
+        j.setValue(12);
+
+        assertTrue(j.isJoker());
+        assertFalse(t.isJoker());
     }
 
 
     //assert that a joker can be used in a meld (isValid() passes)
 
+    public void testValidity() {
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        Tile t1 = new Tile('B', 9);
+        Tile t2 = new Tile('B', 10);
+        Tile t3 = new Tile('B', 12);
+
+        j1.setColour('B');
+        j1.setValue(11);
+
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
+
+        m1.add(t1);
+        m1.add(t2);
+        m1.add(t3);
+        m1.add(j1);
+        assertTrue(m1.isValid());
+
+        m2.add(t1);
+        m2.add(t2);
+        m2.add(j2);
+        assertTrue(m2.isValid());
+
+        m3.add(t2);
+        m3.add(t3);
+        m3.add(j2);
+        assertTrue(m2.isValid());
+    }
+
+
+
+
     //assert that a joker is counted as 30 points in meld.getScore()
 
     //assert that Table.prettyString() shows the jokers properly
+
+    //assert that a joker will change its colour to suit the meld it is being added to
+
+    //asset some function that can tell if a meld contains a joker
 
     //discuss with everyone about the organization of a printed meld when the joker is included; 
     //should it just read as a big "J" or something else?
