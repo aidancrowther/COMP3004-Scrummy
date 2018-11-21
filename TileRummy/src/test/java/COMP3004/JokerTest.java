@@ -35,8 +35,6 @@ public class JokerTest {
         Joker j = new Joker();
         Tile t = new Tile('B', 12);
 
-        j.setColour('B');
-        j.setValue(12);
 
         assertTrue(j.isJoker());
         assertFalse(t.isJoker());

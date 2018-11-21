@@ -26,6 +26,14 @@ public class Tile{
         return value;
     }
 
+    public void setColour(char c) {
+        this.colour = c;
+    }
+
+    public void setValue(int v) {
+        this.value = v;
+    }
+
     //Check if the tile is equal to the tile passed in
     public Boolean equals(Tile t){
         Boolean result = true;
@@ -34,9 +42,19 @@ public class Tile{
         return result;
     }
 
+    public boolean isJoker() {
+        if (this instanceof COMP3004.models.Joker) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     //Print the cards suit and value in a human readable format
     @Override
     public String toString(){
         return ""+colour+value;
     }
+
 }
