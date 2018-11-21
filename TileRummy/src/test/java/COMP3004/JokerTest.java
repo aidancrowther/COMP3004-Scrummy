@@ -50,9 +50,9 @@ public class JokerTest {
         Tile t1 = new Tile('B', 9);
         Tile t2 = new Tile('B', 10);
         Tile t3 = new Tile('B', 12);
-        Tile t4 = new Tile('G', 1);
-        Tile t5 = new Tile('O', 1);
-        Tile t6 = new Tile('R', 1);
+        Tile t4 = new Tile('B', 1);
+        Tile t5 = new Tile('G', 1);
+        Tile t6 = new Tile('O', 1);
 
         Meld m1 = new Meld();
         Meld m2 = new Meld();
@@ -68,9 +68,13 @@ public class JokerTest {
         m2.add(j);
         assertTrue(m2.isValid());
 
-        m1.add(t4);
-        m1.add(t5);
-        m2.add(t6);
+        m3.add(t4);
+        m3.add(t5);
+        m3.add(j);
+        assertTrue(m3.isValid());
+
+        m3.add(t6);
+        assertTrue(m3.isValid());
     }
 
     //assert that a joker is counted as 30 points in meld.getScore()
@@ -86,7 +90,6 @@ public class JokerTest {
         m1.add(new Joker());
         assertTrue(m1.isValid());
         assertTrue(m1.getScore() == 33);
-
 
     }
 
