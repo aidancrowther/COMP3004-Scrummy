@@ -18,7 +18,12 @@ public class Meld {
     public int size() { return tiles.size(); }
 
     public void add(Tile t) { 
-        tiles.add(t);
+        if (t.isJoker()) {
+            this.addJoker(t);
+        }
+        else {
+            tiles.add(t);
+        }
         sort();
     }
 
@@ -71,6 +76,19 @@ public class Meld {
         return score;
     }
 
+    /*special function designed to add a joker to a meld by inspecting the meld and
+    determine what value and colour the meld should take on.
+    This is particularly important for sets.
+    */
+    public void addJoker(Tile joker) {
+
+
+
+
+
+
+    }
+
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
@@ -121,7 +139,7 @@ public class Meld {
                 }
             }
         } else { //test a set
-            Set<Character> colours = new HashSet<Character>();
+            Set<Character> colours = new HashSet<>();
             for (int i=0; i<tiles.size(); i++) {
                 if (tiles.get(i).getValue() != tiles.get(0).getValue()) { //all are same value
                     return false;
@@ -132,9 +150,12 @@ public class Meld {
                     colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
                 }
             }
+            if (colours.size() > 4) { //only possible if there are 5 cards, including a joker
+                return false;
+            }
         }
 
-        return true; //reached the end!
+        return true; 
     }
 
     public boolean isValid(Tile t) {
@@ -194,7 +215,7 @@ public class Meld {
 
     }
 
-    public boolean isRun() { //-1 is invalid, 0 is set, 1 is run
+    public boolean isRun() { //used specifically for searchSplit
         if (!isValid()) {
             return false;
         }
