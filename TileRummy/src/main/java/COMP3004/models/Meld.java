@@ -17,14 +17,10 @@ public class Meld {
 
     public int size() { return tiles.size(); }
 
-    /*
-        Adds a tile to the current meld 
-    */
     public void add(Tile t) { 
         tiles.add(t);
         sort();
     }
-
 
     public void clear() {
         tiles.clear();
@@ -39,10 +35,7 @@ public class Meld {
         return m;
     }
 
-    /*
-        Removes a tile from the meld
-        Walks through the arraylist until it finds an identical tile, then removes it.
-    */
+
     public Tile remove(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
             if (tiles.get(i).equals(t)) {
@@ -64,7 +57,20 @@ public class Meld {
     public Tile get(int id) {
      return tiles.get(id);
     }
-    
+
+    public int getScore() {
+        int score = 0;
+        for (int i=0; i<this.size(); i++) {
+            if (this.get(i).isJoker()) {
+                score += 30;
+            }
+            else {
+                score += this.get(i).getValue();
+            }
+        }
+        return score;
+    }
+
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
