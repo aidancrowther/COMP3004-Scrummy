@@ -42,7 +42,7 @@ public class JokerTest {
 
 
     //assert that a joker can be used in a meld (isValid() passes)
-
+    @Test
     public void testValidity() {
         Joker j = new Joker();
         Tile t1 = new Tile('B', 9);
@@ -61,7 +61,7 @@ public class JokerTest {
         m.addJoker(j);
         assertTrue(m.isValid()); 
         m.clear();
-
+        
         //assert jokers can be added to the middle of a run
         m.add(t2);
         m.add(t3);
@@ -78,13 +78,14 @@ public class JokerTest {
         //assert more can be added to the set with no complications
         m.add(t6);
         assertTrue(m.isValid());
-
+        
         //assert 5 cards, joker included, cannot make a set
         m.add(t7);
         assertFalse(m.isValid());
         m.clear();
 
-        /*assert that a joker can be added to an empty meld, then adjust to what's added to it
+        /*
+        assert that a joker can be added to an empty meld, then adjust to what's added to it
         m.addJoker(j);
         m.add(t2);
         m.add(t3);

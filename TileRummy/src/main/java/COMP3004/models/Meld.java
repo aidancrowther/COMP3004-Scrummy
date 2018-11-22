@@ -76,31 +76,46 @@ public class Meld {
     This is particularly important for sets.
     */
     public void addJoker(Tile joker) {
+        joker.setColour('J');
+		joker.setValue(0);
         /*
         -> inspect the meld
         -> if the meld is a set and the set is less than size 4:
                 ->add the joker and set the joker's # to the # of the set
         -> if the meld is a run, look for holes in the continuity of the numbers. 
                 -> if a hole exists, put it there
-                -> otherwise, add it to the front
-                -> if there is no front, add it to the back
+                -> otherwise, add it to the back
+                -> if there is no back, add it to the front
         */
 
         if (this.size() == 1) {
             joker.setValue(this.get(0).getValue()); //make a set
+            this.add(joker);
         }
 
         else if (this.size() > 1) {
-
             //isRun() only works for whole melds so check manually here
             if (tiles.get(0).getValue() == tiles.get(1).getValue()) { //adding a joker to a set
-                if (this.size() > 4) {
-                    joker.setValue(this.get(0).getValue());
-                }
+                joker.setValue(this.get(0).getValue());
             }
             else if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //adding a joker to a run
-                
+                joker.setColour(tiles.get(0).getColour());
+                for (int i=0; i<this.size()-1; i++) {
+                    if (this.get(i+1).getValue() - this.get(i).getValue() != 1) {
+                        joker.setValue(this.get(i).getValue() + 1);
+                    }
+                }
+                if (joker.getValue() == 0) { //if a slot for joker has not been found
+                    if (this.size() < 13) {
+                        if (tiles.get(0).getValue() != 1) {
+                            joker.setValue(tiles.get(0).getValue() - 1);
+                        }
+                        else {
+                            joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
+                        }
+                    }
 
+                }
             }
         }
 
