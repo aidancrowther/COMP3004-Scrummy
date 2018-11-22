@@ -51,43 +51,61 @@ public class JokerTest {
         Tile t4 = new Tile('B', 1);
         Tile t5 = new Tile('G', 1);
         Tile t6 = new Tile('O', 1);
+        Tile t7 = new Tile('R', 1);
 
-        Meld m1 = new Meld();
-        Meld m2 = new Meld();
-        Meld m3 = new Meld();
+        Meld m = new Meld();
 
-        m1.add(t1);
-        m1.add(t2);
-        m1.add(j);
-        assertTrue(m1.isValid());
+        //assert jokers can be added to the end of a run
+        m.add(t1);
+        m.add(t2);
+        m.addJoker(j);
+        assertTrue(m.isValid()); 
+        m.clear();
 
-        m2.add(t2);
-        m2.add(t3);
-        m2.add(j);
-        assertTrue(m2.isValid());
+        //assert jokers can be added to the middle of a run
+        m.add(t2);
+        m.add(t3);
+        m.addJoker(j);
+        assertTrue(m.isValid());
+        m.clear();
 
-        m3.add(t4);
-        m3.add(t5);
-        m3.add(j);
-        assertTrue(m3.isValid());
+        //assert jokers can be added to a set
+        m.add(t4);
+        m.add(t5);
+        m.addJoker(j);
+        assertTrue(m.isValid());
 
-        m3.add(t6);
-        assertTrue(m3.isValid());
+        //assert more can be added to the set with no complications
+        m.add(t6);
+        assertTrue(m.isValid());
+
+        //assert 5 cards, joker included, cannot make a set
+        m.add(t7);
+        assertFalse(m.isValid());
+        m.clear();
+
+        /*assert that a joker can be added to an empty meld, then adjust to what's added to it
+        m.addJoker(j);
+        m.add(t2);
+        m.add(t3);
+        assertTrue(m.isValid());
+        */
+
     }
 
     //assert that a joker is counted as 30 points in meld.getScore()
     @Test
     public void testGetScore() {
-        Meld m1 = new Meld();
-        m1.add(new Tile('O', 1));
-        m1.add(new Tile('B', 1));
-        m1.add(new Tile('R', 1));
+        Meld m = new Meld();
+        m.add(new Tile('O', 1));
+        m.add(new Tile('B', 1));
+        m.add(new Tile('R', 1));
 
-        assertTrue(m1.getScore() == 3);
+        assertTrue(m.getScore() == 3);
 
-        m1.add(new Joker());
-        //assertTrue(m1.isValid());
-        //assertTrue(m1.getScore() == 33);
+        m.addJoker(new Joker());
+        //assertTrue(m.isValid());
+        //assertTrue(m.getScore() == 33);
 
     }
 

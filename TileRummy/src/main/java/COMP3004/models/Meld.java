@@ -18,12 +18,7 @@ public class Meld {
     public int size() { return tiles.size(); }
 
     public void add(Tile t) { 
-        if (t.isJoker()) {
-            this.addJoker(t);
-        }
-        else {
-            tiles.add(t);
-        }
+        tiles.add(t);
         sort();
     }
 
@@ -81,10 +76,35 @@ public class Meld {
     This is particularly important for sets.
     */
     public void addJoker(Tile joker) {
+        /*
+        -> inspect the meld
+        -> if the meld is a set and the set is less than size 4:
+                ->add the joker and set the joker's # to the # of the set
+        -> if the meld is a run, look for holes in the continuity of the numbers. 
+                -> if a hole exists, put it there
+                -> otherwise, add it to the front
+                -> if there is no front, add it to the back
+        */
 
+        if (this.size() == 1) {
+            joker.setValue(this.get(0).getValue()); //make a set
+        }
 
+        else if (this.size() > 1) {
 
+            //isRun() only works for whole melds so check manually here
+            if (tiles.get(0).getValue() == tiles.get(1).getValue()) { //adding a joker to a set
+                if (this.size() > 4) {
+                    joker.setValue(this.get(0).getValue());
+                }
+            }
+            else if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //adding a joker to a run
+                
 
+            }
+        }
+
+        this.add(joker);
 
 
     }
@@ -95,6 +115,8 @@ public class Meld {
         comparator 
     */
     public void sort() {
+        //may need something in here to accomodate a joker changing its form
+
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
             //Override default comparator to compare by tile value (ints)
             Collections.sort(tiles, new Comparator<Tile>() {
