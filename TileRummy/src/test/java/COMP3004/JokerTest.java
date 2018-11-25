@@ -58,21 +58,21 @@ public class JokerTest {
         //assert jokers can be added to the end of a run
         m.add(t1);
         m.add(t2);
-        m.addJoker(j);
+        m.add(j);
         assertTrue(m.isValid()); 
         m.clear();
         
         //assert jokers can be added to the middle of a run
         m.add(t2);
         m.add(t3);
-        m.addJoker(j);
+        m.add(j);
         assertTrue(m.isValid());
         m.clear();
 
         //assert jokers can be added to a set
         m.add(t4);
         m.add(t5);
-        m.addJoker(j);
+        m.add(j);
         assertTrue(m.isValid());
 
         //assert more can be added to the set with no complications
@@ -85,7 +85,7 @@ public class JokerTest {
         m.clear();
 
         //assert that a joker can be added to an empty meld, then adjust to what's added to it
-        m.addJoker(j);
+        m.add(j);
         m.add(t2);
         m.add(t3);
         assertTrue(m.isValid());
@@ -93,7 +93,7 @@ public class JokerTest {
 
         //assert that a joker can be added to an unfinished meld, then adjust to what's added to it
         m.add(t1);
-        m.addJoker(j);
+        m.add(j);
         m.add(t2);
         m.add(t3);
         assertTrue(m.isValid());
@@ -110,9 +110,9 @@ public class JokerTest {
 
         assertTrue(m.getScore() == 3);
 
-        m.addJoker(new Joker());
-        //assertTrue(m.isValid());
-        //assertTrue(m.getScore() == 33);
+        m.add(new Joker());
+        assertTrue(m.isValid());
+        assertTrue(m.getScore() == 33);
 
     }
 
@@ -141,7 +141,7 @@ public class JokerTest {
         m.add(j2);
 
         assertTrue(m.getJokers().size() == 2);
-        assertTrue(m.getJokers().get(1) == 3);
+        assertTrue(m.getJokers().get(1) == 2); //alphabetical
     }
 
 

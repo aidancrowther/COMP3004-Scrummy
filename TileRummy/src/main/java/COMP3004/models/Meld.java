@@ -17,10 +17,19 @@ public class Meld {
 
     public int size() { return tiles.size(); }
 
-    public void add(Tile t) { 
-        tiles.add(t);
-        sort();
+    public void add(Tile t) {
+		if (t.isJoker()) {
+			this.addJoker(t);
+		}
+		this.tiles.add(t);
+		sort();
     }
+
+    //for recreating jokers within sort()
+	public void addInSort(Tile t) {
+		this.addJoker(t);
+		this.tiles.add(t);
+	}
 
     public void clear() {
         tiles.clear();
@@ -90,7 +99,6 @@ public class Meld {
 
         if (this.size() == 1) {
             joker.setValue(this.get(0).getValue()); //make a set
-            this.add(joker);
         }
 
         else if (this.size() > 1) {
@@ -118,10 +126,6 @@ public class Meld {
                 }
             }
         }
-
-        this.add(joker);
-
-
     }
 
     /*
@@ -130,6 +134,15 @@ public class Meld {
         comparator 
     */
     public void sort() {
+        ArrayList<Integer> jokers = this.getJokers();
+		if (jokers.size() != 0) {
+			if (jokers.contains(0) || jokers.contains(1)) {
+				for (int i : jokers) {
+					Tile joker = this.remove(this.get(i));
+					this.addInSort(joker);
+				}
+			}
+		}
         //may need something in here to accomodate a joker changing its form
 
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
@@ -265,7 +278,14 @@ public class Meld {
         }
     }
 
-
-
+    public ArrayList<Integer> getJokers() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (Tile t : this.tiles) {
+            if (t.isJoker()) {
+                list.add(tiles.indexOf(t));
+            }
+        }
+        return list;
+    }
 
 }
