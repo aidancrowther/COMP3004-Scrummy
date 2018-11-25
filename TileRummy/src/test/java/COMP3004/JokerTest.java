@@ -84,21 +84,19 @@ public class JokerTest {
         assertFalse(m.isValid());
         m.clear();
 
-        /*
-        assert that a joker can be added to an empty meld, then adjust to what's added to it
+        //assert that a joker can be added to an empty meld, then adjust to what's added to it
         m.addJoker(j);
         m.add(t2);
         m.add(t3);
         assertTrue(m.isValid());
         m.clear();
 
-        assert that a joker can be added to an unfinished meld, then adjust to what's added to it
+        //assert that a joker can be added to an unfinished meld, then adjust to what's added to it
         m.add(t1);
         m.addJoker(j);
         m.add(t2);
         m.add(t3);
         assertTrue(m.isValid());
-     */
 
     }
 
@@ -118,9 +116,38 @@ public class JokerTest {
 
     }
 
-    //assert that a joker will change its colour to suit the meld it is being added to
+    //assert that multiple jokers will not break the methods
+    @Test
+    public void testMultipleJokers() {
 
-    //asset some function that can tell if a meld contains a joker
+    }
+
+    //assert that melds have a method for determining whether or not there are jokers
+    @Test
+    public void testGetJokers() {
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        Meld m = new Meld();
+        Tile t1 = new Tile('G', 10);
+        Tile t2 = new Tile('R', 10);
+
+        m.add(t1);
+        m.add(j1);
+        m.add(t2);
+
+        assertTrue(m.getJokers().size() == 1);
+        assertTrue(m.getJokers().get(0) == 1);
+
+        m.add(j2);
+
+        assertTrue(m.getJokers().size() == 2);
+        assertTrue(m.getJokers().get(1) == 3);
+    }
+
+
+
+
+
 
     //discuss with everyone about the organization of a printed meld when the joker is included; 
     //should it just read as a big "J" or something else?
@@ -133,7 +160,7 @@ public class JokerTest {
         
         -> TBA: whether or not the AI know how to reuse jokers already on the table
 
-        -> assert that jokers will not just be appended to the fronts or ends of melds and will 
+        -> assert that jokers will not just be appended to the fronts or ends of melds by AI and will 
             be used with some "cleverness"
         -> assert that if the joker is the only card left in the hand, the ai plays it
     */
