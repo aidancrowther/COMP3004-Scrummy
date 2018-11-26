@@ -172,13 +172,10 @@ public class JokerTest {
         m.add(j1);
         m.add(j2);
 		m.add(new Tile('O', 2));
-        m.add(new Tile('O', 4));
         assertTrue(m.isValid());
 
-
-
-
-
+        m.add(new Tile('O', 4));
+        assertTrue(m.isValid());
 
     }
 

@@ -138,12 +138,17 @@ public class Meld {
 				this.addInSort(joker);
 			}
         }
-        else if (jokers.size() == 2) {
+        else if (jokers.size() == 2 && this.size() > 2) {
+			ArrayList<Tile> list = new ArrayList<>();
             for (int i=0; i<this.size(); i++) {
 				if (this.get(i).isJoker()) {
 					Tile joker = this.remove(this.get(i));
-					this.addInSort(joker);
+					list.add(joker);
+					i--;
 				}
+			}
+			for (Tile j : list) {
+				this.addInSort(j);
 			}
         }
         
@@ -184,8 +189,9 @@ public class Meld {
         if (tiles.size() < 3) {
             return false;
         }
-        if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //test a run
-            if (this.size() > 13) {
+        if (tiles.get(0).getColour() == tiles.get(1).getColour() &&
+			tiles.get(0).getValue() != tiles.get(1).getValue()) { //test a run
+			if (this.size() > 13) {
                 return false;
             }
             for (int i=1; i<tiles.size(); i++) {
@@ -196,21 +202,21 @@ public class Meld {
                     return false;
                 }
             }
-        } 
-        else { //test a set
+        } else { //test a set
             Set<Character> colours = new HashSet<>();
             for (int i=0; i<tiles.size(); i++) {
                 if (tiles.get(i).getValue() != tiles.get(0).getValue()) { //all are same value
-                    return false;
+					return false;
                 }
+
                 if (colours.contains(tiles.get(i).getColour()) && tiles.get(i).getColour() != 'J') { //check for duplicate colours
-                    return false;
+					return false;
                 } else {
-                    colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
+					colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
                 }
             }
             if (this.size() > 4) { //only possible if there are 5 cards, including a joker
-                return false;
+				return false;
             }
         }
 
