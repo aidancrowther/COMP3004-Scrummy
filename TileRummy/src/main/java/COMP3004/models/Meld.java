@@ -114,15 +114,12 @@ public class Meld {
                     }
                 }
                 if (joker.getValue() == 0) { //if a slot for joker has not been found
-                    if (this.size() < 13) {
-                        if (tiles.get(0).getValue() != 1) {
-                            joker.setValue(tiles.get(0).getValue() - 1);
-                        }
-                        else {
-                            joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
-                        }
+                    if (tiles.get(0).getValue() != 1) {
+                        joker.setValue(tiles.get(0).getValue() - 1);
                     }
-
+                    else {
+                        joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
+                    }
                 }
             }
         }
@@ -141,8 +138,16 @@ public class Meld {
 				this.addInSort(joker);
 			}
         }
+        else if (jokers.size() == 2) {
+            for (int i=0; i<this.size(); i++) {
+				if (this.get(i).isJoker()) {
+					Tile joker = this.remove(this.get(i));
+					this.addInSort(joker);
+				}
+			}
+        }
         
-        
+
         //may need something in here to accomodate a joker changing its form
 
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
@@ -180,6 +185,9 @@ public class Meld {
             return false;
         }
         if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //test a run
+            if (this.size() > 13) {
+                return false;
+            }
             for (int i=1; i<tiles.size(); i++) {
                 if (tiles.get(i).getColour() != tiles.get(0).getColour()) { //make sure all are same colour
                     return false;
@@ -188,19 +196,20 @@ public class Meld {
                     return false;
                 }
             }
-        } else { //test a set
+        } 
+        else { //test a set
             Set<Character> colours = new HashSet<>();
             for (int i=0; i<tiles.size(); i++) {
                 if (tiles.get(i).getValue() != tiles.get(0).getValue()) { //all are same value
                     return false;
                 }
-                if (colours.contains(tiles.get(i).getColour())) { //check for duplicate colours
+                if (colours.contains(tiles.get(i).getColour()) && tiles.get(i).getColour() != 'J') { //check for duplicate colours
                     return false;
                 } else {
                     colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
                 }
             }
-            if (colours.size() > 4) { //only possible if there are 5 cards, including a joker
+            if (this.size() > 4) { //only possible if there are 5 cards, including a joker
                 return false;
             }
         }
