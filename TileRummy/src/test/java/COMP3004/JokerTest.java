@@ -153,6 +153,33 @@ public class JokerTest {
         m.add(new Tile('O', 13));
         assertFalse(m.isValid());
 
+        /*assert that two jokers added at the beginning will still make a valid meld as long as another card
+        is added*/
+        m.clear();
+        m.add(j1);
+		m.add(j2);
+		m.add(new Tile('R', 1));
+        m.add(new Tile('G', 1));
+        assertTrue(m.isValid());
+
+        m.clear();
+		m.add(j1);
+		m.add(j2);
+		m.add(new Tile('O', 1));
+        assertTrue(m.isValid());
+
+        m.clear();
+        m.add(j1);
+        m.add(j2);
+		m.add(new Tile('O', 2));
+        m.add(new Tile('O', 4));
+        assertTrue(m.isValid());
+
+
+
+
+
+
     }
 
     //assert that melds have a method for determining whether or not there are jokers
