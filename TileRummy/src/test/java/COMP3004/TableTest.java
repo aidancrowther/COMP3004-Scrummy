@@ -120,7 +120,7 @@ public class TableTest {
     }
 
     @Test
-    public void testIsValid() {
+    public void testIsValider() {
         Table t = new Table();
 
         assertTrue(t.isValid());

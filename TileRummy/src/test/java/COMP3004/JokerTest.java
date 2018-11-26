@@ -2,7 +2,6 @@ package COMP3004;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNoException;
 
 import COMP3004.models.Tile;
 import COMP3004.models.Joker;
