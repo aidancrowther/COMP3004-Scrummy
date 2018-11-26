@@ -2,6 +2,7 @@ package COMP3004;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNoException;
 
 import COMP3004.models.Tile;
 import COMP3004.models.Joker;
@@ -118,6 +119,39 @@ public class JokerTest {
     //assert that multiple jokers will not break the methods
     @Test
     public void testMultipleJokers() {
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        Meld m = new Meld();
+
+        //assert a set can have 2 jokers as long as there are <5 cards
+        m.add(new Tile('R', 1));
+        m.add(new Tile('G', 1));
+        m.add(j1);
+        m.add(j2);
+        assertTrue(m.isValid());
+        
+        m.add(new Tile('O', 1));
+        assertFalse(m.isValid());
+
+        //assert that a run can have 2 jokers as long as there are <14 cards
+        m.clear();
+        m.add(new Tile('O', 2));
+        m.add(new Tile('O', 3));
+        m.add(new Tile('O', 4));
+        m.add(new Tile('O', 5));
+        m.add(new Tile('O', 6));
+        m.add(new Tile('O', 7));
+        m.add(new Tile('O', 8));
+        m.add(new Tile('O', 9));
+        m.add(new Tile('O', 10));
+        m.add(new Tile('O', 11));
+        m.add(new Tile('O', 12));
+        m.add(j1);
+        m.add(j2);
+        assertTrue(m.isValid());
+
+        m.add(new Tile('O', 13));
+        assertFalse(m.isValid());
 
     }
 

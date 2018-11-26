@@ -135,14 +135,14 @@ public class Meld {
     */
     public void sort() {
         ArrayList<Integer> jokers = this.getJokers();
-		if (jokers.size() != 0) {
+		if (jokers.size() == 1) {
 			if (jokers.contains(0) || jokers.contains(1)) {
-				for (int i : jokers) {
-					Tile joker = this.remove(this.get(i));
-					this.addInSort(joker);
-				}
+				Tile joker = this.remove(this.get(jokers.get(0)));
+				this.addInSort(joker);
 			}
-		}
+        }
+        
+        
         //may need something in here to accomodate a joker changing its form
 
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
