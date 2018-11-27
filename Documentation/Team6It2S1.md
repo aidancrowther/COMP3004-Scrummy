@@ -1,6 +1,6 @@
 # Team 6, Iteration 2, Report 1
 
-Due: November 28<sup>th</sup> 08:00
+Due: November 30<sup>th</sup> 08:00
 
     before submitting to cuLearn, a report must be sent by email to ALL team members. Do keep these emails!
 
