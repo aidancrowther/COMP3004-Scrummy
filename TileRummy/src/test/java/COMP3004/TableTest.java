@@ -119,5 +119,49 @@ public class TableTest {
 
     }
 
+    @Test
+    public void testIsValider() {
+        Table t = new Table();
+
+        assertTrue(t.isValid());
+
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld m3 = new Meld();
+
+        m1.add(new Tile('B', 1));
+        m1.add(new Tile('B', 2));
+        m1.add(new Tile('B', 3));
+        m1.add(new Tile('B', 4));
+
+        m2.add(new Tile('R', 9));
+        m2.add(new Tile('O', 9));
+        m2.add(new Tile('G', 9));
+
+        t.add(m1);
+        t.add(m2);
+
+        assertTrue(t.isValid());
+
+        t.add(new Tile('G', 7));
+        t.add(new Tile('G', 8));
+
+        assertFalse(t.isValid());
+
+        t.add(new Tile('G', 9));
+
+        assertTrue(t.isValid());
+
+        m3.add(new Tile('R', 5));
+        m3.add(new Tile('R', 6));
+        m3.add(new Tile('R', 8));
+        m3.add(new Tile('R', 9));
+
+        t.add(m3);
+
+        assertFalse(t.isValid());
+
+    }
+
 
 }
