@@ -54,7 +54,9 @@ public class GameApplication {
                 System.out.println("here 2");
                 Rectangle rectangle = new Rectangle( 100,100,30,50);
                 rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
-                rectangle.setOnMousePressed(e -> System.out.println(t));
+                rectangle.setOnMousePressed(e -> {
+                    System.out.println(t);
+                });
                 this.firstLayer.getChildren().add(rectangle);
             }
         }
@@ -64,7 +66,9 @@ public class GameApplication {
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 100,100,30,50);
             rectangle.setFill(Color.rgb(252, 248, 224,1.0));
-            rectangle.setOnMousePressed(e -> System.out.println(playerControl.getPlayer()));
+            rectangle.setOnMousePressed(e -> {
+                System.out.println(playerControl.getPlayer());
+            });
             this.firstLayer.getChildren().add(rectangle);
         }
     }
