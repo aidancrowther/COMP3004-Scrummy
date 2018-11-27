@@ -1,18 +1,43 @@
 package COMP3004;
 
+import COMP3004.GUI.GameApplication;
 import COMP3004.controllers.Controller;
+import COMP3004.controllers.GameInteractionController;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
+    protected static Stage primaryStage;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Controller controller = new Controller();
+        GameApplication gameView = new GameApplication(controller);
+        controller.setGraphicalView(gameView);
+        gameView.getRoot().getChildren().addAll(gameView.getFirstLayer());
+        gameView.draw();
+        this.primaryStage = primaryStage;
+        this.primaryStage.setScene(new Scene(gameView.getRoot(), 1000, 700));
+        this.primaryStage.show();
+    }
+
+
     public static void main (String[] args) {
-        Controller controller;
-        if (args.length == 0)
+        launch(args);
+        /*Controller controller = new Controller();
+        GameApplication gameView = new GameApplication(controller);
+
+        gameView.launch(GameApplication.class, args);
+        /*if (args.length == 0)
             controller = new Controller();
         else{
             args = parseArgs(args);
             controller = new Controller(args);
-        }
+        }*/
 
-        controller.run(false);
+        //controller.run(false);
     }
 
     private static String[] parseArgs(String[] args){

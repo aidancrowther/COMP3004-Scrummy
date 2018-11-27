@@ -12,12 +12,14 @@
 
 package COMP3004.controllers;
 
+import COMP3004.GUI.GameApplication;
 import COMP3004.artificial_intelligence.*;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
 import COMP3004.models.Meld;
 import COMP3004.models.Tile;
 import COMP3004.models.Player;
+import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
 
 public class Controller
@@ -25,6 +27,9 @@ public class Controller
     private Scrummy scrummy;
     private TerminalView view;
     private GameInteractionController[] playerControllers;
+
+    protected GameApplication graphicalView;
+    protected Table table;
 
     public Controller(){
         this.view = new TerminalView();
@@ -242,4 +247,16 @@ public class Controller
                 return null;
         return this.playerControllers[id];
     }
+    public GameInteractionController[] getPlayerControllers() {
+        return this.playerControllers;
+    }
+
+    public GameApplication getGraphicalView() {
+        return graphicalView;
+    }
+
+    public void setGraphicalView(GameApplication graphicalView) {
+        this.graphicalView = graphicalView;
+    }
+
 }
