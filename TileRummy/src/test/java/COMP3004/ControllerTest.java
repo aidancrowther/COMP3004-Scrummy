@@ -15,7 +15,7 @@ public class ControllerTest {
      * While everyone has cards in their hand...
      * Set view's hand to current players hand in scrummy
      * copy players hand, pass in players hand?
-     * Set views table to table in scrummy
+     * Set terminal table to table in scrummy
      * If table equals scrummy table,
      *   add a card to the players hand
      * else

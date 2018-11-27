@@ -10,7 +10,7 @@
  * This UI implemenation should link into std.io and allow the user to play the game from there
  */
 
-package COMP3004.views;
+package COMP3004.terminal;
 
 import COMP3004.models.Meld;
 import COMP3004.models.Table;

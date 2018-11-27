@@ -15,7 +15,7 @@ package COMP3004.controllers;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import COMP3004.views.TerminalView;
+import COMP3004.terminal.TerminalView;
 
 public class PlayerInteractionController extends GameInteractionController
 {

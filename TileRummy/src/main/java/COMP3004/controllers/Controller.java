@@ -19,8 +19,7 @@ import COMP3004.models.Table;
 import COMP3004.models.Meld;
 import COMP3004.models.Tile;
 import COMP3004.models.Player;
-import COMP3004.views.GraphicalView;
-import COMP3004.views.TerminalView;
+import COMP3004.terminal.TerminalView;
 
 public class Controller
 {
@@ -71,7 +70,7 @@ public class Controller
                 scrummy = new Scrummy(((FileInputController)this.playerControllers[0]).getDeck());
                 break;
             case 'g':
-                this.playerControllers[0] = new GraphicalViewController(); //PLAYER
+                //this.playerControllers[0] = new GraphicalViewController(); //PLAYER
                 break;
             case 't':
                 this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
@@ -127,7 +126,7 @@ public class Controller
         * While everyone has cards in their hand...
         * Set view's hand to current players hand in scrummy
         * copy players hand, pass in players actual hand
-        * Set views table to table in scrummy (done by observer)
+        * Set terminal table to table in scrummy (done by observer)
         * If table equals scrummy table,
         *   add a card to the players hand
         * else
