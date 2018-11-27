@@ -5,10 +5,11 @@ import COMP3004.models.Player;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserverInterface;
+import COMP3004.views.GraphicalView;
 import COMP3004.views.TerminalView;
 
 public class GameInteractionController implements TableObserverInterface {
-    protected TerminalView terminalView = new TerminalView();
+    protected GraphicalView terminalView = new GraphicalView();
     protected Table table;
     protected Player player;
 
