@@ -5,12 +5,9 @@ import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
