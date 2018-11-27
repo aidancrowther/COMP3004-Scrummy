@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class GameApplication {
     //hands given
     //table given
-    //Selected tile
+    //Selected tile - observer?
     protected Controller controller;
     StackPane root = new StackPane(); //add layers to our view
     protected Pane firstLayer = new Pane();
@@ -28,6 +28,7 @@ public class GameApplication {
 
 
     public GameApplication(Controller controller){
+        this.root.setStyle("-fx-background-color: #333333");
         this.controller = controller;
         for(GameInteractionController iControl : controller.getPlayerControllers()){
             iControl.setGUI(this);
@@ -40,17 +41,13 @@ public class GameApplication {
     }
 
     public void draw(){
-        System.out.println(this.controller);
+        this.firstLayer.getChildren().clear();
         int i = 0;
         for(GameInteractionController iControl : this.controller.getPlayerControllers()){
-            this.drawHand(iControl.getPlayer().getHand(), i);
+            this.drawHand(iControl);
             i++;
         }
-
         this.drawTable(this.controller.getScrummy().getTable());
-
-        System.out.println(this.root);
-        System.out.println(this.firstLayer);
     }
 
     public void drawTable(Table table){
@@ -58,25 +55,20 @@ public class GameApplication {
             System.out.println("here");
             for(Tile t : m.getTiles()) {
                 System.out.println("here 2");
-                Rectangle rectangle = new Rectangle( 100,100,30,80);
-                rectangle.setFill(Color.GREEN);
+                Rectangle rectangle = new Rectangle( 100,100,30,50);
+                rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
                 rectangle.setOnMousePressed(e -> System.out.println(t));
                 this.firstLayer.getChildren().add(rectangle);
             }
         }
-        //.getChildren().clear();
     }
 
-    public void drawHand(Meld hand, int playerIndex){
-        if(playerIndex >= 0 && playerIndex < this.playerHands.size()){
-            System.out.println("here 3");
-            for(Tile t : hand.getTiles()) {
-                System.out.println("here 4");
-                Rectangle rectangle = new Rectangle( 100,100,30,80);
-                rectangle.setFill(Color.GREEN);
-                rectangle.setOnMousePressed(e -> System.out.println(t));
-                this.firstLayer.getChildren().add(rectangle);
-            }
+    public void drawHand(GameInteractionController playerControl) {
+        for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
+            Rectangle rectangle = new Rectangle( 100,100,30,50);
+            rectangle.setFill(Color.rgb(252, 248, 224,1.0));
+            rectangle.setOnMousePressed(e -> System.out.println(playerControl.getPlayer()));
+            this.firstLayer.getChildren().add(rectangle);
         }
     }
 
