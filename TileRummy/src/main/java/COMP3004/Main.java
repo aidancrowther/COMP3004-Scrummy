@@ -1,8 +1,7 @@
 package COMP3004;
 
-import COMP3004.GUI.GameApplication;
+import COMP3004.GUI.GraphicalView;
 import COMP3004.controllers.Controller;
-import COMP3004.controllers.GameInteractionController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Controller controller = new Controller();
-        GameApplication gameView = new GameApplication(controller);
+        GraphicalView gameView = new GraphicalView(controller);
         controller.setGraphicalView(gameView);
         gameView.getRoot().getChildren().addAll(gameView.getFirstLayer());
         gameView.draw();
@@ -27,9 +26,9 @@ public class Main extends Application {
     public static void main (String[] args) {
         launch(args);
         /*Controller controller = new Controller();
-        GameApplication gameView = new GameApplication(controller);
+        GraphicalView gameView = new GraphicalView(controller);
 
-        gameView.launch(GameApplication.class, args);
+        gameView.launch(GraphicalView.class, args);
         /*if (args.length == 0)
             controller = new Controller();
         else{

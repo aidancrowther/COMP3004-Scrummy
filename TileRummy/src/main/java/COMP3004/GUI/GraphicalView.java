@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class GameApplication {
+public class GraphicalView {
     protected StackPane root = new StackPane(); //add layers to our view
     protected Pane firstLayer = new Pane();
 
@@ -22,7 +22,7 @@ public class GameApplication {
     protected int currentPlayerIndex = 0;
 
 
-    public GameApplication(Controller controller){
+    public GraphicalView(Controller controller){
         this.root.setStyle("-fx-background-color: #333333");
         this.controller = controller;
         for(GameInteractionController iControl : controller.getPlayerControllers()){

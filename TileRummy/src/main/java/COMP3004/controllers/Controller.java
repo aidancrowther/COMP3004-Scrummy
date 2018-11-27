@@ -12,7 +12,7 @@
 
 package COMP3004.controllers;
 
-import COMP3004.GUI.GameApplication;
+import COMP3004.GUI.GraphicalView;
 import COMP3004.artificial_intelligence.*;
 import COMP3004.models.Scrummy;
 import COMP3004.models.Table;
@@ -27,7 +27,7 @@ public class Controller
     private TerminalView view;
     private GameInteractionController[] playerControllers;
 
-    protected GameApplication graphicalView;
+    protected GraphicalView graphicalView;
     protected Table table;
 
     public Controller(){
@@ -250,11 +250,11 @@ public class Controller
         return this.playerControllers;
     }
 
-    public GameApplication getGraphicalView() {
+    public GraphicalView getGraphicalView() {
         return graphicalView;
     }
 
-    public void setGraphicalView(GameApplication graphicalView) {
+    public void setGraphicalView(GraphicalView graphicalView) {
         this.graphicalView = graphicalView;
     }
 
