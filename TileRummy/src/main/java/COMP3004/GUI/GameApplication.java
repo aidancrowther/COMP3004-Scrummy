@@ -13,15 +13,13 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class GameApplication {
-    //hands given
-    //table given
-    //Selected tile - observer?
-    protected Controller controller;
-    StackPane root = new StackPane(); //add layers to our view
+    protected StackPane root = new StackPane(); //add layers to our view
     protected Pane firstLayer = new Pane();
-    protected int currentPlayerIndex;
+
+    protected Controller controller;
     protected ArrayList<Meld> playerHands = new ArrayList<Meld>();
-    protected Table table;
+    //protected Table table;
+    protected int currentPlayerIndex = 0;
 
 
     public GameApplication(Controller controller){
@@ -56,6 +54,8 @@ public class GameApplication {
                 rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
                 rectangle.setOnMousePressed(e -> {
                     System.out.println(t);
+                    System.out.println(currentPlayerIndex);
+                    //TODO: set user selected tile here or to meld
                 });
                 this.firstLayer.getChildren().add(rectangle);
             }
@@ -64,10 +64,14 @@ public class GameApplication {
 
     public void drawHand(GameInteractionController playerControl) {
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
-            Rectangle rectangle = new Rectangle( 100,100,30,50);
+            Rectangle rectangle = new Rectangle( 400,100,30,50);
             rectangle.setFill(Color.rgb(252, 248, 224,1.0));
             rectangle.setOnMousePressed(e -> {
                 System.out.println(playerControl.getPlayer());
+                System.out.println(t);
+                //TODO: set user selected tile here
+                this.controller.getScrummy().getTable().add(t);
+                drawTable(this.controller.getScrummy().getTable());
             });
             this.firstLayer.getChildren().add(rectangle);
         }
