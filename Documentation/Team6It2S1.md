@@ -26,13 +26,16 @@ __Plans until next week:__
 
 __Work completed:__
 
-* 
-* 
+* Implemented Joker class
+* Adjusted Meld so that Jokers can be added appropriately and will remain static on the board
+* Began work for AI effectively using jokers
+* Added validity check for table, considering the possibility that an invalid table is now possible
 
-__Plans until next week:__
+__Plans until due date:__
 
-* 
-* 
+* Ensure that AI can use jokers effectively
+* Ensure that AI can perform, to an extent, complex board reuse
+* Finish video with teammates
 
 ## **Brittny Lapierre**
 
@@ -41,7 +44,7 @@ __Work completed:__
 * 
 * 
 
-__Plans until next week:__
+__Plans until due date:__
 
 * 
 * 
@@ -53,7 +56,7 @@ __Work completed:__
 * 
 * 
 
-__Plans until next week:__
+__Plans until due date:__
 
 * 
 * 
