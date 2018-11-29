@@ -57,7 +57,12 @@ public class GraphicalView {
         newMeldBtn.setOnMouseClicked(e -> {
             if(this.selectedTile != null){
                 controller.getScrummy().getTable().add(selectedTile);
-                this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().remove(selectedTile);
+                if(this.fromMeld != null){
+                    this.fromMeld.remove(selectedTile);
+                    this.fromMeld = null;
+                } else {
+                    this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().remove(selectedTile);
+                }
                 selectedTile = null;
                 draw();
             } else {
@@ -140,9 +145,10 @@ public class GraphicalView {
                                 }
                                 System.out.println(controller.getScrummy().getTable().getMelds().size());
                                 if(controller.getScrummy().getTable().getMelds().size() == 1){
-                                    int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
+                                    //int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
-                                    controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
+                                    //controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
+                                    m.getTiles().remove(t);
                                     selectedTile = null;
                                     fromMeld = null;
                                 }
@@ -151,15 +157,14 @@ public class GraphicalView {
                                 System.out.println("right click");
                                 //YOU HAVE TO SELECT A TILE FIRST
                                 if(selectedTile != null){
+
                                     if (fromMeld != null) {
                                         toMeld = m;
                                     }
 
                                     if (fromMeld != null && toMeld != null) {
-                                        int fromMeldIndex = controller.getScrummy().getTable().getMelds().indexOf(fromMeld);
-                                        int toMeldIndex = controller.getScrummy().getTable().getMelds().indexOf(toMeld);
-                                        table.getMelds().get(fromMeldIndex).getTiles().remove(selectedTile);
-                                        table.getMelds().get(toMeldIndex).getTiles().add(selectedTile);
+                                        fromMeld.getTiles().remove(selectedTile);
+                                        toMeld.getTiles().add(selectedTile);
                                         fromMeld = null;
                                         toMeld = null;
                                         selectedTile = null;
@@ -229,12 +234,15 @@ public class GraphicalView {
                                 controller.getScrummy().getTable().add(selectedTile);
                                 playerControl.getPlayer().getHand().remove(t);
                                 selectedTile = null;
+                            } else {
+                                fromMeld = playerControl.getPlayer().getHand();
                             }
                         } else {
-                            //TODO: set user selected tile here or to meld
                             //YOU HAVE TO SELECT A TILE FIRST
-                            if(selectedTile != null){
+                            System.out.println(fromMeld);
+                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(0)){ //Only allow player to add back tiles from new meld
                                 playerControl.getPlayer().getHand().add(selectedTile);
+                                fromMeld.remove(selectedTile);
                                 selectedTile = null;
                             } else {
                                 System.out.println("select a tile first by left clicking one");
