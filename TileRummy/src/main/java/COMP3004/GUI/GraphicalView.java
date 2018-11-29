@@ -8,11 +8,14 @@ import COMP3004.models.Tile;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
@@ -30,8 +33,9 @@ public class GraphicalView {
     protected int fromMeldIndex;
     protected int currentPlayerIndex = 0;
 
-    protected BorderPane root = new BorderPane();
-    //protected StackPane root = new StackPane(); //add layers to our view
+    protected GridPane root = new GridPane();
+    protected BorderPane tablePane = new BorderPane();
+    protected HBox topButtons = new HBox();
 
     protected Controller controller;
     protected ArrayList<Meld> playerHands = new ArrayList<Meld>();
@@ -39,6 +43,34 @@ public class GraphicalView {
 
     public GraphicalView(Controller controller){
         this.root.setStyle("-fx-background-color: #333333");
+        this.tablePane.setStyle("-fx-background-color: #333333");
+        this.tablePane.setMinSize(1000,600);
+
+        this.topButtons.setStyle("-fx-background-color: #333333");
+        Button finishTurnBtn = new Button("Finish Turn");
+        finishTurnBtn.setOnMouseClicked(e -> {
+            this.finishTurn();
+        });
+        finishTurnBtn.setPrefSize(100, 20);
+
+        Button newMeldBtn = new Button("Add To New Meld");
+        newMeldBtn.setOnMouseClicked(e -> {
+            if(this.selectedTile != null){
+                controller.getScrummy().getTable().add(selectedTile);
+                this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().remove(selectedTile);
+                selectedTile = null;
+                draw();
+            } else {
+                System.out.println("Select a tile first");
+            }
+        });
+        newMeldBtn.setPrefSize(100, 20);
+
+        this.topButtons.getChildren().addAll(finishTurnBtn, newMeldBtn);
+        this.root.add(this.topButtons, 0, 0);
+
+        this.root.add(this.tablePane, 0, 1);
+
         this.controller = controller;
         for(GameInteractionController iControl : controller.getPlayerControllers()){
             iControl.setGUI(this);
@@ -51,7 +83,7 @@ public class GraphicalView {
     }
 
     public void draw(){
-        this.root.getChildren().clear();
+        this.tablePane.getChildren().clear();
         int i = 1;
         for(GameInteractionController iControl : this.controller.getPlayerControllers()){
             this.drawHand(iControl, i-1, i % 2 == 0);
@@ -63,7 +95,10 @@ public class GraphicalView {
     public void drawTable(Table table){
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #333333");
+
+
         GridPane gridPane = new GridPane();
+
         gridPane.setStyle("-fx-background-color: #333333");
         gridPane.setMinSize(850, 550);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -73,28 +108,29 @@ public class GraphicalView {
         int i = 0;
         int j = 0;
         for(Meld m : table.getMelds()){
-            for(Tile t : m.getTiles()) {
-                Rectangle rectangle = new Rectangle( 100,100,30,50);
-                rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
-                Text text = new Text(Integer.toString(t.getValue()));
-                text.setFont(Font.font ("Verdana", 20));
-                if(t.getColour() == 'R'){
-                    text.setFill(Color.RED);
-                } else if (t.getColour() == 'G') {
-                    text.setFill(Color.GREEN);
-                } else if (t.getColour() == 'B') {
-                    text.setFill(Color.BLUE);
-                } else if (t.getColour() == 'O') {
-                    text.setFill(Color.DARKGOLDENROD);
-                }
-                text.setBoundsType(TextBoundsType.VISUAL);
-                StackPane tile = new StackPane();
-                tile.getChildren().addAll(rectangle, text);
-                tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                            //if(mouseEvent.getClickCount() == 2){
+            if(m.getTiles().size()!=0){
+                for(Tile t : m.getTiles()) {
+                    Rectangle rectangle = new Rectangle( 100,100,30,50);
+                    rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
+                    Text text = new Text(Integer.toString(t.getValue()));
+                    text.setFont(Font.font ("Verdana", 20));
+                    if(t.getColour() == 'R'){
+                        text.setFill(Color.RED);
+                    } else if (t.getColour() == 'G') {
+                        text.setFill(Color.GREEN);
+                    } else if (t.getColour() == 'B') {
+                        text.setFill(Color.BLUE);
+                    } else if (t.getColour() == 'O') {
+                        text.setFill(Color.DARKGOLDENROD);
+                    }
+                    text.setBoundsType(TextBoundsType.VISUAL);
+                    StackPane tile = new StackPane();
+                    tile.getChildren().addAll(rectangle, text);
+                    tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                                //if(mouseEvent.getClickCount() == 2){
                                 if(selectedTile == t) {
                                     selectedTile = null;
                                 } else {
@@ -105,31 +141,38 @@ public class GraphicalView {
                                     int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
                                     controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
-                                    draw();
+                                    selectedTile = null;
                                 }
-                        } else {
+                            } else {
                                 //TODO: set user selected tile here or to meld
                                 //YOU HAVE TO SELECT A TILE FIRST
                                 int clickedMeldIndex = table.getMelds().indexOf(m);
                                 if(selectedTile != null){
                                     if(fromMeldIndex != clickedMeldIndex){
                                         table.getMelds().get(clickedMeldIndex).add(selectedTile);
+                                        selectedTile = null;
                                     }
                                 } else {
                                     System.out.println("select a tile first by left click one");
                                 }
-                            //}
+                                //}
+                            }
+                            draw();
                         }
+                    });
+                    gridPane.add(tile, i, j);
+                    i++;
+                    if(m.size() == i){
+                      i = 0;
                     }
-                });
-                gridPane.add(tile, i, j);
-                i++;
+                }
             }
             j++;
         }
 
+        this.tablePane.setCenter(null);
         scrollPane.setContent(gridPane);
-        this.root.setCenter(scrollPane);
+        this.tablePane.setCenter(scrollPane);
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
     }
 
@@ -160,38 +203,33 @@ public class GraphicalView {
             text.setBoundsType(TextBoundsType.VISUAL);
             StackPane tile = new StackPane();
             tile.getChildren().addAll(rectangle, text);
-            if(index == currentPlayerIndex){ //only the player can select their hand
+            if(index == this.currentPlayerIndex){ //only the player can select their hand
                 tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        System.out.println("Yay");
                         //TODO: set user selected tile here
-                        //controller.getScrummy().getTable().add(t);
                         if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                            //if(mouseEvent.getClickCount() == 2){
-                                if(selectedTile == t) {
-                                    selectedTile = null;
-                                } else {
-                                    selectedTile = t;
-                                }
-
-                                if(controller.getScrummy().getTable().getMelds().size() == 1){
-                                    controller.getScrummy().getTable().add(selectedTile);
-                                    playerControl.getPlayer().getHand().remove(t);
-                                    //drawTable(controller.getScrummy().getTable());
-                                    draw();
-                                }
-
+                            if(selectedTile == t) {
+                                selectedTile = null;
                             } else {
-                                //TODO: set user selected tile here or to meld
-                                //YOU HAVE TO SELECT A TILE FIRST
-                                if(selectedTile != null){
-                                    playerControl.getPlayer().getHand().add(selectedTile);
-                                } else {
-                                    System.out.println("select a tile first by left clicking one");
-                                }
+                                selectedTile = t;
                             }
-                        //}
+                            if(controller.getScrummy().getTable().getMelds().size() == 1){
+                                controller.getScrummy().getTable().add(selectedTile);
+                                playerControl.getPlayer().getHand().remove(t);
+                                selectedTile = null;
+                            }
+                        } else {
+                            //TODO: set user selected tile here or to meld
+                            //YOU HAVE TO SELECT A TILE FIRST
+                            if(selectedTile != null){
+                                playerControl.getPlayer().getHand().add(selectedTile);
+                                selectedTile = null;
+                            } else {
+                                System.out.println("select a tile first by left clicking one");
+                            }
+                        }
+                        draw();
                     }
                 });
             }
@@ -216,13 +254,13 @@ public class GraphicalView {
         }
 
         if(index == 0){
-            this.root.setBottom(handPane);
+            this.tablePane.setBottom(handPane);
         } else if (index == 1) {
-            this.root.setRight(handPane);
+            this.tablePane.setRight(handPane);
         } else if (index == 2) {
-            this.root.setTop(handPane);
+            this.tablePane.setTop(handPane);
         } else if (index == 3) {
-            this.root.setLeft(handPane);
+            this.tablePane.setLeft(handPane);
         }
         BorderPane.setAlignment(handPane, Pos.CENTER);
         BorderPane.setMargin(handPane, new Insets(12,12,12,12));
@@ -240,10 +278,11 @@ public class GraphicalView {
         return currentPlayerIndex;
     }
 
-    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+    public void setCurrentPlayerIndex(int c) {
+        this.currentPlayerIndex = c;
         this.tableBefore = controller.getScrummy().getTable().copy();
-        this.handBefore = controller.getPlayerController(getCurrentPlayerIndex()).getPlayer().getHand().copy();
-        this.currentPlayerIndex = currentPlayerIndex;
+        this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
+        this.draw();
     }
 
     public void finishTurn(){
@@ -260,11 +299,11 @@ public class GraphicalView {
     }
 
 
-    public BorderPane getRoot() {
+    public GridPane getRoot() {
         return root;
     }
 
-    public void setRoot(BorderPane root) {
+    public void setRoot(GridPane root) {
         this.root = root;
     }
 

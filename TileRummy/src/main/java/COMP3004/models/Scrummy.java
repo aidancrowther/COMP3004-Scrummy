@@ -13,7 +13,6 @@ package COMP3004.models;
 import COMP3004.artificial_intelligence.Strategy3;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.oberver_pattern.MultiSubject;
-
 import java.util.ArrayList;
 
 public class Scrummy extends MultiSubject // Table and Players are in superclass
@@ -39,6 +38,7 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         players[3].setName("AI 3");
         players[4].setName("AI 4");
     }
+
     public Scrummy(Deck d){
         deck = d;
         // Give players hands here
@@ -102,7 +102,6 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         for(GameInteractionController observer : this.tableObservers) {
             observer.update(this.table);
         }
-
 
         int index = 0;
         for(Strategy3 observer : this.playerHandObservers) {
