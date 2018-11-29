@@ -281,12 +281,17 @@ public class GraphicalView {
     public void setCurrentPlayerIndex(int c) {
         this.currentPlayerIndex = c;
         this.tableBefore = controller.getScrummy().getTable().copy();
+        System.out.println("PLayer table b4: " + this.tableBefore.toString());
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
+        if(this.currentPlayerIndex != 0){ //TODO: set these check if 0s to check if instance of player interaction controller instead
+            this.finishTurn();
+        }
         this.draw();
     }
 
     public void finishTurn(){
         this.controller.finishTurn();
+        //this.draw();
     }
 
 

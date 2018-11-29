@@ -217,7 +217,10 @@ public class Table {
         for(Meld m: this.melds) {
             if(i != 0){
                 Meld newM = new Meld();
-                copy.add(newM.copy());
+                for(Tile t: m.getTiles()) {
+                    newM.add(t);
+                }
+                copy.add(newM);
             }
             i++;
         }
