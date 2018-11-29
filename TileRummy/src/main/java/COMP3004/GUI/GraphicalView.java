@@ -22,9 +22,13 @@ import javafx.scene.text.TextBoundsType;
 import java.util.ArrayList;
 
 public class GraphicalView {
+    protected Table tableBefore;
+    protected Meld handBefore;
     protected Tile selectedTile;
+
     protected int toMeldIndex;
     protected int fromMeldIndex;
+    protected int currentPlayerIndex = 0;
 
     protected BorderPane root = new BorderPane();
     //protected StackPane root = new StackPane(); //add layers to our view
@@ -32,10 +36,6 @@ public class GraphicalView {
     protected Controller controller;
     protected ArrayList<Meld> playerHands = new ArrayList<Meld>();
     //protected Table table;
-    protected int currentPlayerIndex = 0;
-
-    protected Table tableBefore;
-
 
     public GraphicalView(Controller controller){
         this.root.setStyle("-fx-background-color: #333333");
@@ -100,7 +100,14 @@ public class GraphicalView {
                                 } else {
                                     selectedTile = t;
                                 }
-                            } else {
+                                System.out.println(controller.getScrummy().getTable().getMelds().size());
+                                if(controller.getScrummy().getTable().getMelds().size() == 1){
+                                    int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
+                                    controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
+                                    controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
+                                    draw();
+                                }
+                        } else {
                                 //TODO: set user selected tile here or to meld
                                 //YOU HAVE TO SELECT A TILE FIRST
                                 int clickedMeldIndex = table.getMelds().indexOf(m);
@@ -168,7 +175,6 @@ public class GraphicalView {
                                     selectedTile = t;
                                 }
 
-                                System.out.println(controller.getScrummy().getTable().getMelds().size());
                                 if(controller.getScrummy().getTable().getMelds().size() == 1){
                                     controller.getScrummy().getTable().add(selectedTile);
                                     playerControl.getPlayer().getHand().remove(t);
@@ -236,7 +242,12 @@ public class GraphicalView {
 
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.tableBefore = controller.getScrummy().getTable().copy();
+        this.handBefore = controller.getPlayerController(getCurrentPlayerIndex()).getPlayer().getHand().copy();
         this.currentPlayerIndex = currentPlayerIndex;
+    }
+
+    public void finishTurn(){
+        this.controller.finishTurn();
     }
 
 
@@ -255,6 +266,23 @@ public class GraphicalView {
 
     public void setRoot(BorderPane root) {
         this.root = root;
+    }
+
+
+    public Table getTableBefore() {
+        return tableBefore;
+    }
+
+    public void setTableBefore(Table tableBefore) {
+        this.tableBefore = tableBefore;
+    }
+
+    public Meld getHandBefore() {
+        return handBefore;
+    }
+
+    public void setHandBefore(Meld handBefore) {
+        this.handBefore = handBefore;
     }
 
     /*public Pane getFirstLayer() {

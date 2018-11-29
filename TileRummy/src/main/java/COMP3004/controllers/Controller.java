@@ -30,6 +30,8 @@ public class Controller
     protected GraphicalView graphicalView;
     protected Table table;
 
+    protected int currentPlayerIndex = 0;
+
     public Controller(){
         this.view = new TerminalView();
         this.scrummy = new Scrummy();
@@ -122,22 +124,51 @@ public class Controller
     }
 
 
-    public void runGUI(){
-        boolean play = true;
+    public void finishTurn(){
+        int winnerIndex = this.checkPlayerMoveGUI(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
+        if(winnerIndex != -1){
+            System.out.println(getPlayerController(winnerIndex).getPlayer().getName() + " won!!");
+        } else {
+            System.out.println("No win next player.");
+            this.currentPlayerIndex++;
+            this.graphicalView.setCurrentPlayerIndex(currentPlayerIndex);
+        }
+    }
+
+    public int checkPlayerMoveGUI(Table tableBefore, Meld handBefore){
         int winnerIndex = -1;
+        // CHECK WHAT PLAYER DID
+        if(tableBefore != null){
+            /*
+             * Instead check if all tiles in both tables melds are equal...
+             * */
+            if(tableBefore.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
+                scrummy.getCurrentPlayer().setHand(handBefore); // IN CASE PLAYER HAD TENTATIVE MELD
+                Tile t = scrummy.getDeck().pop();
+                if(t != null){
+                    scrummy.getCurrentPlayer().getHand().add(t);
+                    playerControllers[0].getTerminalView().printMessagePlain(playerControllers[scrummy.getCurrentPlayerIndex()].getPlayer().getName() + " drew from the deck tile: " + t.toString());
+                } else {
+                    if(this.view != null) {
+                        this.view.printMessage("Out of tiles to be drawn.");
+                    }
+                }
 
-        int[] hasSkippedAfterEmpty = new int[this.playerControllers.length];
-        for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
-            hasSkippedAfterEmpty[i] = 0;
+            } else {
+                scrummy.validatePlayerMove(scrummy.getTable());
+                if(!scrummy.getTable().isValid()){
+                    scrummy.setTable(tableBefore);
+                    scrummy.getCurrentPlayer().setHand(handBefore);
+                }
+            }
         }
 
-        // for (GameInteractionController g : playerControllers)
-        for (Player p : scrummy.getPlayers())//broadcast hands
-            playerControllers[0].getTerminalView().printMessagePlain(p.getName() + "'s hand: " + p.getHand().toString());
-
-        while(play) {
-
+        // CHECK FOR WIN
+        if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = scrummy.getCurrentPlayerIndex();
         }
+
+        return winnerIndex;
     }
 
     public void run(boolean AIOnly){
@@ -254,6 +285,8 @@ public class Controller
 
         return winnerIndex;
     }
+
+
 
     public Scrummy getScrummy(){
         return this.scrummy;
