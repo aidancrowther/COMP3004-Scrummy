@@ -202,6 +202,18 @@ public class Table {
         return str;
     }
 
+    public Table copy(){
+        Table copy = new Table();
+        for(Meld m: this.melds) {
+            Meld newM = new Meld();
+            for(Tile t: m.getTiles()) {
+                newM.add(t);
+            }
+            copy.add(newM);
+        }
+        return copy;
+    }
+
     @Override
     public String toString() { return prettyString(); }
 }

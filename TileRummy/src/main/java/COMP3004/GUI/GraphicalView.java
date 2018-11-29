@@ -5,9 +5,12 @@ import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -16,17 +19,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-
 import java.util.ArrayList;
 
 public class GraphicalView {
-    BorderPane root = new BorderPane();
+    protected Tile selectedTile;
+    protected int toMeldIndex;
+    protected int fromMeldIndex;
+
+    protected BorderPane root = new BorderPane();
     //protected StackPane root = new StackPane(); //add layers to our view
 
     protected Controller controller;
     protected ArrayList<Meld> playerHands = new ArrayList<Meld>();
     //protected Table table;
     protected int currentPlayerIndex = 0;
+
+    protected Table tableBefore;
 
 
     public GraphicalView(Controller controller){
@@ -66,14 +74,8 @@ public class GraphicalView {
         int j = 0;
         for(Meld m : table.getMelds()){
             for(Tile t : m.getTiles()) {
-                System.out.println("here 2");
                 Rectangle rectangle = new Rectangle( 100,100,30,50);
                 rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
-                /*rectangle.setOnMousePressed(e -> {
-                    System.out.println(t);
-                    System.out.println(currentPlayerIndex);
-                    //TODO: set user selected tile here or to meld
-                });*/
                 Text text = new Text(Integer.toString(t.getValue()));
                 text.setFont(Font.font ("Verdana", 20));
                 if(t.getColour() == 'R'){
@@ -88,10 +90,30 @@ public class GraphicalView {
                 text.setBoundsType(TextBoundsType.VISUAL);
                 StackPane tile = new StackPane();
                 tile.getChildren().addAll(rectangle, text);
-                tile.setOnMousePressed(e -> {
-                    System.out.println(t);
-                    System.out.println(currentPlayerIndex);
-                    //TODO: set user selected tile here or to meld
+                tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                            //if(mouseEvent.getClickCount() == 2){
+                                if(selectedTile == t) {
+                                    selectedTile = null;
+                                } else {
+                                    selectedTile = t;
+                                }
+                            } else {
+                                //TODO: set user selected tile here or to meld
+                                //YOU HAVE TO SELECT A TILE FIRST
+                                int clickedMeldIndex = table.getMelds().indexOf(m);
+                                if(selectedTile != null){
+                                    if(fromMeldIndex != clickedMeldIndex){
+                                        table.getMelds().get(clickedMeldIndex).add(selectedTile);
+                                    }
+                                } else {
+                                    System.out.println("select a tile first by left click one");
+                                }
+                            //}
+                        }
+                    }
                 });
                 gridPane.add(tile, i, j);
                 i++;
@@ -100,7 +122,6 @@ public class GraphicalView {
         }
 
         scrollPane.setContent(gridPane);
-        //scrollPane.setMinSize(800, 700);
         this.root.setCenter(scrollPane);
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
     }
@@ -118,13 +139,6 @@ public class GraphicalView {
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 400,100,30,50);
             rectangle.setFill(Color.rgb(252, 248, 224,1.0));
-            /*rectangle.setOnMousePressed(e -> {
-                System.out.println(playerControl.getPlayer());
-                System.out.println(t);
-                //TODO: set user selected tile here
-                this.controller.getScrummy().getTable().add(t);
-                drawTable(this.controller.getScrummy().getTable());
-            });*/
             Text text = new Text(Integer.toString(t.getValue()));
             text.setFont(Font.font ("Verdana", 20));
             if(t.getColour() == 'R'){
@@ -139,13 +153,43 @@ public class GraphicalView {
             text.setBoundsType(TextBoundsType.VISUAL);
             StackPane tile = new StackPane();
             tile.getChildren().addAll(rectangle, text);
-            tile.setOnMousePressed(e -> {
-                System.out.println(playerControl.getPlayer());
-                System.out.println(t);
-                //TODO: set user selected tile here
-                this.controller.getScrummy().getTable().add(t);
-                drawTable(this.controller.getScrummy().getTable());
-            });
+            if(index == currentPlayerIndex){ //only the player can select their hand
+                tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        System.out.println("Yay");
+                        //TODO: set user selected tile here
+                        //controller.getScrummy().getTable().add(t);
+                        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                            //if(mouseEvent.getClickCount() == 2){
+                                if(selectedTile == t) {
+                                    selectedTile = null;
+                                } else {
+                                    selectedTile = t;
+                                }
+
+                                System.out.println(controller.getScrummy().getTable().getMelds().size());
+                                if(controller.getScrummy().getTable().getMelds().size() == 1){
+                                    controller.getScrummy().getTable().add(selectedTile);
+                                    playerControl.getPlayer().getHand().remove(t);
+                                    //drawTable(controller.getScrummy().getTable());
+                                    draw();
+                                }
+
+                            } else {
+                                //TODO: set user selected tile here or to meld
+                                //YOU HAVE TO SELECT A TILE FIRST
+                                if(selectedTile != null){
+                                    playerControl.getPlayer().getHand().add(selectedTile);
+                                } else {
+                                    System.out.println("select a tile first by left clicking one");
+                                }
+                            }
+                        //}
+                    }
+                });
+            }
+
             if(isHorizontal){
                 handPane.add(tile, j, i);
                 if(i == 8){
@@ -178,6 +222,10 @@ public class GraphicalView {
         BorderPane.setMargin(handPane, new Insets(12,12,12,12));
     }
 
+    public void setSelectedTile(Rectangle rectangle){
+
+    }
+
     public void addPlayer(Meld hand) {
         this.playerHands.add(hand);
     }
@@ -187,6 +235,7 @@ public class GraphicalView {
     }
 
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.tableBefore = controller.getScrummy().getTable().copy();
         this.currentPlayerIndex = currentPlayerIndex;
     }
 

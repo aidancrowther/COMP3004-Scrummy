@@ -121,6 +121,25 @@ public class Controller
         this.scrummy.notifyObservers();
     }
 
+
+    public void runGUI(){
+        boolean play = true;
+        int winnerIndex = -1;
+
+        int[] hasSkippedAfterEmpty = new int[this.playerControllers.length];
+        for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+            hasSkippedAfterEmpty[i] = 0;
+        }
+
+        // for (GameInteractionController g : playerControllers)
+        for (Player p : scrummy.getPlayers())//broadcast hands
+            playerControllers[0].getTerminalView().printMessagePlain(p.getName() + "'s hand: " + p.getHand().toString());
+
+        while(play) {
+
+        }
+    }
+
     public void run(boolean AIOnly){
         /*
         * While everyone has cards in their hand...
