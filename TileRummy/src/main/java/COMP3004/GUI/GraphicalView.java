@@ -29,8 +29,8 @@ public class GraphicalView {
     protected Meld handBefore;
     protected Tile selectedTile;
 
-    protected int toMeldIndex;
-    protected int fromMeldIndex;
+    protected Meld toMeld;
+    protected Meld fromMeld;
     protected int currentPlayerIndex = 0;
 
     protected GridPane root = new GridPane();
@@ -130,11 +130,13 @@ public class GraphicalView {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
                             if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                                System.out.println("Left click");
                                 //if(mouseEvent.getClickCount() == 2){
                                 if(selectedTile == t) {
                                     selectedTile = null;
                                 } else {
                                     selectedTile = t;
+                                    fromMeld = m;
                                 }
                                 System.out.println(controller.getScrummy().getTable().getMelds().size());
                                 if(controller.getScrummy().getTable().getMelds().size() == 1){
@@ -142,20 +144,29 @@ public class GraphicalView {
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
                                     controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
                                     selectedTile = null;
+                                    fromMeld = null;
                                 }
                             } else {
                                 //TODO: set user selected tile here or to meld
+                                System.out.println("right click");
                                 //YOU HAVE TO SELECT A TILE FIRST
-                                int clickedMeldIndex = table.getMelds().indexOf(m);
                                 if(selectedTile != null){
-                                    if(fromMeldIndex != clickedMeldIndex){
-                                        table.getMelds().get(clickedMeldIndex).add(selectedTile);
+                                    if (fromMeld != null) {
+                                        toMeld = m;
+                                    }
+
+                                    if (fromMeld != null && toMeld != null) {
+                                        int fromMeldIndex = controller.getScrummy().getTable().getMelds().indexOf(fromMeld);
+                                        int toMeldIndex = controller.getScrummy().getTable().getMelds().indexOf(toMeld);
+                                        table.getMelds().get(fromMeldIndex).getTiles().remove(selectedTile);
+                                        table.getMelds().get(toMeldIndex).getTiles().add(selectedTile);
+                                        fromMeld = null;
+                                        toMeld = null;
                                         selectedTile = null;
                                     }
                                 } else {
                                     System.out.println("select a tile first by left click one");
                                 }
-                                //}
                             }
                             draw();
                         }
