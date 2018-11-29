@@ -154,6 +154,8 @@ public class Controller
             if(!scrummy.getTable().isValid()){
                 scrummy.setTable(tableBefore);
                 scrummy.getPlayers()[this.currentPlayerIndex].setHand(handBefore);
+                Tile t = scrummy.getDeck().pop();
+                scrummy.getPlayers()[this.currentPlayerIndex].getHand().add(t);
                 scrummy.notifyObservers();
             }
             else if(tableBefore.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE

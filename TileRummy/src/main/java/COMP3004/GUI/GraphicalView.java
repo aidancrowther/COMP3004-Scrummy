@@ -115,13 +115,13 @@ public class GraphicalView {
                     Text text = new Text(Integer.toString(t.getValue()));
                     text.setFont(Font.font ("Verdana", 20));
                     if(t.getColour() == 'R'){
-                        text.setFill(Color.RED);
+                        text.setFill(Color.rgb(204, 0, 0));
                     } else if (t.getColour() == 'G') {
                         text.setFill(Color.GREEN);
                     } else if (t.getColour() == 'B') {
                         text.setFill(Color.BLUE);
                     } else if (t.getColour() == 'O') {
-                        text.setFill(Color.DARKGOLDENROD);
+                        text.setFill(Color.rgb(239, 143, 0));
                     }
                     text.setBoundsType(TextBoundsType.VISUAL);
                     StackPane tile = new StackPane();
