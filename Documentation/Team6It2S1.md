@@ -51,7 +51,7 @@ __Plans until due date:__
 * customizable number and type of players menu
 * timer
 * tips
-* required visual effects##
+* required visual effects
 
 ## **David N. Zilio**
 
