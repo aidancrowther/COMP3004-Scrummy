@@ -60,6 +60,7 @@ __Work completed:__
 * 
 * 
 
-__Plans until due date:_
+__Plans until due date:__
+
 * 
 * 
