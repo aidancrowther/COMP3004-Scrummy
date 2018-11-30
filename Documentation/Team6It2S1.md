@@ -37,17 +37,21 @@ __Plans until due date:__
 * Ensure that AI can perform, to an extent, complex board reuse
 * Assist teammates with any leftover work
 
-## **Brittny Lapierre**
+## ** Brittny Lapierre**
 
 __Work completed:__
 
-* 
-* 
+* Set up user interface using javafx: allowong for a human player to play against 3 ai players for testing.
+* table state and hand state conditional on move validity
 
 __Plans until due date:__
 
-* 
-* 
+* convert table state to required design pattern
+* game rigging through main menu
+* customizable number and type of players menu
+* timer
+* tips
+* required visual effects##
 
 ## **David N. Zilio**
 
@@ -56,7 +60,6 @@ __Work completed:__
 * 
 * 
 
-__Plans until due date:__
-
+__Plans until due date:_
 * 
 * 
