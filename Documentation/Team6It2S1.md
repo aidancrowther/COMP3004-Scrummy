@@ -35,7 +35,7 @@ __Plans until due date:__
 
 * Ensure that AI can use jokers effectively
 * Ensure that AI can perform, to an extent, complex board reuse
-* Finish video with teammates
+* Assist teammates with any leftover work
 
 ## **Brittny Lapierre**
 
