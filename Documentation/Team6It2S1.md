@@ -57,10 +57,11 @@ __Plans until due date:__
 
 __Work completed:__
 
-* 
-* 
+* Got started on improving game rigging with launch parameters
 
 __Plans until due date:__
 
-* 
-* 
+* Complete game rigging, upgrade file input to manage it.
+* add functionality for game settings like 2 players, starting player
+* Networking?
+
