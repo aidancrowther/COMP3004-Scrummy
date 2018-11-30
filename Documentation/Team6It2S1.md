@@ -14,13 +14,13 @@ Our team meets on Tuesdays and Thursdays from 11:30-13:30 in MacOdrum Library (A
 
 __Work completed:__
 
-* 
-* 
+* Began discussing how to work AI with jokers
+* Preliminary work on setting up networking for multiplayer
 
 __Plans until next week:__
 
-* 
-* 
+* Implement all planned features I am in charge of
+
 
 ## **Ellis Glennie**
 
