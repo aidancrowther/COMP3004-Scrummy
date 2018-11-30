@@ -37,7 +37,7 @@ __Plans until due date:__
 * Ensure that AI can perform, to an extent, complex board reuse
 * Assist teammates with any leftover work
 
-## ** Brittny Lapierre**
+## **Brittny Lapierre**
 
 __Work completed:__
 
