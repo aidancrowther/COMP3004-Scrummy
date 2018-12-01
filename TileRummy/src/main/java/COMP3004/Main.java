@@ -15,7 +15,6 @@ public class Main extends Application {
         Controller controller = new Controller();
         GraphicalView gameView = new GraphicalView(controller);
         controller.setGraphicalView(gameView);
-        gameView.setCurrentPlayerIndex(0);
         //gameView.getRoot().getChildren().addAll(gameView.getFirstLayer());
         gameView.draw();
         this.primaryStage = primaryStage;

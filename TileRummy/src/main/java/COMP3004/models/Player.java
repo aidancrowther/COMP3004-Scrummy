@@ -12,6 +12,10 @@ public class Player{
 
     }
 
+    public Player(String name){
+        this.name = name;
+    }
+
     public void setHand(Meld hand) {
         this.hand = hand;
     }

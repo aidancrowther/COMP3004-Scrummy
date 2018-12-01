@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public abstract class MultiSubject implements MultiSubjectInterface{
     protected Table table = new Table();
-    protected Player[] players = new Player[5];
+    protected ArrayList<Player> players = new ArrayList<Player>();
 
     protected ArrayList<GameInteractionController> tableObservers = new ArrayList<>();
     protected ArrayList<Strategy3> playerHandObservers = new ArrayList<>(); //TODO: if you need this more general create a super class
@@ -46,7 +46,7 @@ public abstract class MultiSubject implements MultiSubjectInterface{
 
         int index = 0;
         for(PlayerHandObserverInterface observer : this.playerHandObservers) {
-            observer.update(this.players[index].getHand().size(), index);
+            observer.update(this.players.get(index).getHand().size(), index);
             index++;
         }
     }

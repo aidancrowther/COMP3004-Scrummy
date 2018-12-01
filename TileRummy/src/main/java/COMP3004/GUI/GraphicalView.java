@@ -2,15 +2,19 @@ package COMP3004.GUI;
 
 import COMP3004.controllers.Controller;
 import COMP3004.controllers.GameInteractionController;
+import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -99,7 +103,59 @@ public class GraphicalView {
     }
 
     public void loadGameSettingsPane(){
+        //- drop downs for players 2-4
+        //When new player created show spawned order tile for the new player
+        //start game button
+        // -- loads game
+        VBox setPlayersMenu = new VBox();
+        //buttons.setPadding(new Insets(30, 365, 50, 365));
+        setPlayersMenu.setSpacing(30);
+        setPlayersMenu.setStyle("-fx-background-color: #333333");
 
+        ArrayList<String> playerTypes = new ArrayList<String>();
+        playerTypes.add(null);
+        playerTypes.add(null);
+        playerTypes.add(null);
+        playerTypes.add(null);
+
+        ChoiceBox playerOption1 = new ChoiceBox(FXCollections.observableArrayList(
+                "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
+        );
+        playerOption1.setOnAction(e -> {
+            playerTypes.set(0, playerOption1.getSelectionModel().getSelectedItem().toString());
+        });
+        setPlayersMenu.getChildren().add(playerOption1);
+
+        ChoiceBox playerOption2 = new ChoiceBox(FXCollections.observableArrayList(
+                "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
+        );
+        playerOption2.setOnAction(e -> {
+            playerTypes.set(1, playerOption1.getSelectionModel().getSelectedItem().toString());
+        });
+        setPlayersMenu.getChildren().add(playerOption2);
+
+        Button addPlayer = new Button("NEW PLAYER");
+        addPlayer.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+        //addPlayer.setMaxSize(270, 100);
+        addPlayer.setOnMouseClicked(e -> {
+            //loadImportSavePane();
+        });
+        setPlayersMenu.getChildren().add(addPlayer);
+
+        Button play = new Button("PLAY");
+        play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+        play.setOnMouseClicked(e -> {
+            for(String type : playerTypes){
+                if(type != null){
+                    controller.addPlayer(type);
+                }
+            }
+            this.setCurrentPlayerIndex(0);
+            this.loadGamePane();
+        });
+        setPlayersMenu.getChildren().add(play);
+
+        this.root.getChildren().add(setPlayersMenu);
     }
 
     public void loadRigPane(){
@@ -226,6 +282,7 @@ public class GraphicalView {
                                     if (fromMeld != null && toMeld != null) {
                                         fromMeld.getTiles().remove(selectedTile);
                                         toMeld.getTiles().add(selectedTile);
+                                        controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
                                         fromMeld = null;
                                         toMeld = null;
                                         selectedTile = null;
@@ -301,7 +358,7 @@ public class GraphicalView {
                         } else {
                             //YOU HAVE TO SELECT A TILE FIRST
                             System.out.println(fromMeld);
-                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(0)){ //Only allow player to add back tiles from new meld
+                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(currentPlayerIndex)){ //Only allow player to add back tiles from new meld
                                 playerControl.getPlayer().getHand().add(selectedTile);
                                 fromMeld.remove(selectedTile);
                                 selectedTile = null;
@@ -363,7 +420,7 @@ public class GraphicalView {
         this.tableBefore = controller.getScrummy().getTable().copy();
         System.out.println("PLayer table b4: " + this.tableBefore.toString());
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
-        if(this.currentPlayerIndex != 0){ //TODO: set these check if 0s to check if instance of player interaction controller instead
+        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){ //TODO: set these check if 0s to check if instance of player interaction controller instead
             this.finishTurn();
         }
         this.draw();

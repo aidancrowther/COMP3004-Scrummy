@@ -93,7 +93,7 @@ public class Table {
     public boolean isValid() {
         //System.out.println(melds.get(0).size());
         if (this.melds.get(0).getTiles().size() != 0) {
-            System.out.println("Here");
+            System.out.println("meld 0 not empty: " + this.toString());
             return false;
         }
         for (int i=1; i<this.melds.size(); i++) {
