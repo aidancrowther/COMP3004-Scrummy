@@ -59,7 +59,7 @@ Roadmap of Project Requirements:
   - [ ] LEVEL 1:
     - [x] must have a GUI interface (pattern-based, preferably MVC)
     - [x] must support ALL of iteration 1's functionality EXCEPT strategy 4
-    - [ ]  ability to have 2 to 4 players
+    - [x]  ability to have 2 to 4 players
     - [x] ability to have any player be a human or an AI (to which one of the 3 strategies of Iteration 1 can be assigned)
     - [ ] ability to determine who starts as per rules
     - [ ] highlight of most recently played tiles on the board
