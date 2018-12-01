@@ -11,11 +11,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
@@ -33,7 +36,10 @@ public class GraphicalView {
     protected Meld fromMeld;
     protected int currentPlayerIndex = 0;
 
-    protected GridPane root = new GridPane();
+
+    protected StackPane root = new StackPane();
+    protected VBox menuPane = new VBox();
+    protected GridPane gamePane = new GridPane();
     protected BorderPane tablePane = new BorderPane();
     protected HBox topButtons = new HBox();
 
@@ -42,7 +48,19 @@ public class GraphicalView {
     //protected Table table;
 
     public GraphicalView(Controller controller){
-        this.root.setStyle("-fx-background-color: #333333");
+        //SET UP MENU SCREEN
+        this.menuPane.setStyle("-fx-background-color: #333333");
+        Image img = new Image("/images/bar.png");
+        ImageView imv = new ImageView(img);
+        this.menuPane.getChildren().add(imv);
+
+        Image img2 = new Image("/images/title.png");
+        ImageView imv2 = new ImageView(img2);
+        this.menuPane.getChildren().add(imv2);
+
+
+        //SET UP GAME SCREEN
+        this.gamePane.setStyle("-fx-background-color: #333333");
         this.tablePane.setStyle("-fx-background-color: #333333");
         this.tablePane.setMinSize(1000,600);
 
@@ -72,10 +90,11 @@ public class GraphicalView {
         newMeldBtn.setPrefSize(100, 20);
 
         this.topButtons.getChildren().addAll(finishTurnBtn, newMeldBtn);
-        this.root.add(this.topButtons, 0, 0);
+        this.gamePane.add(this.topButtons, 0, 0);
+        this.gamePane.add(this.tablePane, 0, 1);
 
-        this.root.add(this.tablePane, 0, 1);
-
+        this.root.getChildren().add(gamePane);
+        this.root.getChildren().add(menuPane);
         this.controller = controller;
         for(GameInteractionController iControl : controller.getPlayerControllers()){
             iControl.setGUI(this);
@@ -323,11 +342,11 @@ public class GraphicalView {
     }
 
 
-    public GridPane getRoot() {
+    public StackPane getRoot() {
         return root;
     }
 
-    public void setRoot(GridPane root) {
+    public void setRoot(StackPane root) {
         this.root = root;
     }
 
