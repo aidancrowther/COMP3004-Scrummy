@@ -6,14 +6,10 @@ import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -118,34 +114,45 @@ public class GraphicalView {
         playerTypes.add(null);
         playerTypes.add(null);
 
-        ChoiceBox playerOption1 = new ChoiceBox(FXCollections.observableArrayList(
+        ChoiceBox<String> playerOption1 = new ChoiceBox<>(FXCollections.observableArrayList(
                 "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
         );
         playerOption1.setOnAction(e -> {
             playerTypes.set(0, playerOption1.getSelectionModel().getSelectedItem().toString());
         });
+        playerOption1.getSelectionModel().selectFirst();
         setPlayersMenu.getChildren().add(playerOption1);
 
-        ChoiceBox playerOption2 = new ChoiceBox(FXCollections.observableArrayList(
+        ChoiceBox<String> playerOption2 = new ChoiceBox<>(FXCollections.observableArrayList(
                 "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
         );
         playerOption2.setOnAction(e -> {
-            playerTypes.set(1, playerOption1.getSelectionModel().getSelectedItem().toString());
+            playerTypes.set(1, playerOption2.getSelectionModel().getSelectedItem().toString());
         });
+        playerOption2.getSelectionModel().selectFirst();
         setPlayersMenu.getChildren().add(playerOption2);
 
-        Button addPlayer = new Button("NEW PLAYER");
-        addPlayer.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
-        //addPlayer.setMaxSize(270, 100);
-        addPlayer.setOnMouseClicked(e -> {
-            //loadImportSavePane();
+        ChoiceBox<String> playerOption3 = new ChoiceBox<>(FXCollections.observableArrayList(
+                "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
+        );
+        playerOption3.setOnAction(e -> {
+            playerTypes.set(2, playerOption3.getSelectionModel().getSelectedItem().toString());
         });
-        setPlayersMenu.getChildren().add(addPlayer);
+        setPlayersMenu.getChildren().add(playerOption3);
+
+        ChoiceBox<String> playerOption4 = new ChoiceBox<>(FXCollections.observableArrayList(
+                "Human", "AI Strategy 1", "AI Strategy 2", "AI Strategy 3", "AI Strategy 4")
+        );
+        playerOption4.setOnAction(e -> {
+            playerTypes.set(3, playerOption4.getSelectionModel().getSelectedItem().toString());
+        });
+        setPlayersMenu.getChildren().add(playerOption4);
 
         Button play = new Button("PLAY");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
             for(String type : playerTypes){
+                System.out.println(type);
                 if(type != null){
                     controller.addPlayer(type);
                 }
