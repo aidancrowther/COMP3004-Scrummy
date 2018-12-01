@@ -59,6 +59,58 @@ public class GraphicalView {
         this.menuPane.getChildren().add(imv2);
 
 
+        VBox buttons = new VBox();
+        buttons.setPadding(new Insets(30, 365, 50, 365));
+        buttons.setSpacing(30);
+
+        Button playButton = new Button("PLAY NEW GAME");
+        playButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        playButton.setMaxSize(270, 100);
+        playButton.setOnMouseClicked(e -> {
+            //loadGamePane();
+            loadGameSettingsPane();
+        });
+        buttons.getChildren().add(playButton);
+
+        Button loadButton = new Button("LOAD SAVED GAME");
+        loadButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        loadButton.setMaxSize(270, 100);
+        loadButton.setOnMouseClicked(e -> {
+            loadImportSavePane();
+        });
+        buttons.getChildren().add(loadButton);
+
+        Button rigButton = new Button("NEW RIGGED GAME");
+        rigButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        rigButton.setMaxSize(270, 100);
+        rigButton.setOnMouseClicked(e -> {
+            loadRigPane();
+        });
+        buttons.getChildren().add(rigButton);
+
+        this.menuPane.getChildren().add(buttons);
+        this.root.getChildren().add(menuPane);
+
+        this.controller = controller;
+        for(GameInteractionController iControl : controller.getPlayerControllers()){
+            iControl.setGUI(this);
+            this.addPlayer(iControl.getPlayer().getHand());
+        }
+    }
+
+    public void loadGameSettingsPane(){
+
+    }
+
+    public void loadRigPane(){
+
+    }
+
+    public void loadImportSavePane(){
+
+    }
+
+    public void loadGamePane(){
         //SET UP GAME SCREEN
         this.gamePane.setStyle("-fx-background-color: #333333");
         this.tablePane.setStyle("-fx-background-color: #333333");
@@ -94,16 +146,6 @@ public class GraphicalView {
         this.gamePane.add(this.tablePane, 0, 1);
 
         this.root.getChildren().add(gamePane);
-        this.root.getChildren().add(menuPane);
-        this.controller = controller;
-        for(GameInteractionController iControl : controller.getPlayerControllers()){
-            iControl.setGUI(this);
-            this.addPlayer(iControl.getPlayer().getHand());
-        }
-    }
-
-    public void setSelectedTile(Tile t, int playerIndex, boolean isFromPlayerHand){
-
     }
 
     public void draw(){
