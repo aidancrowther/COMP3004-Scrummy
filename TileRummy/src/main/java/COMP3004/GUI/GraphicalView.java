@@ -6,6 +6,9 @@ import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -29,6 +32,8 @@ import javafx.scene.text.TextBoundsType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class GraphicalView {
@@ -50,6 +55,9 @@ public class GraphicalView {
 
     protected Controller controller;
     protected ArrayList<Meld> playerHands = new ArrayList<Meld>();
+
+    protected boolean limitHumanTime = false;
+    protected Timer timer = new Timer();
     //protected Table table;
 
     public GraphicalView(Controller controller){
@@ -109,9 +117,15 @@ public class GraphicalView {
         //start game button
         // -- loads game
         VBox setPlayersMenu = new VBox();
+        setPlayersMenu.setPadding(new Insets(30, 50, 30, 50));
         //buttons.setPadding(new Insets(30, 365, 50, 365));
         setPlayersMenu.setSpacing(30);
         setPlayersMenu.setStyle("-fx-background-color: #333333");
+
+        Text title = new Text("Game setup:");
+        title.setFont(Font.font ("Verdana", 20));
+        title.setFill(Color.WHITE);
+        setPlayersMenu.getChildren().add(title);
 
         ArrayList<String> playerTypes = new ArrayList<String>();
         playerTypes.add(null);
@@ -153,6 +167,16 @@ public class GraphicalView {
         });
         setPlayersMenu.getChildren().add(playerOption4);
 
+        CheckBox limitCheck = new CheckBox("Limit human player turn times");
+        limitCheck.setStyle("-fx-text-fill:white");
+        limitCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean old_val, Boolean new_val) {
+                limitHumanTime = new_val;
+            }
+        });
+        setPlayersMenu.getChildren().add(limitCheck);
+
         Button play = new Button("PLAY");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
@@ -171,10 +195,17 @@ public class GraphicalView {
     }
 
     public void loadPlayerOrderPane(){
+
         VBox playerOrder = new VBox();
         playerOrder.setPadding(new Insets(30, 50, 30, 50));
         playerOrder.setSpacing(30);
         playerOrder.setStyle("-fx-background-color: #333333");
+
+
+        Text title = new Text("Player order:");
+        title.setFont(Font.font ("Verdana", 20));
+        title.setFill(Color.WHITE);
+        playerOrder.getChildren().add(title);
 
         VBox chooseAttemptsPane = new VBox();
         chooseAttemptsPane.setSpacing(30);
@@ -327,6 +358,7 @@ public class GraphicalView {
         this.topButtons.setStyle("-fx-background-color: #333333");
         Button finishTurnBtn = new Button("Finish Turn");
         finishTurnBtn.setOnMouseClicked(e -> {
+            this.timer.cancel();
             this.finishTurn();
         });
         finishTurnBtn.setPrefSize(100, 20);
@@ -639,6 +671,12 @@ public class GraphicalView {
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
             this.finishTurn();
+        } else {
+            if(this.limitHumanTime){
+                System.out.println("starting the countdown!");
+                long delay = 1000L*60*2;
+                this.timer.schedule(new PlayerTimerTask(), delay);
+            }
         }
     }
 
@@ -682,6 +720,18 @@ public class GraphicalView {
         this.handBefore = handBefore;
     }
 
+    class PlayerTimerTask extends TimerTask {
+        public void run() {
+            System.out.println("Hello World");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    finishTurn();
+                }
+            });
+            //
+        }
+    }
     /*public Pane getFirstLayer() {
         return firstLayer;
     }
