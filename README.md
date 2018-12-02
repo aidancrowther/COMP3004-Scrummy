@@ -66,7 +66,7 @@ Roadmap of Project Requirements:
     - [ ] jokers  
     - [ ] minimal game rigging to set initial hands
   - [ ] LEVEL 2: for a grade between 50 and 65, must support:
-    - [ ] optional timer of 2 minutes for human playing
+    - [x] optional timer of 2 minutes for human playing
     - [x] rules for dealing with the case where a human plays and leaves the board in an invalid state after declaring the end of his/her turn.
     - [ ] This includes the use of the Memento pattern to return to the state of game (board and current player's hand) before the invalid turn.
   - [ ] LEVEL 3: for a grade between 66 and 84, must support:
