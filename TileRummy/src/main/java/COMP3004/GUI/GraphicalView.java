@@ -24,6 +24,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
 
 import java.lang.reflect.Array;
@@ -371,7 +372,7 @@ public class GraphicalView {
         GridPane gridPane = new GridPane();
 
         gridPane.setStyle("-fx-background-color: #333333");
-        gridPane.setMinSize(850, 550);
+        gridPane.setMinSize(800, 500);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(10);
@@ -521,6 +522,7 @@ public class GraphicalView {
             }
 
             if(isHorizontal){
+                //playerControl.getPlayer().getHand()
                 handPane.add(tile, j, i);
                 if(i == 8){
                     i = 0;
@@ -539,14 +541,29 @@ public class GraphicalView {
             }
         }
 
+        VBox handLabelPane = new VBox();
+        Text text = new Text(playerControl.getPlayer().getName());
+        text.setFont(Font.font ("Verdana", 15));
+        text.setFill(Color.WHITE);
+        text.setTextAlignment(TextAlignment.CENTER);
+
+        if(!isHorizontal){
+            text.setTranslateX(450);
+        }
+        handLabelPane.getChildren().add(text);
+        handLabelPane.getChildren().add(handPane);
         if(index == 0){
-            this.tablePane.setBottom(handPane);
+            handLabelPane.setPadding(new Insets(30, 10, 10, 10));
+            this.tablePane.setBottom(handLabelPane);
         } else if (index == 1) {
-            this.tablePane.setRight(handPane);
+            handLabelPane.setPadding(new Insets(0, 10, 10, 10));
+            this.tablePane.setRight(handLabelPane);
         } else if (index == 2) {
-            this.tablePane.setTop(handPane);
+            handLabelPane.setPadding(new Insets(10, 10, 10, 10));
+            this.tablePane.setTop(handLabelPane);
         } else if (index == 3) {
-            this.tablePane.setLeft(handPane);
+            handLabelPane.setPadding(new Insets(0, 10, 10, 10));
+            this.tablePane.setLeft(handLabelPane);
         }
         BorderPane.setAlignment(handPane, Pos.CENTER);
         BorderPane.setMargin(handPane, new Insets(12,12,12,12));

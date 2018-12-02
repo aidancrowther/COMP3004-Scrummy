@@ -18,7 +18,7 @@ public class Main extends Application {
         //gameView.getRoot().getChildren().addAll(gameView.getFirstLayer());
         gameView.draw();
         this.primaryStage = primaryStage;
-        this.primaryStage.setScene(new Scene(gameView.getRoot(), 1000, 700));
+        this.primaryStage.setScene(new Scene(gameView.getRoot(), 1000, 750));
         this.primaryStage.show();
     }
 
