@@ -114,9 +114,9 @@ public class Controller
             winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
 
             //print winner
-            if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
-                Player current = this.scrummy.getPlayers().get(winnerIndex);
-                this.playerControllers.get(0).displayWinner(current.getName());
+            if(winnerIndex != -1 ){//winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
+                //Player current = this.scrummy.getPlayers().get(winnerIndex);
+                System.out.println(getPlayerController(winnerIndex).getPlayer().getName() + " won!!");
                 this.graphicalView.displayWin();
             } else {
                 //System.out.println(this.currentPlayerIndex + " No win next player.");
@@ -129,8 +129,6 @@ public class Controller
                 this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
                 this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
             }
-
-            System.out.println("\n");
         }
     }
 
@@ -153,8 +151,9 @@ public class Controller
         }
 
         // CHECK FOR WIN
-        if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
-            winnerIndex = scrummy.getCurrentPlayerIndex();
+        System.out.println( "playe rhand size: " + this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand() );
+        if(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = this.currentPlayerIndex;
         }
 
         return winnerIndex;
@@ -182,8 +181,9 @@ public class Controller
         }
 
         // CHECK FOR WIN
-        if(scrummy.getCurrentPlayer().getHand().getTiles().size() == 0){
-            winnerIndex = scrummy.getCurrentPlayerIndex();
+        System.out.println( "playe rhand size: " + this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand() );
+        if(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = this.currentPlayerIndex;
         }
 
         return winnerIndex;

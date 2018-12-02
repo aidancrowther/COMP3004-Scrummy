@@ -392,6 +392,10 @@ public class GraphicalView {
         /*CHOOSE PLAYER ORDER, HANDS, AND TILES POPPED FORM DECKS FOR USER*/
         //Create an array for rigged cards for each user
 
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setStyle("-fx-background: #333333");
+
         ArrayList<Meld> riggedHands = new ArrayList<Meld>();
         ArrayList<ArrayList<Tile>> riggedDeckOrders = new ArrayList<ArrayList<Tile>>();
         for(GameInteractionController playerController : this.controller.getPlayerControllers()){
@@ -548,17 +552,17 @@ public class GraphicalView {
                 i++;
             }
 
+            //Load game
+            this.loadGamePane();
+
             //Set starting player
             System.out.println("Start: " + riggedStartIndex);
             controller.setCurrentPlayerIndex(riggedStartIndex);
-
-            //Load game
-            this.loadGamePane();
         });
         rigOptions.getChildren().add(play);
 
-
-        this.root.getChildren().add(rigOptions);
+        scrollPane.setContent(rigOptions);
+        this.root.getChildren().add(scrollPane);
     }
 
     public void loadImportSavePane(){
@@ -927,10 +931,6 @@ public class GraphicalView {
         this.currentPlayerIndex = c;
         if(this.tableBefore != null){
             this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
-            /*System.out.println("DIFF:");
-            for(Meld m:this.tableDiff){
-                System.out.println(m);
-            }*/
         }
 
         this.tableBefore = controller.getScrummy().getTable().copy();
@@ -956,6 +956,7 @@ public class GraphicalView {
     }
 
     public void displayWin() {
+        System.out.print("displaying win");
         BorderPane winnerScreen = new BorderPane();
         winnerScreen.setStyle("-fx-background-color: #333333");
         Text winnerText = new Text(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName()+ " has won the game!");
