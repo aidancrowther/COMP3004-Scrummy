@@ -539,7 +539,7 @@ public class GraphicalView {
             }
 
             //Set starting player
-            this.controller.setCurrentPlayerIndex(this.riggedStartIndex);
+            controller.setCurrentPlayerIndex(riggedStartIndex);
 
             //Load game
             this.loadGamePane();

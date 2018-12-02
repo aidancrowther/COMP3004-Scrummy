@@ -220,13 +220,18 @@ public class Controller
     }
 
     public void popTileToCurrentUserHand(){
+        System.out.println(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles());
         if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles() != null){
             this.popFromDeckRigged();
         } else {
-            Tile t = scrummy.getDeck().pop();
-            if(t != null){
-                scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
-            }
+            this.popFromDeck();
+        }
+    }
+
+    public void popFromDeck(){
+        Tile t = scrummy.getDeck().pop();
+        if(t != null){
+            scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
         }
     }
 
@@ -234,24 +239,35 @@ public class Controller
         //When user is popping a card off the stack, if they have a rigged stack,
         //tell them to pop/push the cards off the deck until the curr rigged index (first tile in array) tile is found
         //delete first tile in push all popped tiles onto deck.
-        ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
-        for(Tile currRiggedTile : this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles()){
-            Tile deckTile = this.scrummy.getDeck().pop();
-            if(deckTile != null){
-                if(currRiggedTile.getColour() == deckTile.getColour()
-                        && currRiggedTile.getValue() == deckTile.getValue()){
-                    this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
-                    break;
-                } else {
-                    poppedtiles.add(deckTile); //oldest to newest arraylist
+
+        //for(Tile currRiggedTile : this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles()){
+        System.out.println("Rigged: " + this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().toArray());
+        if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().size() > 0){
+            ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+            Tile currRiggedTile = this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().get(0);
+            while(true) {
+                Tile deckTile = this.scrummy.getDeck().pop();
+                System.out.println("dt: " + deckTile);
+                if (deckTile != null) {
+                    if (currRiggedTile.getColour() == deckTile.getColour()
+                            && currRiggedTile.getValue() == deckTile.getValue()) {
+                        this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                        this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().remove(0);
+                        break;
+                    } else {
+                        poppedtiles.add(deckTile); //oldest to newest arraylist
+                    }
                 }
             }
+
+            Collections.reverse(poppedtiles); //add back in original order
+            for(Tile t : poppedtiles){
+                this.scrummy.getDeck().push(t);
+            }
+        } else {
+            this.popFromDeck();
         }
 
-        Collections.reverse(poppedtiles); //add back in original order
-        for(Tile t : poppedtiles){
-            this.scrummy.getDeck().push(t);
-        }
     }
 
 
