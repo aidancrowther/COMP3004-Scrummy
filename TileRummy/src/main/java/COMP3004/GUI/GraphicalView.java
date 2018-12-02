@@ -453,7 +453,7 @@ public class GraphicalView {
         sub1.setFont(Font.font ("Verdana", 15));
         sub1.setFill(Color.WHITE);
         rigOptions.getChildren().add(sub1);
-        Text desc1 = new Text("Please click tiles from the deck below to populate the player hands. It will automatically move to the next player when you've filled up the current player's hand.");
+        Text desc1 = new Text("Please click tiles from the deck below then click an action in one of the player's settings.");
         desc1.setFont(Font.font ("Verdana", 12));
         desc1.setFill(Color.WHITE);
         rigOptions.getChildren().add(desc1);
@@ -496,9 +496,12 @@ public class GraphicalView {
             });
             buttons.getChildren().addAll(addToHand, addToPlayerDeck);
 
+            Text playerName = new Text(playerController.getPlayer().getName() + " Settings:");
+            playerName.setFont(Font.font ("Verdana", 12));
+            playerName.setFill(Color.WHITE);
 
             handAndDeckTiles.getChildren().addAll(playerHand, playerDeckTiles);
-            playerSetupPane.getChildren().addAll(buttons, handAndDeckTiles);
+            playerSetupPane.getChildren().addAll(playerName, buttons, handAndDeckTiles);
             rigOptions.getChildren().add(playerSetupPane);
 
         }
@@ -572,6 +575,10 @@ public class GraphicalView {
     public void loadGamePane(){
         //SET UP GAME SCREEN
         this.gamePane.setStyle("-fx-background-color: #333333");
+        this.gamePane.setHgap(10);
+        this.gamePane.setVgap(10);
+
+        this.gamePane.setPadding(new Insets(15, 15, 15, 15));
         this.tablePane.setStyle("-fx-background-color: #333333");
         this.tablePane.setMinSize(1000,600);
 
@@ -606,8 +613,13 @@ public class GraphicalView {
 
         this.topButtons.getChildren().addAll(finishTurnBtn, newMeldBtn);
 
-        this.gamePane.add(this.topButtons, 0, 0);
-        this.gamePane.add(this.tablePane, 0, 1);
+        Text tip = new Text("** Select tiles by left clicking on the tile. Select melds by right clicking on a tile in the meld.");
+        tip.setFont(Font.font ("Verdana", 12));
+        tip.setFill(Color.WHITE);
+
+        this.gamePane.add(tip, 0, 0);
+        this.gamePane.add(this.topButtons, 0, 1);
+        this.gamePane.add(this.tablePane, 0, 2);
 
         this.root.getChildren().add(gamePane);
         draw();
