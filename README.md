@@ -65,10 +65,10 @@ Roadmap of Project Requirements:
     - [x] highlight of most recently played tiles on the board
     - [ ] jokers  
     - [x] minimal game rigging to set initial hands
-  - [ ] LEVEL 2: for a grade between 50 and 65, must support:
+  - [x] LEVEL 2: for a grade between 50 and 65, must support:
     - [x] optional timer of 2 minutes for human playing
     - [x] rules for dealing with the case where a human plays and leaves the board in an invalid state after declaring the end of his/her turn.
-    - [ ] This includes the use of the Memento pattern to return to the state of game (board and current player's hand) before the invalid turn.
+    - [x] This includes the use of the Memento pattern to return to the state of game (board and current player's hand) before the invalid turn.
   - [ ] LEVEL 3: for a grade between 66 and 84, must support:
     - [x] complex board reuse: Do include all the situations you got working in your video
       - **I will provide some test cases**
