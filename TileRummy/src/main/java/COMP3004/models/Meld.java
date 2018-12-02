@@ -17,14 +17,19 @@ public class Meld {
 
     public int size() { return tiles.size(); }
 
-    /*
-        Adds a tile to the current meld 
-    */
-    public void add(Tile t) { 
-        tiles.add(t);
-        sort();
+    public void add(Tile t) {
+		if (t.isJoker()) {
+			this.addJoker(t);
+		}
+		this.tiles.add(t);
+		sort();
     }
 
+    //for recreating jokers within sort()
+	public void addInSort(Tile t) {
+		this.addJoker(t);
+		this.tiles.add(t);
+	}
 
     public void clear() {
         tiles.clear();
@@ -33,16 +38,22 @@ public class Meld {
     public Meld copy() {
         Meld m = new Meld();
         for (int i=0; i<this.getTiles().size(); i++) {
-            Tile t = new Tile(this.getTiles().get(i).getColour(), this.getTiles().get(i).getValue());
-            m.add(t);
+            if(!(this.getTiles().get(i).isJoker())){
+                Tile t = new Tile(this.getTiles().get(i).getColour(), this.getTiles().get(i).getValue());
+                m.add(t);
+            }  else {
+                Joker j = new Joker();
+                j.setColour(this.getTiles().get(i).getColour());
+                j.setValue(this.getTiles().get(i).getValue());
+                m.add(j);
+            }
+
         }
+        m.sort();
         return m;
     }
 
-    /*
-        Removes a tile from the meld
-        Walks through the arraylist until it finds an identical tile, then removes it.
-    */
+
     public Tile remove(Tile t) {
         for (int i=0; i<tiles.size(); i++) {
             if (tiles.get(i).equals(t)) {
@@ -64,13 +75,96 @@ public class Meld {
     public Tile get(int id) {
      return tiles.get(id);
     }
-    
+
+    public int getScore() {
+        int score = 0;
+        for (int i=0; i<this.size(); i++) {
+            if (this.get(i).isJoker()) {
+                score += 30;
+            }
+            else {
+                score += this.get(i).getValue();
+            }
+        }
+        return score;
+    }
+
+    /*special function designed to add a joker to a meld by inspecting the meld and
+    determine what value and colour the meld should take on.
+    This is particularly important for sets.
+    */
+    public void addJoker(Tile joker) {
+        joker.setColour('J');
+		joker.setValue(0);
+        /*
+        -> inspect the meld
+        -> if the meld is a set and the set is less than size 4:
+                ->add the joker and set the joker's # to the # of the set
+        -> if the meld is a run, look for holes in the continuity of the numbers. 
+                -> if a hole exists, put it there
+                -> otherwise, add it to the back
+                -> if there is no back, add it to the front
+        */
+
+        if (this.size() == 1) {
+            joker.setValue(this.get(0).getValue()); //make a set
+        }
+
+        else if (this.size() > 1) {
+            //isRun() only works for whole melds so check manually here
+            if (tiles.get(0).getValue() == tiles.get(1).getValue()) { //adding a joker to a set
+                joker.setValue(this.get(0).getValue());
+            }
+            else if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //adding a joker to a run
+                joker.setColour(tiles.get(0).getColour());
+                for (int i=0; i<this.size()-1; i++) {
+                    if (this.get(i+1).getValue() - this.get(i).getValue() != 1) {
+                        joker.setValue(this.get(i).getValue() + 1);
+                    }
+                }
+                if (joker.getValue() == 0) { //if a slot for joker has not been found
+                    if (tiles.get(0).getValue() != 1) {
+                        joker.setValue(tiles.get(0).getValue() - 1);
+                    }
+                    else {
+                        joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
+                    }
+                }
+            }
+        }
+        this.sort();
+    }
+
     /*
         Sorts the meld by colour and by number
         Differentiates between a run and a meld (to save time), then overrides default collections
         comparator 
     */
     public void sort() {
+        ArrayList<Integer> jokers = this.getJokers();
+		if (jokers.size() == 1) {
+			if (jokers.contains(0) || jokers.contains(1)) {
+				Tile joker = this.remove(this.get(jokers.get(0)));
+				this.addInSort(joker);
+			}
+        }
+        else if (jokers.size() == 2 && this.size() > 2) {
+			ArrayList<Tile> list = new ArrayList<>();
+            for (int i=0; i<this.size(); i++) {
+				if (this.get(i).isJoker()) {
+					Tile joker = this.remove(this.get(i));
+					list.add(joker);
+					i--;
+				}
+			}
+			for (Tile j : list) {
+				this.addInSort(j);
+			}
+        }
+        
+
+        //may need something in here to accomodate a joker changing its form
+
         if (tiles.size() > 1) { //will only sort a meld with any tiles in it
             //Override default comparator to compare by tile value (ints)
             Collections.sort(tiles, new Comparator<Tile>() {
@@ -103,37 +197,40 @@ public class Meld {
     public boolean isValid() {
         //valid melds must have 3+ tile
         if (tiles.size() < 3) {
-            System.out.print("fail 1");
             return false;
         }
-        if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //test a run
+        if (tiles.get(0).getColour() == tiles.get(1).getColour() &&
+			tiles.get(0).getValue() != tiles.get(1).getValue()) { //test a run
+			if (this.size() > 13) {
+                return false;
+            }
             for (int i=1; i<tiles.size(); i++) {
                 if (tiles.get(i).getColour() != tiles.get(0).getColour()) { //make sure all are same colour
-                    System.out.print("fail 2");
                     return false;
                 }
                 if (tiles.get(i).getValue() != (tiles.get(0).getValue() + i)) { //make sure all values make a run
-                    System.out.print("fail 3");
                     return false;
                 }
             }
         } else { //test a set
-            Set<Character> colours = new HashSet<Character>();
+            Set<Character> colours = new HashSet<>();
             for (int i=0; i<tiles.size(); i++) {
                 if (tiles.get(i).getValue() != tiles.get(0).getValue()) { //all are same value
-                    System.out.print("fail 4");
-                    return false;
+					return false;
                 }
-                if (colours.contains(tiles.get(i).getColour())) { //check for duplicate colours
-                    System.out.print("fail 5");
-                    return false;
+
+                if (colours.contains(tiles.get(i).getColour()) && tiles.get(i).getColour() != 'J') { //check for duplicate colours
+					return false;
                 } else {
-                    colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
+					colours.add(tiles.get(i).getColour()); //keep track of all the colours this set has
                 }
+            }
+            if (this.size() > 4) { //only possible if there are 5 cards, including a joker
+				return false;
             }
         }
 
-        return true; //reached the end!
+        return true; 
     }
 
     public boolean isValid(Tile t) {
@@ -193,7 +290,7 @@ public class Meld {
 
     }
 
-    public boolean isRun() { //-1 is invalid, 0 is set, 1 is run
+    public boolean isRun() { //used specifically for searchSplit
         if (!isValid()) {
             return false;
         }
@@ -206,7 +303,14 @@ public class Meld {
         }
     }
 
-
-
+    public ArrayList<Integer> getJokers() {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (Tile t : this.tiles) {
+            if (t.isJoker()) {
+                list.add(tiles.indexOf(t));
+            }
+        }
+        return list;
+    }
 
 }

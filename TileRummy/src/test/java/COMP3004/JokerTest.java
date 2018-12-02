@@ -1,0 +1,225 @@
+package COMP3004;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNoException;
+
+import COMP3004.models.Tile;
+import COMP3004.models.Joker;
+import COMP3004.models.Meld;
+import org.junit.Test;
+
+
+public class JokerTest {
+
+
+    //assert that a joker can be created and assigned different values, acting as a true wild card
+    @Test
+    public void testJokerChanging() {
+        Joker j = new Joker();
+
+        assertTrue(j.getColour() == 'J');
+        assertTrue(j.getValue() == 0);
+
+        j.setColour('B');
+        j.setValue(12);
+
+        assertTrue(j.getColour() == 'B');
+        assertTrue(j.getValue() == 12);
+    }
+
+
+    //assert that isJoker() can identify which cards are jokers and which are not
+    @Test
+    public void testIsJoker() {
+        Joker j = new Joker();
+        Tile t = new Tile('B', 12);
+
+
+        assertTrue(j.isJoker());
+        assertFalse(t.isJoker());
+    }
+
+
+    //assert that a joker can be used in a meld (isValid() passes)
+    @Test
+    public void testValidity() {
+        Joker j = new Joker();
+        Tile t1 = new Tile('B', 9);
+        Tile t2 = new Tile('B', 10);
+        Tile t3 = new Tile('B', 12);
+        Tile t4 = new Tile('B', 1);
+        Tile t5 = new Tile('G', 1);
+        Tile t6 = new Tile('O', 1);
+        Tile t7 = new Tile('R', 1);
+
+        Meld m = new Meld();
+
+        //assert jokers can be added to the end of a run
+        m.add(t1);
+        m.add(t2);
+        m.add(j);
+        assertTrue(m.isValid()); 
+        m.clear();
+        
+        //assert jokers can be added to the middle of a run
+        m.add(t2);
+        m.add(t3);
+        m.add(j);
+        assertTrue(m.isValid());
+        m.clear();
+
+        //assert jokers can be added to a set
+        m.add(t4);
+        m.add(t5);
+        m.add(j);
+        assertTrue(m.isValid());
+
+        //assert more can be added to the set with no complications
+        m.add(t6);
+        assertTrue(m.isValid());
+        
+        //assert 5 cards, joker included, cannot make a set
+        m.add(t7);
+        assertFalse(m.isValid());
+        m.clear();
+
+        //assert that a joker can be added to an empty meld, then adjust to what's added to it
+        m.add(j);
+        m.add(t2);
+        m.add(t3);
+        assertTrue(m.isValid());
+        m.clear();
+
+        //assert that a joker can be added to an unfinished meld, then adjust to what's added to it
+        m.add(t1);
+        m.add(j);
+        m.add(t2);
+        m.add(t3);
+        assertTrue(m.isValid());
+
+    }
+
+    //assert that a joker is counted as 30 points in meld.getScore()
+    @Test
+    public void testGetScore() {
+        Meld m = new Meld();
+        m.add(new Tile('O', 1));
+        m.add(new Tile('B', 1));
+        m.add(new Tile('R', 1));
+
+        assertTrue(m.getScore() == 3);
+
+        m.add(new Joker());
+        assertTrue(m.isValid());
+        assertTrue(m.getScore() == 33);
+
+    }
+
+    //assert that multiple jokers will not break the methods
+    @Test
+    public void testMultipleJokers() {
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        Meld m = new Meld();
+
+        //assert a set can have 2 jokers as long as there are <5 cards
+        m.add(new Tile('R', 1));
+        m.add(new Tile('G', 1));
+        m.add(j1);
+        m.add(j2);
+        assertTrue(m.isValid());
+        
+        m.add(new Tile('O', 1));
+        assertFalse(m.isValid());
+
+        //assert that a run can have 2 jokers as long as there are <14 cards
+        m.clear();
+        m.add(new Tile('O', 2));
+        m.add(new Tile('O', 3));
+        m.add(new Tile('O', 4));
+        m.add(new Tile('O', 5));
+        m.add(new Tile('O', 6));
+        m.add(new Tile('O', 7));
+        m.add(new Tile('O', 8));
+        m.add(new Tile('O', 9));
+        m.add(new Tile('O', 10));
+        m.add(new Tile('O', 11));
+        m.add(new Tile('O', 12));
+        m.add(j1);
+        m.add(j2);
+        assertTrue(m.isValid());
+
+        m.add(new Tile('O', 13));
+        assertFalse(m.isValid());
+
+        /*assert that two jokers added at the beginning will still make a valid meld as long as another card
+        is added*/
+        m.clear();
+        m.add(j1);
+		m.add(j2);
+		m.add(new Tile('R', 1));
+        m.add(new Tile('G', 1));
+        assertTrue(m.isValid());
+
+        m.clear();
+		m.add(j1);
+		m.add(j2);
+		m.add(new Tile('O', 1));
+        assertTrue(m.isValid());
+
+        m.clear();
+        m.add(j1);
+        m.add(j2);
+		m.add(new Tile('O', 2));
+        assertTrue(m.isValid());
+
+        m.add(new Tile('O', 4));
+        assertTrue(m.isValid());
+
+    }
+
+    //assert that melds have a method for determining whether or not there are jokers
+    @Test
+    public void testGetJokers() {
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        Meld m = new Meld();
+        Tile t1 = new Tile('G', 10);
+        Tile t2 = new Tile('R', 10);
+
+        m.add(t1);
+        m.add(j1);
+        m.add(t2);
+
+        assertTrue(m.getJokers().size() == 1);
+        assertTrue(m.getJokers().get(0) == 1);
+
+        m.add(j2);
+
+        assertTrue(m.getJokers().size() == 2);
+        assertTrue(m.getJokers().get(1) == 2); //alphabetical
+    }
+
+
+
+
+
+
+    //discuss with everyone about the organization of a printed meld when the joker is included; 
+    //should it just read as a big "J" or something else?
+
+   /*
+    //LATER...
+
+        -> assert that jokers can be added to melds made from searchHand()
+        -> assert that jokers can be added to melds made from searchTable()
+        
+        -> TBA: whether or not the AI know how to reuse jokers already on the table
+
+        -> assert that jokers will not just be appended to the fronts or ends of melds by AI and will 
+            be used with some "cleverness"
+        -> assert that if the joker is the only card left in the hand, the ai plays it
+    */
+
+}

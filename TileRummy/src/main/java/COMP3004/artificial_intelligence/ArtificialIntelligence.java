@@ -421,7 +421,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         HashMap<String, Integer> handUsed = new HashMap<String, Integer>(inHand);
         ArrayList<Integer> usedMelds = new ArrayList<>();
 
-        for(Tile t : m.getTiles()) handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+        for(Tile t : m.getTiles()) {
+            /*System.out.println("A: " + t.toString());
+            System.out.println("B: ");
+            System.out.println(handUsed.get(t.toString()));*/
+            if(handUsed.get(t.toString())!=null){
+                handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+            }
+        }
         results.add(m);
 
         //Iterate over the set to compare against
@@ -439,7 +446,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
             //Check for duplicate tiles
             for(Tile t : entry.getKey().getTiles()){
-                if(handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
+                /*System.out.println("C: ");
+                System.out.println(t.toString());
+                System.out.println("D: ");
+                System.out.println(handUsedLocal.get(t.toString()));*/
+                if(handUsedLocal.get(t.toString()) != null &&
+                        handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
                 else containsDuplicate = true;
             }
 

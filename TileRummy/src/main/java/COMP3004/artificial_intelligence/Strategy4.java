@@ -16,6 +16,7 @@
 
 package COMP3004.artificial_intelligence;
 
+import COMP3004.models.Joker;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
@@ -26,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.AbstractMap;
 import java.util.Collections;
+
+//TODO: consider jokers
 
 public class Strategy4 extends ArtificialIntelligence
 {
@@ -255,14 +258,22 @@ public class Strategy4 extends ArtificialIntelligence
                 results.put(new Tile(colours[i], j).toString(), 0.0);
             }
         }
+        results.put("J0", 0.0);
 
         for(Meld m : this.table.getMelds()){
-            for(Tile t : m.getTiles()){results.put(t.toString(), results.get(t.toString())+1);
-                totalSeen++;
+            for(Tile t : m.getTiles()){
+                if(results.get(t.toString()) != null){
+                    results.put(t.toString(), results.get(t.toString())+1);
+                    totalSeen++;
+                }
             }
         }
 
-        for(Tile t : this.player.getHand().getTiles()){results.put(t.toString(), results.get(t.toString())+1);
+        for(Tile t : this.player.getHand().getTiles()){
+            //System.out.println(t.toString());
+            if(results.get(t.toString()) != null){
+                results.put(t.toString(), results.get(t.toString())+1);
+            }
             totalSeen++;
         }
 

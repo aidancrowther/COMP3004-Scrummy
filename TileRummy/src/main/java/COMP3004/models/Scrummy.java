@@ -120,6 +120,7 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         for(int j = 0; j < 14; j++){
             hand.add(this.deck.pop());
         }
+        hand.add(new Joker());
         p.setHand(hand);
         this.players.add(p);
         return p;

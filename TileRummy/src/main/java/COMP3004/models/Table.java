@@ -93,7 +93,7 @@ public class Table {
     public boolean isValid() {
         //System.out.println(melds.get(0).size());
         if (this.melds.get(0).getTiles().size() != 0) {
-            System.out.println("meld 0 not empty: " + this.toString());
+            //System.out.println("meld 0 not empty: " + this.toString());
             return false;
         }
         for (int i=1; i<this.melds.size(); i++) {
@@ -271,12 +271,12 @@ public class Table {
     public String prettyString() {
         String str = "";
         int i= 0;
-        if(this.melds.size() == 0){
-            System.out.println("no melds at all");
-        }
-        if(this.melds.size() == 1){
-            System.out.println("Only meld 0");
-        }
+        //if(this.melds.size() == 0){
+            //System.out.println("no melds at all");
+        //}
+        //if(this.melds.size() == 1){
+        //    System.out.println("Only meld 0");
+        //}
         for( Meld m : this.melds){
             for( Tile t : m.getTiles() ) {
                 str += i + " |" + Character.toString(t.getColour()) + "-" + Integer.toString(t.getValue()) + "| ";

@@ -4,6 +4,7 @@ import COMP3004.artificial_intelligence.Strategy4;
 import COMP3004.controllers.Controller;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.PlayerInteractionController;
+import COMP3004.models.Joker;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
@@ -197,7 +198,7 @@ public class GraphicalView {
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
             for(String type : playerTypes){
-                System.out.println(type);
+                //System.out.println(type);
                 if(type != null){
                     controller.addPlayer(type);
                 }
@@ -301,7 +302,7 @@ public class GraphicalView {
         playerOrder.getChildren().add(chooseAttemptsPane);
 
 
-        System.out.println("START INDEX: " + startIndex);
+        //System.out.println("START INDEX: " + startIndex);
         this.controller.setCurrentPlayerIndex(startIndex);
 
         Text wintext = new Text(
@@ -447,10 +448,15 @@ public class GraphicalView {
                     Rectangle rectangle = new Rectangle( 100,100,30,50);
                     rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
                     if(this.tableDiff.contains(m)){
-                        System.out.println("yeet");
                         rectangle.setFill(Color.rgb(245, 221, 213,1.0));//")); //rgb()
                     }
-                    Text text = new Text(Integer.toString(t.getValue()));
+
+                    String tileText = Integer.toString(t.getValue());
+                    if(t instanceof Joker){
+                        //System.out.println("Mask joker");
+                        tileText = "J";
+                    }
+                    Text text = new Text(tileText);
                     text.setFont(Font.font ("Verdana", 20));
                     if(t.getColour() == 'R'){
                         text.setFill(Color.rgb(204, 0, 0));
@@ -477,7 +483,7 @@ public class GraphicalView {
                                     selectedTile = t;
                                     fromMeld = m;
                                 }
-                                System.out.println(controller.getScrummy().getTable().getMelds().size());
+                                //System.out.println(controller.getScrummy().getTable().getMelds().size());
                                 if(controller.getScrummy().getTable().getMelds().size() == 1){
                                     //int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
@@ -556,7 +562,14 @@ public class GraphicalView {
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 400,100,30,50);
             rectangle.setFill(Color.rgb(252, 248, 224,1.0));
-            Text text = new Text(Integer.toString(t.getValue()));
+
+            String tileText = Integer.toString(t.getValue());
+            if(t instanceof Joker){
+                t.setValue(0);
+                t.setColour('J');
+                tileText = "J";
+            }
+            Text text = new Text(tileText);
             text.setFont(Font.font ("Verdana", 20));
             if(t.getColour() == 'R'){
                 text.setFill(Color.rgb(204, 0, 0));
@@ -590,7 +603,7 @@ public class GraphicalView {
                             }
                         } else {
                             //YOU HAVE TO SELECT A TILE FIRST
-                            System.out.println(fromMeld);
+                            //System.out.println(fromMeld);
                             if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(currentPlayerIndex)){ //Only allow player to add back tiles from new meld
                                 playerControl.getPlayer().getHand().add(selectedTile);
                                 fromMeld.remove(selectedTile);
@@ -668,9 +681,9 @@ public class GraphicalView {
     public void drawSuggestedMelds(){
         if(this.suggestionsEnabled){
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
-            for(Meld m: this.suggestedPlays){
+            /*for(Meld m: this.suggestedPlays){
                 System.out.println(m.toString());
-            }
+            }*/
         }
 
         //TODO: SUGGESTED PLAYS CLEANUP
@@ -714,14 +727,14 @@ public class GraphicalView {
         this.currentPlayerIndex = c;
         if(this.tableBefore != null){
             this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
-            System.out.println("DIFF:");
+            /*System.out.println("DIFF:");
             for(Meld m:this.tableDiff){
                 System.out.println(m);
-            }
+            }*/
         }
 
         this.tableBefore = controller.getScrummy().getTable().copy();
-        System.out.println("PLayer: " + this.currentPlayerIndex);
+        //System.out.println("PLayer: " + this.currentPlayerIndex);
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
         this.draw();
 
@@ -778,7 +791,7 @@ public class GraphicalView {
 
     class PlayerTimerTask extends TimerTask {
         public void run() {
-            System.out.println("Hello World");
+            System.out.println("Turn Complete");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
