@@ -738,6 +738,7 @@ public class GraphicalView {
         } else {
             if(this.limitHumanTime){
                 System.out.println("starting the countdown!");
+                this.timer = new Timer();
                 long delay = 1000L*60*2;
                 this.timer.schedule(new PlayerTimerTask(), delay);
             }
