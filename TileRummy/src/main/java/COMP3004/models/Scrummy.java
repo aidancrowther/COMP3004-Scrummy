@@ -125,6 +125,13 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         return p;
     }
 
+    public Player addNewPlayer(String name, Meld hand){
+        Player p = new Player(name);
+        p.setHand(hand);
+        this.players.add(p);
+        return p;
+    }
+
     public ArrayList<GameInteractionController> getTableObservers(){
         return this.tableObservers;
     }

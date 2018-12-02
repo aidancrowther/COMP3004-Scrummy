@@ -8,11 +8,15 @@ import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserverInterface;
 import COMP3004.terminal.TerminalView;
 
+import java.util.ArrayList;
+
 public class GameInteractionController implements TableObserverInterface {
     protected TerminalView terminalView = new TerminalView();
     protected GraphicalView graphicalView;
     protected Table table;
     protected Player player;
+
+    protected ArrayList<Tile> riggedTiles;
 
     public GameInteractionController(){
         //this.terminalView = new TerminalView();
@@ -74,4 +78,12 @@ public class GameInteractionController implements TableObserverInterface {
 
     public GraphicalView getGUI() { return this.graphicalView; }
     public void setGUI(GraphicalView g) { this.graphicalView = g; }
+
+    public ArrayList<Tile> getRiggedTiles() {
+        return riggedTiles;
+    }
+
+    public void setRiggedTiles(ArrayList<Tile> riggedTiles) {
+        this.riggedTiles = riggedTiles;
+    }
 }

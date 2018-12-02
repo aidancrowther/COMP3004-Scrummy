@@ -22,6 +22,7 @@ import COMP3004.models.Player;
 import COMP3004.terminal.TerminalView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class Controller
@@ -142,13 +143,15 @@ public class Controller
             if(!scrummy.getTable().isValid()){
                 scrummy.setTable(tableBefore);
                 scrummy.getPlayers().get(this.currentPlayerIndex).setHand(handBefore);
-                Tile t = scrummy.getDeck().pop();
-                scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
+                /*Tile t = scrummy.getDeck().pop();
+                scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);*/
+                this.popTileToCurrentUserHand();
                 scrummy.notifyObservers();
             }
             else if(tableBefore.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 scrummy.getCurrentPlayer().setHand(handBefore); // IN CASE PLAYER HAD TENTATIVE MELD
-                Tile t = scrummy.getDeck().pop();
+                this.popTileToCurrentUserHand();
+                /*Tile t = scrummy.getDeck().pop();
                 if(t != null){
                     scrummy.getCurrentPlayer().getHand().add(t);
                     playerControllers.get(0).getTerminalView().printMessagePlain(playerControllers.get(scrummy.getCurrentPlayerIndex()).getPlayer().getName() + " drew from the deck tile: " + t.toString());
@@ -156,7 +159,7 @@ public class Controller
                     if(this.view != null) {
                         this.view.printMessage("Out of tiles to be drawn.");
                     }
-                }
+                }*/
             }
         }
 
@@ -181,10 +184,11 @@ public class Controller
             if(playedTable.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
                 //System.out.println("Equivalent");
                 scrummy.getCurrentPlayer().setHand(playerHandCopy); // IN CASE PLAYER HAD TENTATIVE MELD
-                Tile t = scrummy.getDeck().pop();
+                this.popTileToCurrentUserHand();
+                /*Tile t = scrummy.getDeck().pop();
                 if(t != null){
                     scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
-                    playerControllers.get(0).getTerminalView().printMessagePlain(playerControllers.get(scrummy.getCurrentPlayerIndex()).getPlayer().getName() + " drew from the deck tile: " + t.toString());
+                    //playerControllers.get(0).getTerminalView().printMessagePlain(playerControllers.get(scrummy.getCurrentPlayerIndex()).getPlayer().getName() + " drew from the deck tile: " + t.toString());
                     //System.out.println(this.scrummy.getCurrentPlayer().getName() + " hand in controller: ");
                     //System.out.println(this.playerControllers[(scrummy.getCurrentPlayerIndex())].getPlayer().getHand().toString());
                     if(this.view != null) {
@@ -194,16 +198,15 @@ public class Controller
                     if(this.view != null) {
                         this.view.printMessage("Out of tiles to be drawn.");
                     }
-                }
+                }*/
 
             } else {
                 scrummy.validatePlayerMove(playedTable);
                 //System.out.println("vallid");
                 if(!playedTable.isValid()){
                     scrummy.getPlayers().get(this.currentPlayerIndex).setHand(playerHandCopy);
-                    Tile t = scrummy.getDeck().pop();
-                    scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
                     //scrummy.getCurrentPlayer().setHand(playerHandCopy);
+                    this.popTileToCurrentUserHand();
                 }
             }
         }
@@ -214,6 +217,41 @@ public class Controller
         }
 
         return winnerIndex;
+    }
+
+    public void popTileToCurrentUserHand(){
+        if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles() != null){
+            this.popFromDeckRigged();
+        } else {
+            Tile t = scrummy.getDeck().pop();
+            if(t != null){
+                scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(t);
+            }
+        }
+    }
+
+    public void popFromDeckRigged(){
+        //When user is popping a card off the stack, if they have a rigged stack,
+        //tell them to pop/push the cards off the deck until the curr rigged index (first tile in array) tile is found
+        //delete first tile in push all popped tiles onto deck.
+        ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+        for(Tile currRiggedTile : this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles()){
+            Tile deckTile = this.scrummy.getDeck().pop();
+            if(deckTile != null){
+                if(currRiggedTile.getColour() == deckTile.getColour()
+                        && currRiggedTile.getValue() == deckTile.getValue()){
+                    this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                    break;
+                } else {
+                    poppedtiles.add(deckTile); //oldest to newest arraylist
+                }
+            }
+        }
+
+        Collections.reverse(poppedtiles); //add back in original order
+        for(Tile t : poppedtiles){
+            this.scrummy.getDeck().push(t);
+        }
     }
 
 
@@ -309,7 +347,6 @@ public class Controller
         }
         this.scrummy.notifyObservers();
     }
-
 
     public Scrummy getScrummy(){
         return this.scrummy;

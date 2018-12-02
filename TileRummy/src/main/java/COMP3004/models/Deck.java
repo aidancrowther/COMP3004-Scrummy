@@ -49,4 +49,8 @@ public class Deck{
         deck.push(c);
     }
 
+    public Stack<Tile> clone() {
+        return (Stack<Tile>)deck.clone();
+    }
+
 }

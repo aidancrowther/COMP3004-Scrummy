@@ -20,11 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -34,6 +30,7 @@ import javafx.scene.text.TextBoundsType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +64,9 @@ public class GraphicalView {
     protected Strategy4 suggestionEngine;
     protected ArrayList<Meld> suggestedPlays;
 
+    protected Tile selectedTileForRigging;
+    protected int riggedStartIndex;
+
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
         this.menuPane.setStyle("-fx-background-color: #333333");
@@ -88,23 +88,24 @@ public class GraphicalView {
         playButton.setMaxSize(270, 100);
         playButton.setOnMouseClicked(e -> {
             //loadGamePane();
-            loadGameSettingsPane();
+            loadGameSettingsPane(false);
         });
         buttons.getChildren().add(playButton);
 
-        Button loadButton = new Button("LOAD SAVED GAME");
+        /*Button loadButton = new Button("LOAD SAVED GAME");
         loadButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         loadButton.setMaxSize(270, 100);
         loadButton.setOnMouseClicked(e -> {
             loadImportSavePane();
         });
-        buttons.getChildren().add(loadButton);
+        buttons.getChildren().add(loadButton);*/
 
         Button rigButton = new Button("NEW RIGGED GAME");
         rigButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         rigButton.setMaxSize(270, 100);
         rigButton.setOnMouseClicked(e -> {
-            loadRigPane();
+            //loadRigPane();
+            loadGameSettingsPane(true);
         });
         buttons.getChildren().add(rigButton);
 
@@ -118,7 +119,7 @@ public class GraphicalView {
         }
     }
 
-    public void loadGameSettingsPane(){
+    public void loadGameSettingsPane(boolean rigged){
         //- drop downs for players 2-4
         //When new player created show spawned order tile for the new player
         //start game button
@@ -194,17 +195,22 @@ public class GraphicalView {
         });
         setPlayersMenu.getChildren().add(suggestionsCheck);
 
-        Button play = new Button("PLAY");
+        Button play = new Button(rigged ? "-> RIGGING SETUP" : "PLAY");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
+            //this.setCurrentPlayerIndex(0);
             for(String type : playerTypes){
                 //System.out.println(type);
                 if(type != null){
                     controller.addPlayer(type);
                 }
             }
-            //this.setCurrentPlayerIndex(0);
-            this.loadPlayerOrderPane();
+
+            if(rigged){
+                this.loadRigPane(playerTypes);
+            } else {
+                this.loadPlayerOrderPane();
+            }
         });
         setPlayersMenu.getChildren().add(play);
 
@@ -342,6 +348,26 @@ public class GraphicalView {
         return tile;
     }
 
+    public StackPane generateTilePaneMini(Tile t){
+        Rectangle rectangle = new Rectangle( 100,100,25,35);
+        rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
+        Text text = new Text(Integer.toString(t.getValue()));
+        text.setFont(Font.font ("Verdana", 14));
+        if(t.getColour() == 'R'){
+            text.setFill(Color.rgb(204, 0, 0));
+        } else if (t.getColour() == 'G') {
+            text.setFill(Color.GREEN);
+        } else if (t.getColour() == 'B') {
+            text.setFill(Color.BLUE);
+        } else if (t.getColour() == 'O') {
+            text.setFill(Color.rgb(239, 143, 0));
+        }
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane tile = new StackPane();
+        tile.getChildren().addAll(rectangle, text);
+        return tile;
+    }
+
     public StackPane generateTilePane(Tile t){
         Rectangle rectangle = new Rectangle( 100,100,30,50);
         rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
@@ -362,8 +388,166 @@ public class GraphicalView {
         return tile;
     }
 
-    public void loadRigPane(){
+    public void loadRigPane(ArrayList<String> playerTypes){
+        /*CHOOSE PLAYER ORDER, HANDS, AND TILES POPPED FORM DECKS FOR USER*/
+        //Create an array for rigged cards for each user
 
+        ArrayList<Meld> riggedHands = new ArrayList<Meld>();
+        ArrayList<ArrayList<Tile>> riggedDeckOrders = new ArrayList<ArrayList<Tile>>();
+        for(GameInteractionController playerController : this.controller.getPlayerControllers()){
+            riggedHands.add(new Meld());
+            riggedDeckOrders.add(new ArrayList<Tile>());
+        }
+        Stack<Tile> deckCopy = this.controller.getScrummy().getDeck().clone();
+
+
+        VBox rigOptions = new VBox();
+        rigOptions.setPadding(new Insets(30, 50, 30, 50));
+        //buttons.setPadding(new Insets(30, 365, 50, 365));
+        rigOptions.setSpacing(30);
+        rigOptions.setStyle("-fx-background-color: #333333");
+
+        Text title = new Text("Game Rigging");
+        title.setFont(Font.font ("Verdana", 20));
+        title.setFill(Color.WHITE);
+        rigOptions.getChildren().add(title);
+
+
+        Text sub = new Text("The Game Deck:");
+        sub.setFont(Font.font ("Verdana", 15));
+        sub.setFill(Color.WHITE);
+        rigOptions.getChildren().add(sub);
+        //Show interactive deck
+        FlowPane deckPane = new FlowPane();
+        deckPane.setHgap(2);
+        deckPane.setVgap(2);
+        int tileIndex = 0;
+        for(Tile t : deckCopy){
+            //set selectedTileForRigging
+            StackPane tilePane = this.generateTilePaneMini(t);
+            tilePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if(selectedTileForRigging == t) {
+                        selectedTileForRigging = null;
+                        Rectangle r = (Rectangle)tilePane.getChildren().get(0);
+                        r.setFill(Color.rgb(252, 248, 224,1.0));
+                    } else {
+                        selectedTileForRigging = t;
+                        Rectangle r = (Rectangle)tilePane.getChildren().get(0);
+                        r.setFill(Color.rgb(255, 255, 255,0.5));
+                    }
+                }
+            });
+            deckPane.getChildren().add(tilePane);
+            tileIndex++;
+        }
+        rigOptions.getChildren().add(deckPane);
+
+
+        Text sub1 = new Text("Player Hands and Rigged Deck Tiles");
+        sub1.setFont(Font.font ("Verdana", 15));
+        sub1.setFill(Color.WHITE);
+        rigOptions.getChildren().add(sub1);
+        Text desc1 = new Text("Please click tiles from the deck below to populate the player hands. It will automatically move to the next player when you've filled up the current player's hand.");
+        desc1.setFont(Font.font ("Verdana", 12));
+        desc1.setFill(Color.WHITE);
+        rigOptions.getChildren().add(desc1);
+
+
+
+        for(GameInteractionController playerController : this.controller.getPlayerControllers()) {
+            VBox playerSetupPane = new VBox();
+            HBox buttons = new HBox();
+            HBox handAndDeckTiles = new HBox();
+            //Mini tile view of player hand and rigged deck
+            FlowPane playerHand = new FlowPane();
+            FlowPane playerDeckTiles = new FlowPane();
+
+            //Buttons for adding to players hand or rigged deck
+            Button addToHand = new Button("Add to hand");
+            addToHand.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+            addToHand.setOnMouseClicked(e -> {
+                if(selectedTileForRigging != null){
+                    int playerIndex = controller.getPlayerControllers().indexOf(playerController);
+                    playerHand.getChildren().add(generateTilePaneMini(selectedTileForRigging)); //add to view
+                    riggedHands.get(playerIndex).add(selectedTileForRigging); //save for setup later
+                }
+            });
+
+            Button addToPlayerDeck = new Button("Add to rigged draws");
+            addToPlayerDeck.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+            addToPlayerDeck.setOnMouseClicked(e -> {
+                if(selectedTileForRigging != null){
+                    int playerIndex = controller.getPlayerControllers().indexOf(playerController);
+                    playerDeckTiles.getChildren().add(generateTilePaneMini(selectedTileForRigging)); //add to view
+                    riggedDeckOrders.get(playerIndex).add(selectedTileForRigging); //save for setup later
+                }
+            });
+            buttons.getChildren().addAll(addToHand, addToPlayerDeck);
+
+
+            handAndDeckTiles.getChildren().addAll(playerHand, playerDeckTiles);
+            playerSetupPane.getChildren().addAll(buttons, handAndDeckTiles);
+            rigOptions.getChildren().add(playerSetupPane);
+
+        }
+
+
+        //START INDEX
+
+        Text sub3= new Text("Starting Player");
+        sub3.setFont(Font.font ("Verdana", 15));
+        sub3.setFill(Color.WHITE);
+        rigOptions.getChildren().add(sub3);
+
+
+        final ToggleGroup group = new ToggleGroup();
+
+        int playerIndex = 0;
+        for(GameInteractionController playerController : this.controller.getPlayerControllers()) {
+            RadioButton rb1 = new RadioButton(playerController.getPlayer().getName());
+            rb1.setToggleGroup(group);
+            rb1.setUserData(playerIndex);
+            playerIndex++;
+        }
+
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (group.getSelectedToggle() != null) {
+                    riggedStartIndex = Integer.parseInt(group.getSelectedToggle().getUserData().toString());
+                }
+            }
+        });
+
+        Button play = new Button("START GAME");
+        play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+        play.setOnMouseClicked(e -> {
+            //Save game settings
+
+            int i = 0;
+            for(Meld hand : riggedHands){
+                controller.getPlayerControllers().get(i).getPlayer().setHand(hand);
+                i++;
+            }
+
+            i = 0;
+            for(ArrayList<Tile> riggedTiles : riggedDeckOrders){
+                controller.getPlayerControllers().get(i).setRiggedTiles(riggedTiles);
+                i++;
+            }
+
+            //Set starting player
+            this.controller.setCurrentPlayerIndex(this.riggedStartIndex);
+
+            //Load game
+            this.loadGamePane();
+        });
+        rigOptions.getChildren().add(play);
+
+
+        this.root.getChildren().add(rigOptions);
     }
 
     public void loadImportSavePane(){
@@ -446,7 +630,12 @@ public class GraphicalView {
             if(m.getTiles().size()!=0){
                 for(Tile t : m.getTiles()) {
                     Rectangle rectangle = new Rectangle( 100,100,30,50);
-                    rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                    if(this.selectedTile == t){
+                        rectangle.setFill(Color.rgb(242, 255, 230,1));
+                    } else {
+                        rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                    }
+
                     if(this.tableDiff.contains(m)){
                         rectangle.setFill(Color.rgb(245, 221, 213,1.0));//")); //rgb()
                     }
@@ -561,8 +750,11 @@ public class GraphicalView {
         int j = 0;
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 400,100,30,50);
-            rectangle.setFill(Color.rgb(252, 248, 224,1.0));
-
+            if(this.selectedTile == t){
+                rectangle.setFill(Color.rgb(242, 255, 230,1));
+            } else {
+                rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+            }
             String tileText = Integer.toString(t.getValue());
             if(t instanceof Joker){
                 t.setValue(0);
