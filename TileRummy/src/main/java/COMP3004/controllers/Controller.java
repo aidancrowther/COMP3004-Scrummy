@@ -386,6 +386,8 @@ public class Controller
     }
 
     public void setCurrentPlayerIndex(int index){
+        System.out.println("SET INDEX: " + index);
+        System.out.println("NUM PLAYERS: " + this.playerControllers.size());
         this.currentPlayerIndex = index;
         this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
         this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);

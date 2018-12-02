@@ -65,7 +65,7 @@ public class GraphicalView {
     protected ArrayList<Meld> suggestedPlays;
 
     protected Tile selectedTileForRigging;
-    protected int riggedStartIndex;
+    protected int riggedStartIndex = 0;
 
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
@@ -389,6 +389,9 @@ public class GraphicalView {
     }
 
     public void loadRigPane(ArrayList<String> playerTypes){
+        if(this.suggestionsEnabled){
+            this.suggestionEngine = new Strategy4();
+        }
         /*CHOOSE PLAYER ORDER, HANDS, AND TILES POPPED FORM DECKS FOR USER*/
         //Create an array for rigged cards for each user
 
@@ -458,11 +461,17 @@ public class GraphicalView {
 
         for(GameInteractionController playerController : this.controller.getPlayerControllers()) {
             VBox playerSetupPane = new VBox();
+            playerSetupPane.setSpacing(10);
             HBox buttons = new HBox();
+            buttons.setSpacing(10);
             HBox handAndDeckTiles = new HBox();
             //Mini tile view of player hand and rigged deck
             FlowPane playerHand = new FlowPane();
+            playerHand.setHgap(2);
+            playerHand.setVgap(2);
             FlowPane playerDeckTiles = new FlowPane();
+            playerDeckTiles.setHgap(2);
+            playerDeckTiles.setVgap(2);
 
             //Buttons for adding to players hand or rigged deck
             Button addToHand = new Button("Add to hand");
@@ -502,24 +511,28 @@ public class GraphicalView {
         rigOptions.getChildren().add(sub3);
 
 
-        final ToggleGroup group = new ToggleGroup();
-
+        ToggleGroup startGroup = new ToggleGroup();
+        HBox radioButtons = new HBox();
+        radioButtons.setSpacing(10);
         int playerIndex = 0;
         for(GameInteractionController playerController : this.controller.getPlayerControllers()) {
-            RadioButton rb1 = new RadioButton(playerController.getPlayer().getName());
-            rb1.setToggleGroup(group);
-            rb1.setUserData(playerIndex);
+            RadioButton playerRadio = new RadioButton(playerController.getPlayer().getName());
+            playerRadio.setStyle("-fx-text-fill:white");
+            playerRadio.setToggleGroup(startGroup);
+            playerRadio.setUserData(playerIndex);
+            radioButtons.getChildren().add(playerRadio);
             playerIndex++;
         }
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+        startGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
-                if (group.getSelectedToggle() != null) {
-                    riggedStartIndex = Integer.parseInt(group.getSelectedToggle().getUserData().toString());
+                if (startGroup.getSelectedToggle() != null) {
+                    riggedStartIndex = Integer.parseInt(startGroup.getSelectedToggle().getUserData().toString());
                 }
             }
         });
+        rigOptions.getChildren().add(radioButtons);
 
         Button play = new Button("START GAME");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
@@ -539,6 +552,7 @@ public class GraphicalView {
             }
 
             //Set starting player
+            System.out.println("Start: " + riggedStartIndex);
             controller.setCurrentPlayerIndex(riggedStartIndex);
 
             //Load game
@@ -872,10 +886,9 @@ public class GraphicalView {
 
     public void drawSuggestedMelds(){
         if(this.suggestionsEnabled){
+            System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName());
+            System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand());
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
-            /*for(Meld m: this.suggestedPlays){
-                System.out.println(m.toString());
-            }*/
         }
 
         //TODO: SUGGESTED PLAYS CLEANUP
