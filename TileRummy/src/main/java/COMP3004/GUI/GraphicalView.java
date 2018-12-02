@@ -577,6 +577,7 @@ public class GraphicalView {
         this.topButtons.setStyle("-fx-background-color: #333333");
         this.topButtons.setSpacing(10);
         Button finishTurnBtn = new Button("Finish Turn");
+        finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
             this.finishTurn();
@@ -584,6 +585,7 @@ public class GraphicalView {
         finishTurnBtn.setPrefSize(100, 20);
 
         Button newMeldBtn = new Button("Add To New Meld");
+        newMeldBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         newMeldBtn.setOnMouseClicked(e -> {
             if(this.selectedTile != null){
                 controller.getScrummy().getTable().add(selectedTile);
@@ -607,6 +609,7 @@ public class GraphicalView {
         this.gamePane.add(this.tablePane, 0, 1);
 
         this.root.getChildren().add(gamePane);
+        draw();
     }
 
     public void draw(){
