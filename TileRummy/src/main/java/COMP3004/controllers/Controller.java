@@ -295,6 +295,12 @@ public class Controller
         this.graphicalView = graphicalView;
     }
 
+    public void setCurrentPlayerIndex(int index){
+        this.currentPlayerIndex = index;
+        this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
+        this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+    }
+
 }
 
 

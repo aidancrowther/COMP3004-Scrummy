@@ -106,7 +106,7 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
         int index = 0;
         for(Strategy3 observer : this.playerHandObservers) {
             for(int i = 0; i < this.players.size(); i++) {
-                if(i != 3) { //no for s3
+                if(observer.getPlayer() != this.players.get(i)) { //no for self
                     observer.update(this.getPlayerHandByIndex(i).size(), index);
                     index++;
                 }

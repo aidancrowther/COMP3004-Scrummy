@@ -25,8 +25,8 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     public void setPlayerHandSizes(ArrayList<Player> players) {
         int index = 0;
         for(int i = 0; i < players.size(); i++) {
-            if(i != 3){ //Don't track self - strat 3
-                this.playerHandSizes.set(index, players.get(i).getHand().size());
+            if(this.player != players.get(i)){ //Don't track self
+                this.playerHandSizes.add(players.get(i).getHand().size());
                 index++;
             }
         }

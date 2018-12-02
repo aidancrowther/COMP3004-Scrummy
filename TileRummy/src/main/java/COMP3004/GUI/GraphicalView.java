@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GraphicalView {
@@ -157,12 +159,152 @@ public class GraphicalView {
                     controller.addPlayer(type);
                 }
             }
-            this.setCurrentPlayerIndex(0);
-            this.loadGamePane();
+            //this.setCurrentPlayerIndex(0);
+            this.loadPlayerOrderPane();
         });
         setPlayersMenu.getChildren().add(play);
 
         this.root.getChildren().add(setPlayersMenu);
+    }
+
+    public void loadPlayerOrderPane(){
+        VBox playerOrder = new VBox();
+        playerOrder.setPadding(new Insets(30, 50, 30, 50));
+        playerOrder.setSpacing(30);
+        playerOrder.setStyle("-fx-background-color: #333333");
+
+        VBox chooseAttemptsPane = new VBox();
+        chooseAttemptsPane.setSpacing(30);
+
+        HBox chosenTilesPane = new HBox();
+        chosenTilesPane.setSpacing(50);
+
+        HBox chosenTilesLabelPane = new HBox();
+        chosenTilesLabelPane.setSpacing(50);
+
+        ArrayList<Tile> selectedTiles = new ArrayList<Tile>();
+        for(GameInteractionController p : this.controller.getPlayerControllers()){
+            String label = p.getPlayer().getName();
+            if(label.length() < 8){
+                label += "   ";
+            }
+            Text text = new Text(label);
+            text.setFont(Font.font ("Verdana", 15));
+            text.setFill(Color.WHITE);
+            chosenTilesLabelPane.getChildren().add(text);
+
+            Tile t = this.controller.getScrummy().getDeck().pop();
+            selectedTiles.add(t);
+            chosenTilesPane.getChildren().add(this.generateTilePaneLarge(t));
+        }
+        chooseAttemptsPane.getChildren().add(chosenTilesLabelPane);
+        chooseAttemptsPane.getChildren().add(chosenTilesPane);
+
+
+        int highestValue = -1;
+        int startIndex = 0;
+        int index = 0;
+
+        ArrayList<Tile> otherAttempts = new ArrayList<Tile>();
+        for(Tile t : selectedTiles){
+            if(highestValue == -1){
+                highestValue = t.getValue();
+            } else if(t.getValue() > highestValue){
+                startIndex = index;
+                highestValue = t.getValue();
+            } else if(t.getValue() == highestValue){
+                Text text = new Text(
+                        this.controller.getPlayerControllers().get(index).getPlayer().getName()
+                                + " has tied! They selected the following tile(s) to try and break the tie:");
+                text.setFont(Font.font ("Verdana", 15));
+                text.setFill(Color.WHITE);
+                chooseAttemptsPane.getChildren().add(text);
+
+                HBox otherAttemptsPane = new HBox();
+                otherAttemptsPane.setSpacing(10);
+                while(true){
+                    Tile t2 = this.controller.getScrummy().getDeck().pop();
+                    otherAttemptsPane.getChildren().add(this.generateTilePane(t2));
+                    otherAttempts.add(t2);
+                    if(t2.getValue() > highestValue) {
+                        highestValue = t2.getValue();
+                        startIndex = index;
+                        break;
+                    } else if (t2.getValue() < highestValue) {
+                        break;
+                    }
+                }
+                chooseAttemptsPane.getChildren().add(otherAttemptsPane);
+            }
+            index++;
+        }
+
+        selectedTiles.addAll(otherAttempts);
+        for(Tile t : selectedTiles){
+            this.controller.getScrummy().getDeck().push(t);
+        }
+
+        playerOrder.getChildren().add(chooseAttemptsPane);
+
+
+        System.out.println("START INDEX: " + startIndex);
+        this.controller.setCurrentPlayerIndex(startIndex);
+
+        Text wintext = new Text(
+                this.controller.getPlayerControllers().get(startIndex).getPlayer().getName()
+                        + " will play first.");
+        wintext.setFont(Font.font ("Verdana", 15));
+        wintext.setFill(Color.WHITE);
+        playerOrder.getChildren().add(wintext);
+
+        Button play = new Button("START GAME");
+        play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+        play.setOnMouseClicked(e -> {
+            this.loadGamePane();
+        });
+        playerOrder.getChildren().add(play);
+
+        this.root.getChildren().add(playerOrder);
+    }
+
+    public StackPane generateTilePaneLarge(Tile t){
+        Rectangle rectangle = new Rectangle( 100,100,70,90);
+        rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
+        Text text = new Text(Integer.toString(t.getValue()));
+        text.setFont(Font.font ("Verdana", 20));
+        if(t.getColour() == 'R'){
+            text.setFill(Color.rgb(204, 0, 0));
+        } else if (t.getColour() == 'G') {
+            text.setFill(Color.GREEN);
+        } else if (t.getColour() == 'B') {
+            text.setFill(Color.BLUE);
+        } else if (t.getColour() == 'O') {
+            text.setFill(Color.rgb(239, 143, 0));
+        }
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane tile = new StackPane();
+        tile.getChildren().addAll(rectangle, text);
+        return tile;
+    }
+
+    public StackPane generateTilePane(Tile t){
+        Rectangle rectangle = new Rectangle( 100,100,30,50);
+        rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
+        Text text = new Text(Integer.toString(t.getValue()));
+        text.setFont(Font.font ("Verdana", 20));
+        if(t.getColour() == 'R'){
+            text.setFill(Color.rgb(204, 0, 0));
+        } else if (t.getColour() == 'G') {
+            text.setFill(Color.GREEN);
+        } else if (t.getColour() == 'B') {
+            text.setFill(Color.BLUE);
+        } else if (t.getColour() == 'O') {
+            text.setFill(Color.rgb(239, 143, 0));
+        }
+        text.setBoundsType(TextBoundsType.VISUAL);
+        StackPane tile = new StackPane();
+        tile.getChildren().addAll(rectangle, text);
+        return tile;
     }
 
     public void loadRigPane(){
