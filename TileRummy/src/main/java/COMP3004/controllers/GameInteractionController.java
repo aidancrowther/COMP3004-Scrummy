@@ -1,14 +1,16 @@
 package COMP3004.controllers;
 
+import COMP3004.GUI.GraphicalView;
 import COMP3004.models.Meld;
 import COMP3004.models.Player;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
 import COMP3004.oberver_pattern.TableObserverInterface;
-import COMP3004.views.TerminalView;
+import COMP3004.terminal.TerminalView;
 
 public class GameInteractionController implements TableObserverInterface {
     protected TerminalView terminalView = new TerminalView();
+    protected GraphicalView graphicalView;
     protected Table table;
     protected Player player;
 
@@ -62,7 +64,6 @@ public class GameInteractionController implements TableObserverInterface {
         this.player = player;
     }
 
-
     public void setTerminalView(TerminalView t) {
         this.terminalView = t;
     }
@@ -70,4 +71,7 @@ public class GameInteractionController implements TableObserverInterface {
     public TerminalView getTerminalView() {
         return this.terminalView;
     }
+
+    public GraphicalView getGUI() { return this.graphicalView; }
+    public void setGUI(GraphicalView g) { this.graphicalView = g; }
 }

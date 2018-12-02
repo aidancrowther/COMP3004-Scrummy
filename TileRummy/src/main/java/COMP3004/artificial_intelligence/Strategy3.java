@@ -4,8 +4,10 @@ import COMP3004.models.Player;
 import COMP3004.models.Table;
 import COMP3004.oberver_pattern.PlayerHandObserverInterface;
 
+import java.util.ArrayList;
+
 public class Strategy3 extends ArtificialIntelligence implements PlayerHandObserverInterface {
-    protected int[] playerHandSizes;
+    protected ArrayList<Integer> playerHandSizes = new ArrayList<Integer>();
 
     public Strategy3(){ }
 
@@ -15,35 +17,34 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
     }
 
     public void update(int value, int index){
-        if(index >= 0 && index < playerHandSizes.length){
-            this.playerHandSizes[index] = value;
+        if(index >= 0 && index < playerHandSizes.size()){
+            this.playerHandSizes.set(index, value);
         }
     }
 
-    public void setPlayerHandSizes(Player[] players) {
-        this.playerHandSizes = new int[players.length-1];
+    public void setPlayerHandSizes(ArrayList<Player> players) {
         int index = 0;
-        for(int i = 0; i < players.length; i++) {
-            if(i != 3){ //Don't track self - strat 3
-                this.playerHandSizes[index] = players[i].getHand().size();
+        for(int i = 0; i < players.size(); i++) {
+            if(this.player != players.get(i)){ //Don't track self
+                this.playerHandSizes.add(players.get(i).getHand().size());
                 index++;
             }
         }
     }
 
-    public void setPlayerHandsArray(int[] playerHandSizes) {
+    public void setPlayerHandsArray(ArrayList<Integer> playerHandSizes) {
         this.playerHandSizes = playerHandSizes;
     }
 
     public int getPlayerHandSize(int index) {
-        return this.playerHandSizes[index];
+        return this.playerHandSizes.get(index);
     }
     public void setPlayerHandSize(int value, int index) {
-        this.playerHandSizes[index] = value;
+        this.playerHandSizes.set(index,value);
     }
     
     public int getPlayerHandSizesLength() {
-        return playerHandSizes.length;
+        return playerHandSizes.size();
     }
 
 
@@ -54,7 +55,7 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
 
         //check with the observer
         boolean playWithHand = false;
-        for (int i=0; i<this.playerHandSizes.length; i++) {
+        for (int i=0; i<this.playerHandSizes.size(); i++) {
             int check = this.getPlayerHandSize(i);
             if ((this.getHand().size() - check) > 0) {
                 playWithHand = true;

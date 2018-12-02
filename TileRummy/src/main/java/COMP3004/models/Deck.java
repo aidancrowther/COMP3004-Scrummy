@@ -22,6 +22,8 @@ public class Deck{
                 deck.push(new Tile(colours[colour%4], value));
             }
         }
+        deck.push(new Joker());
+        deck.push(new Joker());
     }
 
     //Return the top card of the deck, removing it

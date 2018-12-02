@@ -1,18 +1,36 @@
 package COMP3004;
 
+import COMP3004.GUI.GraphicalView;
 import COMP3004.controllers.Controller;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
+    protected static Stage primaryStage;
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Controller controller = new Controller();
+        GraphicalView gameView = new GraphicalView(controller);
+        controller.setGraphicalView(gameView);
+        //gameView.getRoot().getChildren().addAll(gameView.getFirstLayer());
+        gameView.draw();
+        this.primaryStage = primaryStage;
+        this.primaryStage.setScene(new Scene(gameView.getRoot(), 1000, 750));
+        this.primaryStage.show();
+    }
+
+
     public static void main (String[] args) {
-        Controller controller;
-        if (args.length == 0)
-            controller = new Controller();
-        else{
+        if (args.length != 0){
             args = parseArgs(args);
-            controller = new Controller(args);
+            Controller controller = new Controller(args);
+            controller.run(false);
+        } else {
+            launch(args);
         }
-
-        controller.run(false);
     }
 
     private static String[] parseArgs(String[] args){

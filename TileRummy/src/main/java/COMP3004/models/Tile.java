@@ -7,8 +7,8 @@ package COMP3004.models;
 
 public class Tile{
     
-    private char colour;
-    private int value;
+    protected char colour;
+    protected int value;
 
     //Gnerate a new card using the specified suit and value
     public Tile(char colour, int value){

@@ -38,9 +38,18 @@ public class Meld {
     public Meld copy() {
         Meld m = new Meld();
         for (int i=0; i<this.getTiles().size(); i++) {
-            Tile t = new Tile(this.getTiles().get(i).getColour(), this.getTiles().get(i).getValue());
-            m.add(t);
+            if(!(this.getTiles().get(i).isJoker())){
+                Tile t = new Tile(this.getTiles().get(i).getColour(), this.getTiles().get(i).getValue());
+                m.add(t);
+            }  else {
+                Joker j = new Joker();
+                j.setColour(this.getTiles().get(i).getColour());
+                j.setValue(this.getTiles().get(i).getValue());
+                m.add(j);
+            }
+
         }
+        m.sort();
         return m;
     }
 
@@ -123,6 +132,7 @@ public class Meld {
                 }
             }
         }
+        this.sort();
     }
 
     /*

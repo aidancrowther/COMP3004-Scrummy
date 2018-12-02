@@ -93,6 +93,7 @@ public class Table {
     public boolean isValid() {
         //System.out.println(melds.get(0).size());
         if (this.melds.get(0).getTiles().size() != 0) {
+            //System.out.println("meld 0 not empty: " + this.toString());
             return false;
         }
         for (int i=1; i<this.melds.size(); i++) {
@@ -191,15 +192,115 @@ public class Table {
         return true;
     }
 
+    public ArrayList<Meld> getDiff(Table other) {
+        ArrayList<Meld> diffMelds = new ArrayList<Meld>();
+        if(other.getMelds().size() == 1 && this.melds.size() == 1){ //Only blank melds
+            return diffMelds;
+        }
+
+        int otherSize = other.getMelds().size();
+        //MINUS ONE DO NOT CHECK FIRST MELDS
+        boolean[] isMeldPresent = new boolean[this.melds.size()-1];
+        for(int i = 0; i < isMeldPresent.length-1; i++){
+            isMeldPresent[i] = false;
+        }
+
+        //FOR ALL MELDS IN THIS TABLE
+        for(int i = 1; i < this.melds.size(); i++){
+            if(isMeldPresent[i-1] ){ //already found it in other
+                break;
+            }
+            //FOR ALL MELDS IN THE OTHER TABLE
+            for(int j = 1; j < otherSize; j++){
+                //Only check melds of same size
+                if(melds.get(i).getTiles().size() !=  other.getMelds().get(j).getTiles().size()){
+                    continue;
+                }
+
+
+                boolean[] areTilesPresent = new boolean[melds.get(i).getTiles().size()];
+                for(int k = 0; k < areTilesPresent.length; k++){
+                    areTilesPresent[k] = false;
+                }
+
+                int tileIndex = 0;
+
+                //FOR ALL TILES IN THIS TABLE'S MELD
+                for(Tile t1 : melds.get(i).getTiles()){
+                    //FOR ALL TILES IN THE OTHER TABLE'S MELD
+                    for(Tile t2 : other.getMelds().get(j).getTiles()) {
+                        //IF T1 IS EQUAL TO T2 SET T1 TO FOUND
+                        if(t1.equals(t2)){
+                            //System.out.println(t1.toString() + " = " + t2.toString());
+                            areTilesPresent[tileIndex] = true;
+                        } else {
+                            //System.out.println(t1.toString() + " != " + t2.toString());
+                        }
+                    }
+                    tileIndex++;
+                }
+
+                //if tiles are all FOUND, set meld to found true and break
+                boolean allTilesFoundInOtherMeld = true;
+                for(int k = 0; k < areTilesPresent.length; k++){
+                    if(!areTilesPresent[k]){
+                        allTilesFoundInOtherMeld = false;
+                    }
+                }
+
+                if(allTilesFoundInOtherMeld){
+                    isMeldPresent[i-1] = true;
+                    break;
+                }
+
+            }
+        }
+
+        //IF ANY MELD WASN'T FOUND RETURN FALSE
+        for(int j = 0; j < isMeldPresent.length; j++){
+            //System.out.print(isMeldPresent[j]);
+            if(!isMeldPresent[j]){
+                //return false;
+                diffMelds.add(this.melds.get(j+1));
+            }
+        }
+
+        return diffMelds;
+    }
+
     public String prettyString() {
         String str = "";
+        int i= 0;
+        //if(this.melds.size() == 0){
+            //System.out.println("no melds at all");
+        //}
+        //if(this.melds.size() == 1){
+        //    System.out.println("Only meld 0");
+        //}
         for( Meld m : this.melds){
             for( Tile t : m.getTiles() ) {
-                str += " |" + Character.toString(t.getColour()) + "-" + Integer.toString(t.getValue()) + "| ";
+                str += i + " |" + Character.toString(t.getColour()) + "-" + Integer.toString(t.getValue()) + "| ";
             }
             str += "\n";
+            i++;
         }
         return str;
+    }
+
+    public Table copy(){
+        Table copy = new Table();
+        int i = 0;
+        for(Meld m: this.melds) {
+            if(i != 0){
+                Meld newM = new Meld();
+                for(Tile t: m.getTiles()) {
+                    newM.add(t);
+                }
+                copy.add(newM);
+            }
+            i++;
+        }
+        return copy;
     }
 
     @Override

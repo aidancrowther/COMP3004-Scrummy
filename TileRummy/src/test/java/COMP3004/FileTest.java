@@ -19,7 +19,7 @@ import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 
 public class FileTest {
-    @Test
+    /*@Test
     public void test1() {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         PrintStream p = new PrintStream(outStream);
@@ -44,5 +44,5 @@ public class FileTest {
         assertTrue(s.indexOf("Current Player: AI 1") < s.indexOf("Current Player: AI 2") && s.indexOf("Current Player: AI 2") < s.indexOf("Current Player: AI 3"));//turn order's working and it's displayed
         assertTrue(s.contains("Player drew from the deck tile: B6"));//Req 6
         p.close();
-    }
+    }*/
  }

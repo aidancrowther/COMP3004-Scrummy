@@ -23,8 +23,8 @@ public class ScrummyTest
         Scrummy s = new Scrummy();
         //Test that each player was initialized and that they have hands of size 14
         assertNotNull(s.getPlayers());
-        for(int i = 0; i < s.getPlayers().length; i++){
-            assertTrue(s.getPlayers()[i].getHand().getTiles().size() == 14);
+        for(int i = 0; i < s.getPlayers().size(); i++){
+            assertTrue(s.getPlayers().get(i).getHand().getTiles().size() == 14);
         }
     }
 
@@ -129,8 +129,8 @@ public class ScrummyTest
     @Test
     public void testScrummyGetPlayerByIndex() {
         Scrummy s = new Scrummy();
-        for(int i = 0; i < s.getPlayers().length; i++) {
-            Meld playerHand = s.getPlayers()[i].getHand();
+        for(int i = 0; i < s.getPlayers().size(); i++) {
+            Meld playerHand = s.getPlayers().get(i).getHand();
             assertEquals(playerHand, s.getPlayerHandByIndex(i));
         }
     }

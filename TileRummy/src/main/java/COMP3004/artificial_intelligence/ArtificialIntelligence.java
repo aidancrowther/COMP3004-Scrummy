@@ -120,6 +120,55 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         return handMelds;
     }
 
+    protected HashMap<Meld, Integer> searchHand(Meld playerHand) {
+        HashMap<Meld, Integer> handMelds = new HashMap<>();
+        int n = 0;
+        ArrayList<Tile> h = playerHand.getTiles();
+
+        //runs
+        for (int i=0; i<h.size()-2; i++) {
+            Meld m = new Meld();
+            m.add(h.get(i));
+            m.add(h.get(i+1));
+            m.add(h.get(i+2));
+            if (m.isValid()) {
+                handMelds.put(m.copy(), n);
+                n++;
+                if (i+2<h.size()-1) {
+                    for (int j=i+3; j<h.size(); j++) {
+                        m.add(h.get(j));
+                        if (m.isValid()) {
+                            handMelds.put(m.copy(), n);
+                            n++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //sets
+        for (int i=0; i<h.size(); i++) {
+            ArrayList<Character> a = new ArrayList<Character>();
+            Meld m = new Meld();
+            m.add(h.get(i));
+            a.add(h.get(i).getColour());
+            for (int j=i; j<h.size(); j++) {
+                if (h.get(j).getValue() == h.get(i).getValue() &&
+                        !a.contains(h.get(j).getColour())) {
+                    m.add(h.get(j));
+                    a.add(h.get(j).getColour()); //no duplicate colours
+                    if (m.isValid()) {
+                        handMelds.put(m.copy(), n);
+                        n++;
+                    }
+                }
+            }
+        }
+
+        return handMelds;
+    }
+
 
     protected HashMap<Meld, Integer> searchTable(Table t) {
         HashMap<Meld, Integer> tMelds = new HashMap<>();
@@ -372,7 +421,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         HashMap<String, Integer> handUsed = new HashMap<String, Integer>(inHand);
         ArrayList<Integer> usedMelds = new ArrayList<>();
 
-        for(Tile t : m.getTiles()) handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+        for(Tile t : m.getTiles()) {
+            /*System.out.println("A: " + t.toString());
+            System.out.println("B: ");
+            System.out.println(handUsed.get(t.toString()));*/
+            if(handUsed.get(t.toString())!=null){
+                handUsed.put(t.toString(), handUsed.get(t.toString())-1);
+            }
+        }
         results.add(m);
 
         //Iterate over the set to compare against
@@ -390,7 +446,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
             //Check for duplicate tiles
             for(Tile t : entry.getKey().getTiles()){
-                if(handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
+                /*System.out.println("C: ");
+                System.out.println(t.toString());
+                System.out.println("D: ");
+                System.out.println(handUsedLocal.get(t.toString()));*/
+                if(handUsedLocal.get(t.toString()) != null &&
+                        handUsedLocal.get(t.toString()) > 0) handUsedLocal.put(t.toString(), handUsedLocal.get(t.toString())-1);
                 else containsDuplicate = true;
             }
 
