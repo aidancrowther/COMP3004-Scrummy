@@ -1,5 +1,6 @@
 package COMP3004.GUI;
 
+import COMP3004.artificial_intelligence.Strategy4;
 import COMP3004.controllers.Controller;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.PlayerInteractionController;
@@ -59,6 +60,11 @@ public class GraphicalView {
     protected boolean limitHumanTime = false;
     protected Timer timer = new Timer();
     //protected Table table;
+
+
+    protected boolean suggestionsEnabled = false;
+    protected Strategy4 suggestionEngine;
+    protected ArrayList<Meld> suggestedPlays;
 
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
@@ -177,6 +183,16 @@ public class GraphicalView {
         });
         setPlayersMenu.getChildren().add(limitCheck);
 
+        CheckBox suggestionsCheck = new CheckBox("Enable real time suggestions");
+        suggestionsCheck.setStyle("-fx-text-fill:white");
+        suggestionsCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean old_val, Boolean new_val) {
+                suggestionsEnabled = new_val;
+            }
+        });
+        setPlayersMenu.getChildren().add(suggestionsCheck);
+
         Button play = new Button("PLAY");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
@@ -195,6 +211,10 @@ public class GraphicalView {
     }
 
     public void loadPlayerOrderPane(){
+
+        if(this.suggestionsEnabled){
+            this.suggestionEngine = new Strategy4();
+        }
 
         VBox playerOrder = new VBox();
         playerOrder.setPadding(new Insets(30, 50, 30, 50));
@@ -356,6 +376,7 @@ public class GraphicalView {
         this.tablePane.setMinSize(1000,600);
 
         this.topButtons.setStyle("-fx-background-color: #333333");
+        this.topButtons.setSpacing(10);
         Button finishTurnBtn = new Button("Finish Turn");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
@@ -382,6 +403,7 @@ public class GraphicalView {
         newMeldBtn.setPrefSize(100, 20);
 
         this.topButtons.getChildren().addAll(finishTurnBtn, newMeldBtn);
+
         this.gamePane.add(this.topButtons, 0, 0);
         this.gamePane.add(this.tablePane, 0, 1);
 
@@ -396,6 +418,7 @@ public class GraphicalView {
             i++;
         }
         this.drawTable(this.controller.getScrummy().getTable());
+        this.drawSuggestedMelds();
     }
 
     public void drawTable(Table table){
@@ -642,6 +665,39 @@ public class GraphicalView {
         //BorderPane.setMargin(handPane, new Insets(12,12,12,12));
     }
 
+    public void drawSuggestedMelds(){
+        if(this.suggestionsEnabled){
+            this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
+            for(Meld m: this.suggestedPlays){
+                System.out.println(m.toString());
+            }
+        }
+
+        //TODO: SUGGESTED PLAYS CLEANUP
+        if(this.topButtons.getChildren().size() >= 2){
+            if(this.topButtons.getChildren().size() == 3){
+                this.topButtons.getChildren().remove(2);
+            }
+            String suggestedText = "Suggested Melds:\n";
+            if(this.suggestionsEnabled && this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController){
+                //ArrayList<Meld> suggestedPlays
+                int index = 0;
+                for(Meld m : this.suggestedPlays){
+                    if(index != 0){
+                        suggestedText += ", ";
+                    }
+                    suggestedText += m.toString();
+                    index++;
+                }
+            }
+            Text suggestions = new Text(suggestedText);
+            suggestions.setFont(Font.font ("Verdana", 15));
+            suggestions.setFill(Color.WHITE);
+            this.topButtons.getChildren().add(suggestions);
+        }
+    }
+
+
     public void setSelectedTile(Rectangle rectangle){
 
     }
@@ -663,11 +719,11 @@ public class GraphicalView {
                 System.out.println(m);
             }
         }
+
         this.tableBefore = controller.getScrummy().getTable().copy();
         System.out.println("PLayer: " + this.currentPlayerIndex);
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
         this.draw();
-
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
             this.finishTurn();

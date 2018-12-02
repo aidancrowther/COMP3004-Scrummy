@@ -19,6 +19,8 @@ package COMP3004.artificial_intelligence;
 import COMP3004.models.Meld;
 import COMP3004.models.Table;
 import COMP3004.models.Tile;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -268,6 +270,93 @@ public class Strategy4 extends ArtificialIntelligence
             results.put(e.getKey(), ((2-e.getValue())/((52*2)-totalSeen)));
         }
         return results;
+    }
+
+    public ArrayList<Meld> getSuggestedPlays(Meld playerHand, Table gameTable){
+               /*
+            -> HashMap<Meld, int> handResults = searchHand();
+            -> HashMap<Meld, int> tableResults = searchTable(table);
+            -> ArrayList<ArrayList<Meld>> results
+            -> results contains every combination of the Melds within handResults and tableResults
+                that do not use the same elements from hand
+            -> Pick the largest ArrayList. Remove every tile from hand that is there.
+            -> From the largest ArrayList of melds, search for the keyvalue of each meld within its
+                original hashmap, and append said meld to the meld specified in the Hashmap
+            -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
+            -> Return the brand new table :)
+        */
+        this.terminalView.printMessage("Current Player: " + this.player.getName());
+        this.player.setHand(playerHand);
+
+        this.terminalView.printMessage(this.player.getName() + " hand: ");
+        this.terminalView.printPlayerHand(this.player.getHand());
+
+        //Output table
+        Table output = gameTable.copy();
+
+        //Get all possible melds
+        HashMap<Meld, Integer> handResults = new HashMap<Meld, Integer>();
+        HashMap<Meld, Integer> tableResults = new HashMap<Meld, Integer>();
+        HashMap<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> splitResults = new HashMap<>();
+
+        handResults = searchHand(playerHand);
+        if (score >= 30) {
+            tableResults = searchTable(output);
+            splitResults = searchSplit(output);
+        }
+
+        //Lists to track hand status
+        HashMap<String, Integer> inHand = new HashMap<>();
+        ArrayList<ArrayList<Meld>> results = new ArrayList<>();
+
+        //Identify duplicate tiles and keep track of all tiles
+        for(Tile tile : playerHand.getTiles()){
+            Boolean found = false;
+            for(Map.Entry<String, Integer> pair : inHand.entrySet()){
+                if(tile.toString().equals(pair.getKey())){
+                    inHand.put(pair.getKey().toString(), pair.getValue()+1);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) inHand.put(tile.toString(), 1);
+        }
+
+        //Generate array lists of moves to make
+        HashMap<Meld, Integer> allMelds = new HashMap<>();
+        for(Map.Entry<Meld, Integer> pair : handResults.entrySet()){
+            allMelds.put(pair.getKey(), 0);
+        }
+        for(Map.Entry<Meld, Integer> pair : tableResults.entrySet()){
+            allMelds.put(pair.getKey(), pair.getValue());
+        }
+        for(Map.Entry<Meld, AbstractMap.SimpleEntry<ArrayList<Meld>, Integer>> pair : splitResults.entrySet()){
+            allMelds.put(pair.getKey(), pair.getValue().getValue());
+        }
+
+        //Find all sets of melds that can go together
+        allMelds = sortByLength(allMelds);
+        for(Map.Entry<Meld, Integer> m : allMelds.entrySet()){
+            results.add(findUnique(m.getKey(), allMelds, inHand));
+        }
+
+        //Find the longest set of melds to use
+        int longest = 0;
+        ArrayList<Meld> longestList = new ArrayList<>();
+        for(ArrayList<Meld> a : results){
+            int count = 0;
+            for(Meld m : a) count += m.size();
+            if(count > longest && score >= 30){
+                longest = count;
+                longestList = a;
+            }
+            else if(listScore(a) > longest && score < 30){
+                longest = listScore(a);
+                longestList = a;
+            }
+        }
+
+        return getMeldChance(longestList);
     }
 
 }

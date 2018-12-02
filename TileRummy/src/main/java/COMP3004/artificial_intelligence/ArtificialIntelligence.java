@@ -120,6 +120,55 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         return handMelds;
     }
 
+    protected HashMap<Meld, Integer> searchHand(Meld playerHand) {
+        HashMap<Meld, Integer> handMelds = new HashMap<>();
+        int n = 0;
+        ArrayList<Tile> h = playerHand.getTiles();
+
+        //runs
+        for (int i=0; i<h.size()-2; i++) {
+            Meld m = new Meld();
+            m.add(h.get(i));
+            m.add(h.get(i+1));
+            m.add(h.get(i+2));
+            if (m.isValid()) {
+                handMelds.put(m.copy(), n);
+                n++;
+                if (i+2<h.size()-1) {
+                    for (int j=i+3; j<h.size(); j++) {
+                        m.add(h.get(j));
+                        if (m.isValid()) {
+                            handMelds.put(m.copy(), n);
+                            n++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //sets
+        for (int i=0; i<h.size(); i++) {
+            ArrayList<Character> a = new ArrayList<Character>();
+            Meld m = new Meld();
+            m.add(h.get(i));
+            a.add(h.get(i).getColour());
+            for (int j=i; j<h.size(); j++) {
+                if (h.get(j).getValue() == h.get(i).getValue() &&
+                        !a.contains(h.get(j).getColour())) {
+                    m.add(h.get(j));
+                    a.add(h.get(j).getColour()); //no duplicate colours
+                    if (m.isValid()) {
+                        handMelds.put(m.copy(), n);
+                        n++;
+                    }
+                }
+            }
+        }
+
+        return handMelds;
+    }
+
 
     protected HashMap<Meld, Integer> searchTable(Table t) {
         HashMap<Meld, Integer> tMelds = new HashMap<>();
