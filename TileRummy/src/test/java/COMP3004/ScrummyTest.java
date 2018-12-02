@@ -71,6 +71,7 @@ public class ScrummyTest
     public void testNotifyObservers(){
         PlayerInteractionController t = new PlayerInteractionController();
         Scrummy s = new Scrummy();
+        s.addNewPlayer("Human");
         s.registerTableObserver(t);
 
         Strategy3 strat = new Strategy3();
@@ -80,7 +81,7 @@ public class ScrummyTest
         s.notifyObservers();
 
         for(TableObserverInterface observer : s.getTableObservers()){
-            assertEquals(observer.getTable(), s.getTable());
+            assertTrue(observer.getTable().isEquivalent(s.getTable()));
         }
 
         int index = 0;

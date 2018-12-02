@@ -14,7 +14,6 @@ public class ControllerTest {
     public void testCreateController() {
         Controller controller = new Controller();
         assertNotNull(controller.getScrummy());
-        assertNotEquals(controller.getScrummy().getTableObservers().size(), 0);
     }
 
 }

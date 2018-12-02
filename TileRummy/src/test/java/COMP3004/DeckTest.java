@@ -22,7 +22,7 @@ public class DeckTest
 
         for(;!testDeck.isEmpty();testDeck.pop()) counter++;
 
-        assertTrue(counter == 104);
+        assertTrue(counter == 106);
 
     }
 
