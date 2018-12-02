@@ -532,7 +532,7 @@ public class GraphicalView {
                 }
             } else {
                 handPane.add(tile, i, j);
-                if(i == 20){
+                if(i == 18){
                     i = 0;
                     j++;
                 } else {
