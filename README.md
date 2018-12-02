@@ -73,7 +73,7 @@ Roadmap of Project Requirements:
     - [x] complex board reuse: Do include all the situations you got working in your video
       - **I will provide some test cases**
     - [ ]strategy 4: explain what it does and how it does it in your video
-    - [ ]real-time suggestions for human players wrt how to play their tiles and why (which goes hand in hand with strategy 4): show them in your video
+    - [x]real-time suggestions for human players wrt how to play their tiles and why (which goes hand in hand with strategy 4): show them in your video
   - [ ] LEVEL 4: for a grade of 85 and 89:
     - [ ] GUI support for game rigging:
       - [ ] ability to set load/set initial hands via GUI
