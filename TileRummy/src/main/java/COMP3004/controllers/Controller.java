@@ -22,6 +22,7 @@ import COMP3004.models.Player;
 import COMP3004.terminal.TerminalView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Controller
 {
@@ -109,7 +110,6 @@ public class Controller
                 scrummy.notifyObservers();
             }
             else if(tableBefore.isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
-                this.view.printMessage("gg");
                 scrummy.getCurrentPlayer().setHand(handBefore); // IN CASE PLAYER HAD TENTATIVE MELD
                 Tile t = scrummy.getDeck().pop();
                 if(t != null){

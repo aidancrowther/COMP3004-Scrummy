@@ -29,6 +29,7 @@ import javafx.scene.text.TextBoundsType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GraphicalView {
     protected Table tableBefore;
@@ -463,7 +464,6 @@ public class GraphicalView {
     public void drawHand(GameInteractionController playerControl, int index, boolean isHorizontal) {
         GridPane handPane = new GridPane();
         handPane.setAlignment(Pos.CENTER);
-        handPane.setStyle("-fx-background-color: #333333");
         handPane.setPadding(new Insets(10, 10, 10, 10));
         handPane.setVgap(5);
         handPane.setHgap(5);
@@ -524,7 +524,7 @@ public class GraphicalView {
             if(isHorizontal){
                 //playerControl.getPlayer().getHand()
                 handPane.add(tile, j, i);
-                if(i == 8){
+                if(i == 7){
                     i = 0;
                     j++;
                 } else {
@@ -554,19 +554,32 @@ public class GraphicalView {
         handLabelPane.getChildren().add(handPane);
         if(index == 0){
             handLabelPane.setPadding(new Insets(30, 10, 10, 10));
+            if(index==this.currentPlayerIndex){
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+            }
             this.tablePane.setBottom(handLabelPane);
         } else if (index == 1) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
+            if(index==this.currentPlayerIndex){
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+            }
             this.tablePane.setRight(handLabelPane);
         } else if (index == 2) {
             handLabelPane.setPadding(new Insets(10, 10, 10, 10));
+            if(index==this.currentPlayerIndex){
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+            }
             this.tablePane.setTop(handLabelPane);
         } else if (index == 3) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
+            if(index==this.currentPlayerIndex){
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+            }
             this.tablePane.setLeft(handLabelPane);
         }
-        BorderPane.setAlignment(handPane, Pos.CENTER);
-        BorderPane.setMargin(handPane, new Insets(12,12,12,12));
+
+        BorderPane.setAlignment(handLabelPane, Pos.CENTER);
+        //BorderPane.setMargin(handPane, new Insets(12,12,12,12));
     }
 
     public void setSelectedTile(Rectangle rectangle){
@@ -584,12 +597,14 @@ public class GraphicalView {
     public void setCurrentPlayerIndex(int c) {
         this.currentPlayerIndex = c;
         this.tableBefore = controller.getScrummy().getTable().copy();
-        System.out.println("PLayer table b4: " + this.tableBefore.toString());
+        System.out.println("PLayer: " + this.currentPlayerIndex);
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
-        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){ //TODO: set these check if 0s to check if instance of player interaction controller instead
+        this.draw();
+
+
+        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
             this.finishTurn();
         }
-        this.draw();
     }
 
     public void finishTurn(){
