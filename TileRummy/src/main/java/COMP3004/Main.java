@@ -24,19 +24,13 @@ public class Main extends Application {
 
 
     public static void main (String[] args) {
-        launch(args);
-        /*Controller controller = new Controller();
-        GraphicalView gameView = new GraphicalView(controller);
-
-        gameView.launch(GraphicalView.class, args);
-        /*if (args.length == 0)
-            controller = new Controller();
-        else{
+        if (args.length != 0){
             args = parseArgs(args);
-            controller = new Controller(args);
-        }*/
-
-        //controller.run(false);
+            Controller controller = new Controller(args);
+            controller.run(false);
+        } else {
+            launch(args);
+        }
     }
 
     private static String[] parseArgs(String[] args){

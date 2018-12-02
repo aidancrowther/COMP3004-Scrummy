@@ -45,6 +45,43 @@ public class Controller
         this.playerControllers = new ArrayList<GameInteractionController>();
     }
 
+    public Controller(String[] args){
+        char viewType = args[0].charAt(0);
+        this.scrummy = new Scrummy();
+        this.playerControllers = new ArrayList<GameInteractionController>();
+
+        //Make all of the "people" playing
+        switch (viewType) {//Specify which view the user is using
+            case 'f':
+                if (args.length == 2)
+                    this.playerControllers.add(new FileInputController(args[1])); //PLAYER
+                else
+                    this.playerControllers.add(new FileInputController(args[1], args[3])); //PLAYER
+                scrummy = new Scrummy(((FileInputController)this.playerControllers.get(0)).getDeck());
+                break;
+            case 'g':
+                //this.playerControllers[0] = new GraphicalViewController(); //PLAYER
+                break;
+            case 't':
+                this.playerControllers.add(new PlayerInteractionController()); //PLAYER
+                break;
+        }
+        this.playerControllers.add(new Strategy1());
+        this.playerControllers.add(new Strategy2());
+        Strategy3 s3 = new Strategy3();
+        this.playerControllers.add(s3);
+        this.playerControllers.add(new Strategy4());
+
+        for (int i = 0; i <= 4; i++){//Register everyone
+            this.playerControllers.get(i).setPlayer(this.scrummy.getPlayers().get(i));
+            this.scrummy.registerTableObserver(this.playerControllers.get(i));
+        }
+
+        s3.setPlayerHandSizes(this.scrummy.getPlayers());
+        this.scrummy.registerPlayerHandObserver(s3);
+        this.scrummy.notifyObservers();
+    }
+
 
     public void finishTurn(){
         int winnerIndex = -1;
@@ -301,48 +338,82 @@ public class Controller
         this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
     }
 
+    public void run(boolean AIOnly){
+        /*
+         * While everyone has cards in their hand...
+         * Set view's hand to current players hand in scrummy
+         * copy players hand, pass in players actual hand
+         * Set views table to table in scrummy (done by observer)
+         * If table equals scrummy table,
+         *   add a card to the players hand
+         * else
+         *   have scrummy evaluate the table and update if valid reset player hand if not
+         * */
+
+        boolean play = true;
+        int winnerIndex = -1;
+
+        int[] hasSkippedAfterEmpty = new int[this.playerControllers.size()];
+        for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+            hasSkippedAfterEmpty[i] = 0;
+        }
+
+        // for (GameInteractionController g : playerControllers)
+        for (Player p : scrummy.getPlayers())//broadcast hands
+            playerControllers.get(0).getTerminalView().printMessagePlain(p.getName() + "'s hand: " + p.getHand().toString());
+
+        while(play){
+            if(this.view != null && this.scrummy.getTable() != null){
+                this.view.printTable(this.scrummy.getTable());
+            }
+
+            Meld playerHandCopy = new Meld();
+            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
+                playerHandCopy.add(t);
+
+            Table playedTable = this.playerControllers.get(scrummy.getCurrentPlayerIndex()).play(scrummy.getCurrentPlayer().getHand());
+            winnerIndex = this.checkPlayerMove(playedTable, playerHandCopy);
+
+            //print winner
+            if(winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
+                Player current = this.scrummy.getPlayers().get(winnerIndex);
+                this.playerControllers.get(0).displayWinner(current.getName());
+                //TODO: ask if want to play again
+                break;
+            }
+
+            System.out.println("\n");
+
+            if(scrummy.getDeck().isEmpty() && playedTable.isEquivalent(this.scrummy.getTable())){
+                System.out.println(this.getScrummy().getCurrentPlayer().getName() + " has no more moves!");
+                hasSkippedAfterEmpty[this.getScrummy().getCurrentPlayerIndex()] += 1;
+
+                int skippedNum = 0;
+                for(int i = 0; i < hasSkippedAfterEmpty.length; i++){
+                    if(hasSkippedAfterEmpty[i] == 2){
+                        skippedNum++;
+                    }
+                }
+                if(skippedNum == hasSkippedAfterEmpty.length){
+                    //TODO: ask if want to play again
+                    System.out.println("GAME OVER - DECK EMPTY AND NO VALID MOVES.");
+                    break;
+                }
+            }
+
+            if(this.view != null){
+                this.view.printLine();
+                this.view.printLine();
+            }
+            // SET NEXT PLAYER
+            if(this.getScrummy().getCurrentPlayerIndex() < this.scrummy.getPlayers().size() - 1)
+                this.scrummy.setCurrentPlayerIndex(this.getScrummy().getCurrentPlayerIndex() + 1);
+            else
+                this.scrummy.setCurrentPlayerIndex(0);
+        }
+    }
+
 }
-
-
-
-    /*public Controller(String[] args){
-        char viewType = args[0].charAt(0);
-        this.scrummy = new Scrummy();
-        this.playerControllers = new ArrayList<GameInteractionController>();
-
-        //Make all of the "people" playing
-        switch (viewType) {//Specify which view the user is using
-            case 'f':
-                if (args.length == 2)
-                    this.playerControllers[0] = new FileInputController(args[1]); //PLAYER
-                else
-                this.playerControllers[0] = new FileInputController(args[1], args[3]); //PLAYER
-                scrummy = new Scrummy(((FileInputController)this.playerControllers[0]).getDeck());
-                break;
-            case 'g':
-                //this.playerControllers[0] = new GraphicalViewController(); //PLAYER
-                break;
-            case 't':
-                this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
-                break;
-        }
-        this.playerControllers[1] = new Strategy1();
-        this.playerControllers[2] = new Strategy2();
-        //Special for S3 bc needs to count hands
-        Strategy3 s3 = new Strategy3();
-        this.playerControllers[3] = s3;
-        this.playerControllers[4] = new Strategy4();
-
-        for (int i = 0; i <= 4; i++){//Register everyone
-            this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
-            this.scrummy.registerTableObserver(this.playerControllers[i]);
-        }
-
-        s3.setPlayerHandSizes(this.scrummy.getPlayers());
-        this.scrummy.registerPlayerHandObserver(s3);
-        this.scrummy.notifyObservers();
-    }*/
-
     /*public Controller(boolean AIOnly){
         this.view = new TerminalView();
         this.scrummy = new Scrummy(AIOnly);
