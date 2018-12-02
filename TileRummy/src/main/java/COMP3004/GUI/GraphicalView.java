@@ -710,11 +710,6 @@ public class GraphicalView {
         }
     }
 
-
-    public void setSelectedTile(Rectangle rectangle){
-
-    }
-
     public void addPlayer(Meld hand) {
         this.playerHands.add(hand);
     }
