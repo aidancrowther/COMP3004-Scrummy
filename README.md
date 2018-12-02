@@ -64,7 +64,7 @@ Roadmap of Project Requirements:
     - [x] ability to determine who starts as per rules
     - [x] highlight of most recently played tiles on the board
     - [ ] jokers  
-    - [ ] minimal game rigging to set initial hands
+    - [x] minimal game rigging to set initial hands
   - [ ] LEVEL 2: for a grade between 50 and 65, must support:
     - [x] optional timer of 2 minutes for human playing
     - [x] rules for dealing with the case where a human plays and leaves the board in an invalid state after declaring the end of his/her turn.
@@ -74,10 +74,10 @@ Roadmap of Project Requirements:
       - **I will provide some test cases**
     - [ ]strategy 4: explain what it does and how it does it in your video
     - [x]real-time suggestions for human players wrt how to play their tiles and why (which goes hand in hand with strategy 4): show them in your video
-  - [ ] LEVEL 4: for a grade of 85 and 89:
-    - [ ] GUI support for game rigging:
-      - [ ] ability to set load/set initial hands via GUI
-      - [ ] ability to set the tile drawn by any player via the GUI
+  - [x] LEVEL 4: for a grade of 85 and 89:
+    - [x] GUI support for game rigging:
+      - [x] ability to set load/set initial hands via GUI
+      - [x] ability to set the tile drawn by any player via the GUI
   - [ ] LEVEL 5: for a grade of 90 or more:
     - [ ] use of one or more Go4 patterns for the generation (as opposed to the mere loading) of rigged initial hands and in-game drawn tiles.
       - This is an open-ended requirement. The goal is to have an approach to generating specific game scenarios to exercise all rules. \
