@@ -35,6 +35,7 @@ public class GraphicalView {
     protected Table tableBefore;
     protected Meld handBefore;
     protected Tile selectedTile;
+    protected ArrayList<Meld> tableDiff = new ArrayList<Meld>();
 
     protected Meld toMeld;
     protected Meld fromMeld;
@@ -378,13 +379,22 @@ public class GraphicalView {
         gridPane.setVgap(5);
         gridPane.setHgap(10);
 
+        VBox rows = new VBox();
+        rows.setSpacing(10);
+        rows.setPadding(new Insets(10, 10, 10, 10));
+
         int i = 0;
         int j = 0;
         for(Meld m : table.getMelds()){
+            HBox cols = new HBox();
             if(m.getTiles().size()!=0){
                 for(Tile t : m.getTiles()) {
                     Rectangle rectangle = new Rectangle( 100,100,30,50);
-                    rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
+                    rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                    if(this.tableDiff.contains(m)){
+                        System.out.println("yeet");
+                        rectangle.setFill(Color.rgb(245, 221, 213,1.0));//")); //rgb()
+                    }
                     Text text = new Text(Integer.toString(t.getValue()));
                     text.setFont(Font.font ("Verdana", 20));
                     if(t.getColour() == 'R'){
@@ -398,6 +408,7 @@ public class GraphicalView {
                     }
                     text.setBoundsType(TextBoundsType.VISUAL);
                     StackPane tile = new StackPane();
+                    tile.setPadding(new Insets(0, 2.5, 0, 2.5));
                     tile.getChildren().addAll(rectangle, text);
                     tile.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -445,20 +456,37 @@ public class GraphicalView {
                             draw();
                         }
                     });
-                    gridPane.add(tile, i, j);
+                    //gridPane.add(tile, i, j);
+                    cols.getChildren().add(tile);
                     i++;
                     if(m.size() == i){
                       i = 0;
                     }
                 }
+                rows.getChildren().add(cols);
             }
             j++;
         }
 
         this.tablePane.setCenter(null);
-        scrollPane.setContent(gridPane);
+        scrollPane.setContent(rows);
         this.tablePane.setCenter(scrollPane);
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
+    }
+
+    public Text getTileText(Tile t, boolean pressed){
+        Text text = new Text(Integer.toString(t.getValue()) + (pressed ? "*" : ""));
+        text.setFont(Font.font ("Verdana", 20));
+        if(t.getColour() == 'R'){
+            text.setFill(Color.rgb(204, 0, 0));
+        } else if (t.getColour() == 'G') {
+            text.setFill(Color.GREEN);
+        } else if (t.getColour() == 'B') {
+            text.setFill(Color.BLUE);
+        } else if (t.getColour() == 'O') {
+            text.setFill(Color.rgb(239, 143, 0));
+        }
+        return text;
     }
 
     public void drawHand(GameInteractionController playerControl, int index, boolean isHorizontal) {
@@ -596,6 +624,13 @@ public class GraphicalView {
 
     public void setCurrentPlayerIndex(int c) {
         this.currentPlayerIndex = c;
+        if(this.tableBefore != null){
+            this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
+            System.out.println("DIFF:");
+            for(Meld m:this.tableDiff){
+                System.out.println(m);
+            }
+        }
         this.tableBefore = controller.getScrummy().getTable().copy();
         System.out.println("PLayer: " + this.currentPlayerIndex);
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
