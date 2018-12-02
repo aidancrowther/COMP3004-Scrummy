@@ -27,13 +27,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class GraphicalView {
     protected Table tableBefore;
@@ -956,6 +953,17 @@ public class GraphicalView {
     public void finishTurn(){
         this.controller.finishTurn();
         //this.draw();
+    }
+
+    public void displayWin() {
+        BorderPane winnerScreen = new BorderPane();
+        winnerScreen.setStyle("-fx-background-color: #333333");
+        Text winnerText = new Text(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName()+ " has won the game!");
+        winnerText.setFont(Font.font ("Verdana", 20));
+        winnerText.setFill(Color.WHITE);
+        BorderPane.setAlignment(winnerText, Pos.CENTER);
+        winnerScreen.setCenter(winnerText);
+        this.root.getChildren().add(winnerScreen);
     }
 
 
