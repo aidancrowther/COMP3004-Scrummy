@@ -62,7 +62,7 @@ Roadmap of Project Requirements:
     - [x]  ability to have 2 to 4 players
     - [x] ability to have any player be a human or an AI (to which one of the 3 strategies of Iteration 1 can be assigned)
     - [x] ability to determine who starts as per rules
-    - [ ] highlight of most recently played tiles on the board
+    - [x] highlight of most recently played tiles on the board
     - [ ] jokers  
     - [ ] minimal game rigging to set initial hands
   - [ ] LEVEL 2: for a grade between 50 and 65, must support:
