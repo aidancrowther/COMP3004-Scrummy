@@ -61,6 +61,7 @@ public class GraphicalView {
 
     protected Tile selectedTileForRigging;
     protected int riggedStartIndex = 0;
+    protected int startIndex = 0;
 
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
@@ -258,7 +259,7 @@ public class GraphicalView {
 
 
         int highestValue = -1;
-        int startIndex = 0;
+        //int startIndex = 0;
         int index = 0;
 
         ArrayList<Tile> otherAttempts = new ArrayList<Tile>();
@@ -266,7 +267,7 @@ public class GraphicalView {
             if(highestValue == -1){
                 highestValue = t.getValue();
             } else if(t.getValue() > highestValue){
-                startIndex = index;
+                this.startIndex = index;
                 highestValue = t.getValue();
             } else if(t.getValue() == highestValue){
                 Text text = new Text(
@@ -284,7 +285,7 @@ public class GraphicalView {
                     otherAttempts.add(t2);
                     if(t2.getValue() > highestValue) {
                         highestValue = t2.getValue();
-                        startIndex = index;
+                        this.startIndex = index;
                         break;
                     } else if (t2.getValue() < highestValue) {
                         break;
@@ -302,12 +303,8 @@ public class GraphicalView {
 
         playerOrder.getChildren().add(chooseAttemptsPane);
 
-
-        //System.out.println("START INDEX: " + startIndex);
-        this.controller.setCurrentPlayerIndex(startIndex);
-
         Text wintext = new Text(
-                this.controller.getPlayerControllers().get(startIndex).getPlayer().getName()
+                this.controller.getPlayerControllers().get(this.startIndex).getPlayer().getName()
                         + " will play first.");
         wintext.setFont(Font.font ("Verdana", 15));
         wintext.setFill(Color.WHITE);
@@ -317,6 +314,9 @@ public class GraphicalView {
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
             this.loadGamePane();
+
+            //System.out.println("START INDEX: " + startIndex);
+            controller.setCurrentPlayerIndex(startIndex);
         });
         playerOrder.getChildren().add(play);
 
