@@ -943,7 +943,8 @@ public class GraphicalView {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        while(controller.getWinner() == -1 && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
+                        while(controller.getWinner() == -1
+                                && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
                             finishTurn();
                             drawNextPlayer();
                         }
@@ -967,12 +968,6 @@ public class GraphicalView {
                 this.timer.schedule(new PlayerTimerTask(), delay);
             }
         }
-
-        if (this.controller.getWinner() != -1){
-            this.displayWin();
-        }
-
-
     }
 
     public void drawNextPlayer() {
@@ -996,6 +991,18 @@ public class GraphicalView {
         BorderPane winnerScreen = new BorderPane();
         winnerScreen.setStyle("-fx-background-color: #333333");
         Text winnerText = new Text(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName()+ " has won the game!");
+        winnerText.setFont(Font.font ("Verdana", 20));
+        winnerText.setFill(Color.WHITE);
+        BorderPane.setAlignment(winnerText, Pos.CENTER);
+        winnerScreen.setCenter(winnerText);
+        this.root.getChildren().add(winnerScreen);
+    }
+
+    public void displayDraw() {
+        System.out.print("displaying draw");
+        BorderPane winnerScreen = new BorderPane();
+        winnerScreen.setStyle("-fx-background-color: #333333");
+        Text winnerText = new Text("It's a draw!\n\nThe deck is out of cards, and no one made a move in the last round.");
         winnerText.setFont(Font.font ("Verdana", 20));
         winnerText.setFill(Color.WHITE);
         BorderPane.setAlignment(winnerText, Pos.CENTER);
