@@ -891,33 +891,33 @@ public class GraphicalView {
     }
 
     public void drawSuggestedMelds(){
-        if(this.suggestionsEnabled){
+        if(this.suggestionsEnabled) {
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName());
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand());
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
-        }
 
-        //TODO: SUGGESTED PLAYS CLEANUP
-        if(this.topButtons.getChildren().size() >= 2){
-            if(this.topButtons.getChildren().size() == 3){
-                this.topButtons.getChildren().remove(2);
-            }
-            String suggestedText = "Suggested Melds:\n";
-            if(this.suggestionsEnabled && this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController){
-                //ArrayList<Meld> suggestedPlays
-                int index = 0;
-                for(Meld m : this.suggestedPlays){
-                    if(index != 0){
-                        suggestedText += ", ";
-                    }
-                    suggestedText += m.toString();
-                    index++;
+            //TODO: SUGGESTED PLAYS CLEANUP
+            if (this.topButtons.getChildren().size() >= 2) {
+                if (this.topButtons.getChildren().size() == 3) {
+                    this.topButtons.getChildren().remove(2);
                 }
+                String suggestedText = "Suggested Melds:\n";
+                if (this.suggestionsEnabled && this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController) {
+                    //ArrayList<Meld> suggestedPlays
+                    int index = 0;
+                    for (Meld m : this.suggestedPlays) {
+                        if (index != 0) {
+                            suggestedText += ", ";
+                        }
+                        suggestedText += m.toString();
+                        index++;
+                    }
+                }
+                Text suggestions = new Text(suggestedText);
+                suggestions.setFont(Font.font("Verdana", 15));
+                suggestions.setFill(Color.WHITE);
+                this.topButtons.getChildren().add(suggestions);
             }
-            Text suggestions = new Text(suggestedText);
-            suggestions.setFont(Font.font ("Verdana", 15));
-            suggestions.setFill(Color.WHITE);
-            this.topButtons.getChildren().add(suggestions);
         }
     }
 
