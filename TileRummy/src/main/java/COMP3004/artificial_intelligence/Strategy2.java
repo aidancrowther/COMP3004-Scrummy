@@ -49,11 +49,11 @@ public class Strategy2 extends ArtificialIntelligence
             -> If the specified meld is from the hand, add the entire meld. Otherwise, append by tile
             -> Return the brand new table :)
         */
-        this.terminalView.printMessage("Current Player: " + this.player.getName());
+        //this.terminalView.printMessage("Current Player: " + this.player.getName());
         this.player.setHand(hand);
 
-        this.terminalView.printMessage(this.player.getName() + " hand: ");
-        this.terminalView.printPlayerHand(this.player.getHand());
+       // this.terminalView.printMessage(this.player.getName() + " hand: ");
+        //this.terminalView.printPlayerHand(this.player.getHand());
 
 
         //Output table

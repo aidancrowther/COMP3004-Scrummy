@@ -4,14 +4,12 @@ import COMP3004.artificial_intelligence.Strategy4;
 import COMP3004.controllers.Controller;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.controllers.PlayerInteractionController;
-import COMP3004.models.Joker;
-import COMP3004.models.Meld;
-import COMP3004.models.Table;
-import COMP3004.models.Tile;
+import COMP3004.models.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -368,7 +366,13 @@ public class GraphicalView {
     public StackPane generateTilePane(Tile t){
         Rectangle rectangle = new Rectangle( 100,100,30,50);
         rectangle.setFill(Color.rgb(252, 248, 224,1.0));//")); //rgb()
-        Text text = new Text(Integer.toString(t.getValue()));
+        //Text text = new Text(Integer.toString(t.getValue()));
+        String tileText = Integer.toString(t.getValue());
+        if(t instanceof Joker){
+            //System.out.println("Mask joker");
+            tileText = "J";
+        }
+        Text text = new Text(tileText);
         text.setFont(Font.font ("Verdana", 20));
         if(t.getColour() == 'R'){
             text.setFill(Color.rgb(204, 0, 0));
@@ -754,20 +758,6 @@ public class GraphicalView {
         BorderPane.setAlignment(scrollPane, Pos.CENTER);
     }
 
-    public Text getTileText(Tile t, boolean pressed){
-        Text text = new Text(Integer.toString(t.getValue()) + (pressed ? "*" : ""));
-        text.setFont(Font.font ("Verdana", 20));
-        if(t.getColour() == 'R'){
-            text.setFill(Color.rgb(204, 0, 0));
-        } else if (t.getColour() == 'G') {
-            text.setFill(Color.GREEN);
-        } else if (t.getColour() == 'B') {
-            text.setFill(Color.BLUE);
-        } else if (t.getColour() == 'O') {
-            text.setFill(Color.rgb(239, 143, 0));
-        }
-        return text;
-    }
 
     public void drawHand(GameInteractionController playerControl, int index, boolean isHorizontal) {
         GridPane handPane = new GridPane();
@@ -946,13 +936,30 @@ public class GraphicalView {
         }
 
         this.tableBefore = controller.getScrummy().getTable().copy();
-        //System.out.println("PLayer: " + this.currentPlayerIndex);
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
-        this.draw();
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(controller.getWinner() == -1 && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
+                            finishTurn();
+                            drawNextPlayer();
+                        }
+                    }
+                });
+                return null;
+            }
+        };
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
-            this.finishTurn();
-        } else {
+            new Thread(task).start();
+        }
+
+
+        if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
+            this.draw();
             if(this.limitHumanTime){
                 System.out.println("starting the countdown!");
                 this.timer = new Timer();
@@ -960,6 +967,23 @@ public class GraphicalView {
                 this.timer.schedule(new PlayerTimerTask(), delay);
             }
         }
+
+        if (this.controller.getWinner() != -1){
+            this.displayWin();
+        }
+
+
+    }
+
+    public void drawNextPlayer() {
+        this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
+        if(this.tableBefore != null){
+            this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
+        }
+        this.tableBefore = controller.getScrummy().getTable().copy();
+        //System.out.println("PLayer: " + this.currentPlayerIndex);
+        this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
+        this.draw();
     }
 
     public void finishTurn(){

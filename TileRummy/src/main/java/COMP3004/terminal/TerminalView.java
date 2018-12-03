@@ -45,7 +45,7 @@ public class TerminalView
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
     public TerminalView(){
-        this.scanner = new Scanner(System.in);
+        //this.scanner = new Scanner(System.in);
     }
 
     public String generateTileString(Tile tile) {
