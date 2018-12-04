@@ -130,85 +130,45 @@ public class Controller
 
 
     public void finishTurn(){
-        //if(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController){
-            System.out.println("b4 : " + this.graphicalView.getTableBefore());
+        System.out.println("b4 : " + this.graphicalView.getTableBefore());
+        this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
 
-            //TODO: move these vars to controller
-            /*
-            this.graphicalView.setTableBefore(this.scrummy.getTable().copy());
-            this.graphicalView.setHandBefore(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().copy());
-            */
-            this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
+        if(this.graphicalView.getTableBefore() != null){
+            this.graphicalView.setTableDiff(this.scrummy.getTable().getDiff(this.getState().getTable()));
+        }
 
-            if(this.graphicalView.getTableBefore() != null){
-                this.graphicalView.setTableDiff(this.scrummy.getTable().getDiff(this.getState().getTable()));
-            }
+        this.graphicalView.draw();
 
-            this.graphicalView.draw();
-
-            if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
-                this.playerControllers.get(this.currentPlayerIndex).setTable(this.scrummy.getTable());
-                Table playedTable = this.playerControllers.get(this.currentPlayerIndex).play(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand());
-                this.scrummy.setTable(playedTable);
-            }
-
-            System.out.print("after: " + scrummy.getTable());
-
-            this.winner = this.checkPlayerMoveGUI();
-            //System.out.println("Hand: " + this.graphicalView.getHandBefore());
-            //System.out.println(this.graphicalView.getTableBefore());
-            if(this.winner >= 0){
-                System.out.println(getPlayerController(this.winner).getPlayer().getName() + " won!!");
-                this.graphicalView.displayWin();
-            } else if(this.winner == -1)  {
-                //System.out.println(this.currentPlayerIndex + " No win next player.");
-                int prevPlayerIndex = this.currentPlayerIndex;
-
-                if(this.currentPlayerIndex == this.playerControllers.size()-1){
-                    this.currentPlayerIndex = 0;
-                } else {
-                    this.currentPlayerIndex++;
-                }
-                this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
-                this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
-            } else {
-                //a draw
-                this.graphicalView.displayDraw();
-            }
-        /*} else {
-            Meld playerHandCopy = new Meld();
-            for(Tile t: this.scrummy.getCurrentPlayer().getHand().getTiles())
-                playerHandCopy.add(t);
-
+        if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+            this.playerControllers.get(this.currentPlayerIndex).setTable(this.scrummy.getTable());
             Table playedTable = this.playerControllers.get(this.currentPlayerIndex).play(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand());
-            //System.out.println("AI TABLE: " + playedTable);
-            this.saveState(playedTable, playerHandCopy);
-            this.winner = this.checkPlayerMove();
+            this.scrummy.setTable(playedTable);
+            this.graphicalView.draw();
+        }
+        System.out.print("after: " + scrummy.getTable());
 
-            //print winner
-            if(this.winner >= 0){//winnerIndex >= 0 && winnerIndex < this.scrummy.getPlayers().size()){
-                //Player current = this.scrummy.getPlayers().get(winnerIndex);
-                System.out.println(getPlayerController(this.winner).getPlayer().getName() + " won!!");
+        this.winner = this.checkPlayerMoveGUI();
+        this.graphicalView.draw();
 
-                this.graphicalView.displayWin();
-            } else if(this.winner == -1) {
-                //System.out.println(this.currentPlayerIndex + " No win next player.");
-                if(currentPlayerIndex == this.playerControllers.size()-1){
-                    this.currentPlayerIndex = 0;
-                } else {
-                    this.currentPlayerIndex++;
-                }
-                //System.out.println(this.currentPlayerIndex);
-                //this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
-                this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
-                this.graphicalView.setCurrentPlayerIndexAI(this.currentPlayerIndex);
-                //this.graphicalView.draw();
+        if(this.winner >= 0){
+            System.out.println(getPlayerController(this.winner).getPlayer().getName() + " won!!");
+            this.graphicalView.displayWin();
+        } else if(this.winner == -1)  {
+            int prevPlayerIndex = this.currentPlayerIndex;
+
+            if(this.currentPlayerIndex == this.playerControllers.size()-1){
+                this.currentPlayerIndex = 0;
             } else {
-                //a draw
-                System.out.print("draw");
-                this.graphicalView.displayDraw();
+                this.currentPlayerIndex++;
             }
-        }*/
+
+            this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
+            this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+            this.graphicalView.draw();
+        } else {
+            //a draw
+            this.graphicalView.displayDraw();
+        }
     }
 
     public void saveState(Table saveTable, Meld saveMeld){

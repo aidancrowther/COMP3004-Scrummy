@@ -918,26 +918,30 @@ public class GraphicalView {
         handLabelPane.getChildren().add(handPane);
         if(index == 0){
             handLabelPane.setPadding(new Insets(30, 10, 10, 10));
-            if(index==this.currentPlayerIndex){
+            if(index==this.controller.getCurrentPlayerIndex()){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                System.out.println("highlight player 1");
             }
             this.tablePane.setBottom(handLabelPane);
         } else if (index == 1) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
-            if(index==this.currentPlayerIndex){
+            if(index==this.controller.getCurrentPlayerIndex()){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                System.out.println("highlight player 2");
             }
             this.tablePane.setRight(handLabelPane);
         } else if (index == 2) {
             handLabelPane.setPadding(new Insets(10, 10, 10, 10));
-            if(index==this.currentPlayerIndex){
+            if(index==this.controller.getCurrentPlayerIndex()){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                System.out.println("highlight player 3");
             }
             this.tablePane.setTop(handLabelPane);
         } else if (index == 3) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
-            if(index==this.currentPlayerIndex){
+            if(index==this.controller.getCurrentPlayerIndex()){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                System.out.println("highlight player 4");
             }
             this.tablePane.setLeft(handLabelPane);
         }
@@ -1001,11 +1005,24 @@ public class GraphicalView {
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
         this.draw();
 
-        /*if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
             //this.graphicalView.finishAITurn();
-            Button finishTurn = (Button) this.topButtons.getChildren().get(0);
-            finishTurn.fire();
-        }*/
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    draw();
+                    controller.finishTurn();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    draw();
+                    //drawNextPlayer();
+                }
+            });
+        }
 
         /*if(this.tableBefore != null){
             this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
