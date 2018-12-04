@@ -15,12 +15,6 @@ import static org.junit.Assert.*;
 /*
 * Scenarios:
 * s1: PlayerAS1 with planned plays + unlucky PlayerBS1 who won't play at all
-*
-* //test s2 move after s1 plays it's first 30 + it can play all cards
-* s2: PlayerAS2 (s1) [will play on first turn] + PlayerBS2 (s2) [has run of all color]
-*
-* Brittny's testplan
-* s3: PlayerAS3 (s1) + PlayerBS3 (s1) + PlayerCS3 (s2) + PlayerDS3 (s2)
  * */
 public class PlayerFactoryTest {
     @Test
@@ -111,56 +105,59 @@ public class PlayerFactoryTest {
         assertTrue(tileListsEqual(testTwo, p2.getRiggedTiles()));
     }
 
+    /*
+     * //test s2 move after s1 plays it's first 30 + it can play all cards
+     * s2: PlayerAS2 (s1) [will play on first turn] + PlayerBS2 (s2) [has run of all color]
+     *
+    * */
     @Test
-    public void testCreatePlayerTypeTwo() {
+    public void testScenarioTwoSetup() {
         Table table = new Table();
         PlayerFactory factory = new PlayerFactory();
-
-// AI HAND > [O1,O2,O3,R6,O5,O6,R7,O8,O9,O11,O12,013]
-//AI DRAW ORDER [R8, O7]
-//> WILL PLAY THESE MOVES
-//01, 02, 03
-//O8,O9,O10,
-//011, 012, 013
-//NOTHING > R8
-// R6 R7 R8
-//NOTHING > O7
-//05, 06, 07
 
         //PLAYER TWO
         Player p = factory.FactoryMethod(2);
         ArrayList<Tile> test = new ArrayList<Tile>();
-        test.add(new Tile('B', 1));
-        test.add(new Tile('B', 2));
+        test.add(new Tile('G', 1));
+        test.add(new Tile('G', 2));
         test.add(new Tile('B', 3));
-
-        test.add(new Tile('B', 6));
-        test.add(new Tile('B', 5));
-
         test.add(new Tile('G', 6));
-
-        test.add(new Tile('B', 7));
-        test.add(new Tile('B', 8));
-
-        test.add(new Tile('G', 9));
+        test.add(new Tile('G', 5));
+        test.add(new Tile('B', 6));
+        test.add(new Tile('G', 7));
+        test.add(new Tile('G', 8));
+        test.add(new Tile('B', 9));
         test.add(new Tile('G', 10));
+        test.add(new Tile('O', 11));
+        test.add(new Tile('O', 12));
+        test.add(new Tile('O', 13));
+        assertTrue(tileListsEqual(test, p.getHand().getTiles()));
 
+        //PLAYER TWO - will win on first turn
+        Player p2 = factory.FactoryMethod(2);
+        ArrayList<Tile> test2 = new ArrayList<Tile>();
+        test.add(new Tile('R', 1));
+        test.add(new Tile('R', 2));
+        test.add(new Tile('R', 3));
+        test.add(new Tile('R', 6));
+        test.add(new Tile('R', 5));
+        test.add(new Tile('R', 6));
+        test.add(new Tile('R', 7));
+        test.add(new Tile('R', 8));
+        test.add(new Tile('R', 9));
+        test.add(new Tile('R', 10));
         test.add(new Tile('R', 11));
         test.add(new Tile('R', 12));
         test.add(new Tile('R', 13));
         assertTrue(tileListsEqual(test, p.getHand().getTiles()));
-
-        ArrayList<Tile> testTwo = new ArrayList<Tile>();
-        testTwo.add(new Tile('G', 4));
-        testTwo.add(new Tile('G', 5));
-        testTwo.add(new Tile('B', 3));
-        testTwo.add(new Tile('B', 6));
-        testTwo.add(new Tile('B', 9));
-        testTwo.add(new Tile('B', 10));
-        assertTrue(tileListsEqual(testTwo, p.getRiggedTiles()));
     }
 
-
+/*
+*
+ * Brittny's testplan
+ * s3: PlayerAS3 (s1) + PlayerBS3 (s1) + PlayerCS3 (s2) + PlayerDS3 (s2)
+*
+* */
     @Test
     public void testCreatePlayerAIThree() {
         //Setup same as two, add a player four
