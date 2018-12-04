@@ -311,10 +311,10 @@ public class GraphicalView {
         Button play = new Button("START GAME");
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
-            this.loadGamePane();
-
             //System.out.println("START INDEX: " + startIndex);
+            this.currentPlayerIndex = startIndex;
             controller.setCurrentPlayerIndex(startIndex);
+            this.loadGamePane();
         });
         playerOrder.getChildren().add(play);
 
@@ -557,12 +557,11 @@ public class GraphicalView {
                 i++;
             }
 
-            //Load game
-            this.loadGamePane();
-
             //Set starting player
             System.out.println("Start: " + riggedStartIndex);
+            currentPlayerIndex = riggedStartIndex;
             controller.setCurrentPlayerIndex(riggedStartIndex);
+            this.loadGamePane();
         });
         rigOptions.getChildren().add(play);
 
@@ -599,6 +598,7 @@ public class GraphicalView {
         playButton.setOnMouseClicked(e -> {
             this.controller.setupGameByType();
             this.loadGamePane();
+            currentPlayerIndex = 0;
             controller.setCurrentPlayerIndex(0);
         });
 
@@ -610,6 +610,10 @@ public class GraphicalView {
     }
 
     public void loadGamePane(){
+
+        this.tableBefore = this.controller.getScrummy().getTable().copy();
+        this.handBefore = this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
+
         //SET UP GAME SCREEN
         this.gamePane.setStyle("-fx-background-color: #333333");
         this.gamePane.setHgap(10);
@@ -661,6 +665,8 @@ public class GraphicalView {
         this.root.getChildren().add(gamePane);
 
         draw();
+
+        System.out.println(this.controller.getCurrentPlayerIndex());
 
         if(!(this.controller.getPlayerControllers().get(this.controller.getCurrentPlayerIndex()) instanceof PlayerInteractionController)) {
             this.startAILoop();
@@ -1004,8 +1010,8 @@ public class GraphicalView {
 
     public void runAITask(){
         this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
-        this.tableBefore = controller.getScrummy().getTable().copy();
-        this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
+        this.tableBefore = this.controller.getScrummy().getTable().copy();
+        this.handBefore = this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
 
         try {
             //draw

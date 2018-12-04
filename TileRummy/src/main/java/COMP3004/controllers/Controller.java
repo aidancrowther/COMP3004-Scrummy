@@ -603,7 +603,7 @@ public class Controller
         System.out.println("NUM PLAYERS: " + this.playerControllers.size());
         this.currentPlayerIndex = index;
         this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
-        this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+        //this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
     }
 
     public void run(boolean AIOnly){
@@ -684,7 +684,7 @@ public class Controller
     }
 
     public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
+        return this.currentPlayerIndex;
     }
 
     public int getWinner() {
