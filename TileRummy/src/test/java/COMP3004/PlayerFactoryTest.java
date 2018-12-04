@@ -75,34 +75,28 @@ public class PlayerFactoryTest {
         assertTrue(tileListsEqual(table.getMelds().get(3).getTiles(), playedMeld3));
     }
 
-    /*
-    *
-
-    //PLAYER 2
-    p = factory.FactoryMethod(1);
-
-
-    //PLAYER 3
-
-    assertTrue(p instanceof PlayerSecondAI);
-    p = factory.FactoryMethod(2);
-    assertTrue(p instanceof PlayerThirdAI);
-    p = factory.FactoryMethod(3);
-    assertTrue(p instanceof PlayerFourthAI);
-    * */
-
     @Test
-    public void testCreatePlayerAITwo() {
+    public void testCreatePlayerTypeTwo() {
         Table table = new Table();
         PlayerFactory factory = new PlayerFactory();
+
+// AI HAND > [O1,O2,O3,R6,O5,O6,R7,O8,O9,O11,O12,013]
+//AI DRAW ORDER [R8, O7]
+//> WILL PLAY THESE MOVES
+//01, 02, 03
+//O8,O9,O10,
+//011, 012, 013
+//NOTHING > R8
+// R6 R7 R8
+//NOTHING > O7
+//05, 06, 07
 
         //PLAYER TWO
         Player p = factory.FactoryMethod(2);
         ArrayList<Tile> test = new ArrayList<Tile>();
         test.add(new Tile('B', 1));
         test.add(new Tile('B', 2));
-
-        test.add(new Tile('G', 3));
+        test.add(new Tile('B', 3));
 
         test.add(new Tile('B', 6));
         test.add(new Tile('B', 5));

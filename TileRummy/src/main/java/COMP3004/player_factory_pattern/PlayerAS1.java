@@ -15,8 +15,8 @@ import java.util.ArrayList;
 //NOTHING > O7
 //05, 06, 07
 
-public class PlayerTypeOne extends Player {
-    public PlayerTypeOne(){
+public class PlayerAS1 extends Player {
+    public PlayerAS1(){
         this.hand.add(new Tile('0', 1));
         this.hand.add(new Tile('0', 2));
         this.hand.add(new Tile('0', 3));
