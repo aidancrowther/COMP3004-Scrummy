@@ -130,7 +130,7 @@ public class Controller
     }
 
 
-    public void finishTurn(){
+    public void finishTurn(boolean callGUI){
         System.out.println("b4 : " + this.graphicalView.getTableBefore());
         this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
 
@@ -164,11 +164,9 @@ public class Controller
             }
 
             this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
-            this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
-
-            /*if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
-                this.graphicalView.fireFinishForAI();
-            }*/
+            if(callGUI){
+                this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+            }
             this.graphicalView.draw();
         } else {
             //a draw

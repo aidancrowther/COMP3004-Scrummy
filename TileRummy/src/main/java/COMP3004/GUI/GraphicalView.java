@@ -625,7 +625,7 @@ public class GraphicalView {
         finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
-            this.controller.finishTurn();
+            this.controller.finishTurn(true);
         });
         finishTurnBtn.setPrefSize(100, 20);
 
@@ -1010,17 +1010,20 @@ public class GraphicalView {
                 //stop if hit a human
                 break;
             }
+            this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
+            this.tableBefore = controller.getScrummy().getTable().copy();
+            this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
 
             try {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         draw();
-                        controller.finishTurn();
+                        controller.finishTurn(false);
                     }
                 });
                 //draw
-                Thread.sleep(1000); //TODO: why no delay work?
+                Thread.sleep(1000);
             }
             catch (InterruptedException e){
                 e.printStackTrace();
