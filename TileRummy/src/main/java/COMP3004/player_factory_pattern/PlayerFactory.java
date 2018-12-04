@@ -34,16 +34,17 @@ public class PlayerFactory extends AbstractPlayerFactory {
         switch (type) {
             //SCENARIO 1
             case 0: return new PlayerAS1();
+            case 1: return new PlayerBS1();
 
             //SCENARIO 2
-            case 1: return new PlayerAS2();
-            case 2: return new PlayerBS2();
+            case 2: return new PlayerAS2();
+            case 3: return new PlayerBS2();
 
             //SCENARIO 3
-            case 3: return new PlayerAS3();
-            case 4: return new PlayerBS3();
-            case 5: return new PlayerCS3();
-            case 6: return new PlayerDS3();
+            case 4: return new PlayerAS3();
+            case 5: return new PlayerBS3();
+            case 6: return new PlayerCS3();
+            case 7: return new PlayerDS3();
             default: return new Player();
         }
     }

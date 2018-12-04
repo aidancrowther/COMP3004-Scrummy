@@ -12,9 +12,19 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/*
+* Scenarios:
+* s1: PlayerAS1 with planned plays + unlucky PlayerBS1 who won't play at all
+*
+* //test s2 move after s1 plays it's first 30 + it can play all cards
+* s2: PlayerAS2 (s1) [will play on first turn] + PlayerBS2 (s2) [has run of all color]
+*
+* Brittny's testplan
+* s3: PlayerAS3 (s1) + PlayerBS3 (s1) + PlayerCS3 (s2) + PlayerDS3 (s2)
+ * */
 public class PlayerFactoryTest {
     @Test
-    public void testCreatePlayerAIOne() {
+    public void testScenarioOneSetup() {
         Table table = new Table();
         PlayerFactory factory = new PlayerFactory();
 
@@ -73,6 +83,32 @@ public class PlayerFactoryTest {
         assertTrue(tileListsEqual(table.getMelds().get(1).getTiles(), playedMeld1));
         assertTrue(tileListsEqual(table.getMelds().get(2).getTiles(), playedMeld2));
         assertTrue(tileListsEqual(table.getMelds().get(3).getTiles(), playedMeld3));
+
+
+
+        Player p2 = factory.FactoryMethod(1);
+        ArrayList<Tile> test2 = new ArrayList<Tile>();
+        test.add(new Tile('G', 1));
+        test.add(new Tile('B', 2));
+        test.add(new Tile('G', 3));
+        test.add(new Tile('B', 6));
+        test.add(new Tile('G', 5));
+        test.add(new Tile('B', 6));
+        test.add(new Tile('G', 7));
+        test.add(new Tile('B', 8));
+        test.add(new Tile('G', 9));
+        test.add(new Tile('B', 10));
+        test.add(new Tile('G', 11));
+        test.add(new Tile('B', 12));
+        test.add(new Tile('G', 13));
+        assertTrue(tileListsEqual(test, p2.getHand().getTiles()));
+
+        ArrayList<Tile> testTwo2 = new ArrayList<Tile>();
+        testTwo.add(new Tile('R', 1));
+        testTwo.add(new Tile('R', 3));
+        testTwo.add(new Tile('R', 10));
+        testTwo.add(new Tile('R', 12));
+        assertTrue(tileListsEqual(testTwo, p2.getRiggedTiles()));
     }
 
     @Test
