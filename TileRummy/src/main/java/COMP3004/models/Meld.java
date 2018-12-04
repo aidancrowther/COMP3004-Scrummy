@@ -141,7 +141,7 @@ public class Meld {
         else if (jokers.size() == 2 && this.size() > 2) {
 			ArrayList<Tile> list = new ArrayList<>();
             for (int i=0; i<this.size(); i++) {
-				if (this.get(i).isJoker()) {
+				if (this.get(i).getColour() == 'J') {
 					Tile joker = this.remove(this.get(i));
 					list.add(joker);
 					i--;
