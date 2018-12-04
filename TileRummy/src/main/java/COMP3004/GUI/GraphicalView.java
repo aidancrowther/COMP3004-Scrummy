@@ -610,7 +610,6 @@ public class GraphicalView {
     }
 
     public void loadGamePane(){
-
         this.tableBefore = this.controller.getScrummy().getTable().copy();
         this.handBefore = this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
 

@@ -129,7 +129,7 @@ public class Controller
         this.scrummy.notifyObservers();
     }
 
-
+    // FOR GUI GAME FLOW
     public void finishTurn(boolean callGUI){
         System.out.println("b4 : " + this.graphicalView.getTableBefore());
         this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
@@ -222,43 +222,6 @@ public class Controller
         return winnerIndex;
     }
 
-
-
-    public int checkPlayerMove(){
-        System.out.println("s: " + this.scrummy.getTable());
-        int winnerIndex = -1;
-        // CHECK WHAT PLAYER DID
-        GameState stateAfterTurn = this.getState();
-        if(stateAfterTurn != null){
-            /*
-             * Instead check if all tiles in both tables melds are equal...
-             * */
-            System.out.println("a: " + stateAfterTurn.getTable());
-            if(stateAfterTurn.getTable().isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
-                System.out.println("NO move");
-                if(this.checkForEmptyDeckCase()){
-                    winnerIndex = -2;
-                }
-                scrummy.getCurrentPlayer().setHand(stateAfterTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
-                this.popTileToCurrentUserHand();
-            } else {
-                scrummy.validatePlayerMove(stateAfterTurn.getTable());
-                if(!stateAfterTurn.getTable().isValid()){
-                    System.out.println("NOT VALID");
-                    scrummy.getPlayers().get(this.currentPlayerIndex).setHand(stateAfterTurn.getPlayerHand());
-                    this.popTileToCurrentUserHand();
-                }
-            }
-        }
-
-        // CHECK FOR WIN
-        System.out.println( "playe rhand size: " + this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand() );
-        if(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().getTiles().size() == 0){
-            winnerIndex = this.currentPlayerIndex;
-        }
-
-        return winnerIndex;
-    }
 
     public boolean checkForEmptyDeckCase(){
         if(scrummy.getDeck().isEmpty()){
@@ -454,24 +417,6 @@ public class Controller
         }
     }
 
-    /*//Make all of the "people" playing
-    this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
-    this.playerControllers[1] = new Strategy1();
-    this.playerControllers[2] = new Strategy2();
-    //Special for S3 bc needs to count hands
-    Strategy3 s3 = new Strategy3();
-    this.playerControllers[3] = s3;
-    this.playerControllers[4] = new Strategy4();
-
-    for (int i = 0; i < this.scrummy.getPlayers().length; i++){//Register everyone
-        this.playerControllers[i].setPlayer(this.scrummy.getPlayers()[i]);
-        this.playerControllers[i].setTerminalView(this.view);
-        this.scrummy.registerTableObserver(this.playerControllers[i]);
-    }
-
-    s3.setPlayerHandSizes(this.scrummy.getPlayers());
-    this.scrummy.registerPlayerHandObserver(s3);
-    this.scrummy.notifyObservers();*/
 
     public void addPlayer(int type){
         if(type == 0) {
@@ -606,6 +551,7 @@ public class Controller
         //this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
     }
 
+    //FOR TERMINAL VIEW ONLY
     public void run(boolean AIOnly){
         /*
          * While everyone has cards in their hand...
@@ -682,6 +628,43 @@ public class Controller
                 this.scrummy.setCurrentPlayerIndex(0);
         }
     }
+
+    public int checkPlayerMove(){
+        System.out.println("s: " + this.scrummy.getTable());
+        int winnerIndex = -1;
+        // CHECK WHAT PLAYER DID
+        GameState stateAfterTurn = this.getState();
+        if(stateAfterTurn != null){
+            /*
+             * Instead check if all tiles in both tables melds are equal...
+             * */
+            System.out.println("a: " + stateAfterTurn.getTable());
+            if(stateAfterTurn.getTable().isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
+                System.out.println("NO move");
+                if(this.checkForEmptyDeckCase()){
+                    winnerIndex = -2;
+                }
+                scrummy.getCurrentPlayer().setHand(stateAfterTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
+                this.popTileToCurrentUserHand();
+            } else {
+                scrummy.validatePlayerMove(stateAfterTurn.getTable());
+                if(!stateAfterTurn.getTable().isValid()){
+                    System.out.println("NOT VALID");
+                    scrummy.getPlayers().get(this.currentPlayerIndex).setHand(stateAfterTurn.getPlayerHand());
+                    this.popTileToCurrentUserHand();
+                }
+            }
+        }
+
+        // CHECK FOR WIN
+        System.out.println( "playe rhand size: " + this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand() );
+        if(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = this.currentPlayerIndex;
+        }
+
+        return winnerIndex;
+    }
+
 
     public int getCurrentPlayerIndex() {
         return this.currentPlayerIndex;
