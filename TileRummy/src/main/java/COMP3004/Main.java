@@ -24,7 +24,7 @@ public class Main extends Application {
 
 
     public static void main (String[] args) {
-        String gameType = "t";
+        String gameType = "g";
         if (args.length != 0){
             args = parseArgs(args);
             Controller controller = new Controller(args);

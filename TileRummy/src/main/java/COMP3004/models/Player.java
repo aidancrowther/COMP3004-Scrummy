@@ -4,9 +4,12 @@
 
 package COMP3004.models;
 
+import java.util.ArrayList;
+
 public class Player{
     private String name = "player";
-    Meld hand = new Meld();
+    protected Meld hand = new Meld();
+    protected ArrayList<Tile> riggedTiles;
 
     public Player(){
 
@@ -28,5 +31,13 @@ public class Player{
 
     public String getName(){
         return this.name;
+    }
+
+    public ArrayList<Tile> getRiggedTiles() {
+        return riggedTiles;
+    }
+
+    public void setRiggedTiles(ArrayList<Tile> riggedTiles) {
+        this.riggedTiles = riggedTiles;
     }
 }

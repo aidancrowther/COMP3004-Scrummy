@@ -105,6 +105,15 @@ public class GraphicalView {
         });
         buttons.getChildren().add(rigButton);
 
+        Button scenarioButton = new Button("LOAD GAME SCENARIO");
+        scenarioButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        scenarioButton.setMaxSize(270, 100);
+        scenarioButton.setOnMouseClicked(e -> {
+            //loadRigPane();
+            loadGameFactorySettingsPane();
+        });
+        buttons.getChildren().add(scenarioButton);
+
         this.menuPane.getChildren().add(buttons);
         this.root.getChildren().add(menuPane);
 
@@ -572,7 +581,42 @@ public class GraphicalView {
         this.root.getChildren().add(scrollPane);
     }
 
-    public void loadImportSavePane(){
+    public void loadGameFactorySettingsPane(){
+
+        VBox strategyPane = new VBox();
+
+        strategyPane.setPadding(new Insets(30, 50, 30, 50));
+        //buttons.setPadding(new Insets(30, 365, 50, 365));
+        strategyPane.setSpacing(30);
+        strategyPane.setStyle("-fx-background-color: #333333");
+
+        Text title = new Text("Scenario Selection");
+        title.setFont(Font.font ("Verdana", 20));
+        title.setFill(Color.WHITE);
+        strategyPane.getChildren().add(title);
+
+        Button playButton = new Button("START GAME");
+
+        String gameType = "";
+        ChoiceBox<String> options = new ChoiceBox<>(FXCollections.observableArrayList(
+            "Scenario 1", "Scenario 2", "Scenario 3")
+        );
+        options.setOnAction(e -> {
+             controller.setGameType(options.getSelectionModel().getSelectedItem().toString());
+        });
+        options.getSelectionModel().selectFirst();
+
+        playButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
+        playButton.setOnMouseClicked(e -> {
+            this.controller.setupGameByType();
+            this.loadGamePane();
+            controller.setCurrentPlayerIndex(0);
+        });
+
+
+        strategyPane.getChildren().add(options);
+        strategyPane.getChildren().add(playButton);
+        this.root.getChildren().add(strategyPane);
 
     }
 
@@ -648,7 +692,6 @@ public class GraphicalView {
             i++;
         }
 
-        System.out.println("DRAWWWWWWWWWWWWWWWWWW");
         this.drawTable(t);
         this.drawSuggestedMelds();
     }
@@ -953,6 +996,7 @@ public class GraphicalView {
 
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
+            this.draw();
             this.startAILoop();
         }
 
@@ -985,9 +1029,8 @@ public class GraphicalView {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                           finishTurn();
-                           drawNextPlayer();
-
+                        finishTurn();
+                        drawNextPlayer();
                     }
                 });
                 //draw

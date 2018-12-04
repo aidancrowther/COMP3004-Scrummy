@@ -22,6 +22,7 @@ import COMP3004.models.Table;
 import COMP3004.models.Meld;
 import COMP3004.models.Tile;
 import COMP3004.models.Player;
+import COMP3004.player_factory_pattern.PlayerFactory;
 import COMP3004.terminal.TerminalView;
 
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ public class Controller
     protected int winner = -1;
 
     protected ArrayList<GameInteractionController> playersWhoHaventMoved = new ArrayList<>();
+
+    String gameType;
 
     // Add player method
 
@@ -309,34 +312,157 @@ public class Controller
 
         //for(Tile currRiggedTile : this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles()){
         System.out.println("Rigged: " + this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().toArray());
-        if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().size() > 0){
-            ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
-            Tile currRiggedTile = this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().get(0);
-            while(true) {
-                Tile deckTile = this.scrummy.getDeck().pop();
-                System.out.println("dt: " + deckTile);
-                if (deckTile != null) {
-                    if (currRiggedTile.getColour() == deckTile.getColour()
-                            && currRiggedTile.getValue() == deckTile.getValue()) {
-                        this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
-                        this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().remove(0);
-                        break;
+        if(!this.scrummy.getDeck().isEmpty()){
+
+            if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().size() > 0){
+                ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+                Tile currRiggedTile = this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().get(0);
+
+                while(true) {
+                    Tile deckTile = this.scrummy.getDeck().pop();
+                    System.out.println("dt: " + deckTile);
+                    if (deckTile != null) {
+                        if (currRiggedTile.getColour() == deckTile.getColour()
+                                && currRiggedTile.getValue() == deckTile.getValue()) {
+                            this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                            this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().remove(0);
+                            break;
+                        } else {
+                            poppedtiles.add(deckTile); //oldest to newest arraylist
+                        }
                     } else {
-                        poppedtiles.add(deckTile); //oldest to newest arraylist
+                        break;
                     }
                 }
+
+                Collections.reverse(poppedtiles); //add back in original order
+                for(Tile t : poppedtiles){
+                    this.scrummy.getDeck().push(t);
+                }
+            } else {
+                //Tile t = scrummy.getDeck().pop();
+                //if(t != null){
+
+                ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+                while(true) {
+                    Tile deckTile = this.scrummy.getDeck().pop();
+                    System.out.println("dt: " + deckTile);
+                    if (deckTile != null) {
+                        boolean found = false;
+                        for(GameInteractionController playerController: this.playerControllers){
+                            for(Tile currRiggedTile : playerController.getRiggedTiles()){
+                                if (currRiggedTile.getColour() == deckTile.getColour()
+                                        && currRiggedTile.getValue() == deckTile.getValue()) {
+                                    found = true;
+                                }
+                            }
+                        }
+                        if(!found){
+                            scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                            break;
+                        } else {
+                            poppedtiles.add(deckTile);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                Collections.reverse(poppedtiles); //add back in original order
+                for(Tile t : poppedtiles){
+                    this.scrummy.getDeck().push(t);
+                }
+                //}
             }
 
-            Collections.reverse(poppedtiles); //add back in original order
-            for(Tile t : poppedtiles){
-                this.scrummy.getDeck().push(t);
-            }
-        } else {
-            this.popFromDeck();
         }
-
     }
 
+
+    public void setupGameByType(){
+        if(this.gameType != null){
+            PlayerFactory factory = new PlayerFactory();
+            if(this.gameType.equals("Scenario 1")){
+                Player p1 = factory.FactoryMethod(0);
+                Player p2 = factory.FactoryMethod(1);
+
+
+                Strategy1 s = new Strategy1();
+                this.playerControllers.add(s);
+                p1.setName("player a");
+                s.setPlayer(p1);
+                s.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p1);
+                this.scrummy.registerTableObserver(s);
+
+                Strategy1 s2 = new Strategy1();
+                this.playerControllers.add(s2);
+                p2.setName("player b");
+                s2.setPlayer(p2);
+                s2.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p2);
+                this.scrummy.registerTableObserver(s2);
+
+            } else if(this.gameType.equals("Scenario 2")){
+                Player p1 = factory.FactoryMethod(2);
+                Player p2 = factory.FactoryMethod(3);
+
+
+                Strategy1 s = new Strategy1();
+                this.playerControllers.add(s);
+                p1.setName("player a");
+                s.setPlayer(p1);
+                s.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p1);
+                this.scrummy.registerTableObserver(s);
+
+                Strategy2 s2 = new Strategy2();
+                this.playerControllers.add(s2);
+                p2.setName("player b");
+                s2.setPlayer(p2);
+                s2.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p2);
+                this.scrummy.registerTableObserver(s2);
+            } else {
+                Player p1 = factory.FactoryMethod(4);
+                Player p2 = factory.FactoryMethod(5);
+                Player p3 = factory.FactoryMethod(6);
+                Player p4 = factory.FactoryMethod(7);
+
+
+                Strategy1 s = new Strategy1();
+                this.playerControllers.add(s);
+                p1.setName("player a");
+                s.setPlayer(p1);
+                s.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p1);
+                this.scrummy.registerTableObserver(s);
+
+                Strategy1 s2 = new Strategy1();
+                this.playerControllers.add(s2);
+                p2.setName("player b");
+                s2.setPlayer(p2);
+                s2.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p2);
+                this.scrummy.registerTableObserver(s2);
+
+                Strategy2 s3 = new Strategy2();
+                this.playerControllers.add(s3);
+                p3.setName("player c");
+                s3.setPlayer(p3);
+                s3.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p3);
+                this.scrummy.registerTableObserver(s3);
+
+                Strategy3 s4 = new Strategy3();
+                this.playerControllers.add(s4);
+                p4.setName("player d");
+                s4.setPlayer(p4);
+                s4.setGUI(this.graphicalView);
+                this.scrummy.getPlayers().add(p4);
+                this.scrummy.registerTableObserver(s4);
+            }
+        }
+    }
 
     /*//Make all of the "people" playing
     this.playerControllers[0] = new PlayerInteractionController(); //PLAYER
@@ -573,6 +699,14 @@ public class Controller
 
     public int getWinner() {
         return winner;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }
     /*public Controller(boolean AIOnly){

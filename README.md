@@ -78,8 +78,8 @@ Roadmap of Project Requirements:
     - [x] GUI support for game rigging:
       - [x] ability to set load/set initial hands via GUI
       - [x] ability to set the tile drawn by any player via the GUI
-  - [ ] LEVEL 5: for a grade of 90 or more:
-    - [ ] use of one or more Go4 patterns for the generation (as opposed to the mere loading) of rigged initial hands and in-game drawn tiles.
+  - [x] LEVEL 5: for a grade of 90 or more:
+    - [x] use of one or more Go4 patterns for the generation (as opposed to the mere loading) of rigged initial hands and in-game drawn tiles.
       - This is an open-ended requirement. The goal is to have an approach to generating specific game scenarios to exercise all rules. \
       Factory and Decorator may be the most relevant patterns.\
       The initial idea I have is that to address a game that only involves AI players (whose behavior is predictable) and set up their initial hands and the tiles they draw so that they can exercise specific functionality on the second turn (eg board tile reuse that involves 3 or more melds).\
