@@ -71,6 +71,11 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
 
+    protected void addJoker(Meld m, Tile joker) {
+        
+    }
+
+
     protected HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<>();
         int n = 0;

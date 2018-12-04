@@ -201,13 +201,37 @@ public class JokerTest {
         assertTrue(m.getJokers().get(1) == 2); //alphabetical
     }
 
+    @Test
+    public void testJokerStaticity() {
+        Meld m = new Meld();
+        Joker j1 = new Joker();
+        Joker j2 = new Joker();
+        
+        m.add(j1);
+        m.add(j2);
+        m.add(new Tile('G', 3));
+        assertTrue(m.isValid());
+		m.clear();
+		
+		m.add(j1);
+		m.add(new Tile('G', 3));
+		m.add(j2);
+		m.add(new Tile('G', 5));
+		assertTrue(m.isValid());
+		
+		m.add(new Tile('G', 4));
+		assertFalse(m.isValid());
+		m.clear();
+		
+		m.add(j1);
+		m.add(j2);
+		m.add(new Tile('G', 3));
+		m.add(new Tile('G', 5));
+		assertTrue(m.isValid());
+    }
 
 
 
-
-
-    //discuss with everyone about the organization of a printed meld when the joker is included; 
-    //should it just read as a big "J" or something else?
 
    /*
     //LATER...
