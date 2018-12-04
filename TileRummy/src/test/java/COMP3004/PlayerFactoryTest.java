@@ -74,11 +74,9 @@ public class PlayerFactoryTest {
         playedMeld3.add(new Tile('0', 12));
         playedMeld3.add(new Tile('0', 13));
 
-        assertTrue(tileListsEqual(table.getMelds().get(1).getTiles(), playedMeld1));
-        assertTrue(tileListsEqual(table.getMelds().get(2).getTiles(), playedMeld2));
-        assertTrue(tileListsEqual(table.getMelds().get(3).getTiles(), playedMeld3));
-
-
+        assertTrue(tableContainsMeld(table, playedMeld1));
+        assertTrue(tableContainsMeld(table, playedMeld2));
+        assertTrue(tableContainsMeld(table, playedMeld3));
 
         Player p2 = factory.FactoryMethod(1);
         ArrayList<Tile> test2 = new ArrayList<Tile>();
@@ -208,6 +206,15 @@ public class PlayerFactoryTest {
         for(Tile curr : array) {
             if(curr.getValue() == t.getValue()
             && curr.getColour() == t.getColour()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean tableContainsMeld(Table t, ArrayList<Tile> tiles){
+        for(Meld m : t.getMelds()){
+            if(tileListsEqual(m.getTiles(), tiles)){
                 return true;
             }
         }
