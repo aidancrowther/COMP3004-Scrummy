@@ -767,7 +767,7 @@ public class GraphicalView {
                                     //int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
                                     //controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
-                                    m.getTiles().remove(t);
+                                    m.remove(t);
                                     selectedTile = null;
                                     fromMeld = null;
                                 }
@@ -782,8 +782,8 @@ public class GraphicalView {
                                     }
 
                                     if (fromMeld != null && toMeld != null) {
-                                        fromMeld.getTiles().remove(selectedTile);
-                                        toMeld.getTiles().add(selectedTile);
+                                        fromMeld.remove(selectedTile);
+                                        toMeld.add(selectedTile);
                                         controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
                                         fromMeld = null;
                                         toMeld = null;
@@ -985,19 +985,44 @@ public class GraphicalView {
         return currentPlayerIndex;
     }
 
+    public void finishAITurn(){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.finishTurn();
+            }
+        });
+    }
+
     public void setCurrentPlayerIndex(int c) {
         this.currentPlayerIndex = c;
-        if(this.tableBefore != null){
+        System.out.println("CURR PLAYER:  " + controller.getPlayerController(c).getPlayer().getName());
+        this.tableBefore = controller.getScrummy().getTable().copy();
+        this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
+        this.draw();
+
+        /*if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+            //this.graphicalView.finishAITurn();
+            Button finishTurn = (Button) this.topButtons.getChildren().get(0);
+            finishTurn.fire();
+        }*/
+
+        /*if(this.tableBefore != null){
             this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
         }
 
-        this.tableBefore = controller.getScrummy().getTable().copy();
-        this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
 
+        draw();
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
-            this.draw();
-            this.startAILoop();
+            System.out.println("----------- AI TURN ----------");
+            Table playedTable = controller.getPlayerControllers().get(currentPlayerIndex).play(controller.getPlayerControllers().get(currentPlayerIndex).getPlayer().getHand());
+            controller.getScrummy().setTable(playedTable);
+            System.out.println("after: " + controller.getScrummy().getTable().toString());
+            draw();
+            finishTurn();
+            System.out.println("----------- AI TURN DONE----------");
+            this.setCurrentPlayerIndex(this.controller.getCurrentPlayerIndex());
         }
 
         if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
@@ -1008,7 +1033,7 @@ public class GraphicalView {
                 long delay = 1000L*60*2;
                 this.timer.schedule(new PlayerTimerTask(), delay);
             }
-        }
+        }*/
     }
 
     public void startAILoop() {
@@ -1133,6 +1158,15 @@ public class GraphicalView {
             //
         }
     }
+
+    public ArrayList<Meld> getTableDiff() {
+        return tableDiff;
+    }
+
+    public void setTableDiff(ArrayList<Meld> tableDiff) {
+        this.tableDiff = tableDiff;
+    }
+
     /*public Pane getFirstLayer() {
         return firstLayer;
     }
