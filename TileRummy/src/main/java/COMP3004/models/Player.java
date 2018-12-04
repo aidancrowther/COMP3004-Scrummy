@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Player{
     private String name = "player";
-    Meld hand = new Meld();
+    protected Meld hand = new Meld();
     protected ArrayList<Tile> riggedTiles;
 
     public Player(){

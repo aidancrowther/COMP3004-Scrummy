@@ -46,7 +46,8 @@ public class PlayerFactoryTest {
         s.setPlayer(p);
         s.setTable(table);
         table = s.play(p.getHand());
-        assertTrue(table.getMelds().size() == 3);
+        System.out.println(table.toString());
+        assertTrue(table.getMelds().size() == 4);
 
 
         ArrayList played = new ArrayList();
@@ -55,17 +56,23 @@ public class PlayerFactoryTest {
 
 
         ArrayList<Tile> playedMeld1 = new ArrayList<Tile>();
-        playedMeld1.add(new Tile('0', 1));
-        playedMeld1.add(new Tile('0', 2));
-        playedMeld1.add(new Tile('0', 3));
+        playedMeld1.add(new Tile('0', 8));
+        playedMeld1.add(new Tile('0', 9));
+        playedMeld1.add(new Tile('0', 10));
 
         ArrayList<Tile> playedMeld2 = new ArrayList<Tile>();
-        playedMeld2.add(new Tile('0', 11));
-        playedMeld2.add(new Tile('0', 12));
-        playedMeld2.add(new Tile('0', 13));
+        playedMeld2.add(new Tile('0', 1));
+        playedMeld2.add(new Tile('0', 2));
+        playedMeld2.add(new Tile('0', 3));
+
+        ArrayList<Tile> playedMeld3 = new ArrayList<Tile>();
+        playedMeld3.add(new Tile('0', 11));
+        playedMeld3.add(new Tile('0', 12));
+        playedMeld3.add(new Tile('0', 13));
 
         assertTrue(tileListsEqual(table.getMelds().get(1).getTiles(), playedMeld1));
         assertTrue(tileListsEqual(table.getMelds().get(2).getTiles(), playedMeld2));
+        assertTrue(tileListsEqual(table.getMelds().get(3).getTiles(), playedMeld3));
     }
 
     /*
@@ -162,12 +169,22 @@ public class PlayerFactoryTest {
     public boolean tileListsEqual(ArrayList<Tile> one, ArrayList<Tile> two){
         if(one.size() == two.size()){
             for(Tile t : two){
-                if(!one.contains(t)){
+                if(!containsTile(one,t)){
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    public boolean containsTile(ArrayList<Tile> array, Tile t) {
+        for(Tile curr : array) {
+            if(curr.getValue() == t.getValue()
+            && curr.getColour() == t.getColour()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
