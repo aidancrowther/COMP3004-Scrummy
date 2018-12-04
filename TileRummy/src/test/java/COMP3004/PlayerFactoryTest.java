@@ -185,9 +185,12 @@ public class PlayerFactoryTest {
         assertTrue(tileListsEqual(test, p.getHand().getTiles()));
 
         ArrayList<Tile> testTwo = new ArrayList<Tile>();
-        //testTwo.add(new Tile('R', 8));
-        //testTwo.add(new Tile('O', 7));
+        testTwo.add(new Tile('B', 13));
+        testTwo.add(new Tile('R', 11));
+        testTwo.add(new Tile('0', 05));
+        testTwo.add(new Tile('G', 7));
         assertTrue(tileListsEqual(testTwo, p.getRiggedTiles()));
+        //B13, R11, O5, G7
 
         //PLAYER 2
         Player p2 = factory.FactoryMethod(5);
@@ -211,6 +214,14 @@ public class PlayerFactoryTest {
         test.add(new Tile('G', 8));
         test.add(new Tile('G', 11));
         assertTrue(tileListsEqual(test2, p2.getHand().getTiles()));
+        ArrayList<Tile> testTwo2 = new ArrayList<Tile>();
+        testTwo.add(new Tile('O', 12));
+        testTwo.add(new Tile('R', 4));
+        testTwo.add(new Tile('R', 6));
+        testTwo.add(new Tile('O', 11)); //TODO: JOKER
+        testTwo.add(new Tile('G', 3));
+        assertTrue(tileListsEqual(testTwo2, p2.getRiggedTiles()));
+        //012,R4,R6, O11 //TOO JOKER, G3
 
         //PLAYER 3
         Player p3 = factory.FactoryMethod(6);
@@ -233,6 +244,13 @@ public class PlayerFactoryTest {
         test.add(new Tile('G', 6));
         test.add(new Tile('G', 13));
         assertTrue(tileListsEqual(test3, p3.getHand().getTiles()));
+        ArrayList<Tile> testTwo3 = new ArrayList<Tile>();
+        testTwo.add(new Tile('O', 1));
+        testTwo.add(new Tile('B', 10));
+        testTwo.add(new Tile('O', 13));
+        testTwo.add(new Tile('B', 12));
+        assertTrue(tileListsEqual(testTwo3, p3.getRiggedTiles()));
+        //O1, B10, O13, B12
 
         //PLAYER 3
         Player p4 = factory.FactoryMethod(7);
@@ -253,6 +271,13 @@ public class PlayerFactoryTest {
         test.add(new Tile('G', 7));
         test.add(new Tile('G', 8));
         assertTrue(tileListsEqual(test4, p4.getHand().getTiles()));
+        ArrayList<Tile> testTwo4 = new ArrayList<Tile>();
+        testTwo.add(new Tile('B', 5));
+        testTwo.add(new Tile('G', 4));
+        testTwo.add(new Tile('R', 10));
+        testTwo.add(new Tile('G', 3));
+        assertTrue(tileListsEqual(testTwo4, p4.getRiggedTiles()));
+        //B5,G4, R10, G3
     }
 
     @Test
