@@ -659,7 +659,12 @@ public class GraphicalView {
         this.gamePane.add(this.tablePane, 0, 2);
 
         this.root.getChildren().add(gamePane);
+
         draw();
+
+        if(!(this.controller.getPlayerControllers().get(this.controller.getCurrentPlayerIndex()) instanceof PlayerInteractionController)) {
+            this.startAILoop();
+        }
     }
 
     public void draw(){
@@ -984,17 +989,12 @@ public class GraphicalView {
         this.tableBefore = controller.getScrummy().getTable().copy();
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
         this.draw();
-
-        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
-                this.startAILoop();
-        }
-        this.draw();
     }
 
     public void startAILoop() {
         Runnable task = new Runnable(){
             public void run() {
-                runAILoopTask();
+                runAITask();
             }
         };
         Thread backgroundThread = new Thread(task);
@@ -1002,75 +1002,26 @@ public class GraphicalView {
         backgroundThread.start();
     }
 
-    public void runAILoopTask(){
-        int i = this.currentPlayerIndex;
-        while(true){
-            if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)
-                || this.controller.getWinner() >= 0){
-                //stop if hit a human
-                break;
-            }
-            this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
-            this.tableBefore = controller.getScrummy().getTable().copy();
-            this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
+    public void runAITask(){
+        this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
+        this.tableBefore = controller.getScrummy().getTable().copy();
+        this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
 
-            try {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        draw();
-                        controller.finishTurn(false);
-                    }
-                });
-                //draw
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e){
-                e.printStackTrace();
-            }
-
-            if(i == this.controller.getPlayerControllers().size()-1){
-                i = 0;
-            } else {
-                i++;
-            }
+        try {
+            //draw
+            Thread.sleep(1000);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    draw();
+                    controller.finishTurn(false);
+                }
+            });
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
         }
     }
-
-    /*public void fireFinishForAI(){
-        //Step 1: get number of AIs that come after
-        //Step 2: run finish for the ais that come after
-        int i = this.currentPlayerIndex;
-        while(true){
-            if(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController){
-               //stop if hit a human
-                break;
-            }
-
-            draw();
-            controller.finishTurn();
-
-            if(i == this.controller.getPlayerControllers().size()-1){
-                i = 0;
-            } else {
-                i++;
-            }
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                draw();
-                controller.finishTurn();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                draw();
-            }
-        });
-    }*/
 
     public void displayWin() {
         System.out.print("displaying win");

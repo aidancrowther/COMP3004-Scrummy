@@ -167,6 +167,10 @@ public class Controller
             if(callGUI){
                 this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
             }
+
+            if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+                this.graphicalView.startAILoop();
+            }
             this.graphicalView.draw();
         } else {
             //a draw
