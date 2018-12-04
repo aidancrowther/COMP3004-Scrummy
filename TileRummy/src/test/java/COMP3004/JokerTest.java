@@ -227,7 +227,17 @@ public class JokerTest {
 		m.add(j2);
 		m.add(new Tile('G', 3));
 		m.add(new Tile('G', 5));
+        assertTrue(m.isValid());
+        
+        m.clear();
+		m.add(j1);
+		m.add(new Tile('G', 1));
+		m.add(new Tile('G', 2));
+		
 		assertTrue(m.isValid());
+		
+		m.add(new Tile('G', 3));
+		assertFalse(m.isValid());
     }
 
 
