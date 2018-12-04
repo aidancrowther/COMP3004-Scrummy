@@ -989,15 +989,6 @@ public class GraphicalView {
         return currentPlayerIndex;
     }
 
-    public void finishAITurn(){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controller.finishTurn();
-            }
-        });
-    }
-
     public void setCurrentPlayerIndex(int c) {
         this.currentPlayerIndex = c;
         System.out.println("CURR PLAYER:  " + controller.getPlayerController(c).getPlayer().getName());
@@ -1006,8 +997,6 @@ public class GraphicalView {
         this.draw();
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
-            //this.graphicalView.finishAITurn();
-
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -1023,80 +1012,6 @@ public class GraphicalView {
                 }
             });
         }
-
-        /*if(this.tableBefore != null){
-            this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
-        }
-
-
-        draw();
-
-        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
-            System.out.println("----------- AI TURN ----------");
-            Table playedTable = controller.getPlayerControllers().get(currentPlayerIndex).play(controller.getPlayerControllers().get(currentPlayerIndex).getPlayer().getHand());
-            controller.getScrummy().setTable(playedTable);
-            System.out.println("after: " + controller.getScrummy().getTable().toString());
-            draw();
-            finishTurn();
-            System.out.println("----------- AI TURN DONE----------");
-            this.setCurrentPlayerIndex(this.controller.getCurrentPlayerIndex());
-        }
-
-        if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
-            this.draw();
-            if(this.limitHumanTime){
-                System.out.println("starting the countdown!");
-                this.timer = new Timer();
-                long delay = 1000L*60*2;
-                this.timer.schedule(new PlayerTimerTask(), delay);
-            }
-        }*/
-    }
-
-    public void startAILoop() {
-        Runnable task = new Runnable(){
-            public void run() {
-                runAILoopTask();
-            }
-        };
-        Thread backgroundThread = new Thread(task);
-        backgroundThread.setDaemon(true);
-        backgroundThread.start();
-    }
-
-    public void runAILoopTask(){
-        while(controller.getWinner() == -1
-                && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
-            try {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishTurn();
-                        drawNextPlayer();
-                    }
-                });
-                //draw
-                Thread.sleep(1000);
-            }
-            catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void setCurrentPlayerIndexAI(int c){
-        this.currentPlayerIndex = c;
-    }
-
-    public void drawNextPlayer() {
-        this.currentPlayerIndex = this.controller.getCurrentPlayerIndex();
-        if(this.tableBefore != null){
-            this.tableDiff = controller.getScrummy().getTable().getDiff(this.tableBefore);
-        }
-        this.tableBefore = controller.getScrummy().getTable().copy();
-        //System.out.println("PLayer: " + this.currentPlayerIndex);
-        this.handBefore = controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
-        this.draw();
     }
 
     public void finishTurn(){
