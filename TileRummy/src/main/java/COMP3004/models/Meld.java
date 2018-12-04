@@ -118,7 +118,7 @@ public class Meld {
                     if (tiles.get(0).getValue() != 1) {
                         joker.setValue(tiles.get(0).getValue() - 1);
                     }
-                    else if (tiles.get(this.size()-1).getValue() != 12) {
+                    else if (tiles.get(this.size()-1).getValue() != 13) {
                         joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
                     }
 					else {
@@ -184,6 +184,9 @@ public class Meld {
     */
     public boolean isValid() {
         //valid melds must have 3+ tile
+        if (this.size() == 0) {
+            return true;
+        }
         if (tiles.size() < 3) {
             return false;
         }
