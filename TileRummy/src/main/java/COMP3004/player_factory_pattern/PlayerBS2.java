@@ -8,7 +8,7 @@ public class PlayerBS2 extends Player {
         this.hand.add(new Tile('R', 1));
         this.hand.add(new Tile('R', 2));
         this.hand.add(new Tile('R', 3));
-        this.hand.add(new Tile('R', 6));
+        this.hand.add(new Tile('R', 4));
         this.hand.add(new Tile('R', 5));
         this.hand.add(new Tile('R', 6));
         this.hand.add(new Tile('R', 7));

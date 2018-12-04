@@ -17,19 +17,19 @@ import java.util.ArrayList;
 
 public class PlayerAS1 extends Player {
     public PlayerAS1(){
-        this.hand.add(new Tile('0', 1));
-        this.hand.add(new Tile('0', 2));
-        this.hand.add(new Tile('0', 3));
+        this.hand.add(new Tile('O', 1));
+        this.hand.add(new Tile('O', 2));
+        this.hand.add(new Tile('O', 3));
         this.hand.add(new Tile('R', 6));
-        this.hand.add(new Tile('0', 5));
-        this.hand.add(new Tile('0', 6));
+        this.hand.add(new Tile('O', 5));
+        this.hand.add(new Tile('O', 6));
         this.hand.add(new Tile('R', 7));
-        this.hand.add(new Tile('0', 8));
-        this.hand.add(new Tile('0', 9));
-        this.hand.add(new Tile('0', 10));
-        this.hand.add(new Tile('0', 11));
-        this.hand.add(new Tile('0', 12));
-        this.hand.add(new Tile('0', 13));
+        this.hand.add(new Tile('O', 8));
+        this.hand.add(new Tile('O', 9));
+        this.hand.add(new Tile('O', 10));
+        this.hand.add(new Tile('O', 11));
+        this.hand.add(new Tile('O', 12));
+        this.hand.add(new Tile('O', 13));
 
         this.riggedTiles = new ArrayList<Tile>();
         this.riggedTiles.add(new Tile('R', 8));

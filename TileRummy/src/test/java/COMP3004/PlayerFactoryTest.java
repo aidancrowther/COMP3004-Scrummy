@@ -25,19 +25,19 @@ public class PlayerFactoryTest {
         //PLAYER TYPE ONE
         Player p = factory.FactoryMethod(0);
         ArrayList<Tile> test = new ArrayList<Tile>();
-        test.add(new Tile('0', 1));
-        test.add(new Tile('0', 2));
-        test.add(new Tile('0', 3));
+        test.add(new Tile('O', 1));
+        test.add(new Tile('O', 2));
+        test.add(new Tile('O', 3));
         test.add(new Tile('R', 6));
-        test.add(new Tile('0', 5));
-        test.add(new Tile('0', 6));
+        test.add(new Tile('O', 5));
+        test.add(new Tile('O', 6));
         test.add(new Tile('R', 7));
-        test.add(new Tile('0', 8));
-        test.add(new Tile('0', 9));
-        test.add(new Tile('0', 10));
-        test.add(new Tile('0', 11));
-        test.add(new Tile('0', 12));
-        test.add(new Tile('0', 13));
+        test.add(new Tile('O', 8));
+        test.add(new Tile('O', 9));
+        test.add(new Tile('O', 10));
+        test.add(new Tile('O', 11));
+        test.add(new Tile('O', 12));
+        test.add(new Tile('O', 13));
         assertTrue(tileListsEqual(test, p.getHand().getTiles()));
 
         ArrayList<Tile> testTwo = new ArrayList<Tile>();
@@ -60,19 +60,19 @@ public class PlayerFactoryTest {
 
 
         ArrayList<Tile> playedMeld1 = new ArrayList<Tile>();
-        playedMeld1.add(new Tile('0', 8));
-        playedMeld1.add(new Tile('0', 9));
-        playedMeld1.add(new Tile('0', 10));
+        playedMeld1.add(new Tile('O', 8));
+        playedMeld1.add(new Tile('O', 9));
+        playedMeld1.add(new Tile('O', 10));
 
         ArrayList<Tile> playedMeld2 = new ArrayList<Tile>();
-        playedMeld2.add(new Tile('0', 1));
-        playedMeld2.add(new Tile('0', 2));
-        playedMeld2.add(new Tile('0', 3));
+        playedMeld2.add(new Tile('O', 1));
+        playedMeld2.add(new Tile('O', 2));
+        playedMeld2.add(new Tile('O', 3));
 
         ArrayList<Tile> playedMeld3 = new ArrayList<Tile>();
-        playedMeld3.add(new Tile('0', 11));
-        playedMeld3.add(new Tile('0', 12));
-        playedMeld3.add(new Tile('0', 13));
+        playedMeld3.add(new Tile('O', 11));
+        playedMeld3.add(new Tile('O', 12));
+        playedMeld3.add(new Tile('O', 13));
 
         assertTrue(tableContainsMeld(table, playedMeld1));
         assertTrue(tableContainsMeld(table, playedMeld2));
@@ -137,7 +137,7 @@ public class PlayerFactoryTest {
         test.add(new Tile('R', 1));
         test.add(new Tile('R', 2));
         test.add(new Tile('R', 3));
-        test.add(new Tile('R', 6));
+        test.add(new Tile('R', 4));
         test.add(new Tile('R', 5));
         test.add(new Tile('R', 6));
         test.add(new Tile('R', 7));
