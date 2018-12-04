@@ -953,6 +953,7 @@ public class GraphicalView {
 
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
+            this.draw();
             this.startAILoop();
         }
 
@@ -985,9 +986,8 @@ public class GraphicalView {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                           finishTurn();
-                           drawNextPlayer();
-
+                        finishTurn();
+                        drawNextPlayer();
                     }
                 });
                 //draw
