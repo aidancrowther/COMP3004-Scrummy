@@ -628,7 +628,7 @@ public class GraphicalView {
         finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
-            this.controller.finishTurn(true);
+            this.controller.finishTurn();
         });
         finishTurnBtn.setPrefSize(100, 20);
 
@@ -665,9 +665,9 @@ public class GraphicalView {
 
         draw();
 
-        System.out.println(this.controller.getCurrentPlayerIndex());
+        System.out.println(this.currentPlayerIndex);
 
-        if(!(this.controller.getPlayerControllers().get(this.controller.getCurrentPlayerIndex()) instanceof PlayerInteractionController)) {
+        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
             this.startAILoop();
         }
     }
@@ -917,28 +917,28 @@ public class GraphicalView {
         handLabelPane.getChildren().add(handPane);
         if(index == 0){
             handLabelPane.setPadding(new Insets(30, 10, 10, 10));
-            if(index==this.controller.getCurrentPlayerIndex()){
+            if(index==this.currentPlayerIndex){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
                 System.out.println("highlight player 1");
             }
             this.tablePane.setBottom(handLabelPane);
         } else if (index == 1) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
-            if(index==this.controller.getCurrentPlayerIndex()){
+            if(index==this.currentPlayerIndex){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
                 System.out.println("highlight player 2");
             }
             this.tablePane.setRight(handLabelPane);
         } else if (index == 2) {
             handLabelPane.setPadding(new Insets(10, 10, 10, 10));
-            if(index==this.controller.getCurrentPlayerIndex()){
+            if(index==this.currentPlayerIndex){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
                 System.out.println("highlight player 3");
             }
             this.tablePane.setTop(handLabelPane);
         } else if (index == 3) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
-            if(index==this.controller.getCurrentPlayerIndex()){
+            if(index==this.currentPlayerIndex){
                 handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
                 System.out.println("highlight player 4");
             }
@@ -993,7 +993,7 @@ public class GraphicalView {
         System.out.println("CURR PLAYER:  " + controller.getPlayerController(c).getPlayer().getName());
         this.tableBefore = controller.getScrummy().getTable().copy();
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
-        this.draw();
+        draw();
     }
 
     public void startAILoop() {
@@ -1019,7 +1019,7 @@ public class GraphicalView {
                 @Override
                 public void run() {
                     draw();
-                    controller.finishTurn(false);
+                    controller.finishTurn();
                 }
             });
         }

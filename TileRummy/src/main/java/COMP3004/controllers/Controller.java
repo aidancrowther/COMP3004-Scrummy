@@ -69,27 +69,6 @@ public class Controller
         this.addPlayer(2);
         this.addPlayer(3);
         this.addPlayer(4);
-        /*this.playerControllers[0] = new Strategy1();
-        this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
-        this.scrummy.registerTableObserver(this.playerControllers[0]);
-
-        this.playerControllers[1] = new Strategy2();
-        this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
-        this.scrummy.registerTableObserver(this.playerControllers[1]);
-
-        //Special for S3 bc needs to count hands
-        Strategy3 s3 = new Strategy3();
-        this.playerControllers[2] = s3;
-        this.playerControllers[2].setPlayer(this.scrummy.getPlayers()[2]);
-        this.scrummy.registerTableObserver(this.playerControllers[2]);
-
-        this.playerControllers[3] = new Strategy4();
-        this.playerControllers[3].setPlayer(this.scrummy.getPlayers()[3]);
-        this.scrummy.registerTableObserver(this.playerControllers[3]);
-
-        s3.setPlayerHandSizes(this.scrummy.getPlayers());
-        this.scrummy.registerPlayerHandObserver(s3);
-        this.scrummy.notifyObservers();*/
     }
 
     public Controller(String[] args){
@@ -107,7 +86,6 @@ public class Controller
                 scrummy = new Scrummy(((FileInputController)this.playerControllers.get(0)).getDeck());
                 break;
             case 'g':
-                //this.playerControllers[0] = new GraphicalViewController(); //PLAYER
                 break;
             case 't':
                 this.playerControllers.add(new PlayerInteractionController()); //PLAYER
@@ -130,22 +108,23 @@ public class Controller
     }
 
     // FOR GUI GAME FLOW
-    public void finishTurn(boolean callGUI){
+    public void finishTurn(){
         System.out.println("b4 : " + this.graphicalView.getTableBefore());
         this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
-
-        if(this.graphicalView.getTableBefore() != null){
-            this.graphicalView.setTableDiff(this.scrummy.getTable().getDiff(this.getState().getTable()));
-        }
-
         this.graphicalView.draw();
 
         if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
             this.playerControllers.get(this.currentPlayerIndex).setTable(this.scrummy.getTable());
             Table playedTable = this.playerControllers.get(this.currentPlayerIndex).play(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand());
             this.scrummy.setTable(playedTable);
-            this.graphicalView.draw();
         }
+
+        if(this.graphicalView.getTableBefore() != null){
+            this.graphicalView.setTableDiff(this.scrummy.getTable().getDiff(this.getState().getTable()));
+            System.out.println("diff : " + this.graphicalView.getTableDiff());
+        }
+
+        this.graphicalView.draw();
         System.out.print("after: " + scrummy.getTable());
 
         this.winner = this.checkPlayerMoveGUI();
@@ -164,13 +143,11 @@ public class Controller
             }
 
             this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
-            if(callGUI){
-                this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
-            }
 
             if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
                 this.graphicalView.startAILoop();
             }
+            this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
             this.graphicalView.draw();
         } else {
             //a draw
