@@ -192,13 +192,11 @@ public class JokerTest {
         m.add(j1);
         m.add(t2);
 
-        assertTrue(m.getJokers().size() == 1);
-        assertTrue(m.getJokers().get(0) == 1);
+        assertTrue(m.getJokers() == 1);
 
         m.add(j2);
 
-        assertTrue(m.getJokers().size() == 2);
-        assertTrue(m.getJokers().get(1) == 2); //alphabetical
+        assertTrue(m.getJokers() == 2);
     }
 
     @Test
