@@ -648,7 +648,6 @@ public class GraphicalView {
             i++;
         }
 
-        System.out.println("DRAWWWWWWWWWWWWWWWWWW");
         this.drawTable(t);
         this.drawSuggestedMelds();
     }
