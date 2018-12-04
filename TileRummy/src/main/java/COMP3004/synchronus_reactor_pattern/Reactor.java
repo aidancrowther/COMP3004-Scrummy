@@ -1,4 +1,4 @@
-package COMP3004.synchronus_reactor_pattern.memento_pattern.game_state;
+package COMP3004.synchronus_reactor_pattern;
 
 public class Reactor {
 }
