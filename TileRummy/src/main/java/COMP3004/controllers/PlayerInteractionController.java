@@ -39,9 +39,11 @@ public class PlayerInteractionController extends GameInteractionController
 
         if(score >= 30){ //Only let the player move if the score >= 30.
             this.terminalView.printMessage("You are done your turn. ");
+            this.playedTable.checkMeldZeroValidAndAppend();
             return this.playedTable;
         }
 
+        this.table.checkMeldZeroValidAndAppend();
         this.terminalView.printMessage("You chose not to move.\n");
         return this.table; //will be the same if player doesn't move
     }

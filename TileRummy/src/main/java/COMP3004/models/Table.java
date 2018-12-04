@@ -92,6 +92,7 @@ public class Table {
     */
     public boolean isValid() {
         //System.out.println(melds.get(0).size());
+        this.checkMeldZeroValidAndAppend();
         if (this.melds.get(0).getTiles().size() != 0) {
             System.out.println("meld 0 not empty: " + this.toString());
             return false;
@@ -106,7 +107,7 @@ public class Table {
     }
 
     public boolean checkMeldZeroValidAndAppend(){
-        if (melds.get(0).isValid()) {
+        if (melds.size() > 0 && melds.get(0).isValid()) {
             add(melds.get(0).copy());
             melds.get(0).clear();
             return true;

@@ -24,12 +24,16 @@ public class Main extends Application {
 
 
     public static void main (String[] args) {
+        String gameType = "t";
         if (args.length != 0){
             args = parseArgs(args);
             Controller controller = new Controller(args);
             controller.run(false);
-        } else {
+        } else if (gameType.equals("g")) {
             launch(args);
+        } else {
+            Controller controller = new Controller(false);
+            controller.run(false);
         }
     }
 

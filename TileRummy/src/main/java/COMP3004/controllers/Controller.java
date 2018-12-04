@@ -56,6 +56,38 @@ public class Controller
         this.playerControllers = new ArrayList<GameInteractionController>();
     }
 
+    public Controller(boolean AIOnly){
+        this.view = new TerminalView();
+        this.scrummy = new Scrummy(AIOnly);
+        this.playerControllers = new ArrayList<GameInteractionController>();
+        this.addPlayer(0);
+        this.addPlayer(1);
+        this.addPlayer(2);
+        this.addPlayer(3);
+        this.addPlayer(4);
+        /*this.playerControllers[0] = new Strategy1();
+        this.playerControllers[0].setPlayer(this.scrummy.getPlayers()[0]);
+        this.scrummy.registerTableObserver(this.playerControllers[0]);
+
+        this.playerControllers[1] = new Strategy2();
+        this.playerControllers[1].setPlayer(this.scrummy.getPlayers()[1]);
+        this.scrummy.registerTableObserver(this.playerControllers[1]);
+
+        //Special for S3 bc needs to count hands
+        Strategy3 s3 = new Strategy3();
+        this.playerControllers[2] = s3;
+        this.playerControllers[2].setPlayer(this.scrummy.getPlayers()[2]);
+        this.scrummy.registerTableObserver(this.playerControllers[2]);
+
+        this.playerControllers[3] = new Strategy4();
+        this.playerControllers[3].setPlayer(this.scrummy.getPlayers()[3]);
+        this.scrummy.registerTableObserver(this.playerControllers[3]);
+
+        s3.setPlayerHandSizes(this.scrummy.getPlayers());
+        this.scrummy.registerPlayerHandObserver(s3);
+        this.scrummy.notifyObservers();*/
+    }
+
     public Controller(String[] args){
         char viewType = args[0].charAt(0);
         this.scrummy = new Scrummy();
@@ -330,26 +362,42 @@ public class Controller
             PlayerInteractionController p = new PlayerInteractionController();
             Player player = this.scrummy.addNewPlayer("Human");
             p.setPlayer(player);
-            p.setGUI(this.graphicalView);
+            if(this.graphicalView != null){
+                p.setGUI(this.graphicalView);
+            } else {
+                p.setTerminalView(this.view);
+            }
             this.playerControllers.add(p);
             this.scrummy.registerTableObserver(p);
         } else if(type == 1) {
             Strategy1 s = new Strategy1();
             this.playerControllers.add(s);
-            s.setGUI(this.graphicalView);
+            if(this.graphicalView != null){
+                s.setGUI(this.graphicalView);
+            } else {
+                s.setTerminalView(this.view);
+            }
             Player player = this.scrummy.addNewPlayer("Strategy1");
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 2) {
             Strategy2 s = new Strategy2();
-            s.setGUI(this.graphicalView);
+            if(this.graphicalView != null){
+                s.setGUI(this.graphicalView);
+            } else {
+                s.setTerminalView(this.view);
+            }
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy2");
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 3) {
             Strategy3 s = new Strategy3();
-            s.setGUI(this.graphicalView);
+            if(this.graphicalView != null){
+                s.setGUI(this.graphicalView);
+            } else {
+                s.setTerminalView(this.view);
+            }
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy3");
             s.setPlayer(player);
@@ -358,7 +406,11 @@ public class Controller
             this.scrummy.registerTableObserver(s);
         } else {
             Strategy4 s = new Strategy4();
-            s.setGUI(this.graphicalView);
+            if(this.graphicalView != null){
+                s.setGUI(this.graphicalView);
+            } else {
+                s.setTerminalView(this.view);
+            }
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy4");
             s.setPlayer(player);
@@ -472,6 +524,8 @@ public class Controller
                 playerHandCopy.add(t);
 
             Table playedTable = this.playerControllers.get(scrummy.getCurrentPlayerIndex()).play(scrummy.getCurrentPlayer().getHand());
+
+            this.saveState(playedTable, playerHandCopy);
             winnerIndex = this.checkPlayerMove();
 
             //print winner
