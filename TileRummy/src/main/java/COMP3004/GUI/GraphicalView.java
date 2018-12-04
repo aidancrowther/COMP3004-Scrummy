@@ -83,24 +83,14 @@ public class GraphicalView {
         playButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         playButton.setMaxSize(270, 100);
         playButton.setOnMouseClicked(e -> {
-            //loadGamePane();
             loadGameSettingsPane(false);
         });
         buttons.getChildren().add(playButton);
-
-        /*Button loadButton = new Button("LOAD SAVED GAME");
-        loadButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
-        loadButton.setMaxSize(270, 100);
-        loadButton.setOnMouseClicked(e -> {
-            loadImportSavePane();
-        });
-        buttons.getChildren().add(loadButton);*/
 
         Button rigButton = new Button("NEW RIGGED GAME");
         rigButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         rigButton.setMaxSize(270, 100);
         rigButton.setOnMouseClicked(e -> {
-            //loadRigPane();
             loadGameSettingsPane(true);
         });
         buttons.getChildren().add(rigButton);
@@ -109,7 +99,6 @@ public class GraphicalView {
         scenarioButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         scenarioButton.setMaxSize(270, 100);
         scenarioButton.setOnMouseClicked(e -> {
-            //loadRigPane();
             loadGameFactorySettingsPane();
         });
         buttons.getChildren().add(scenarioButton);
@@ -636,7 +625,7 @@ public class GraphicalView {
         finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
-            this.finishTurn();
+            this.controller.finishTurn();
         });
         finishTurnBtn.setPrefSize(100, 20);
 
@@ -1008,15 +997,9 @@ public class GraphicalView {
                         e.printStackTrace();
                     }
                     draw();
-                    //drawNextPlayer();
                 }
             });
         }
-    }
-
-    public void finishTurn(){
-        this.controller.finishTurn();
-        //this.draw();
     }
 
     public void displayWin() {
@@ -1078,19 +1061,6 @@ public class GraphicalView {
         this.handBefore = handBefore;
     }
 
-    class PlayerTimerTask extends TimerTask {
-        public void run() {
-            System.out.println("Turn Complete");
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    finishTurn();
-                }
-            });
-            //
-        }
-    }
-
     public ArrayList<Meld> getTableDiff() {
         return tableDiff;
     }
@@ -1098,13 +1068,5 @@ public class GraphicalView {
     public void setTableDiff(ArrayList<Meld> tableDiff) {
         this.tableDiff = tableDiff;
     }
-
-    /*public Pane getFirstLayer() {
-        return firstLayer;
-    }
-
-    public void setFirstLayer(Pane firstLayer) {
-        this.firstLayer = firstLayer;
-    }*/
 
 }
