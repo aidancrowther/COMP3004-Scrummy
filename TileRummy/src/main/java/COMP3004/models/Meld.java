@@ -108,7 +108,7 @@ public class Meld {
             }
             else if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //adding a joker to a run
                 joker.setColour(tiles.get(0).getColour());
-                
+
                 for (int i=0; i<this.size()-1; i++) {
                     if (this.get(i+1).getValue() - this.get(i).getValue() != 1) {
                         joker.setValue(this.get(i).getValue() + 1);
@@ -118,9 +118,12 @@ public class Meld {
                     if (tiles.get(0).getValue() != 1) {
                         joker.setValue(tiles.get(0).getValue() - 1);
                     }
-                    else {
+                    else if (tiles.get(this.size()-1).getValue() != 12) {
                         joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
                     }
+					else {
+						joker.setColour('J');
+					}
                 }
             }
         }
