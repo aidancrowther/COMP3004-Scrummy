@@ -640,6 +640,19 @@ public class GraphicalView {
         this.drawSuggestedMelds();
     }
 
+    public void draw(Table t){
+        this.tablePane.getChildren().clear();
+        int i = 1;
+        for(GameInteractionController iControl : this.controller.getPlayerControllers()){
+            this.drawHand(iControl, i-1, i % 2 == 0);
+            i++;
+        }
+
+        System.out.println("DRAWWWWWWWWWWWWWWWWWW");
+        this.drawTable(t);
+        this.drawSuggestedMelds();
+    }
+
     public void drawTable(Table table){
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setStyle("-fx-background: #333333");
@@ -938,26 +951,10 @@ public class GraphicalView {
         this.tableBefore = controller.getScrummy().getTable().copy();
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
 
-        Task task = new Task<Void>() {
-            @Override public Void call() {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        while(controller.getWinner() == -1
-                                && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
-                            finishTurn();
-                            drawNextPlayer();
-                        }
-                    }
-                });
-                return null;
-            }
-        };
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
-            new Thread(task).start();
+            this.startAILoop();
         }
-
 
         if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)){
             this.draw();
@@ -968,6 +965,42 @@ public class GraphicalView {
                 this.timer.schedule(new PlayerTimerTask(), delay);
             }
         }
+    }
+
+    public void startAILoop() {
+        Runnable task = new Runnable(){
+            public void run() {
+                runAILoopTask();
+            }
+        };
+        Thread backgroundThread = new Thread(task);
+        backgroundThread.setDaemon(true);
+        backgroundThread.start();
+    }
+
+    public void runAILoopTask(){
+        while(controller.getWinner() == -1
+                && !(controller.getPlayerControllers().get(currentPlayerIndex) instanceof PlayerInteractionController)){
+            try {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                           finishTurn();
+                           drawNextPlayer();
+
+                    }
+                });
+                //draw
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setCurrentPlayerIndexAI(int c){
+        this.currentPlayerIndex = c;
     }
 
     public void drawNextPlayer() {

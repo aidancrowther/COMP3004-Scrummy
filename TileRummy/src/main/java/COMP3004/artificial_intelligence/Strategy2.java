@@ -244,6 +244,8 @@ public class Strategy2 extends ArtificialIntelligence
         this.terminalView.printMessage(this.player.getName() + " hand after their turn: ");
         this.terminalView.printPlayerHand(this.player.getHand());
 
+        this.graphicalView.draw(output);
+
         //Return the output table
         if ((longest >= 30 || score >= 30) && table.getMelds().size() >= 2) {
             return output;

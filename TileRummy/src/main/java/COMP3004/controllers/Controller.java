@@ -143,6 +143,8 @@ public class Controller
                 //System.out.println(this.currentPlayerIndex);
                 //this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
                 this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
+                this.graphicalView.setCurrentPlayerIndexAI(this.currentPlayerIndex);
+                //this.graphicalView.draw();
             } else {
                 //a draw
                 System.out.print("draw");
@@ -328,22 +330,26 @@ public class Controller
             PlayerInteractionController p = new PlayerInteractionController();
             Player player = this.scrummy.addNewPlayer("Human");
             p.setPlayer(player);
+            p.setGUI(this.graphicalView);
             this.playerControllers.add(p);
             this.scrummy.registerTableObserver(p);
         } else if(type == 1) {
             Strategy1 s = new Strategy1();
             this.playerControllers.add(s);
+            s.setGUI(this.graphicalView);
             Player player = this.scrummy.addNewPlayer("Strategy1");
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 2) {
             Strategy2 s = new Strategy2();
+            s.setGUI(this.graphicalView);
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy2");
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 3) {
             Strategy3 s = new Strategy3();
+            s.setGUI(this.graphicalView);
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy3");
             s.setPlayer(player);
@@ -352,6 +358,7 @@ public class Controller
             this.scrummy.registerTableObserver(s);
         } else {
             Strategy4 s = new Strategy4();
+            s.setGUI(this.graphicalView);
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy4");
             s.setPlayer(player);
@@ -365,6 +372,7 @@ public class Controller
             PlayerInteractionController p = new PlayerInteractionController();
             Player player = this.scrummy.addNewPlayer("Human");
             p.setPlayer(player);
+            p.setGUI(this.graphicalView);
             this.playerControllers.add(p);
             this.scrummy.registerTableObserver(p);
         } else if(type.equals("AI Strategy 1")) {
@@ -372,18 +380,21 @@ public class Controller
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy1");
             s.setPlayer(player);
+            s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);
         } else if (type.equals("AI Strategy 2")) {
             Strategy2 s = new Strategy2();
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy2");
             s.setPlayer(player);
+            s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);
         } else if (type.equals("AI Strategy 3")) {
             Strategy3 s = new Strategy3();
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy3");
             s.setPlayer(player);
+            s.setGUI(this.graphicalView);
             s.setPlayerHandSizes(this.scrummy.getPlayers());
             this.scrummy.registerPlayerHandObserver(s);
             this.scrummy.registerTableObserver(s);
@@ -392,6 +403,7 @@ public class Controller
             this.playerControllers.add(s);
             Player player = this.scrummy.addNewPlayer("Strategy4");
             s.setPlayer(player);
+            s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);
         }
         this.scrummy.notifyObservers();

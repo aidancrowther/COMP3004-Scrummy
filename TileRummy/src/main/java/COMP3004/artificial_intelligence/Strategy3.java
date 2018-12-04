@@ -90,6 +90,8 @@ public class Strategy3 extends ArtificialIntelligence implements PlayerHandObser
             strat.setTable(this.getTable());
             output = strat.play(hand);
         }
+        this.graphicalView.draw(output);
+
 
         return output;
     }
