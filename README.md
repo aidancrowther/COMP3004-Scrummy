@@ -69,10 +69,10 @@ Roadmap of Project Requirements:
     - [x] optional timer of 2 minutes for human playing
     - [x] rules for dealing with the case where a human plays and leaves the board in an invalid state after declaring the end of his/her turn.
     - [x] This includes the use of the Memento pattern to return to the state of game (board and current player's hand) before the invalid turn.
-  - [ ] LEVEL 3: for a grade between 66 and 84, must support:
+  - [x] LEVEL 3: for a grade between 66 and 84, must support:
     - [x] complex board reuse: Do include all the situations you got working in your video
       - **I will provide some test cases**
-    - [ ] strategy 4: explain what it does and how it does it in your video
+    - [x] strategy 4: explain what it does and how it does it in your video
     - [x] real-time suggestions for human players wrt how to play their tiles and why (which goes hand in hand with strategy 4): show them in your video
   - [x] LEVEL 4: for a grade of 85 and 89:
     - [x] GUI support for game rigging:
