@@ -24,6 +24,7 @@ import COMP3004.models.Tile;
 import COMP3004.models.Player;
 import COMP3004.player_factory_pattern.PlayerFactory;
 import COMP3004.terminal.TerminalView;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,6 +165,10 @@ public class Controller
 
             this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
             this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+
+            /*if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+                this.graphicalView.fireFinishForAI();
+            }*/
             this.graphicalView.draw();
         } else {
             //a draw

@@ -986,21 +986,88 @@ public class GraphicalView {
         this.draw();
 
         if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    draw();
-                    controller.finishTurn();
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                this.startAILoop();
+        }
+        this.draw();
+    }
+
+    public void startAILoop() {
+        Runnable task = new Runnable(){
+            public void run() {
+                runAILoopTask();
+            }
+        };
+        Thread backgroundThread = new Thread(task);
+        backgroundThread.setDaemon(true);
+        backgroundThread.start();
+    }
+
+    public void runAILoopTask(){
+        int i = this.currentPlayerIndex;
+        while(true){
+            if((this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)
+                || this.controller.getWinner() >= 0){
+                //stop if hit a human
+                break;
+            }
+
+            try {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        draw();
+                        controller.finishTurn();
                     }
-                    draw();
-                }
-            });
+                });
+                //draw
+                Thread.sleep(1000); //TODO: why no delay work?
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+
+            if(i == this.controller.getPlayerControllers().size()-1){
+                i = 0;
+            } else {
+                i++;
+            }
         }
     }
+
+    /*public void fireFinishForAI(){
+        //Step 1: get number of AIs that come after
+        //Step 2: run finish for the ais that come after
+        int i = this.currentPlayerIndex;
+        while(true){
+            if(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController){
+               //stop if hit a human
+                break;
+            }
+
+            draw();
+            controller.finishTurn();
+
+            if(i == this.controller.getPlayerControllers().size()-1){
+                i = 0;
+            } else {
+                i++;
+            }
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                draw();
+                controller.finishTurn();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                draw();
+            }
+        });
+    }*/
 
     public void displayWin() {
         System.out.print("displaying win");
