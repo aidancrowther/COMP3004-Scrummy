@@ -63,6 +63,8 @@ public class GraphicalView {
     protected int riggedStartIndex = 0;
     protected int startIndex = 0;
 
+    protected boolean isNetworked = false;
+
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
         this.menuPane.setStyle("-fx-background-color: #333333");
@@ -102,6 +104,22 @@ public class GraphicalView {
             loadGameFactorySettingsPane();
         });
         buttons.getChildren().add(scenarioButton);
+
+        Button hostButton = new Button("HOST GAME");
+        hostButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        hostButton.setMaxSize(270, 100);
+        hostButton.setOnMouseClicked(e -> {
+            loadGameSettingsPane(false);
+        });
+        buttons.getChildren().add(hostButton);
+
+        Button connectButton = new Button("CONNECT TO GAME");
+        connectButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        connectButton.setMaxSize(270, 100);
+        connectButton.setOnMouseClicked(e -> {
+            isNetworked = true;
+        });
+        buttons.getChildren().add(connectButton);
 
         this.menuPane.getChildren().add(buttons);
         this.root.getChildren().add(menuPane);
@@ -312,8 +330,11 @@ public class GraphicalView {
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
             //System.out.println("START INDEX: " + startIndex);
-            this.currentPlayerIndex = startIndex;
+            currentPlayerIndex = startIndex;
             controller.setCurrentPlayerIndex(startIndex);
+            if(isNetworked){
+                this.controller.setupHostedGame();
+            }
             this.loadGamePane();
         });
         playerOrder.getChildren().add(play);

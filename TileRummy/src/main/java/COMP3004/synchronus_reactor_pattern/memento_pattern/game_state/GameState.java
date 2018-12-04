@@ -1,18 +1,22 @@
 package COMP3004.synchronus_reactor_pattern.memento_pattern.game_state;
 
-import COMP3004.models.Player;
+import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.Table;
 
 import java.util.ArrayList;
 
-public class GameState {
+public class GameState implements java.io.Serializable {
     protected Table table;
-    protected ArrayList<Player> players;
+    protected ArrayList<GameInteractionController> playerControllers;
     protected int currentPlayer;
 
-    public GameState(Table table, ArrayList<Player> players, int currentPlayer){
+    public GameState() {
+
+    }
+
+    public GameState(Table table, ArrayList<GameInteractionController> players, int currentPlayer){
         this.table = table;
-        this.players = players;
+        this.playerControllers = players;
         this.currentPlayer = currentPlayer;
     }
 
@@ -20,7 +24,9 @@ public class GameState {
         return table;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public ArrayList<GameInteractionController> getPlayerControllers() {
+        return playerControllers;
     }
+
+    public int getCurrentPlayerIndex() { return this.currentPlayer; }
 }

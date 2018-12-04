@@ -23,6 +23,7 @@ import COMP3004.models.Meld;
 import COMP3004.models.Tile;
 import COMP3004.models.Player;
 import COMP3004.player_factory_pattern.PlayerFactory;
+import COMP3004.synchronus_reactor_pattern.NetworkedController;
 import COMP3004.terminal.TerminalView;
 import javafx.application.Platform;
 
@@ -51,6 +52,8 @@ public class Controller
     protected ArrayList<GameInteractionController> playersWhoHaventMoved = new ArrayList<>();
 
     String gameType;
+
+    NetworkedController networkController;
 
     // Add player method
 
@@ -107,6 +110,15 @@ public class Controller
         this.scrummy.notifyObservers();
     }
 
+    //NETWORKING METHODS
+    public void setupHostedGame(){
+        this.networkController = new NetworkedController(this);
+    }
+
+
+
+
+
     // FOR GUI GAME FLOW
     public void finishTurn(){
         System.out.println("b4 : " + this.graphicalView.getTableBefore());
@@ -144,7 +156,8 @@ public class Controller
 
             this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
 
-            if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+            //Only do this for local games
+            if(this.networkController == null && !(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
                 this.graphicalView.startAILoop();
             }
             this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
@@ -152,6 +165,10 @@ public class Controller
         } else {
             //a draw
             this.graphicalView.displayDraw();
+        }
+
+        if(this.networkController != null){
+            this.networkController.sendGameState();
         }
     }
 
