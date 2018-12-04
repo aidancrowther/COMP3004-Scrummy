@@ -312,32 +312,69 @@ public class Controller
 
         //for(Tile currRiggedTile : this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles()){
         System.out.println("Rigged: " + this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().toArray());
-        if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().size() > 0){
-            ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
-            Tile currRiggedTile = this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().get(0);
-            while(true) {
-                Tile deckTile = this.scrummy.getDeck().pop();
-                System.out.println("dt: " + deckTile);
-                if (deckTile != null) {
-                    if (currRiggedTile.getColour() == deckTile.getColour()
-                            && currRiggedTile.getValue() == deckTile.getValue()) {
-                        this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
-                        this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().remove(0);
-                        break;
+        if(!this.scrummy.getDeck().isEmpty()){
+
+            if(this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().size() > 0){
+                ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+                Tile currRiggedTile = this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().get(0);
+
+                while(true) {
+                    Tile deckTile = this.scrummy.getDeck().pop();
+                    System.out.println("dt: " + deckTile);
+                    if (deckTile != null) {
+                        if (currRiggedTile.getColour() == deckTile.getColour()
+                                && currRiggedTile.getValue() == deckTile.getValue()) {
+                            this.scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                            this.playerControllers.get(this.currentPlayerIndex).getRiggedTiles().remove(0);
+                            break;
+                        } else {
+                            poppedtiles.add(deckTile); //oldest to newest arraylist
+                        }
                     } else {
-                        poppedtiles.add(deckTile); //oldest to newest arraylist
+                        break;
                     }
                 }
+
+                Collections.reverse(poppedtiles); //add back in original order
+                for(Tile t : poppedtiles){
+                    this.scrummy.getDeck().push(t);
+                }
+            } else {
+                //Tile t = scrummy.getDeck().pop();
+                //if(t != null){
+
+                ArrayList<Tile> poppedtiles = new ArrayList<Tile>();
+                while(true) {
+                    Tile deckTile = this.scrummy.getDeck().pop();
+                    System.out.println("dt: " + deckTile);
+                    if (deckTile != null) {
+                        boolean found = false;
+                        for(GameInteractionController playerController: this.playerControllers){
+                            for(Tile currRiggedTile : playerController.getRiggedTiles()){
+                                if (currRiggedTile.getColour() == deckTile.getColour()
+                                        && currRiggedTile.getValue() == deckTile.getValue()) {
+                                    found = true;
+                                }
+                            }
+                        }
+                        if(!found){
+                            scrummy.getPlayers().get(this.currentPlayerIndex).getHand().add(deckTile);
+                            break;
+                        } else {
+                            poppedtiles.add(deckTile);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                Collections.reverse(poppedtiles); //add back in original order
+                for(Tile t : poppedtiles){
+                    this.scrummy.getDeck().push(t);
+                }
+                //}
             }
 
-            Collections.reverse(poppedtiles); //add back in original order
-            for(Tile t : poppedtiles){
-                this.scrummy.getDeck().push(t);
-            }
-        } else {
-            this.popFromDeck();
         }
-
     }
 
 
