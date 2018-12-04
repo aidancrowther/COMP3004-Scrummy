@@ -108,6 +108,7 @@ public class Meld {
             }
             else if (tiles.get(0).getColour() == tiles.get(1).getColour()) { //adding a joker to a run
                 joker.setColour(tiles.get(0).getColour());
+                
                 for (int i=0; i<this.size()-1; i++) {
                     if (this.get(i+1).getValue() - this.get(i).getValue() != 1) {
                         joker.setValue(this.get(i).getValue() + 1);

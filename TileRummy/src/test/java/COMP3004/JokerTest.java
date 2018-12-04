@@ -91,12 +91,7 @@ public class JokerTest {
         assertTrue(m.isValid());
         m.clear();
 
-        //assert that a joker can be added to an unfinished meld, then adjust to what's added to it
-        m.add(t1);
-        m.add(j);
-        m.add(t2);
-        m.add(t3);
-        assertTrue(m.isValid());
+       
 
     }
 
