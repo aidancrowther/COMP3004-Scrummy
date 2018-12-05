@@ -115,6 +115,7 @@ public class Table {
         return false;
     }
 
+
     public boolean isEquivalent(Table other) {
         if(other.getMelds().size() != this.melds.size()){
             return false;
