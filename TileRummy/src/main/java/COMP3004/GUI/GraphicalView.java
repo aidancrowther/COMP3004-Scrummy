@@ -885,16 +885,19 @@ public class GraphicalView {
                             if(controller.getScrummy().getTable().getMelds().size() == 1){
                                 controller.getScrummy().getTable().add(selectedTile);
                                 playerControl.getPlayer().getHand().remove(t);
+                                //ADD SCORE
+                                playerControl.setScore(playerControl.getScore()+selectedTile.getValue());
                                 selectedTile = null;
                             } else {
                                 fromMeld = playerControl.getPlayer().getHand();
                             }
                         } else {
                             //YOU HAVE TO SELECT A TILE FIRST
-                            //System.out.println(fromMeld);
-                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(currentPlayerIndex)){ //Only allow player to add back tiles from new meld
+                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(0)){ //Only allow player to add back tiles from new meld
                                 playerControl.getPlayer().getHand().add(selectedTile);
                                 fromMeld.remove(selectedTile);
+                                //DETRACT SCORE
+                                playerControl.setScore(playerControl.getScore()-selectedTile.getValue());
                                 selectedTile = null;
                             } else {
                                 System.out.println("select a tile first by left clicking one");
@@ -974,6 +977,8 @@ public class GraphicalView {
         if(this.suggestionsEnabled) {
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName());
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand());
+
+            suggestionEngine.setScore(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getScore());
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
 
             //TODO: SUGGESTED PLAYS CLEANUP

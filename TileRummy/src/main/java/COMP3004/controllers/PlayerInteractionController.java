@@ -19,7 +19,6 @@ import COMP3004.terminal.TerminalView;
 
 public class PlayerInteractionController extends GameInteractionController
 {
-    private int score = 0;
     private boolean enableTableInteraction = false;
     private Table playedTable = new Table();
     public PlayerInteractionController(){
@@ -139,13 +138,6 @@ public class PlayerInteractionController extends GameInteractionController
         return this.terminalView;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
 
     public void setPlayedTable(Table table) {
         this.playedTable = this.getTableCopy(table);
