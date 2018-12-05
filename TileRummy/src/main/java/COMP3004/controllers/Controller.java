@@ -67,11 +67,11 @@ public class Controller
         this.view = new TerminalView();
         this.scrummy = new Scrummy(AIOnly);
         this.playerControllers = new ArrayList<GameInteractionController>();
-        this.addPlayer(0);
-        this.addPlayer(1);
-        this.addPlayer(2);
-        this.addPlayer(3);
-        this.addPlayer(4);
+        this.addPlayer(0, false);
+        this.addPlayer(1, false);
+        this.addPlayer(2, false);
+        this.addPlayer(3, false);
+        this.addPlayer(4, false);
     }
 
     public Controller(String[] args){
@@ -414,10 +414,10 @@ public class Controller
     }
 
 
-    public void addPlayer(int type){
+    public void addPlayer(int type, boolean rigged){
         if(type == 0) {
             PlayerInteractionController p = new PlayerInteractionController();
-            Player player = this.scrummy.addNewPlayer("Human");
+            Player player = this.scrummy.addNewPlayer("Human", rigged);
             p.setPlayer(player);
             if(this.graphicalView != null){
                 p.setGUI(this.graphicalView);
@@ -434,7 +434,7 @@ public class Controller
             } else {
                 s.setTerminalView(this.view);
             }
-            Player player = this.scrummy.addNewPlayer("Strategy1");
+            Player player = this.scrummy.addNewPlayer("Strategy1", rigged);
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 2) {
@@ -445,7 +445,7 @@ public class Controller
                 s.setTerminalView(this.view);
             }
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy2");
+            Player player = this.scrummy.addNewPlayer("Strategy2", rigged);
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         } else if (type == 3) {
@@ -456,7 +456,7 @@ public class Controller
                 s.setTerminalView(this.view);
             }
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy3");
+            Player player = this.scrummy.addNewPlayer("Strategy3", rigged);
             s.setPlayer(player);
             s.setPlayerHandSizes(this.scrummy.getPlayers());
             this.scrummy.registerPlayerHandObserver(s);
@@ -469,17 +469,17 @@ public class Controller
                 s.setTerminalView(this.view);
             }
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy4");
+            Player player = this.scrummy.addNewPlayer("Strategy4", rigged);
             s.setPlayer(player);
             this.scrummy.registerTableObserver(s);
         }
         this.scrummy.notifyObservers();
     }
 
-    public void addPlayer(String type){
+    public void addPlayer(String type, boolean rigged){
         if(type.equals("Human")) {
             PlayerInteractionController p = new PlayerInteractionController();
-            Player player = this.scrummy.addNewPlayer("Human");
+            Player player = this.scrummy.addNewPlayer("Human", rigged);
             p.setPlayer(player);
             p.setGUI(this.graphicalView);
             this.playerControllers.add(p);
@@ -487,21 +487,21 @@ public class Controller
         } else if(type.equals("AI Strategy 1")) {
             Strategy1 s = new Strategy1();
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy1");
+            Player player = this.scrummy.addNewPlayer("Strategy1", rigged);
             s.setPlayer(player);
             s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);
         } else if (type.equals("AI Strategy 2")) {
             Strategy2 s = new Strategy2();
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy2");
+            Player player = this.scrummy.addNewPlayer("Strategy2", rigged);
             s.setPlayer(player);
             s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);
         } else if (type.equals("AI Strategy 3")) {
             Strategy3 s = new Strategy3();
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy3");
+            Player player = this.scrummy.addNewPlayer("Strategy3", rigged);
             s.setPlayer(player);
             s.setGUI(this.graphicalView);
             s.setPlayerHandSizes(this.scrummy.getPlayers());
@@ -510,7 +510,7 @@ public class Controller
         } else {
             Strategy4 s = new Strategy4();
             this.playerControllers.add(s);
-            Player player = this.scrummy.addNewPlayer("Strategy4");
+            Player player = this.scrummy.addNewPlayer("Strategy4", rigged);
             s.setPlayer(player);
             s.setGUI(this.graphicalView);
             this.scrummy.registerTableObserver(s);

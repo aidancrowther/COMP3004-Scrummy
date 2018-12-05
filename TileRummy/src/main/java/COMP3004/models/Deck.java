@@ -4,6 +4,7 @@
 
 package COMP3004.models;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Deck{
@@ -22,6 +23,8 @@ public class Deck{
                 deck.push(new Tile(colours[colour%4], value));
             }
         }
+
+        System.out.println("deck length: " + this.deck.size());
         deck.push(new Joker());
         deck.push(new Joker());
     }
@@ -50,7 +53,23 @@ public class Deck{
     }
 
     public Stack<Tile> clone() {
-        return (Stack<Tile>)deck.clone();
+        Stack<Tile> copy = new Stack<Tile>();
+        //while()
+        System.out.println(deck.size());
+        ArrayList<Tile> popped = new ArrayList<>();
+        Tile t = deck.pop();
+        while(!deck.empty()){
+            popped.add(t);
+            t = deck.pop();
+        }
+
+        for(Tile t2: popped){
+          this.deck.push(t2);
+          copy.push(t2);
+        }
+
+        System.out.println(copy.size());
+        return copy;
     }
 
 }

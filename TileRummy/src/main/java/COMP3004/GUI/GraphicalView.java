@@ -209,7 +209,7 @@ public class GraphicalView {
             for(String type : playerTypes){
                 //System.out.println(type);
                 if(type != null){
-                    controller.addPlayer(type);
+                    controller.addPlayer(type, rigged);
                 }
             }
 

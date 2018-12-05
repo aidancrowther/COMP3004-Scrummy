@@ -71,7 +71,7 @@ public class ScrummyTest
     public void testNotifyObservers(){
         PlayerInteractionController t = new PlayerInteractionController();
         Scrummy s = new Scrummy();
-        s.addNewPlayer("Human");
+        s.addNewPlayer("Human", false);
         s.registerTableObserver(t);
 
         Strategy3 strat = new Strategy3();
