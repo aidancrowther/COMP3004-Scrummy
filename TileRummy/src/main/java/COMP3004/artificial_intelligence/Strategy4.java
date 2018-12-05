@@ -82,8 +82,10 @@ public class Strategy4 extends ArtificialIntelligence
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : hand.getTiles()){
             Boolean found = false;
+            String t = tile.toString();
+            if(tile.isJoker()) t = "J0";
             for(Map.Entry<String, Integer> pair : inHand.entrySet()){
-                if(tile.toString().equals(pair.getKey())){
+                if(t.equals(pair.getKey())){
                     inHand.put(pair.getKey().toString(), pair.getValue()+1);
                     found = true;
                     break;
@@ -327,8 +329,10 @@ public class Strategy4 extends ArtificialIntelligence
         //Identify duplicate tiles and keep track of all tiles
         for(Tile tile : playerHand.getTiles()){
             Boolean found = false;
+            String t = tile.toString();
+            if(tile.isJoker()) t = "J0";
             for(Map.Entry<String, Integer> pair : inHand.entrySet()){
-                if(tile.toString().equals(pair.getKey())){
+                if(t.equals(pair.getKey())){
                     inHand.put(pair.getKey().toString(), pair.getValue()+1);
                     found = true;
                     break;
