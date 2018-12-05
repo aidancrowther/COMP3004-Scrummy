@@ -18,7 +18,6 @@ public class Table {
     */
     public void add(Meld m) {
         melds.add(m);
-        clearEmpties();
     }
 
     /*
@@ -33,7 +32,6 @@ public class Table {
             add(melds.get(0).copy());
             melds.get(0).clear();
         }
-        clearEmpties();
     }
 
     /*
@@ -41,7 +39,6 @@ public class Table {
     */
     public void add(Tile t, int i) {
         melds.get(i).add(t);
-        clearEmpties();
     }
 
     public Meld remove(int i) {
@@ -115,13 +112,6 @@ public class Table {
         return false;
     }
 
-    public void clearEmpties() {
-        for (int i=melds.size()-1; i>0; i--) {
-            if (melds.get(i).size() == 0) {
-                melds.remove(i);
-            }
-        }
-    }
 
     public boolean isEquivalent(Table other) {
         if(other.getMelds().size() != this.melds.size()){

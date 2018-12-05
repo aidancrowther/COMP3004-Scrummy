@@ -4,9 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;
 
-import COMP3004.models.Tile;
-import COMP3004.models.Joker;
-import COMP3004.models.Meld;
+import COMP3004.models.*;
+import COMP3004.artificial_intelligence.*;
 import org.junit.Test;
 
 
@@ -187,11 +186,11 @@ public class JokerTest {
         m.add(j1);
         m.add(t2);
 
-        assertTrue(m.getJokers() == 1);
+        assertTrue(m.getJokers().size() == 1);
 
         m.add(j2);
 
-        assertTrue(m.getJokers() == 2);
+        assertTrue(m.getJokers().size() == 2);
     }
 
     @Test
@@ -234,19 +233,72 @@ public class JokerTest {
     }
 
 
+    //assert that addJoker() can do its thing
+    @Test
+    public void testAddJoker() {
+        Strategy1 AI1 = new Strategy1();
+        Meld hand = new Meld();
+        Meld m = new Meld();
+
+        m.add(new Tile('B', 2));
+        m.add(new Tile('B', 3));
+        m.add(new Tile('B', 4));
+        m.add(new Tile('B', 5));
+
+        hand.add(new Tile('B', 2));
+        hand.add(new Tile('B', 3));
+        hand.add(new Tile('B', 4));
+        hand.add(new Tile('B', 5));
+        hand.add(new Joker());
+        hand.add(new Tile('O', 10));
+        hand.add(new Tile('R', 9));
+
+        AI1.addJoker(m, hand);
+
+        assertTrue(m.size() == 5);
+        assertTrue(m.getJokers().size() == 1);
+
+        m.clear();
+        m.add(new Tile('R', 8));
+        m.add(new Tile('R', 9));
+        m.add(new Tile('R', 10));
+
+        hand.add(new Joker());
+
+        assertTrue(hand.getJokers().size() == 0);
+
+        AI1.addJoker(m, hand);
+
+        assertTrue(m.size() == 5);
+        assertTrue(m.getJokers().size() == 2);
+
+    }
 
 
-   /*
-    //LATER...
+    //assert that jokers can be added to melds made from searchHand()
+    @Test
+    public void testSearchHand() {
+        Strategy1 AI1 = new Strategy1();
+        Table t = new Table();
 
-        -> assert that jokers can be added to melds made from searchHand()
-        -> assert that jokers can be added to melds made from searchTable()
+        Meld hand = new Meld();
         
-        -> TBA: whether or not the AI know how to reuse jokers already on the table
 
-        -> assert that jokers will not just be appended to the fronts or ends of melds by AI and will 
-            be used with some "cleverness"
-        -> assert that if the joker is the only card left in the hand, the ai plays it
-    */
+    }
+
+    //assert that jokers can be added to melds made from searchTable()
+    @Test
+    public void testSearchTable() {
+
+    }
+
+    //assert that if the joker is the only card left in the hand, the ai plays it
+    @Test
+    public void testOnlyJokersLeftInHand() {
+
+    }
+
+
+
 
 }

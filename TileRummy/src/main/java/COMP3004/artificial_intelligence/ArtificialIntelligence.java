@@ -71,8 +71,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
 
-    protected void addJoker(Meld m, Tile joker) {
-        
+    public boolean addJoker(Meld m, Meld hand) {
+        return false;
     }
 
 
