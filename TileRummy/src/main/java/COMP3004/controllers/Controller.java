@@ -192,7 +192,7 @@ public class Controller
         if(stateBeforeTurn != null){
             /* Instead check if all tiles in both tables melds are equal...
              * */
-            if(this.playerControllers.get(this.currentPlayerIndex).getScore() <= 30 // PLAYER DIDN'T HAVE ENOUGH POINTS
+            if(this.playerControllers.get(this.currentPlayerIndex).getScore() < 30 // PLAYER DIDN'T HAVE ENOUGH POINTS
                     || this.scrummy.getTable().isEquivalent(stateBeforeTurn.getTable())) { // PLAYER NOT MOVE
                 if(this.checkForEmptyDeckCase()){
                     winnerIndex = -2;
