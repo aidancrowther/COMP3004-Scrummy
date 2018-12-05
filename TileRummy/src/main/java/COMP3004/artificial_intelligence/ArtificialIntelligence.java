@@ -83,7 +83,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             while (((m.isRun() && m.size() < 13) || (!m.isRun() && m.size() < 4)) && i<hand.size()) {
                 //if the meld is not full, depending on what type
                 if (hand.get(i).isJoker()) {
-                    m.add(hand.get(i));
+                    m.addJoker(hand.get(i));
                     break;
                 }
                 i++;
@@ -101,8 +101,8 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             while (((m.isRun() && m.size() < 13) || (!m.isRun() && m.size() < 4)) && i<hand.size()) {
                 //if the meld is not full, depending on what type
                 if (hand.get(i).isJoker()) {
-                    m.add(hand.get(i));
-                    toAdd.add(hand.get(i));
+                    m.addJoker(hand.get(i));
+                    toAdd.addJoker(hand.get(i));
                     break;
                 }
                 i++;

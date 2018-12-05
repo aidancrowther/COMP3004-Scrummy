@@ -23,9 +23,6 @@ public class Meld {
 
     public void add(Tile t) {
         if(t != null){
-            if (t.isJoker() && t.getValue() == 0 && t.getColour() == 'J') {
-                this.addJoker(t);
-            }
             this.tiles.add(t);
             sort();
         }
@@ -144,6 +141,7 @@ public class Meld {
             joker.setValue(tiles.get(0).getValue());
         }
         //}
+        this.tiles.add(joker);
         this.sort();
     }
 
