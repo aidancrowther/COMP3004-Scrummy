@@ -240,6 +240,7 @@ public class JokerTest {
         Meld hand = new Meld();
         Meld m = new Meld();
 
+        //assert that a joker can be added to a meld
         m.add(new Tile('B', 2));
         m.add(new Tile('B', 3));
         m.add(new Tile('B', 4));
@@ -258,6 +259,7 @@ public class JokerTest {
         assertTrue(m.size() == 5);
         assertTrue(m.getJokers().size() == 1);
 
+        //assert that two jokers can be added to a meld
         m.clear();
         m.add(new Tile('R', 8));
         m.add(new Tile('R', 9));
@@ -265,13 +267,50 @@ public class JokerTest {
 
         hand.add(new Joker());
 
-        assertTrue(hand.getJokers().size() == 0);
+        assertTrue(hand.getJokers().size() == 2);
 
         AI1.addJoker(m, hand);
 
         assertTrue(m.size() == 5);
         assertTrue(m.getJokers().size() == 2);
 
+        //assert that jokers won't be added to a full run
+        m.clear();
+        for (int i=1; i<14; i++) {
+            m.add(new Tile('B', i));
+        }
+        assertTrue(m.size() == 13);
+
+        AI1.addJoker(m, hand);
+        assertTrue(m.size() == 13);
+
+        //assert that only one joker will be added if there is only one slot left in a set
+        m.clear();
+        for (int i=2; i<14; i++) {
+            m.add(new Tile('B', i));
+        }
+        AI1.addJoker(m, hand);
+        assertTrue(m.size() == 13);
+
+        //assert that jokers won't be added to a full set
+        m.clear();
+        m.add(new Tile('B', 1));
+        m.add(new Tile('R', 1));
+        m.add(new Tile('O', 1));
+        m.add(new Tile('G', 1));
+        AI1.addJoker(m, hand);
+        assertTrue(m.size() == 4);
+        assertTrue(m.getJokers().size() == 0);
+        
+        //assert that only one joker will be added if there is only one slot left in a set
+        m.clear();
+        m.add(new Tile('B', 1));
+        m.add(new Tile('R', 1));
+        m.add(new Tile('O', 1));
+
+        AI1.addJoker(m, hand);
+        assertTrue(m.size() == 4);
+        assertTrue(m.getJokers().size() == 1);
     }
 
 
