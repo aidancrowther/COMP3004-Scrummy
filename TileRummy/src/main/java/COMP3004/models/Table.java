@@ -125,6 +125,21 @@ public class Table {
             return true;
         }
 
+        //CHECK IF NO TILES WERE ADDED EVENT IF MOVED
+        ArrayList<Tile> allOthersTiles = new ArrayList<>();
+        for(Meld m : other.getMelds()){
+            allOthersTiles.addAll(m.getTiles());
+        }
+        ArrayList<Tile> allThisTiles = new ArrayList<>();
+        for(Meld m : this.getMelds()){
+            allThisTiles.addAll(m.getTiles());
+        }
+        System.out.println( allOthersTiles.size() + " OTHER SIZE " + allThisTiles.size());
+        if(allOthersTiles.size() == allThisTiles.size()){
+            return true;
+        }
+
+
         int otherSize = other.getMelds().size();
         //MINUS ONE DO NOT CHECK FIRST MELDS
         boolean[] isMeldPresent = new boolean[this.melds.size()-1];

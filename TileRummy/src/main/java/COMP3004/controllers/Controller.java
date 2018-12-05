@@ -192,18 +192,19 @@ public class Controller
         if(stateBeforeTurn != null){
             /* Instead check if all tiles in both tables melds are equal...
              * */
+            if(this.scrummy.getTable().isEquivalent(stateBeforeTurn.getTable())) { // PLAYER NOT MOVE
+                if(this.checkForEmptyDeckCase()){
+                    winnerIndex = -2;
+                }
+                this.scrummy.setTable(stateBeforeTurn.getTable()); //IN CASE PLAYER JUST MMOVED A TILE
+                scrummy.getCurrentPlayer().setHand(stateBeforeTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
+                this.popTileToCurrentUserHand();
+            } else
             if(!scrummy.getTable().isValid()){
                 scrummy.setTable(stateBeforeTurn.getTable());
                 scrummy.getPlayers().get(this.currentPlayerIndex).setHand(stateBeforeTurn.getPlayerHand());
                 this.popTileToCurrentUserHand();
                 scrummy.notifyObservers();
-            }
-            else if(stateBeforeTurn.getTable().isEquivalent(this.scrummy.getTable())) { // PLAYER NOT MOVE
-                if(this.checkForEmptyDeckCase()){
-                    winnerIndex = -2;
-                }
-                scrummy.getCurrentPlayer().setHand(stateBeforeTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
-                this.popTileToCurrentUserHand();
             }
         }
 
