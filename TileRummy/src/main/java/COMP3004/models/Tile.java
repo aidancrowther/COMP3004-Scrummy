@@ -42,6 +42,9 @@ public class Tile{
     //Check if the tile is equal to the tile passed in
     public Boolean equals(Tile t){
         Boolean result = true;
+        if (this.isJoker() && t.isJoker()) {
+            return result;
+        }
         result &= this.getColour() == t.getColour();
         result &= this.getValue() == t.getValue();
         return result;
