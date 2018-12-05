@@ -103,6 +103,9 @@ public class Table {
                 return false;
             }
         }
+
+        for(Meld m : melds) for(Tile t : m.getTiles()) t.setPlayed();
+
         return true;
     }
 
