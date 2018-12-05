@@ -222,8 +222,8 @@ public class Meld {
         comparator 
     */
     public void sort() {
-        ArrayList<Integer> jokers = this.getJokers();
-		if (jokers.size() > 0 && this.size() > 2) {
+        int jokers = this.getJokers();
+		if (jokers > 0 && this.size() > 2) {
 			ArrayList<Tile> list = new ArrayList<>();
             for (int i=0; i<this.size(); i++) {
 				if (this.get(i).getColour() == 'J') {
@@ -385,14 +385,14 @@ public class Meld {
         }
     }
 
-    public ArrayList<Integer> getJokers() {
-        ArrayList<Integer> list = new ArrayList<>();
+    public int getJokers() {
+        int i = 0;
         for (Tile t : this.tiles) {
             if (t.isJoker()) {
-                list.add(tiles.indexOf(t));
+                i++;
             }
         }
-        return list;
+        return i;
     }
 
 }

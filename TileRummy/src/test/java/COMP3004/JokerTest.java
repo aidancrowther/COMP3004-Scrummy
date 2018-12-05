@@ -186,11 +186,11 @@ public class JokerTest {
         m.add(j1);
         m.add(t2);
 
-        assertTrue(m.getJokers().size() == 1);
+        assertTrue(m.getJokers() == 1);
 
         m.add(j2);
 
-        assertTrue(m.getJokers().size() == 2);
+        assertTrue(m.getJokers() == 2);
     }
 
     @Test
@@ -257,7 +257,7 @@ public class JokerTest {
         AI1.addJoker(m, hand);
 
         assertTrue(m.size() == 5);
-        assertTrue(m.getJokers().size() == 1);
+        assertTrue(m.getJokers() == 1);
 
         //assert that two jokers can be added to a meld
         m.clear();
@@ -267,12 +267,12 @@ public class JokerTest {
 
         hand.add(new Joker());
 
-        assertTrue(hand.getJokers().size() == 2);
+        assertTrue(hand.getJokers() == 2);
 
         AI1.addJoker(m, hand);
 
         assertTrue(m.size() == 5);
-        assertTrue(m.getJokers().size() == 2);
+        assertTrue(m.getJokers() == 2);
 
         //assert that jokers won't be added to a full run
         m.clear();
@@ -284,6 +284,7 @@ public class JokerTest {
         AI1.addJoker(m, hand);
         assertTrue(m.size() == 13);
 
+        
         //assert that only one joker will be added if there is only one slot left in a set
         m.clear();
         for (int i=2; i<14; i++) {
@@ -300,7 +301,7 @@ public class JokerTest {
         m.add(new Tile('G', 1));
         AI1.addJoker(m, hand);
         assertTrue(m.size() == 4);
-        assertTrue(m.getJokers().size() == 0);
+        assertTrue(m.getJokers() == 0);
         
         //assert that only one joker will be added if there is only one slot left in a set
         m.clear();
@@ -310,7 +311,7 @@ public class JokerTest {
 
         AI1.addJoker(m, hand);
         assertTrue(m.size() == 4);
-        assertTrue(m.getJokers().size() == 1);
+        assertTrue(m.getJokers() == 1);
     }
 
 
