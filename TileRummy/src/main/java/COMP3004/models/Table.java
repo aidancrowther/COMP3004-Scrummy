@@ -98,7 +98,7 @@ public class Table {
             return false;
         }
         for (int i=1; i<this.melds.size(); i++) {
-            if (!this.melds.get(i).isValid()) {
+            if (!this.melds.get(i).isValid() && this.melds.get(i).size() != 0) {
                 System.out.print(i + " is invalid");
                 return false;
             }
