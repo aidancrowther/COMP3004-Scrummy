@@ -314,27 +314,37 @@ public class JokerTest {
     }
 
 
-    //assert that jokers can be added to melds made from searchHand()
-    @Test
-    public void testSearchHand() {
-        Strategy1 AI1 = new Strategy1();
-        Table t = new Table();
-
-        Meld hand = new Meld();
-        
-
-    }
-
-    //assert that jokers can be added to melds made from searchTable()
-    @Test
-    public void testSearchTable() {
-
-    }
 
     //assert that if the joker is the only card left in the hand, the ai plays it
     @Test
     public void testOnlyJokersLeftInHand() {
+        Strategy1 AI1 = new Strategy1();
 
+        Meld m1 = new Meld();
+        Meld m2 = new Meld();
+        Meld hand = new Meld();
+
+        for (int i=2; i<9; i++) {
+            m1.add(new Tile('R', i));
+        }
+        m2.add(new Tile('G', 1));
+        m2.add(new Tile('O', 1));
+        m2.add(new Tile('B', 1));
+
+        Table t = new Table();
+        t.add(m1);
+        t.add(m2);
+
+        hand.add(new Joker());
+        hand.add(new Joker());
+
+        AI1.setHand(hand);
+        AI1.setTable(t);
+        AI1.setScore(50);
+
+        Table output = AI1.play();
+
+        assertTrue(AI1.getHand().size() == 0);
     }
 
 
