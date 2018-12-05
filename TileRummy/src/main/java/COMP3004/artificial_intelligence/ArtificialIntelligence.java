@@ -72,10 +72,10 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
 
     //adds jokers to melds, if possible
-    //returns whether or not all jokers were used
-    public boolean addJoker(Meld m, Meld hand) {
-        int j = hand.getJokers();
-        int count = 0;
+    public void addJoker(Meld m, ArrayList<Tile> hand) {
+        Meld h = new Meld();
+        h.setTiles(hand);
+        int j = h.getJokers();
 
         if (j != 0) {
             int i=0;
@@ -83,16 +83,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 //if the meld is not full, depending on what type
                 if (hand.get(i).isJoker()) {
                     m.add(hand.get(i));
-                    count++;
                 }
                 i++;
             }
-        }
-        if (count == j) {
-            return true;
-        }
-        else {
-            return false;
         }
     }
 
@@ -109,12 +102,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i+1));
             m.add(h.get(i+2));
             if (m.isValid()) {
+                addJoker(m, h);
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
                         if (m.isValid()) {
+                            addJoker(m, h);
                             handMelds.put(m.copy(), n);
                             n++;
                         } else {
@@ -136,6 +131,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
                     if (m.isValid()) {
+                        addJoker(m, h);
                         handMelds.put(m.copy(), n);
                         n++;
                     }
@@ -158,12 +154,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i+1));
             m.add(h.get(i+2));
             if (m.isValid()) {
+                addJoker(m, h);
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
                         if (m.isValid()) {
+                            addJoker(m, h);
                             handMelds.put(m.copy(), n);
                             n++;
                         } else {
@@ -185,6 +183,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
                     if (m.isValid()) {
+                        addJoker(m, h);
                         handMelds.put(m.copy(), n);
                         n++;
                     }
@@ -226,6 +225,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 }
             }
             if (!toAdd.getTiles().isEmpty()) {
+                addJoker(toAdd, h);
                 tMelds.put(toAdd.copy(), i);
             }
         }
@@ -294,7 +294,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     //adds a meld from a split to its arraylist. In doing so, it removes these cards from the
-    //local copy of the table's meld as well as the local copy of the AI's hand
+    //shallow copy of the table's meld as well as the shallow copy of the AI's hand
     protected void addSplitToList(ArrayList<Meld> aList, Meld shortM, Meld m, Meld hTiles, ArrayList<Tile> h) {
         aList.add(shortM.copy());
         for (int q=0; q<shortM.size(); q++) {
@@ -362,15 +362,17 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                     Meld shortM = new Meld();
                     //for melds where we'll iterate through linearly, rather than consider every combination
                     for (int k=j; k<m.size(); k++) {
-                        shortM.add(m.getTiles().get(k));
-                        for (int p=0; p<h.size(); p++) {
-                            addingForSplitting(shortM, h, p);
+                        if (!m.getTiles().get(k).isJoker()) {
+                            shortM.add(m.getTiles().get(k));
+                            for (int p=0; p<h.size(); p++) {
+                                addingForSplitting(shortM, h, p);
 
-                            if (shortM.isValid()) {
-                                addSplitToList(aList, shortM, m, hTiles, h);
-                                k=999;
-                                j--;
-                                break;
+                                if (shortM.isValid()) {
+                                    addSplitToList(aList, shortM, m, hTiles, h);
+                                    k=999;
+                                    j--;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -386,7 +388,9 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                     }
                     Meld shortM = new Meld();
                     for (int p=0; p<perms.get(j).size(); p++) {
-                        shortM.add(m.sameValue(perms.get(j).get(p)));
+                        if (!perms.get(j).get(p).isJoker()) {
+                            shortM.add(m.sameValue(perms.get(j).get(p)));
+                        }
                     }
 
                     for (int k=0; k<h.size(); k++) {

@@ -17,6 +17,10 @@ public class Meld {
 
     public int size() { return tiles.size(); }
 
+    public void setTiles(ArrayList<Tile> tiles) { 
+        this.tiles = tiles;
+    }
+
     public void add(Tile t) {
         if(t != null){
             if (t.isJoker()) {
