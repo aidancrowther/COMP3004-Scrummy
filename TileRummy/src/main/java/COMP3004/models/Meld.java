@@ -59,7 +59,10 @@ public class Meld {
 
     public Tile remove(Tile t) {
 
+        if(t.isJoker()) System.out.println(t.toString());
+
         for (int i=0; i<tiles.size(); i++) {
+            if(tiles.get(i).isJoker()) System.out.println(tiles.get(i).toString());
             if (tiles.get(i).equals(t)) {
                 return tiles.remove(i);   
             }

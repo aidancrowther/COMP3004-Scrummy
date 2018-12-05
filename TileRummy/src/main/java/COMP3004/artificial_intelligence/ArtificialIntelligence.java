@@ -505,7 +505,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
 
         for(Tile t : m.getTiles()) {
             String tile = t.toString();
-            if(t.isJoker()) tile = "J0";
+            //if(t.isJoker()) tile = "J0";
             if(handUsed.get(tile)!=null){
                 handUsed.put(tile, handUsed.get(tile)-1);
             }
@@ -528,7 +528,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             //Check for duplicate tiles
             for(Tile t : entry.getKey().getTiles()){
                 String tile = t.toString();
-                if(t.isJoker()) tile = "J0";
+                //if(t.isJoker()) tile = "J0";
                 if(handUsedLocal.get(tile) != null &&
                         handUsedLocal.get(tile) > 0) handUsedLocal.put(tile, handUsedLocal.get(tile)-1);
                 else containsDuplicate = true;

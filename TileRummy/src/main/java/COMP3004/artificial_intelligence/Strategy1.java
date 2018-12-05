@@ -83,7 +83,7 @@ public class Strategy1 extends ArtificialIntelligence
         for(Tile tile : hand.getTiles()){
             Boolean found = false;
             String t = tile.toString();
-            if(tile.isJoker()) t = "J0";
+            //if(tile.isJoker()) t = "J0";
             for(Map.Entry<String, Integer> pair : inHand.entrySet()){
                 if(t.equals(pair.getKey())){
                     inHand.put(pair.getKey().toString(), pair.getValue()+1);
