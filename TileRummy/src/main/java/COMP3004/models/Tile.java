@@ -9,6 +9,7 @@ public class Tile{
     
     protected char colour;
     protected int value;
+    protected Boolean played = false;
 
     //Gnerate a new card using the specified suit and value
     public Tile(char colour, int value){
@@ -33,6 +34,10 @@ public class Tile{
     public void setValue(int v) {
         this.value = v;
     }
+
+    public void setPlayed(){ played = true; }
+
+    public Boolean getPlayed(){ return played; }
 
     //Check if the tile is equal to the tile passed in
     public Boolean equals(Tile t){
