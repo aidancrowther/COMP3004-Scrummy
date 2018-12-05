@@ -250,8 +250,12 @@ public class Controller
                 this.scrummy.setTable(stateBeforeTurn.getTable()); //IN CASE PLAYER JUST MMOVED A TILE
                 scrummy.getCurrentPlayer().setHand(stateBeforeTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
                 this.popTileToCurrentUserHand();
-            } else
-            if(!scrummy.getTable().isValid()){
+                this.popTileToCurrentUserHand();
+                this.popTileToCurrentUserHand();
+                if(this.playerControllers.get(this.currentPlayerIndex).getScore() < 30 ){
+                    this.playerControllers.get(this.currentPlayerIndex).setScore(0);
+                }
+            } else if(!scrummy.getTable().isValid()){
                 scrummy.setTable(stateBeforeTurn.getTable());
                 scrummy.getPlayers().get(this.currentPlayerIndex).setHand(stateBeforeTurn.getPlayerHand());
                 //TIMER + INVALID = POP 3

@@ -50,6 +50,7 @@ public class GraphicalView {
 
     protected boolean limitHumanTime = false;
     protected Timer timer = new Timer();
+    protected Timer displayerTimer = new Timer();
 
     protected boolean suggestionsEnabled = false;
     protected Strategy4 suggestionEngine;
@@ -655,6 +656,7 @@ public class GraphicalView {
         finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         finishTurnBtn.setOnMouseClicked(e -> {
             this.timer.cancel();
+            this.displayerTimer.cancel();
             this.controller.finishTurn();
         });
         finishTurnBtn.setPrefSize(100, 20);
@@ -1158,8 +1160,8 @@ public class GraphicalView {
         this.timer = new Timer();
         long delay = 1000L*60*2;
         this.timer.schedule(new PlayerTimerTask(), delay);
-        Timer displayerTimer = new Timer();
-        displayerTimer.schedule(new TimerTask() {
+        this.displayerTimer = new Timer();
+        this.displayerTimer.schedule(new TimerTask() {
             int timeRemaining = 120;
             public void run() {
                 timeRemaining--;
@@ -1168,6 +1170,9 @@ public class GraphicalView {
                     public void run() {
                         Text time = (Text) topButtons.getChildren().get(topButtons.getChildren().size()-1);
                         time.setText("Seconds remaining: " + timeRemaining);
+                        if(timeRemaining == 0){
+                            displayerTimer.cancel();
+                        }
                     }
                 });
                 //
