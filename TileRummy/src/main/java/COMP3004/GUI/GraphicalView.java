@@ -23,6 +23,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
@@ -61,6 +64,11 @@ public class GraphicalView {
     protected int startIndex = 0;
 
     protected boolean isNetworked = false;
+
+    protected char colour = 'R';
+    protected int value = 1;
+
+    Stage primaryStage;
 
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
@@ -665,17 +673,23 @@ public class GraphicalView {
         newMeldBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         newMeldBtn.setOnMouseClicked(e -> {
             if(this.selectedTile != null){
-                controller.getScrummy().getTable().add(selectedTile);
-
+                if(selectedTile.isJoker()){
+                    if(this.fromMeld != null){
+                        drawJokerPopup(selectedTile, controller.getScrummy().getTable().getMelds().get(0), fromMeld);
+                    } else {
+                        drawJokerPopup(selectedTile, controller.getScrummy().getTable().getMelds().get(0), this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand());
+                    }
+                } else  {
+                    controller.getScrummy().getTable().add(selectedTile);
+                    if(this.fromMeld != null){
+                        this.fromMeld.remove(selectedTile);
+                        this.fromMeld = null;
+                    } else {
+                        this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().remove(selectedTile);
+                    }
+                }
                 //ADD SCORE
                 controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore()+selectedTile.getValue());
-
-                if(this.fromMeld != null){
-                    this.fromMeld.remove(selectedTile);
-                    this.fromMeld = null;
-                } else {
-                    this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().remove(selectedTile);
-                }
                 selectedTile = null;
                 draw();
             } else {
@@ -823,9 +837,12 @@ public class GraphicalView {
                                 //System.out.println(controller.getScrummy().getTable().getMelds().size());
                                 if(fromMeld == controller.getScrummy().getTable().getMelds().get(0)){
                                     //int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
-                                    controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
-                                    //controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
-                                    fromMeld.remove(t);
+                                    if(selectedTile.isJoker()){
+                                        drawJokerPopup(selectedTile, controller.getPlayerController(currentPlayerIndex).getPlayer().getHand(), fromMeld);
+                                    } else {
+                                        controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(selectedTile);
+                                        fromMeld.remove(selectedTile); //TODO use return value here
+                                    }
 
                                     //REMOVE SCORE
                                     controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore()-selectedTile.getValue());
@@ -844,10 +861,14 @@ public class GraphicalView {
                                     }
 
                                     if (fromMeld != null && toMeld != null) {
-                                        fromMeld.remove(selectedTile);
-                                        toMeld.add(selectedTile);
-                                        controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
+                                        if(selectedTile.isJoker()){
+                                            drawJokerPopup(selectedTile, toMeld, fromMeld);
+                                        } else {
+                                            fromMeld.remove(selectedTile); //TODO: add remove value here
+                                            toMeld.add(selectedTile);
+                                        }
 
+                                        controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
                                         if(fromMeld == controller.getPlayerControllers().get(currentPlayerIndex).getPlayer().getHand()){
                                             //ADD SCORE if from hand
                                             System.out.println("ADDING SCORE");
@@ -946,8 +967,12 @@ public class GraphicalView {
                                 selectedTile = t;
                             }
                             if(controller.getScrummy().getTable().getMelds().size() == 1){
-                                controller.getScrummy().getTable().add(selectedTile);
-                                playerControl.getPlayer().getHand().remove(t);
+                                if(selectedTile.isJoker()){
+                                    drawJokerPopup(selectedTile, controller.getScrummy().getTable().getMelds().get(0),  playerControl.getPlayer().getHand());
+                                }  else {
+                                    controller.getScrummy().getTable().add(selectedTile); //TODO; add using remove return
+                                    playerControl.getPlayer().getHand().remove(selectedTile);
+                                }
                                 //ADD SCORE
                                 playerControl.setScore(playerControl.getScore()+selectedTile.getValue());
                                 selectedTile = null;
@@ -957,8 +982,13 @@ public class GraphicalView {
                         } else {
                             //YOU HAVE TO SELECT A TILE FIRST
                             if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(0)){ //Only allow player to add back tiles from new meld
-                                playerControl.getPlayer().getHand().add(selectedTile);
-                                fromMeld.remove(selectedTile);
+                                if(selectedTile.isJoker()){
+                                    drawJokerPopup(selectedTile, playerControl.getPlayer().getHand(), fromMeld);
+                                } else {
+                                    playerControl.getPlayer().getHand().add(selectedTile); //TODO: add using remove return
+                                    fromMeld.remove(selectedTile);
+                                }
+
                                 //DETRACT SCORE
                                 playerControl.setScore(playerControl.getScore()-selectedTile.getValue());
                                 selectedTile = null;
@@ -1034,6 +1064,59 @@ public class GraphicalView {
 
         BorderPane.setAlignment(handLabelPane, Pos.CENTER);
         //BorderPane.setMargin(handPane, new Insets(12,12,12,12));
+    }
+
+    public void drawJokerPopup(Tile t, Meld toMeld, Meld fromMeld){
+        System.out.println("Popup");
+        Popup popup = new Popup();
+        VBox box = new VBox();
+        box.setStyle("-fx-background-color: #ffffff");
+        box.setMinHeight(200);
+        box.setMinHeight(150);
+
+        Text joker = new Text("What tile do you want to set your Joker to?");
+
+        ChoiceBox<Character> colourOption = new ChoiceBox<>(FXCollections.observableArrayList(
+                'R', 'G', 'B', 'O')
+        );
+        colourOption.setOnAction(e -> {
+            colour = colourOption.getSelectionModel().getSelectedItem();
+        });
+        colourOption.getSelectionModel().selectFirst();
+
+
+        ChoiceBox<Integer> valOption = new ChoiceBox<>(FXCollections.observableArrayList(
+                1,2,3,4,5,6,7,8,9,10,11,12,13)
+        );
+        valOption.setOnAction(e -> {
+            value = valOption.getSelectionModel().getSelectedItem();
+        });
+        valOption.getSelectionModel().selectFirst();
+
+
+        Button ok = new Button("Add Joker");
+        ok.setOnMouseClicked(e->{
+            t.setColour(colour);
+            t.setValue(value);
+
+            System.out.println(colour + "ww " + t.getColour());
+            System.out.println(value + "ww " + t.getValue());
+            fromMeld.remove(t);
+            toMeld.add(t);
+            //TODO: add/ remove
+            controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore() + value);
+            draw();
+            controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
+            popup.hide();
+        });
+
+        box.getChildren().add(joker);
+        box.getChildren().add(colourOption);
+        box.getChildren().add(valOption);
+        box.getChildren().add(ok);
+        popup.getContent().add(box);
+        popup.show(this.gamePane, 100, 100);
+        popup.centerOnScreen();
     }
 
     public void drawSuggestedMelds(){
@@ -1223,4 +1306,11 @@ public class GraphicalView {
         this.tableDiff = tableDiff;
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 }
