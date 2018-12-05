@@ -698,17 +698,18 @@ public class GraphicalView {
 
     public void draw(){
         this.tablePane.getChildren().clear();
+        this.drawSuggestedMelds();
         int i = 1;
         for(GameInteractionController iControl : this.controller.getPlayerControllers()){
             this.drawHand(iControl, i-1, i % 2 == 0);
             i++;
         }
         this.drawTable(this.controller.getScrummy().getTable());
-        this.drawSuggestedMelds();
     }
 
     public void draw(Table t){
         this.tablePane.getChildren().clear();
+        this.drawSuggestedMelds();
         int i = 1;
         for(GameInteractionController iControl : this.controller.getPlayerControllers()){
             this.drawHand(iControl, i-1, i % 2 == 0);
@@ -716,7 +717,6 @@ public class GraphicalView {
         }
 
         this.drawTable(t);
-        this.drawSuggestedMelds();
     }
 
     public void drawTable(Table table){
@@ -745,8 +745,25 @@ public class GraphicalView {
                     Rectangle rectangle = new Rectangle( 100,100,30,50);
                     if(this.selectedTile == t){
                         rectangle.setFill(Color.rgb(242, 255, 230,1));
-                    } else {
+                    } else if ((fromMeld != null && fromMeld.getTiles().contains(t))
+                            || (toMeld != null && toMeld.getTiles().contains(t))) {
                         rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                    } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) { //TODO: suggest colour
+                        rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                        ArrayList<Tile> allSuggestedTiles = new ArrayList<>();
+                        for(Meld suggestedMeld : this.suggestedPlays){
+                            for(Tile suggestedTile : suggestedMeld.getTiles()){
+                                allSuggestedTiles.add(suggestedTile);
+                            }
+                        }
+                        for(Tile suggestedTile : allSuggestedTiles) {
+                            if(suggestedTile.equals(t)){
+                                //rectangle.setFill(Color.rgb(247, 227, 224,0));//")); //rgb()
+                                rectangle.setFill(Color.web("#FAD3C5"));//")); //rgb()
+                            }
+                        }
+                    } else {
+                        rectangle.setFill(Color.rgb(252, 248, 224,0.88));//")); //rgb()
                     }
 
                     if(this.tableDiff.contains(m)){
@@ -856,13 +873,37 @@ public class GraphicalView {
         handPane.setPadding(new Insets(10, 10, 10, 10));
         handPane.setVgap(5);
         handPane.setHgap(5);
-
+/*
+* for(Tile suggestedTile : suggestedMeld.getTiles()){
+                        if(t.getValue() == suggestedTile.getValue()
+                        && t.getColour() == suggestedTile.getColour()){
+                            rectangle.setFill(Color.rgb(247, 227, 224,1));//")); //rgb()
+                        } else {
+                            rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                        }
+                    }
+*
+* */
         int i = 0;
         int j = 0;
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 400,100,30,50);
             if(this.selectedTile == t){
                 rectangle.setFill(Color.rgb(242, 255, 230,1));
+            } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) { //TODO: suggest colour
+                rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
+                ArrayList<Tile> allSuggestedTiles = new ArrayList<>();
+                for(Meld suggestedMeld : this.suggestedPlays){
+                    for(Tile suggestedTile : suggestedMeld.getTiles()){
+                        allSuggestedTiles.add(suggestedTile);
+                    }
+                }
+                for(Tile suggestedTile : allSuggestedTiles) {
+                    if(suggestedTile.equals(t)){
+                        //rectangle.setFill(Color.rgb(247, 227, 224,0));//")); //rgb()
+                        rectangle.setFill(Color.web("#FAD3C5"));//")); //rgb()
+                    }
+                }
             } else {
                 rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
             }
