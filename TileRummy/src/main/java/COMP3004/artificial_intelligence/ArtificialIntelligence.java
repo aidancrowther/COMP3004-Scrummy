@@ -90,6 +90,16 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         }
     }
 
+    public void addJoker(Meld m, ArrayList<Tile> hand, Meld toAdd) {
+        addJoker(m, hand);
+
+        for (int i=0; i<m.size(); i++) {
+            if (m.get(i).isJoker()) {
+                toAdd.add(m.get(i));
+            }
+        }
+    }
+
 
     protected HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<>();
@@ -207,7 +217,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         if (this.getHand().size() == this.getHand().getJokers() && table.getMelds().size() > 1) {
             int i = 1;
             while (i < table.getMelds().size()) {
-                addJoker(table.getMelds().get(i), h);
+                Meld m = t.getMelds().get(i).copy();
+                Meld toAdd = new Meld();
+                addJoker(m, h, toAdd);
+                if (m.isValid()){
+                    tMelds.put(toAdd, i);
+                }
                 i++;
             }            
         }
@@ -217,16 +232,20 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             Meld toAdd = new Meld();
 
             for (int j=h.size()-1; j>=0; j--) {
-                if (m.isValid(h.get(j))) {
-                    m.add(h.get(j));
-                    toAdd.add(h.get(j));
+                if (!h.get(j).isJoker()) {
+                    if (m.isValid(h.get(j))) {
+                        m.add(h.get(j));
+                        toAdd.add(h.get(j));
+                    }
                 }
             }
 
             for (int j=0; j<h.size(); j++) {
-                if (m.isValid(h.get(j))) {
-                    m.add(h.get(j));
-                    toAdd.add(h.get(j));
+                if (!h.get(j).isJoker()) {
+                    if (m.isValid(h.get(j))) {
+                        m.add(h.get(j));
+                        toAdd.add(h.get(j));
+                    }
                 }
             }
             if (!toAdd.getTiles().isEmpty()) {
