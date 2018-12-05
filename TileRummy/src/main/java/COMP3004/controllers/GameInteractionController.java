@@ -16,6 +16,8 @@ public class GameInteractionController implements TableObserverInterface {
     protected Table table;
     protected Player player;
 
+    protected int score = 0;
+
     public GameInteractionController(){
         //this.terminalView = new TerminalView();
         this.table = new Table();
@@ -83,5 +85,13 @@ public class GameInteractionController implements TableObserverInterface {
 
     public void setRiggedTiles(ArrayList<Tile> riggedTiles) {
         this.player.setRiggedTiles(riggedTiles);
+    }
+
+
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
     }
 }

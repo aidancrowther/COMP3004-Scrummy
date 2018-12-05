@@ -3,13 +3,11 @@ package COMP3004.GUI;
 import COMP3004.artificial_intelligence.Strategy4;
 import COMP3004.controllers.Controller;
 import COMP3004.controllers.GameInteractionController;
-import COMP3004.controllers.PlayerInteractionController;
 import COMP3004.models.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -52,8 +50,6 @@ public class GraphicalView {
 
     protected boolean limitHumanTime = false;
     protected Timer timer = new Timer();
-    //protected Table table;
-
 
     protected boolean suggestionsEnabled = false;
     protected Strategy4 suggestionEngine;
@@ -67,7 +63,7 @@ public class GraphicalView {
 
     public GraphicalView(Controller controller){
         //SET UP MENU SCREEN
-        this.menuPane.setStyle("-fx-background-color: #333333");
+        this.menuPane.setStyle("-fx-background-color: #000000");
         Image img = new Image("/images/bar.png");
         ImageView imv = new ImageView(img);
         this.menuPane.getChildren().add(imv);
@@ -138,9 +134,8 @@ public class GraphicalView {
         // -- loads game
         VBox setPlayersMenu = new VBox();
         setPlayersMenu.setPadding(new Insets(30, 50, 30, 50));
-        //buttons.setPadding(new Insets(30, 365, 50, 365));
         setPlayersMenu.setSpacing(30);
-        setPlayersMenu.setStyle("-fx-background-color: #333333");
+        setPlayersMenu.setStyle("-fx-background-color: #000000");
 
         Text title = new Text("Game setup:");
         title.setFont(Font.font ("Verdana", 20));
@@ -238,7 +233,7 @@ public class GraphicalView {
         VBox playerOrder = new VBox();
         playerOrder.setPadding(new Insets(30, 50, 30, 50));
         playerOrder.setSpacing(30);
-        playerOrder.setStyle("-fx-background-color: #333333");
+        playerOrder.setStyle("-fx-background-color: #000000");
 
 
         Text title = new Text("Player order:");
@@ -417,7 +412,7 @@ public class GraphicalView {
 
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setStyle("-fx-background: #333333");
+        scrollPane.setStyle("-fx-background: #000000");
 
         ArrayList<Meld> riggedHands = new ArrayList<Meld>();
         ArrayList<ArrayList<Tile>> riggedDeckOrders = new ArrayList<ArrayList<Tile>>();
@@ -432,7 +427,7 @@ public class GraphicalView {
         rigOptions.setPadding(new Insets(30, 50, 30, 50));
         //buttons.setPadding(new Insets(30, 365, 50, 365));
         rigOptions.setSpacing(30);
-        rigOptions.setStyle("-fx-background-color: #333333");
+        rigOptions.setStyle("-fx-background-color: #000000");
 
         Text title = new Text("Game Rigging");
         title.setFont(Font.font ("Verdana", 20));
@@ -597,7 +592,7 @@ public class GraphicalView {
         strategyPane.setPadding(new Insets(30, 50, 30, 50));
         //buttons.setPadding(new Insets(30, 365, 50, 365));
         strategyPane.setSpacing(30);
-        strategyPane.setStyle("-fx-background-color: #333333");
+        strategyPane.setStyle("-fx-background-color: #000000");
 
         Text title = new Text("Scenario Selection");
         title.setFont(Font.font ("Verdana", 20));
@@ -635,15 +630,15 @@ public class GraphicalView {
         this.handBefore = this.controller.getPlayerController(this.currentPlayerIndex).getPlayer().getHand().copy();
 
         //SET UP GAME SCREEN
-        this.gamePane.setStyle("-fx-background-color: #333333");
+        this.gamePane.setStyle("-fx-background-color: #000000");
         this.gamePane.setHgap(10);
         this.gamePane.setVgap(10);
 
         this.gamePane.setPadding(new Insets(15, 15, 15, 15));
-        this.tablePane.setStyle("-fx-background-color: #333333");
+        this.tablePane.setStyle("-fx-background-color: #000000");
         this.tablePane.setMinSize(1000,600);
 
-        this.topButtons.setStyle("-fx-background-color: #333333");
+        this.topButtons.setStyle("-fx-background-color: #000000");
         this.topButtons.setSpacing(10);
         Button finishTurnBtn = new Button("Finish Turn");
         finishTurnBtn.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
@@ -671,12 +666,16 @@ public class GraphicalView {
             }
         });
         newMeldBtn.setPrefSize(100, 20);
-
         this.topButtons.getChildren().addAll(finishTurnBtn, newMeldBtn);
 
-        Text tip = new Text("** Select tiles by left clicking on the tile. Select melds by right clicking on a tile in the meld.");
+        Text tip = new Text("** Select tiles by left clicking on the tile. Select melds by right clicking on a tile in the meld. A tile must be selected before a meld.");
         tip.setFont(Font.font ("Verdana", 12));
         tip.setFill(Color.WHITE);
+
+        Text countDownText = new Text("");
+        countDownText.setFont(Font.font ("Verdana", 20));
+        countDownText.setFill(Color.WHITE);
+        this.topButtons.getChildren().add(countDownText);
 
         this.gamePane.add(tip, 0, 0);
         this.gamePane.add(this.topButtons, 0, 1);
@@ -688,7 +687,7 @@ public class GraphicalView {
 
         System.out.println(this.currentPlayerIndex);
 
-        if(!(this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+        if(!(this.controller.isPlayerHuman())) {
             this.startAILoop();
         }
     }
@@ -718,12 +717,12 @@ public class GraphicalView {
 
     public void drawTable(Table table){
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setStyle("-fx-background: #333333");
+        scrollPane.setStyle("-fx-background: #000000");
 
 
         GridPane gridPane = new GridPane();
 
-        gridPane.setStyle("-fx-background-color: #333333");
+        gridPane.setStyle("-fx-background-color: #000000");
         gridPane.setMinSize(800, 500);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
@@ -809,6 +808,7 @@ public class GraphicalView {
                                         toMeld = null;
                                         selectedTile = null;
                                     }
+
                                 } else {
                                     System.out.println("select a tile first by left click one");
                                 }
@@ -885,16 +885,19 @@ public class GraphicalView {
                             if(controller.getScrummy().getTable().getMelds().size() == 1){
                                 controller.getScrummy().getTable().add(selectedTile);
                                 playerControl.getPlayer().getHand().remove(t);
+                                //ADD SCORE
+                                playerControl.setScore(playerControl.getScore()+selectedTile.getValue());
                                 selectedTile = null;
                             } else {
                                 fromMeld = playerControl.getPlayer().getHand();
                             }
                         } else {
                             //YOU HAVE TO SELECT A TILE FIRST
-                            //System.out.println(fromMeld);
-                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(currentPlayerIndex)){ //Only allow player to add back tiles from new meld
+                            if(selectedTile != null && fromMeld == controller.getScrummy().getTable().getMelds().get(0)){ //Only allow player to add back tiles from new meld
                                 playerControl.getPlayer().getHand().add(selectedTile);
                                 fromMeld.remove(selectedTile);
+                                //DETRACT SCORE
+                                playerControl.setScore(playerControl.getScore()-selectedTile.getValue());
                                 selectedTile = null;
                             } else {
                                 System.out.println("select a tile first by left clicking one");
@@ -939,28 +942,28 @@ public class GraphicalView {
         if(index == 0){
             handLabelPane.setPadding(new Insets(30, 10, 10, 10));
             if(index==this.currentPlayerIndex){
-                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #000000;");
                 System.out.println("highlight player 1");
             }
             this.tablePane.setBottom(handLabelPane);
         } else if (index == 1) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
             if(index==this.currentPlayerIndex){
-                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #000000;");
                 System.out.println("highlight player 2");
             }
             this.tablePane.setRight(handLabelPane);
         } else if (index == 2) {
             handLabelPane.setPadding(new Insets(10, 10, 10, 10));
             if(index==this.currentPlayerIndex){
-                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #000000;");
                 System.out.println("highlight player 3");
             }
             this.tablePane.setTop(handLabelPane);
         } else if (index == 3) {
             handLabelPane.setPadding(new Insets(0, 10, 10, 10));
             if(index==this.currentPlayerIndex){
-                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #333333;");
+                handLabelPane.setStyle("-fx-border-color: red;-fx-background-color: #000000;");
                 System.out.println("highlight player 4");
             }
             this.tablePane.setLeft(handLabelPane);
@@ -974,6 +977,8 @@ public class GraphicalView {
         if(this.suggestionsEnabled) {
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName());
             System.out.println(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand());
+
+            suggestionEngine.setScore(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getScore());
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
 
             //TODO: SUGGESTED PLAYS CLEANUP
@@ -982,7 +987,7 @@ public class GraphicalView {
                     this.topButtons.getChildren().remove(2);
                 }
                 String suggestedText = "Suggested Melds:\n";
-                if (this.suggestionsEnabled && this.controller.getPlayerControllers().get(this.currentPlayerIndex) instanceof PlayerInteractionController) {
+                if (this.suggestionsEnabled && this.controller.isPlayerHuman()) {
                     //ArrayList<Meld> suggestedPlays
                     int index = 0;
                     for (Meld m : this.suggestedPlays) {
@@ -1014,6 +1019,9 @@ public class GraphicalView {
         System.out.println("CURR PLAYER:  " + controller.getPlayerController(c).getPlayer().getName());
         this.tableBefore = controller.getScrummy().getTable().copy();
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
+        if(this.limitHumanTime && this.controller.isPlayerHuman()){
+            this.startTimer();
+        }
         draw();
     }
 
@@ -1052,7 +1060,7 @@ public class GraphicalView {
     public void displayWin() {
         System.out.print("displaying win");
         BorderPane winnerScreen = new BorderPane();
-        winnerScreen.setStyle("-fx-background-color: #333333");
+        winnerScreen.setStyle("-fx-background-color: #000000");
         Text winnerText = new Text(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getName()+ " has won the game!");
         winnerText.setFont(Font.font ("Verdana", 20));
         winnerText.setFill(Color.WHITE);
@@ -1064,13 +1072,33 @@ public class GraphicalView {
     public void displayDraw() {
         System.out.print("displaying draw");
         BorderPane winnerScreen = new BorderPane();
-        winnerScreen.setStyle("-fx-background-color: #333333");
+        winnerScreen.setStyle("-fx-background-color: #000000");
         Text winnerText = new Text("It's a draw!\n\nThe deck is out of cards, and no one made a move in the last round.");
         winnerText.setFont(Font.font ("Verdana", 20));
         winnerText.setFill(Color.WHITE);
         BorderPane.setAlignment(winnerText, Pos.CENTER);
         winnerScreen.setCenter(winnerText);
         this.root.getChildren().add(winnerScreen);
+    }
+
+    class PlayerTimerTask extends TimerTask {
+        public void run() {
+            System.out.println("Turn Complete");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    controller.finishTurn();
+                }
+            });
+            //
+        }
+    }
+
+    public void startTimer(){
+        System.out.println("starting the countdown!");
+        this.timer = new Timer();
+        long delay = 1000L*60*2;
+        this.timer.schedule(new PlayerTimerTask(), delay);
     }
 
 
