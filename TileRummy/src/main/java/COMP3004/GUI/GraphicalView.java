@@ -1143,7 +1143,6 @@ public class GraphicalView {
 
     class PlayerTimerTask extends TimerTask {
         public void run() {
-            Text time = (Text) topButtons.getChildren().get(topButtons.getChildren().size());
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
