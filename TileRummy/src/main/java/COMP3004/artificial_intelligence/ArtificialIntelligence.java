@@ -102,14 +102,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
-            if (m.isValid()) {
+            if (m.isValid() && m.getJokers() < 2) {
                 addJoker(m, h);
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
-                        if (m.isValid()) {
+                        if (m.isValid() && m.getJokers() < 2) {
                             addJoker(m, h);
                             handMelds.put(m.copy(), n);
                             n++;
@@ -131,7 +131,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         !a.contains(h.get(j).getColour())) {
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
-                    if (m.isValid()) {
+                    if (m.isValid() && m.getJokers() < 2) {
                         addJoker(m, h);
                         handMelds.put(m.copy(), n);
                         n++;
@@ -154,14 +154,14 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
-            if (m.isValid()) {
+            if (m.isValid() && m.getJokers() < 2) {
                 addJoker(m, h);
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
-                        if (m.isValid()) {
+                        if (m.isValid() && m.getJokers() < 2) {
                             addJoker(m, h);
                             handMelds.put(m.copy(), n);
                             n++;
@@ -183,7 +183,7 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         !a.contains(h.get(j).getColour())) {
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
-                    if (m.isValid()) {
+                    if (m.isValid() && m.getJokers() < 2) {
                         addJoker(m, h);
                         handMelds.put(m.copy(), n);
                         n++;
@@ -204,8 +204,12 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             return tMelds;
         }
 
-        if (this.getHand().size() == this.getHand().getJokers()) {
-
+        if (this.getHand().size() == this.getHand().getJokers() && table.getMelds().size() > 1) {
+            int i = 1;
+            while (i < table.getMelds().size()) {
+                addJoker(table.getMelds().get(i), h);
+                i++;
+            }            
         }
 
         for (int i=1; i<t.getMelds().size(); i++) {
@@ -226,7 +230,6 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                 }
             }
             if (!toAdd.getTiles().isEmpty()) {
-                addJoker(toAdd, h);
                 tMelds.put(toAdd.copy(), i);
             }
         }

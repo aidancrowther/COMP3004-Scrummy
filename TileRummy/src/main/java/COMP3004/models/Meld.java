@@ -179,7 +179,7 @@ public class Meld {
             }
         } else { //set
             ArrayList<Character> requiredColours = new ArrayList<>();
-            char[] allColours = {'R', 'G', 'B', '0'};
+            char[] allColours = {'R', 'G', 'B', '0', 'J'};
             for(char colour : allColours){
                 if(!seenColours.contains(colour)){
                     requiredColours.add(colour);
