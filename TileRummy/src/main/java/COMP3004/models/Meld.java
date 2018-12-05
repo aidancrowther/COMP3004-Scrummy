@@ -23,7 +23,7 @@ public class Meld {
 
     public void add(Tile t) {
         if(t != null){
-            if (t.isJoker()) {
+            if (t.isJoker() && t.getValue() == 0 && t.getColour() == 'J') {
                 this.addJoker(t);
             }
             this.tiles.add(t);
@@ -95,9 +95,7 @@ public class Meld {
         return score;
     }
 
-    /*special function designed to add a joker to a meld by inspecting the meld and
-    determine what value and colour the meld should take on.
-    This is particularly important for sets.
+    /*This is now ONLY called by AI when using a joker. Jokers will only be added to valid melds.
     */
     public void addJoker(Tile joker) {
         joker.setColour('J');
@@ -112,7 +110,7 @@ public class Meld {
                 -> if there is no back, add it to the front
         */
 
-        if (this.size() == 1) {
+        /*if (this.size() == 1) {
             joker.setValue(this.get(0).getValue()); //make a set
         }
 
@@ -128,20 +126,23 @@ public class Meld {
                     if (this.get(i+1).getValue() - this.get(i).getValue() != 1) {
                         joker.setValue(this.get(i).getValue() + 1);
                     }
-                }
-                if (joker.getValue() == 0) { //if a slot for joker has not been found
-                    if (tiles.get(0).getValue() != 1) {
-                        joker.setValue(tiles.get(0).getValue() - 1);
-                    }
-                    else if (tiles.get(this.size()-1).getValue() != 13) {
-                        joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
-                    }
-					else {
-						joker.setColour('J');
-					}
-                }
+                }*/
+                
+        //if (joker.getValue() == 0) { //if a slot for joker has not been found
+        if (this.isRun()) {
+            joker.setColour(tiles.get(0).getColour());
+            if (tiles.get(0).getValue() != 1) {
+                joker.setValue(tiles.get(0).getValue() - 1);
             }
+            else if (tiles.get(this.size()-1).getValue() != 13) {
+                joker.setValue(tiles.get(tiles.size()-1).getValue() + 1);
+            }
+
         }
+		else {
+            joker.setValue(tiles.get(0).getValue());
+        }
+        //}
         this.sort();
     }
 
@@ -226,7 +227,7 @@ public class Meld {
         comparator 
     */
     public void sort() {
-        int jokers = this.getJokers();
+        /*int jokers = this.getJokers();
 		if (jokers > 0 && this.size() > 2) {
 			ArrayList<Tile> list = new ArrayList<>();
             for (int i=0; i<this.size(); i++) {
@@ -239,7 +240,7 @@ public class Meld {
 			for (Tile j : list) {
 				this.addInSort(j);
 			}
-        }
+        }*/
         
 
         //may need something in here to accomodate a joker changing its form

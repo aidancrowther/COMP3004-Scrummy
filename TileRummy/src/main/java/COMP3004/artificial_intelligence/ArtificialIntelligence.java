@@ -78,12 +78,13 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
         h.setTiles(hand);
         int j = h.getJokers();
 
-        if (j != 0) {
+        if (j != 0 && m.getJokers() == 0) {
             int i=0;
             while (((m.isRun() && m.size() < 13) || (!m.isRun() && m.size() < 4)) && i<hand.size()) {
                 //if the meld is not full, depending on what type
                 if (hand.get(i).isJoker()) {
                     m.add(hand.get(i));
+                    break;
                 }
                 i++;
             }
@@ -112,15 +113,19 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
-            if (m.isValid() && m.getJokers() < 2) {
-                addJoker(m, h);
+            if (m.isValid()) {
+                if (m.getJokers() == 0) {
+                    addJoker(m, h);
+                }
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
-                        if (m.isValid() && m.getJokers() < 2) {
-                            addJoker(m, h);
+                        if (m.isValid()) {
+                            if (m.getJokers() == 0) {
+                                addJoker(m, h);
+                            }
                             handMelds.put(m.copy(), n);
                             n++;
                         } else {
@@ -141,8 +146,10 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         !a.contains(h.get(j).getColour())) {
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
-                    if (m.isValid() && m.getJokers() < 2) {
-                        addJoker(m, h);
+                    if (m.isValid()) {
+                        if (m.getJokers() == 0) {
+                            addJoker(m, h);
+                        }
                         handMelds.put(m.copy(), n);
                         n++;
                     }
@@ -164,15 +171,19 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             m.add(h.get(i));
             m.add(h.get(i+1));
             m.add(h.get(i+2));
-            if (m.isValid() && m.getJokers() < 2) {
-                addJoker(m, h);
+            if (m.isValid()) {
+                if (m.getJokers() == 0) {
+                    addJoker(m, h);
+                }
                 handMelds.put(m.copy(), n);
                 n++;
                 if (i+2<h.size()-1) {
                     for (int j=i+3; j<h.size(); j++) {
                         m.add(h.get(j));
-                        if (m.isValid() && m.getJokers() < 2) {
-                            addJoker(m, h);
+                        if (m.isValid()) {
+                            if (m.getJokers() == 0) {
+                                addJoker(m, h);
+                            }
                             handMelds.put(m.copy(), n);
                             n++;
                         } else {
@@ -193,8 +204,10 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
                         !a.contains(h.get(j).getColour())) {
                     m.add(h.get(j));
                     a.add(h.get(j).getColour()); //no duplicate colours
-                    if (m.isValid() && m.getJokers() < 2) {
-                        addJoker(m, h);
+                    if (m.isValid()) {
+                        if (m.getJokers() == 0) {
+                            addJoker(m, h);
+                        }
                         handMelds.put(m.copy(), n);
                         n++;
                     }
@@ -219,12 +232,15 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
             while (i < table.getMelds().size()) {
                 Meld m = t.getMelds().get(i).copy();
                 Meld toAdd = new Meld();
-                addJoker(m, h, toAdd);
                 if (m.isValid()){
+                    if (m.getJokers() == 0) {
+                        addJoker(m, h);
+                    }
                     tMelds.put(toAdd, i);
                 }
                 i++;
-            }            
+            }
+            return tMelds;
         }
 
         for (int i=1; i<t.getMelds().size(); i++) {
