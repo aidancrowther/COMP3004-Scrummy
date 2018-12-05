@@ -677,13 +677,19 @@ public class GraphicalView {
         tip.setFill(Color.WHITE);
 
         Text countDownText = new Text("");
-        countDownText.setFont(Font.font ("Verdana", 20));
+        countDownText.setFont(Font.font ("Verdana", 15));
         countDownText.setFill(Color.WHITE);
         this.topButtons.getChildren().add(countDownText);
 
+
+        Text suggestionText = new Text("");
+        suggestionText.setFont(Font.font("Verdana", 15));
+        suggestionText.setFill(Color.WHITE);
+
         this.gamePane.add(tip, 0, 0);
         this.gamePane.add(this.topButtons, 0, 1);
-        this.gamePane.add(this.tablePane, 0, 2);
+        this.gamePane.add(suggestionText, 0, 2);
+        this.gamePane.add(this.tablePane, 0, 3);
 
         this.root.getChildren().add(gamePane);
 
@@ -748,7 +754,7 @@ public class GraphicalView {
                     } else if ((fromMeld != null && fromMeld.getTiles().contains(t))
                             || (toMeld != null && toMeld.getTiles().contains(t))) {
                         rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
-                    } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) { //TODO: suggest colour
+                    } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) {
                         rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
                         ArrayList<Tile> allSuggestedTiles = new ArrayList<>();
                         for(Meld suggestedMeld : this.suggestedPlays){
@@ -758,8 +764,7 @@ public class GraphicalView {
                         }
                         for(Tile suggestedTile : allSuggestedTiles) {
                             if(suggestedTile.equals(t)){
-                                //rectangle.setFill(Color.rgb(247, 227, 224,0));//")); //rgb()
-                                rectangle.setFill(Color.web("#FAD3C5"));//")); //rgb()
+                                rectangle.setFill(Color.web("#FAD3C5"));
                             }
                         }
                     } else {
@@ -873,24 +878,13 @@ public class GraphicalView {
         handPane.setPadding(new Insets(10, 10, 10, 10));
         handPane.setVgap(5);
         handPane.setHgap(5);
-/*
-* for(Tile suggestedTile : suggestedMeld.getTiles()){
-                        if(t.getValue() == suggestedTile.getValue()
-                        && t.getColour() == suggestedTile.getColour()){
-                            rectangle.setFill(Color.rgb(247, 227, 224,1));//")); //rgb()
-                        } else {
-                            rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
-                        }
-                    }
-*
-* */
         int i = 0;
         int j = 0;
         for(Tile t : playerControl.getPlayer().getHand().getTiles()) {
             Rectangle rectangle = new Rectangle( 400,100,30,50);
             if(this.selectedTile == t){
                 rectangle.setFill(Color.rgb(242, 255, 230,1));
-            } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) { //TODO: suggest colour
+            } else if(this.suggestedPlays != null && this.suggestedPlays.size() > 0) {
                 rectangle.setFill(Color.rgb(252, 248, 224,1));//")); //rgb()
                 ArrayList<Tile> allSuggestedTiles = new ArrayList<>();
                 for(Meld suggestedMeld : this.suggestedPlays){
@@ -899,8 +893,8 @@ public class GraphicalView {
                     }
                 }
                 for(Tile suggestedTile : allSuggestedTiles) {
-                    if(suggestedTile.equals(t)){
-                        //rectangle.setFill(Color.rgb(247, 227, 224,0));//")); //rgb()
+                    if(suggestedTile.equals(t)
+                            && controller.getPlayerControllers().get(currentPlayerIndex).equals(playerControl)){
                         rectangle.setFill(Color.web("#FAD3C5"));//")); //rgb()
                     }
                 }
@@ -1037,11 +1031,12 @@ public class GraphicalView {
             suggestionEngine.setScore(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getScore());
             this.suggestedPlays = this.suggestionEngine.getSuggestedPlays(this.controller.getPlayerControllers().get(this.currentPlayerIndex).getPlayer().getHand(), this.controller.getScrummy().getTable());
 
+            Text suggestions = (Text)this.gamePane.getChildren().get(2);
             //TODO: SUGGESTED PLAYS CLEANUP
-            if (this.topButtons.getChildren().size() >= 2) {
+            /*if (this.topButtons.getChildren().size() >= 2) {
                 if (this.topButtons.getChildren().size() == 3) {
                     this.topButtons.getChildren().remove(2);
-                }
+                }*/
                 String suggestedText = "Suggested Melds:\n";
                 if (this.suggestionsEnabled && this.controller.isPlayerHuman()) {
                     //ArrayList<Meld> suggestedPlays
@@ -1054,11 +1049,8 @@ public class GraphicalView {
                         index++;
                     }
                 }
-                Text suggestions = new Text(suggestedText);
-                suggestions.setFont(Font.font("Verdana", 15));
-                suggestions.setFill(Color.WHITE);
-                this.topButtons.getChildren().add(suggestions);
-            }
+                suggestions.setText(suggestedText);
+            //}
         }
     }
 
@@ -1076,6 +1068,7 @@ public class GraphicalView {
         this.tableBefore = controller.getScrummy().getTable().copy();
         this.handBefore = controller.getPlayerController(c).getPlayer().getHand().copy();
         if(this.limitHumanTime && this.controller.isPlayerHuman()){
+            System.out.println("start tiemr");
             this.startTimer();
         }
         draw();
@@ -1138,12 +1131,15 @@ public class GraphicalView {
     }
 
     class PlayerTimerTask extends TimerTask {
+        int timeRemaining = 120;
         public void run() {
             System.out.println("Turn Complete");
+            timeRemaining--;
+            Text time = (Text) topButtons.getChildren().get(topButtons.getChildren().size());
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    controller.finishTurn();
+                    controller.finishTurn(true);
                 }
             });
             //
@@ -1155,6 +1151,23 @@ public class GraphicalView {
         this.timer = new Timer();
         long delay = 1000L*60*2;
         this.timer.schedule(new PlayerTimerTask(), delay);
+
+        Timer displayerTimer = new Timer();
+        displayerTimer.schedule(new TimerTask() {
+            int timeRemaining = 120;
+            public void run() {
+                System.out.println("Turn Complete");
+                timeRemaining--;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Text time = (Text) topButtons.getChildren().get(topButtons.getChildren().size()-1);
+                        time.setText("Seconds remaining: " + timeRemaining);
+                    }
+                });
+                //
+            }
+        }, 0, 1000);
     }
 
 

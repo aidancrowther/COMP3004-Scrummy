@@ -116,7 +116,57 @@ public class Controller
     }
 
 
+    public void finishTurn(boolean force){
+        System.out.println("b4 : " + this.graphicalView.getTableBefore());
+        this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
+        this.graphicalView.draw();
 
+        if(!(this.isPlayerHuman())) {
+            this.playerControllers.get(this.currentPlayerIndex).setTable(this.scrummy.getTable());
+            Table playedTable = this.playerControllers.get(this.currentPlayerIndex).play(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand());
+            this.scrummy.setTable(playedTable);
+        }
+
+        if(this.graphicalView.getTableBefore() != null){
+            this.graphicalView.setTableDiff(this.scrummy.getTable().getDiff(this.getState().getTable()));
+            System.out.println("diff : " + this.graphicalView.getTableDiff());
+        }
+
+        this.graphicalView.draw();
+        System.out.print("after: " + scrummy.getTable());
+
+        this.winner = this.checkPlayerMoveGUI(force);
+        this.graphicalView.draw();
+
+        if(this.winner >= 0){
+            System.out.println(getPlayerController(this.winner).getPlayer().getName() + " won!!");
+            this.graphicalView.displayWin();
+        } else if(this.winner == -1)  {
+            int prevPlayerIndex = this.currentPlayerIndex;
+
+            if(this.currentPlayerIndex == this.playerControllers.size()-1){
+                this.currentPlayerIndex = 0;
+            } else {
+                this.currentPlayerIndex++;
+            }
+
+            this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
+
+            //Only do this for local games
+            if(this.networkController == null && !(this.isPlayerHuman())) {
+                this.graphicalView.startAILoop();
+            }
+            this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
+            this.graphicalView.draw();
+        } else {
+            //a draw
+            this.graphicalView.displayDraw();
+        }
+
+        if(this.networkController != null){
+            this.networkController.sendGameState();
+        }
+    }
 
 
     // FOR GUI GAME FLOW
@@ -183,6 +233,42 @@ public class Controller
             return null;
         }
         return careTaker.getLastSave().getState();
+    }
+
+    public int checkPlayerMoveGUI(boolean force){
+        int winnerIndex = -1;
+        // CHECK WHAT PLAYER DID
+        GameState stateBeforeTurn = this.getState();
+        if(stateBeforeTurn != null){
+            /* Instead check if all tiles in both tables melds are equal...
+             * */
+            if(this.playerControllers.get(this.currentPlayerIndex).getScore() < 30 // PLAYER DIDN'T HAVE ENOUGH POINTS
+                    || this.scrummy.getTable().isEquivalent(stateBeforeTurn.getTable())) { // PLAYER NOT MOVE
+                if(this.checkForEmptyDeckCase()){
+                    winnerIndex = -2;
+                }
+                this.scrummy.setTable(stateBeforeTurn.getTable()); //IN CASE PLAYER JUST MMOVED A TILE
+                scrummy.getCurrentPlayer().setHand(stateBeforeTurn.getPlayerHand()); // IN CASE PLAYER HAD TENTATIVE MELD
+                this.popTileToCurrentUserHand();
+            } else
+            if(!scrummy.getTable().isValid()){
+                scrummy.setTable(stateBeforeTurn.getTable());
+                scrummy.getPlayers().get(this.currentPlayerIndex).setHand(stateBeforeTurn.getPlayerHand());
+                //TIMER + INVALID = POP 3
+                this.popTileToCurrentUserHand();
+                this.popTileToCurrentUserHand();
+                this.popTileToCurrentUserHand();
+                scrummy.notifyObservers();
+            }
+        }
+
+        // CHECK FOR WIN
+        System.out.println( "playe rhand size: " + this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand() );
+        if(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand().getTiles().size() == 0){
+            winnerIndex = this.currentPlayerIndex;
+        }
+
+        return winnerIndex;
     }
 
     public int checkPlayerMoveGUI(){
