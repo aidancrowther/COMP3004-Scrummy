@@ -125,7 +125,7 @@ public class Controller
         this.saveState(this.graphicalView.getTableBefore(), this.graphicalView.getHandBefore());
         this.graphicalView.draw();
 
-        if(!(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+        if(!(this.isPlayerHuman())) {
             this.playerControllers.get(this.currentPlayerIndex).setTable(this.scrummy.getTable());
             Table playedTable = this.playerControllers.get(this.currentPlayerIndex).play(this.playerControllers.get(this.currentPlayerIndex).getPlayer().getHand());
             this.scrummy.setTable(playedTable);
@@ -157,7 +157,7 @@ public class Controller
             this.scrummy.setCurrentPlayerIndex(this.currentPlayerIndex);
 
             //Only do this for local games
-            if(this.networkController == null && !(this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController)) {
+            if(this.networkController == null && !(this.isPlayerHuman())) {
                 this.graphicalView.startAILoop();
             }
             this.graphicalView.setCurrentPlayerIndex(this.currentPlayerIndex);
@@ -522,7 +522,7 @@ public class Controller
     }
 
     public GameInteractionController getPlayerController(int id) {
-        if (id >= this.playerControllers.size() || id < 0)//if (this.playerControllers.get(id).getClass().isInstance(TerminalView.class))
+        if (id >= this.playerControllers.size() || id < 0)
             return null;
         return this.playerControllers.get(id);
     }
@@ -660,6 +660,9 @@ public class Controller
         return winnerIndex;
     }
 
+    public boolean isPlayerHuman(){
+        return (this.playerControllers.get(this.currentPlayerIndex) instanceof PlayerInteractionController);
+    }
 
     public int getCurrentPlayerIndex() {
         return this.currentPlayerIndex;
