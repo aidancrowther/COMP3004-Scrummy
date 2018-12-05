@@ -184,9 +184,6 @@ public class Meld {
     */
     public boolean isValid() {
         //valid melds must have 3+ tile
-        if (this.size() == 0) {
-            return true;
-        }
         if (tiles.size() < 3) {
             return false;
         }

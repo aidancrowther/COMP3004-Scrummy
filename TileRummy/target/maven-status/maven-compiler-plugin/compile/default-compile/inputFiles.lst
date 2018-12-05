@@ -1,23 +1,24 @@
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy3.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\FileInputController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Scrummy.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Table.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\views\TerminalView.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\ArtificialIntelligence.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Deck.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\MultiSubjectInterface.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\PlayerInteractionController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Tile.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy4.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GameInteractionController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy1.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\views\GraphicalView.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GraphicalViewController.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Meld.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\MultiSubject.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\models\Player.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy2.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\Main.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\TableObserverInterface.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\controllers\Controller.java
-C:\Users\david\OneDrive\Google Drive\documents\University\4th Year\COMP 3004\Group Project\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\PlayerHandObserverInterface.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Player.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\controllers\Controller.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GraphicalViewController.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\PlayerHandObserverInterface.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\TableObserverInterface.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy2.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\controllers\PlayerInteractionController.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Table.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy1.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy4.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\controllers\FileInputController.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Joker.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\ArtificialIntelligence.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\views\TerminalView.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Meld.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\Main.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\views\GraphicalView.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Scrummy.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Tile.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\controllers\GameInteractionController.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\MultiSubjectInterface.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\artificial_intelligence\Strategy3.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\models\Deck.java
+C:\3004\Scrummy\TileRummy\src\main\java\COMP3004\oberver_pattern\MultiSubject.java
