@@ -653,6 +653,10 @@ public class GraphicalView {
         newMeldBtn.setOnMouseClicked(e -> {
             if(this.selectedTile != null){
                 controller.getScrummy().getTable().add(selectedTile);
+
+                //ADD SCORE
+                controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore()+selectedTile.getValue());
+
                 if(this.fromMeld != null){
                     this.fromMeld.remove(selectedTile);
                     this.fromMeld = null;
@@ -782,11 +786,15 @@ public class GraphicalView {
                                     fromMeld = m;
                                 }
                                 //System.out.println(controller.getScrummy().getTable().getMelds().size());
-                                if(controller.getScrummy().getTable().getMelds().size() == 1){
+                                if(fromMeld == controller.getScrummy().getTable().getMelds().get(0)){
                                     //int meldIndex = controller.getScrummy().getTable().getMelds().indexOf(m);
                                     controller.getPlayerController(currentPlayerIndex).getPlayer().getHand().add(t);
                                     //controller.getScrummy().getTable().getMelds().get(meldIndex).remove(t);
-                                    m.remove(t);
+                                    fromMeld.remove(t);
+
+                                    //REMOVE SCORE
+                                    controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore()-selectedTile.getValue());
+
                                     selectedTile = null;
                                     fromMeld = null;
                                 }
@@ -804,6 +812,13 @@ public class GraphicalView {
                                         fromMeld.remove(selectedTile);
                                         toMeld.add(selectedTile);
                                         controller.getScrummy().getTable().checkMeldZeroValidAndAppend();
+
+                                        if(fromMeld == controller.getPlayerControllers().get(currentPlayerIndex).getPlayer().getHand()){
+                                            //ADD SCORE if from hand
+                                            System.out.println("ADDING SCORE");
+                                            controller.getPlayerControllers().get(currentPlayerIndex).setScore(controller.getPlayerControllers().get(currentPlayerIndex).getScore()+selectedTile.getValue());
+                                        }
+
                                         fromMeld = null;
                                         toMeld = null;
                                         selectedTile = null;
