@@ -92,11 +92,20 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
     public void addJoker(Meld m, ArrayList<Tile> hand, Meld toAdd) {
-        addJoker(m, hand);
+        Meld h = new Meld();
+        h.setTiles(hand);
+        int j = h.getJokers();
 
-        for (int i=0; i<m.size(); i++) {
-            if (m.get(i).isJoker()) {
-                toAdd.add(m.get(i));
+        if (j != 0 && m.getJokers() == 0) {
+            int i=0;
+            while (((m.isRun() && m.size() < 13) || (!m.isRun() && m.size() < 4)) && i<hand.size()) {
+                //if the meld is not full, depending on what type
+                if (hand.get(i).isJoker()) {
+                    m.add(hand.get(i));
+                    toAdd.add(hand.get(i));
+                    break;
+                }
+                i++;
             }
         }
     }
