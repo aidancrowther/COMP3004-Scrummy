@@ -153,4 +153,5 @@ public class Scrummy extends MultiSubject // Table and Players are in superclass
     public ArrayList<Player> getPlayers() { return this.players; }
 
     public Deck getDeck() { return this.deck; }
+    public void setDeck(Deck d) { this.deck = d; }
 }

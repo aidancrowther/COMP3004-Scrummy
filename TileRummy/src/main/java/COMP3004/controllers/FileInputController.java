@@ -150,7 +150,7 @@ public class FileInputController extends GameInteractionController {
         System.exit(2);
     }
 
-    private Deck loadDeck (LinkedList<String> tiles) {
+    public static Deck loadDeck (LinkedList<String> tiles) {
         Deck d = new Deck(true);
         Stack<Tile> reversingStack = new Stack<Tile>();
         int n;
@@ -163,7 +163,7 @@ public class FileInputController extends GameInteractionController {
             d.push(reversingStack.pop());
         return d;
     }
-    private LinkedList<String> load(File inputFile){
+    public static LinkedList<String> load(File inputFile){
         LinkedList<String> input = new LinkedList<String>();
         BufferedReader reader;
         FileReader fReader;

@@ -2,6 +2,7 @@ package COMP3004.GUI;
 
 import COMP3004.artificial_intelligence.Strategy4;
 import COMP3004.controllers.Controller;
+import COMP3004.controllers.FileInputController;
 import COMP3004.controllers.GameInteractionController;
 import COMP3004.models.*;
 import javafx.application.Platform;
@@ -26,6 +27,7 @@ import javafx.scene.text.TextBoundsType;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
@@ -110,7 +112,7 @@ public class GraphicalView {
         });
         buttons.getChildren().add(scenarioButton);
 
-        Button hostButton = new Button("HOST GAME");
+        /*Button hostButton = new Button("HOST GAME");
         hostButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
         hostButton.setMaxSize(270, 100);
         hostButton.setOnMouseClicked(e -> {
@@ -124,6 +126,15 @@ public class GraphicalView {
         connectButton.setOnMouseClicked(e -> {
             isNetworked = true;
         });
+        buttons.getChildren().add(connectButton);*/
+
+
+        Button connectButton = new Button("LOAD FROM FILE");
+        connectButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        connectButton.setMaxSize(270, 100);
+        connectButton.setOnMouseClicked(e -> {
+            loadFromFilePane();
+        });
         buttons.getChildren().add(connectButton);
 
         this.menuPane.getChildren().add(buttons);
@@ -134,6 +145,34 @@ public class GraphicalView {
             iControl.setGUI(this);
             this.addPlayer(iControl.getPlayer().getHand());
         }
+    }
+
+    public void loadFromFilePane(){
+        VBox setPlayersMenu = new VBox();
+        setPlayersMenu.setStyle("-fx-background-color: #000000");
+        Text title = new Text("Enter file name:");
+        title.setFont(Font.font ("Verdana", 20));
+        title.setFill(Color.WHITE);
+        setPlayersMenu.getChildren().add(title);
+
+        TextField textField = new TextField ();
+        setPlayersMenu.getChildren().add(textField);
+        Button connectButton = new Button("K");
+        connectButton.setStyle("-fx-background-color: #00b359;-fx-font-size: 2em;-fx-text-fill:#ffffff;");
+        connectButton.setMaxSize(270, 100);
+        connectButton.setOnMouseClicked(e -> {
+            String filename = textField.getText();
+            File deckFile = new File("./fileInput/"+filename);
+            Deck d = FileInputController.loadDeck(FileInputController.load(deckFile));
+            controller.getScrummy().setDeck(d);
+            //stuff to load form file
+            loadGameSettingsPane(false);
+        });
+        setPlayersMenu.getChildren().add(connectButton);
+
+
+        this.root.getChildren().add(setPlayersMenu);
+
     }
 
     public void loadGameSettingsPane(boolean rigged){
