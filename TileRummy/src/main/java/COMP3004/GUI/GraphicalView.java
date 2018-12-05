@@ -330,6 +330,10 @@ public class GraphicalView {
             if(isNetworked){
                 this.controller.setupHostedGame();
             }
+            if(this.limitHumanTime && this.controller.isPlayerHuman()){
+                System.out.println("start tiemr");
+                this.startTimer();
+            }
             this.loadGamePane();
         });
         playerOrder.getChildren().add(play);
@@ -560,7 +564,6 @@ public class GraphicalView {
         play.setStyle("-fx-background-color: #00b359;-fx-font-size: 1em;-fx-text-fill:#ffffff;");
         play.setOnMouseClicked(e -> {
             //Save game settings
-
             int i = 0;
             for(Meld hand : riggedHands){
                 controller.getPlayerControllers().get(i).getPlayer().setHand(hand);
@@ -577,6 +580,14 @@ public class GraphicalView {
             System.out.println("Start: " + riggedStartIndex);
             currentPlayerIndex = riggedStartIndex;
             controller.setCurrentPlayerIndex(riggedStartIndex);
+            if(isNetworked){
+                this.controller.setupHostedGame();
+            }
+
+            if(this.limitHumanTime && this.controller.isPlayerHuman()){
+                System.out.println("start tiemr");
+                this.startTimer();
+            }
             this.loadGamePane();
         });
         rigOptions.getChildren().add(play);
@@ -1131,10 +1142,7 @@ public class GraphicalView {
     }
 
     class PlayerTimerTask extends TimerTask {
-        int timeRemaining = 120;
         public void run() {
-            System.out.println("Turn Complete");
-            timeRemaining--;
             Text time = (Text) topButtons.getChildren().get(topButtons.getChildren().size());
             Platform.runLater(new Runnable() {
                 @Override
@@ -1151,12 +1159,10 @@ public class GraphicalView {
         this.timer = new Timer();
         long delay = 1000L*60*2;
         this.timer.schedule(new PlayerTimerTask(), delay);
-
         Timer displayerTimer = new Timer();
         displayerTimer.schedule(new TimerTask() {
             int timeRemaining = 120;
             public void run() {
-                System.out.println("Turn Complete");
                 timeRemaining--;
                 Platform.runLater(new Runnable() {
                     @Override
