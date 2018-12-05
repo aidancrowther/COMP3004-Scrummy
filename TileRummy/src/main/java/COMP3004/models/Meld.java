@@ -59,11 +59,19 @@ public class Meld {
 
     public Tile remove(Tile t) {
 
-        if(t.isJoker()) System.out.println(t.toString());
+        Boolean foundDup = false;
+
+        if(t.isJoker() && t.getPlayed()){
+            for (int i=0; i<tiles.size(); i++) {
+                if (tiles.get(i).equals(t)) {
+                    foundDup = true;
+                }
+            }
+        }
+        else foundDup = true;
 
         for (int i=0; i<tiles.size(); i++) {
-            if(tiles.get(i).isJoker()) System.out.println(tiles.get(i).toString());
-            if (tiles.get(i).equals(t)) {
+            if (tiles.get(i).equals(t) && foundDup) {
                 return tiles.remove(i);   
             }
         }
