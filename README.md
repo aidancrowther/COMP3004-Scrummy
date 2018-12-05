@@ -14,7 +14,7 @@
 ### Design Documentation
 
 - [Reports](https://github.com/l3rittny/Scrummy/tree/master/Documentation)
-- [Iteration1 Grid](https://docs.google.com/spreadsheets/d/15IUrvW6riGRSiWDUX_RTzA2lRw7097_fv09wEQ6VmyM/edit?usp=sharing)
+- [Iteration 2 Grid](https://docs.google.com/spreadsheets/d/15IUrvW6riGRSiWDUX_RTzA2lRw7097_fv09wEQ6VmyM/edit?usp=sharing)
 - [Video](https://www.aidancrowther.com/COMP3004.mp4)
 
 ***
