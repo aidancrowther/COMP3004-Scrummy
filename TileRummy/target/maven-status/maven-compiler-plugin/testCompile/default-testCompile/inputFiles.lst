@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/ScrummyTest.java
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/PlayerTest.java
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/MeldTest.java
@@ -14,3 +15,20 @@
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/PlayerInteractionTest.java
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/TileTest.java
 /home/aidancrowther/Documents/Projects/Scrummy/TileRummy/src/test/java/COMP3004/StrategyTest.java
+=======
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\PlayerTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\FileTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\TileTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\ControllerTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\MeldTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\Strategy4Test.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\DeckTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\JokerTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\StrategyMoreTests.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\PlayerInteractionTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\ScrummyTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\Strategy2Test.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\StrategyTest.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\Strategy3Test.java
+C:\3004\Scrummy\TileRummy\src\test\java\COMP3004\TableTest.java
+>>>>>>> AI

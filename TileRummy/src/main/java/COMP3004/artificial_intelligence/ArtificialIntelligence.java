@@ -71,6 +71,11 @@ public abstract class ArtificialIntelligence extends GameInteractionController i
     }
 
 
+    public boolean addJoker(Meld m, Meld hand) {
+        return false;
+    }
+
+
     protected HashMap<Meld, Integer> searchHand() {
         HashMap<Meld, Integer> handMelds = new HashMap<>();
         int n = 0;
